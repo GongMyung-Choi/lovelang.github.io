@@ -21,7 +21,7 @@
       letter-spacing: 1.5px;
     }
     nav {
-      background-color: #4b3b68; /* 진보라 계열 */
+      background-color: #6c5b7b; /* 연보라 */
       display: flex;
       justify-content: center;
       padding: 0.5rem 0;
@@ -44,39 +44,38 @@
     nav ul li a:hover {
       color: #2a9d8f;
     }
-    /* 루웨인 트리니티 메뉴 흰->녹색, 기존 녹색 흰색으로 */
+    /* 루웨인 트리니티 메뉴 기본 흰색, 크기 동일 */
     nav ul li:nth-child(3) a {
-      color: #ffffff; /* 흰색 */
-      font-weight: bold;
-      font-size: 1.1rem;
-    }
-    nav ul li:nth-child(1) a,
-    nav ul li:nth-child(2) a {
-      color: #2a9d8f; /* 녹색으로 바꿈 */
+      color: white; /* 흰색 */
+      font-weight: normal;
+      font-size: 1rem;
     }
     main {
       max-width: 700px;
-      margin: 4rem auto 2rem auto;
+      margin: 0 auto 2rem auto;
       padding: 0 1rem;
       text-align: center;
     }
     main .highlight {
-      font-size: 2.4rem; /* 크게 */
+      font-size: 2.4rem;
       font-weight: 700;
       color: #2a9d8f;
+      margin-top: 5rem; /* 제목 위 여백 더 줌 */
       margin-bottom: 1.5rem;
       letter-spacing: 1px;
     }
     main .subtext {
-      font-size: 1.3rem; /* 크게 */
+      font-size: 1.3rem;
       color: #6b7280;
       line-height: 1.7;
+      margin-top: 2.5rem; /* 설명 위 여백 더 줌 */
       margin-bottom: 3rem;
     }
     .welcome-buttons {
       display: flex;
       justify-content: center;
       gap: 2rem;
+      margin-top: 4rem; /* 버튼 위 여백 더 줌 */
     }
     .welcome-buttons button {
       background-color: white;
