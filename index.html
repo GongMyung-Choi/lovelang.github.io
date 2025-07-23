@@ -1,123 +1,122 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>하나의 흐름 - 루웨인 트리니티</title>
-<style>
-  /* 상단 헤더 */
-  header {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #2a9d8f; /* 루웨인 트리니티 녹색 */
-    text-align: center;
-    padding: 1rem 0;
-  }
-
-  /* 네비게이션 바 */
-  nav {
-    background-color: #333;
-    color: white;
-    padding: 0.5rem 0;
-  }
-  nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
-  nav ul li {
-    display: inline-block;
-    margin: 0 1rem;
-  }
-  nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  nav ul li a:hover {
-    text-decoration: underline;
-  }
-
-  /* 메인 본문 텍스트 */
-  main {
-    text-align: center;
-    padding: 2rem 1rem;
-    font-family: "나눔고딕", "맑은 고딕", sans-serif;
-  }
-  main .highlight {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #2a9d8f;
-    margin-bottom: 1rem;
-  }
-  main .subtext {
-    color: #555;
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 3rem;
-  }
-
-  /* 버튼 스타일 */
-  .welcome-buttons button {
-    border: 2px solid #2a9d8f;
-    background-color: transparent;
-    color: #2a9d8f;
-    font-size: 1.2rem;
-    padding: 0.6rem 1.5rem;
-    margin: 0 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  .welcome-buttons button:hover {
-    background-color: #2a9d8f;
-    color: white;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>루웨인 트리니티</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+      background-color: #f9faf9;
+      color: #374151;
+    }
+    header {
+      background-color: #222;
+      padding: 10px 0;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.8rem;
+      letter-spacing: 1.5px;
+    }
+    nav {
+      background-color: #333;
+      display: flex;
+      justify-content: center;
+      padding: 0.5rem 0;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 2rem;
+    }
+    nav ul li {
+      font-size: 1rem;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      transition: color 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: #2a9d8f;
+    }
+    /* 루웨인 트리니티 메뉴 녹색 강조 */
+    nav ul li:nth-child(3) a {
+      color: #2a9d8f;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    main {
+      max-width: 700px;
+      margin: 4rem auto 2rem auto;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    main .highlight {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2a9d8f;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+    }
+    main .subtext {
+      font-size: 1rem;
+      color: #6b7280;
+      line-height: 1.5;
+      margin-bottom: 3rem;
+    }
+    /* 버튼 그룹 */
+    .welcome-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .welcome-buttons button {
+      background-color: white; /* 하얀 배경 */
+      border: 2px solid #2a9d8f; /* 녹색 테두리 */
+      color: #2a9d8f; /* 글자색 녹색 */
+      font-size: 1rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 120px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .welcome-buttons button:hover {
+      background-color: #2a9d8f; /* 마우스 오버 시 배경 녹색 */
+      color: white; /* 글자 흰색 */
+    }
+  </style>
 </head>
 <body>
-
-<header>루웨인 트리니티</header>
-
-<nav>
-  <ul>
-    <li><a href="#">사랑의 언어</a></li>
-    <li><a href="#">울림의 언어</a></li>
-    <li><a href="#">루웨인 트리니티</a></li>
-    <li><a href="#">한얼</a></li>
-    <li><a href="#">굿즈</a></li>
-    <li><a href="#">도움말 및 공지</a></li>
-    <li><a href="#">고객센터</a></li>
-  </ul>
-</nav>
-
-<main>
-  <div class="highlight">당신을 위한 하나의 흐름</div>
-  <div class="subtext">
-    누구든, 언제든 당신의 말에서 시작됩니다.<br />
-    이곳에서 우리는 깊은 울림을 나누고자 합니다.
-  </div>
-  <div class="welcome-buttons">
-    <button>처음이에요</button>
-    <button>이어 갈래요</button>
-  </div>
-</main>
-.welcome-buttons button {
-  background-color: white; /* 기본 하얀 배경 */
-  border: 2px solid #2a9d8f; /* 녹색 테두리 */
-  color: #2a9d8f; /* 글자색 녹색 */
-  font-size: 1rem; /* 기본 크기 유지 */
-  padding: 0.5rem 1.2rem; /* 기존 패딩 유지 */
-  margin: 0 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.welcome-buttons button:hover {
-  background-color: #2a9d8f; /* 마우스 오버 시 배경 녹색 */
-  color: white; /* 글자 흰색 */
-}
-
+  <header>루웨인 트리니티</header>
+  <nav>
+    <ul>
+      <li><a href="#">사랑의 언어</a></li>
+      <li><a href="#">울림의 언어</a></li>
+      <li><a href="#">루웨인 트리니티</a></li>
+      <li><a href="#">한얼</a></li>
+      <li><a href="#">굿즈</a></li>
+      <li><a href="#">도움말 및 공지</a></li>
+      <li><a href="#">고객센터</a></li>
+    </ul>
+  </nav>
+  <main>
+    <div class="highlight">당신을 위한 하나의 흐름</div>
+    <div class="subtext">
+      누구든, 언제든 당신의 말에서 시작됩니다.<br />
+      이곳에서 우리는 깊은 울림을 나누고자 합니다.
+    </div>
+    <div class="welcome-buttons">
+      <button>처음이에요</button>
+      <button>이어 갈래요</button>
+    </div>
+  </main>
 </body>
 </html>
