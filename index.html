@@ -99,10 +99,28 @@
       margin: 0 auto;
       line-height: 1.5;
     }
+    .welcome-buttons {
+      text-align: center;
+      margin: 2rem 0 3rem 0;
+    }
+    .welcome-buttons button {
+      background-color: #16a085;
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      margin: 0 10px;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .welcome-buttons button:hover {
+      background-color: #12876f;
+    }
   </style>
 </head>
 <body>
-  <header>루웨인 트리니티<span style="font-size:1.8rem;</span></header>
+  <header>루웨인 트리니티</header>
   <nav>
     <ul>
       <li><a href="#">사랑의 언어</a></li>
@@ -123,17 +141,16 @@
   </nav>
   <main>
     <div>
-      <div class="highlight">당신을 위한 하나의 흐름</div>루웨인 트리니티입니다.</div>
+      <div class="highlight">당신을 위한 하나의 흐름</div>
       <div class="subtext">
-        <br />누구든, 언제든 당신의 말에서 시작됩니다.<br />
+        누구든, 언제든 당신의 말에서 시작됩니다.<br />
         이곳에서 우리는 깊은 울림을 나누고자 합니다.
       </div>
     </div>
   </main>
   <div class="welcome-buttons">
-  <button onclick="location.href='start.html'">처음이에요</button>
-  <button onclick="location.href='continue.html'">이어 갈래요</button>
-</div>
-
+    <button onclick="location.href='start.html'">처음이에요</button>
+    <button onclick="location.href='continue.html'">이어 갈래요</button>
+  </div>
 </body>
 </html>
