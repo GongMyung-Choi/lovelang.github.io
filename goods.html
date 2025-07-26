@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>굿즈 - 루웨인 트리니티</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f9fafa;
+    color: #2a9d8f;
+  }
+  header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 3rem;
+    letter-spacing: 1.5px;
+    color: #af2465;
+    margin: 1rem 0 0.5rem 0;
+  }
+  nav.top-nav {
+    background-color: #6c5b7b;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+  nav.top-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 3rem;
+  }
+  nav.top-nav ul li a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+  }
+  nav.top-nav ul li a:hover {
+    color: #2a9d8f;
+  }
+  .main-container {
+    display: flex;
+    height: calc(100vh - 140px);
+  }
+  nav.sidebar {
+    width: 220px;
+    background-color: #f2d1eb;
+    border-right: 1px solid #ae63a0;
+    padding: 1rem 1rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+  nav.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  nav.sidebar ul li {
+    margin-bottom: 1rem;
+  }
+  nav.sidebar ul li a {
+    text-decoration: none;
+    color: #2a9d8f;
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 2;
+    transition: color 0.3s ease;
+    display: block;
+  }
+  nav.sidebar ul li a:hover {
+    color: #6c5b7b;
+  }
+  main.content {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  main.content h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+    gap: 1.5rem;
+  }
+  .product-card {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  .product-card:hover {
+    box-shadow: 0 0 10px rgba(42,157,143,0.6);
+  }
+  .product-card img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+  .product-card h3 {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    color: #2a9d8f;
+  }
+  .product-card p {
+    font-size: 1rem;
+    color: #555;
+  }
+</style>
+</head>
+<body>
+
+<header>루웨인 트리니티</header>
+
+<nav class="top-nav">
+  <ul>
+    <li><a href="language_of_love.html">사랑의 언어</a></li>
+    <li><a href="oulrim_of_language.html">울림의 언어</a></li>
+    <li><a href="luwein_trinity.html">루웨인 트리니티</a></li>
+    <li><a href="haneol.html">한얼</a></li>
+    <li><a href="goods.html" style="font-weight:bold; color:#2a9d8f;">굿즈</a></li>
+    <li><a href="help.html">도움말 및 공지</a></li>
+    <li><a href="contact.html">고객센터</a></li>
+  </ul>
+</nav>
+
+<div class="main-container">
+  <nav class="sidebar">
+    <ul>
+      <li><a href="#">전체</a></li>
+      <li><a href="#">베스트셀러</a></li>
+      <li><a href="#">신상품</a></li>
+      <li><a href="#">티셔츠</a></li>
+      <li><a href="#">머그컵</a></li>
+      <li><a href="#">스티커</a></li>
+      <li><a href="#">에코백</a></li>
+      <li><a href="#">기타</a></li>
+    </ul>
+  </nav>
+  <main class="content">
+    <h1>굿즈 쇼핑</h1>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/200x200?text=티셔츠" alt="티셔츠" />
+        <h3>루웨인 티셔츠</h3>
+        <p>편안하고 스타일리시한 루웨인 티셔츠입니다.</p>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/200x200?text=머그컵" alt="머그컵" />
+        <h3>루웨인 머그컵</h3>
+        <p>따뜻한 음료와 잘 어울리는 루웨인 머그컵입니다.</p>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/200x200?text=스티커" alt="스티커" />
+        <h3>루웨인 스티커 세트</h3>
+        <p>다양한 디자인의 스티커 세트입니다.</p>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/200x200?text=에코백" alt="에코백" />
+        <h3>루웨인 에코백</h3>
+        <p>친환경 소재의 실용적인 에코백입니다.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
