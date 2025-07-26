@@ -3,116 +3,128 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>사랑의 언어</title>
+<title>루웨인 트리니티</title>
 <style>
-  /* 기본 스타일 */
   body {
     margin: 0;
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #f9fafa;
     color: #2a9d8f;
   }
-  
-  /* 상단 네비게이션 바 */
-  header, nav {
-    width: 100%;
-  }
+
+  /* 상단 헤더 */
   header {
-    background-color: #6c5b7b; /* 연보라 배경 */
-    color: white;
-    font-weight: bold;
-    font-size: 1.5rem;
     text-align: center;
-    padding: 1rem 0;
-  }
-  nav {
-    background-color: #57486a; /* 진보라 약간 어둡게 */
-    display: flex;
-    justify-content: center;
-  }
-  nav ul {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-    padding: 0.5rem 0;
-    margin: 0;
-  }
-  nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: 500;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-  }
-  nav ul li a:hover {
-    color: #2a9d8f; /* 루웨인 녹색 */
-  }
-  nav ul li:nth-child(3) a {
-    font-weight: normal;
-    color: white;
-    transition: color 0.3s ease;
-  }
-  nav ul li:nth-child(3) a:hover {
-    color: #2a9d8f;
+    font-weight: bold;
+    font-size: 3rem;
+    letter-spacing: 1.5px;
+    color: #af2465; /* 상단 제목 색상 */
+    margin: 1rem 0 0.5rem 0;
   }
 
-  /* 좌측 사이드바 메뉴 */
+  /* 상단 가로 메뉴 */
+  nav.top-nav {
+    background-color: #6c5b7b; /* 연보라 */
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+
+  nav.top-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 3rem;
+  }
+
+  nav.top-nav ul li {
+    font-size: 1rem;
+  }
+
+  nav.top-nav ul li a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+  }
+
+  nav.top-nav ul li a:hover {
+    color: #2a9d8f; /* 마우스 오버 시 녹색 */
+  }
+
+  /* 본문 전체 레이아웃: 좌우 분할 */
+  .main-container {
+    display: flex;
+    height: calc(100vh - 130px); /* 헤더+상단 메뉴 높이 빼고 화면 전체 */
+    margin: 0 0rem; /* 좌우 여백 */
+  }
+
+  /* 왼쪽 세로 메뉴 */
   .sidebar {
-    width: 220px;
-    position: fixed;
-    top: 120px; /* 헤더+네비 아래 위치 */
-    left: 0;
-    bottom: 0;
-    background-color: #f0f5f9;
-    padding: 1rem 1.5rem;
+    width: 260px;
+    background-color: #f2d1eb;
+    border-right: 1px solid #ae63a0;
+    padding: 1rem 1rem;
     box-sizing: border-box;
-    border-right: 1px solid #ccc;
     overflow-y: auto;
   }
+
   .sidebar ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
+
   .sidebar ul li {
     margin-bottom: 1rem;
   }
+
   .sidebar ul li a {
     text-decoration: none;
     color: #2a9d8f;
     font-weight: 500;
-    transition: color 0.3s ease;
-    display: block;
-    writing-mode: vertical-rl;
+    font-size: 1.5rem;
+    line-height: 2;
+    writing-mode: horizontal-tb; /* 문법 오류 수정, 세미콜론 추가 */
     text-orientation: mixed;
-  }
-  .sidebar ul li a:hover {
-    color: #6c5b7b; /* 보라 계열 */
+    white-space: nowrap;
+    transition: color 0.3s ease;
   }
 
-  /* 콘텐츠 영역 */
+  .sidebar ul li a:hover {
+    color: #6c5b7b;
+  }
+
+  /* 줄 간격 좁히기 클래스 */
+  .narrow-line {
+    line-height: 1.1; /* 0.3은 너무 좁으니 1.1로 조정 */
+  }
+
+  /* 오른쪽 메인 콘텐츠 */
   .content {
-    margin-left: 240px;
-    padding: 2rem 3rem;
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto;
   }
+
   .content h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: 1rem;
-    color: #2a9d8f;
   }
+
   .content p {
-    font-size: 1.3rem;
-    line-height: 1.6;
-    color: #577d8a;
+    font-size: 1.2rem;
+    line-height: 1.5;
   }
 </style>
 </head>
 <body>
 
 <header>루웨인 트리니티</header>
-<nav>
+
+<nav class="top-nav">
   <ul>
-    <li><a href="../language_of_love.html">사랑의 언어</a></li>
+    <li><a href="#">사랑의 언어</a></li>
     <li><a href="#">울림의 언어</a></li>
     <li><a href="#">루웨인 트리니티</a></li>
     <li><a href="#">한얼</a></li>
@@ -122,22 +134,24 @@
   </ul>
 </nav>
 
-<aside class="sidebar">
-  <ul>
-    <li><a href="#">말의 온도</a></li>
-    <li><a href="#">감성일기</a></li>
-    <li><a href="#">상처주는 말 vs 상처 받는 말</a></li>
-    <li><a href="#">사랑도 연습이 필요하다</a></li>
-    <li><a href="#">사랑해 볼까?</a></li>
-    <li><a href="#">루웨인 트리니티에게 마음을 전해요.</a></li>
-    <li><a href="#">감응 언어학</a></li>
-  </ul>
-</aside>
+<div class="main-container">
+  <nav class="sidebar">
+    <ul>
+      <li><a href="#">말의 온도</a></li>
+      <li><a href="#">감성일기</a></li>
+      <li><a href="#" class="narrow-line">상처주는 말<br> vs 상처 받는 말</a></li>
+      <li><a href="#">사랑도<br> 연습이 필요하다</a></li>
+      <li><a href="#">사랑해 볼까?</a></li>
+      <li><a href="#">루웨인 트리니티에게<br> 마음을 전해요.</a></li>
+      <li><a href="#">감응 언어학</a></li>
+    </ul>
+  </nav>
 
-<main class="content">
-  <h1>사랑의 언어에 오신 걸 환영합니다</h1>
-  <p>여기에 사랑의 언어 관련 내용을 넣으세요.</p>
-</main>
+  <main class="content">
+    <h1>사랑의 언어, 나눔의 시작입니다.</h1>
+    <p>왼쪽 메뉴를 누르면 여기에 내용이 보임 ^^</p>
+  </main>
+</div>
 
 </body>
 </html>
