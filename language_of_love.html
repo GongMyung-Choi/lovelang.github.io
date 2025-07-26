@@ -5,57 +5,64 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>사랑의 언어</title>
 <style>
+  /* 기본 스타일 */
   body {
     margin: 0;
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #f9fafa;
     color: #2a9d8f;
   }
+  
+  /* 상단 네비게이션 바 */
+  header, nav {
+    width: 100%;
+  }
   header {
-    text-align: center;
-    font-weight: bold;
-    font-size: 2.5rem;
-    padding: 1rem 0;
-    background-color: #222;
+    background-color: #6c5b7b; /* 연보라 배경 */
     color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 1rem 0;
   }
   nav {
-    background-color: #6c5b7b; /* 연보라 */
+    background-color: #57486a; /* 진보라 약간 어둡게 */
     display: flex;
     justify-content: center;
-    padding: 0.5rem 0;
   }
   nav ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
     gap: 2rem;
-  }
-  nav ul li {
-    font-size: 1rem;
+    padding: 0.5rem 0;
+    margin: 0;
   }
   nav ul li a {
-    color: white;
     text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 1rem;
     transition: color 0.3s ease;
   }
   nav ul li a:hover {
-    color: #2a9d8f;
+    color: #2a9d8f; /* 루웨인 녹색 */
   }
   nav ul li:nth-child(3) a {
-    color: white;
     font-weight: normal;
+    color: white;
+    transition: color 0.3s ease;
   }
   nav ul li:nth-child(3) a:hover {
     color: #2a9d8f;
   }
+
+  /* 좌측 사이드바 메뉴 */
   .sidebar {
     width: 220px;
     position: fixed;
-    top: 88px; /* header(48px)+nav(40px) 높이 합산 */
+    top: 120px; /* 헤더+네비 아래 위치 */
     left: 0;
-    height: calc(100vh - 88px);
+    bottom: 0;
     background-color: #f0f5f9;
     padding: 1rem 1.5rem;
     box-sizing: border-box;
@@ -75,52 +82,62 @@
     color: #2a9d8f;
     font-weight: 500;
     transition: color 0.3s ease;
+    display: block;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
   }
   .sidebar ul li a:hover {
     color: #6c5b7b; /* 보라 계열 */
   }
-  main.content {
+
+  /* 콘텐츠 영역 */
+  .content {
     margin-left: 240px;
-    padding: 2rem;
-    margin-top: 88px; /* header+nav 높이 맞춤 */
+    padding: 2rem 3rem;
   }
-  main.content h1 {
-    font-size: 2rem;
+  .content h1 {
+    font-size: 2.5rem;
     margin-bottom: 1rem;
+    color: #2a9d8f;
   }
-  main.content p {
-    font-size: 1.2rem;
-    line-height: 1.5;
+  .content p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #577d8a;
   }
 </style>
 </head>
 <body>
-  <header>루웨인 트리니티</header>
-  <nav>
-    <ul>
-      <li><a href="#">사랑의 언어</a></li>
-      <li><a href="#">울림의 언어</a></li>
-      <li><a href="#">루웨인 트리니티</a></li>
-      <li><a href="#">한얼</a></li>
-      <li><a href="#">굿즈</a></li>
-      <li><a href="#">도움말 및 공지</a></li>
-      <li><a href="#">고객센터</a></li>
-    </ul>
-  </nav>
-  <nav class="sidebar">
-    <ul>
-      <li><a href="#">말의 온도</a></li>
-      <li><a href="#">감성일기</a></li>
-      <li><a href="#">상처주는 말 vs 상처 받는 말</a></li>
-      <li><a href="#">사랑도 연습이 필요하다</a></li>
-      <li><a href="#">사랑해 볼까?</a></li>
-      <li><a href="#">루웨인 트리니티에게 마음을 전해요.</a></li>
-      <li><a href="#">감응 언어학</a></li>
-    </ul>
-  </nav>
-  <main class="content">
-    <h1>사랑의 언어에 오신 걸 환영합니다</h1>
-    <p>여기에 사랑의 언어 관련 내용을 넣으세요.</p>
-  </main>
+
+<header>루웨인 트리니티</header>
+<nav>
+  <ul>
+    <li><a href="../language_of_love.html">사랑의 언어</a></li>
+    <li><a href="#">울림의 언어</a></li>
+    <li><a href="#">루웨인 트리니티</a></li>
+    <li><a href="#">한얼</a></li>
+    <li><a href="#">굿즈</a></li>
+    <li><a href="#">도움말 및 공지</a></li>
+    <li><a href="#">고객센터</a></li>
+  </ul>
+</nav>
+
+<aside class="sidebar">
+  <ul>
+    <li><a href="#">말의 온도</a></li>
+    <li><a href="#">감성일기</a></li>
+    <li><a href="#">상처주는 말 vs 상처 받는 말</a></li>
+    <li><a href="#">사랑도 연습이 필요하다</a></li>
+    <li><a href="#">사랑해 볼까?</a></li>
+    <li><a href="#">루웨인 트리니티에게 마음을 전해요.</a></li>
+    <li><a href="#">감응 언어학</a></li>
+  </ul>
+</aside>
+
+<main class="content">
+  <h1>사랑의 언어에 오신 걸 환영합니다</h1>
+  <p>여기에 사랑의 언어 관련 내용을 넣으세요.</p>
+</main>
+
 </body>
 </html>
