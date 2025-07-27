@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId" version="3.0">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:title>0에서 시작하는 동양철학</dc:title>
+    <dc:creator>저자명</dc:creator>
+    <dc:language>ko</dc:language>
+    <dc:identifier id="BookId">urn:uuid:12345</dc:identifier>
+    <dc:date>2025-07-01</dc:date>
+    <dc:description>‘0’이라는 철학적 개념을 통해 동양철학을 새롭게 조명하는 책.</dc:description>
+  </metadata>
+  <manifest>
+    <item href="text/prologue.xhtml" id="prologue" media-type="application/xhtml+xml"/>
+    <item href="text/chapter1.xhtml" id="chapter1" media-type="application/xhtml+xml"/>
+    <item href="text/chapter2.xhtml" id="chapter2" media-type="application/xhtml+xml"/>
+    <item href="text/chapter3.xhtml" id="chapter3" media-type="application/xhtml+xml"/>
+    <item href="text/chapter4.xhtml" id="chapter4" media-type="application/xhtml+xml"/>
+    <item href="text/chapter5.xhtml" id="chapter5" media-type="application/xhtml+xml"/>
+    <item href="text/chapter6.xhtml" id="chapter6" media-type="application/xhtml+xml"/>
+    <item href="text/chapter7.xhtml" id="chapter7" media-type="application/xhtml+xml"/>
+    <item href="text/chapter8.xhtml" id="chapter8" media-type="application/xhtml+xml"/>
+    <item href="text/chapter9.xhtml" id="chapter9" media-type="application/xhtml+xml"/>
+    <item href="text/chapter10.xhtml" id="chapter10" media-type="application/xhtml+xml"/>
+    <item href="text/chapter11.xhtml" id="chapter11" media-type="application/xhtml+xml"/>
+    <item href="text/chapter12.xhtml" id="chapter12" media-type="application/xhtml+xml"/>
+    <item href="text/chapter13.xhtml" id="chapter13" media-type="application/xhtml+xml"/>
+    <item href="text/chapter14.xhtml" id="chapter14" media-type="application/xhtml+xml"/>
+    <item href="text/chapter15.xhtml" id="chapter15" media-type="application/xhtml+xml"/>
+    <item href="text/chapter16.xhtml" id="chapter16" media-type="application/xhtml+xml"/>
+    <item href="text/chapter17.xhtml" id="chapter17" media-type="application/xhtml+xml"/>
+    <item href="text/chapter18.xhtml" id="chapter18" media-type="application/xhtml+xml"/>
+    <item href="text/chapter19.xhtml" id="chapter19" media-type="application/xhtml+xml"/>
+    <item href="text/chapter20.xhtml" id="chapter20" media-type="application/xhtml+xml"/>
+    <item href="text/chapter21.xhtml" id="chapter21" media-type="application/xhtml+xml"/>
+    <item href="text/chapter22.xhtml" id="chapter22" media-type="application/xhtml+xml"/>
+    <item href="text/chapter23.xhtml" id="chapter23" media-type="application/xhtml+xml"/>
+    <item href="text/appendix.xhtml" id="appendix" media-type="application/xhtml+xml"/>
+    <item href="styles/style.css" id="css" media-type="text/css"/>
+    <item href="toc.ncx" id="ncx" media-type="application/x-dtbncx+xml"/>
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="prologue"/>
+    <itemref idref="chapter1"/>
+    <itemref idref="chapter2"/>
+    <itemref idref="chapter3"/>
+    <itemref idref="chapter4"/>
+    <itemref idref="chapter5"/>
+    <itemref idref="chapter6"/>
+    <itemref idref="chapter7"/>
+    <itemref idref="chapter8"/>
+    <itemref idref="chapter9"/>
+    <itemref idref="chapter10"/>
+    <itemref idref="chapter11"/>
+    <itemref idref="chapter12"/>
+    <itemref idref="chapter13"/>
+    <itemref idref="chapter14"/>
+    <itemref idref="chapter15"/>
+    <itemref idref="chapter16"/>
+    <itemref idref="chapter17"/>
+    <itemref idref="chapter18"/>
+    <itemref idref="chapter19"/>
+    <itemref idref="chapter20"/>
+    <itemref idref="chapter21"/>
+    <itemref idref="chapter22"/>
+    <itemref idref="chapter23"/>
+    <itemref idref="appendix"/>
+  </spine>
+</package>
