@@ -11,6 +11,7 @@
     background-color: #f9fafa;
     color: #2a9d8f;
   }
+
   header {
     text-align: center;
     font-weight: bold;
@@ -19,12 +20,14 @@
     color: #af2465;
     margin: 1rem 0 0.5rem 0;
   }
+
   nav.top-nav {
     background-color: #6c5b7b;
     display: flex;
     justify-content: center;
     padding: 0.5rem 0;
   }
+
   nav.top-nav ul {
     list-style: none;
     padding: 0;
@@ -32,18 +35,22 @@
     display: flex;
     gap: 3rem;
   }
+
   nav.top-nav ul li a {
     text-decoration: none;
     color: white;
     transition: color 0.3s ease;
   }
+
   nav.top-nav ul li a:hover {
     color: #2a9d8f;
   }
+
   .main-container {
     display: flex;
     height: calc(100vh - 100px);
   }
+
   nav.sidebar {
     width: 200px;
     background-color: #f2d1eb;
@@ -52,14 +59,17 @@
     box-sizing: border-box;
     overflow-y: auto;
   }
+
   nav.sidebar ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
+
   nav.sidebar ul li {
     margin-bottom: 1rem;
   }
+
   nav.sidebar ul li a {
     text-decoration: none;
     color: #2a9d8f;
@@ -69,33 +79,44 @@
     transition: color 0.3s ease;
     display: block;
   }
+
   nav.sidebar ul li a:hover {
     color: #6c5b7b;
   }
+
   main.content {
     flex-grow: 1;
     padding: 2rem;
     overflow-y: auto;
-    text-align: center; /* 가운데 정렬 */
+    text-align: center;
   }
+
+  main.content h1,
+  main.content p {
+    color: #2a9d8f;
+  }
+
   main.content h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
   }
+
   main.content p {
     font-size: 1.4rem;
     line-height: 1.6;
     margin-bottom: 1rem;
   }
-  /* 설정 컨트롤 박스 스타일 */
+
   .settings {
     margin-top: 2rem;
     text-align: center;
   }
+
   .settings label {
     margin-right: 1rem;
     font-weight: bold;
   }
+
   .settings input[type="color"],
   .settings input[type="number"] {
     padding: 0.2rem;
@@ -111,12 +132,12 @@
 <nav class="top-nav">
   <ul>
     <li><a href="language_of_love.html">사랑의 언어</a></li>
-    <li><a href="oulrim_of_language.html">울림의 언어</a></li>
-    <li><a href="#">루웨인 트리니티</a></li>
-    <li><a href="#">한얼</a></li>
-    <li><a href="#">굿즈</a></li>
-    <li><a href="#">도움말 및 공지</a></li>
-    <li><a href="#">고객센터</a></li>
+    <li><a href="language_of_reverbe.html">울림의 언어</a></li>
+    <li><a href="luwein_trinity.html">루웨인 트리니티</a></li>
+    <li><a href="haneul.html">한얼</a></li>
+    <li><a href="goods.html">굿즈</a></li>
+    <li><a href="help&notices.html">도움말 및 공지</a></li>
+    <li><a href="customer_support.html">고객센터</a></li>
   </ul>
 </nav>
 
@@ -129,11 +150,10 @@
       <li><a href="#">울림의 언어는</a></li>
       <li><a href="#">울림체조</a></li>
       <li><a href="#">감응남기기</a></li>
-      <li><a href="#">놀이터</a></li>   
-      <li><a href="#">AI 협업</a></li>    
+      <li><a href="#">놀이터</a></li>
+      <li><a href="#">AI 협업</a></li>
       <li><a href="#">긴급도움요청</a></li>
       <li><a href="#">루웨인<br> 트리니티에게</a></li>
-
     </ul>
   </nav>
 
@@ -141,9 +161,6 @@
     <h1>루웨인 트리니티가 당신을 만나기 위해 준비중입니다. ^^</h1>
     <p>말이 울리기 전에 몸이 먼저 반응합니다.<br>
        당신의 마음과 말 사이, 그 감응의 통로를 함께 열어갑니다.</p>
-
-  
-    </div>
   </main>
 </div>
 
@@ -152,11 +169,11 @@
   const fontSizeInput = document.getElementById('fontSize');
   const fontColorInput = document.getElementById('fontColor');
 
-  fontSizeInput.addEventListener('input', () => {
+  fontSizeInput?.addEventListener('input', () => {
     content.style.fontSize = fontSizeInput.value + 'px';
   });
 
-  fontColorInput.addEventListener('input', () => {
+  fontColorInput?.addEventListener('input', () => {
     content.style.color = fontColorInput.value;
   });
 </script>
