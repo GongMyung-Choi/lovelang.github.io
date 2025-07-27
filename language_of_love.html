@@ -12,19 +12,17 @@
     color: #2a9d8f;
   }
 
-  /* 상단 헤더 */
   header {
     text-align: center;
     font-weight: bold;
     font-size: 3rem;
     letter-spacing: 1.5px;
-    color: #af2465; /* 상단 제목 색상 */
+    color: #af2465;
     margin: 1rem 0 0.5rem 0;
   }
 
-  /* 상단 가로 메뉴 */
   nav.top-nav {
-    background-color: #6c5b7b; /* 연보라 */
+    background-color: #6c5b7b;
     display: flex;
     justify-content: center;
     padding: 0.5rem 0;
@@ -49,17 +47,15 @@
   }
 
   nav.top-nav ul li a:hover {
-    color: #2a9d8f; /* 마우스 오버 시 녹색 */
+    color: #2a9d8f;
   }
 
-  /* 본문 전체 레이아웃: 좌우 분할 */
   .main-container {
     display: flex;
-    height: calc(100vh - 130px); /* 헤더+상단 메뉴 높이 빼고 화면 전체 */
-    margin: 0 0rem; /* 좌우 여백 */
+    height: calc(100vh - 130px);
+    margin: 0 0rem;
   }
 
-  /* 왼쪽 세로 메뉴 */
   .sidebar {
     width: 220px;
     background-color: #f2d1eb;
@@ -85,7 +81,7 @@
     font-weight: 600;
     font-size: 1.3rem;
     line-height: 2;
-    writing-mode: horizontal-tb; /* 문법 오류 수정, 세미콜론 추가 */
+    writing-mode: horizontal-tb;
     text-orientation: mixed;
     white-space: nowrap;
     transition: color 0.3s ease;
@@ -95,16 +91,19 @@
     color: #6c5b7b;
   }
 
-  /* 줄 간격 좁히기 클래스 */
   .narrow-line {
-    line-height: 1.1; /* 0.3은 너무 좁으니 1.1로 조정 */
+    line-height: 1.1;
   }
 
-  /* 오른쪽 메인 콘텐츠 */
   .content {
     flex-grow: 1;
     padding: 2rem;
     overflow-y: auto;
+  }
+
+  .content h1,
+  .content p {
+    color: #2a9d8f;
   }
 
   .content h1 {
@@ -124,13 +123,13 @@
 
 <nav class="top-nav">
   <ul>
-    <li><a href="#">사랑의 언어</a></li>
-    <li><a href="#">울림의 언어</a></li>
-    <li><a href="#">루웨인 트리니티</a></li>
-    <li><a href="#">한얼</a></li>
-    <li><a href="#">굿즈</a></li>
-    <li><a href="#">도움말 및 공지</a></li>
-    <li><a href="#">고객센터</a></li>
+    <li><a href="language_of_love.html">사랑의 언어</a></li>
+    <li><a href="language_of_reverbe.html">울림의 언어</a></li>
+    <li><a href="luwein_trinity.html">루웨인 트리니티</a></li>
+    <li><a href="haneul.html">한얼</a></li>
+    <li><a href="goods.html">굿즈</a></li>
+    <li><a href="help&notices.html">도움말 및 공지</a></li>
+    <li><a href="customer_support.html">고객센터</a></li>
   </ul>
 </nav>
 
