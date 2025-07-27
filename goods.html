@@ -40,6 +40,10 @@
   nav.top-nav ul li a:hover {
     color: #2a9d8f;
   }
+  nav.top-nav ul li:nth-child(5) a {
+    font-weight: bold;
+    color: #2a9d8f;
+  }
   .main-container {
     display: flex;
     height: calc(100vh - 140px);
@@ -68,6 +72,7 @@
     line-height: 2;
     transition: color 0.3s ease;
     display: block;
+    cursor: pointer;
   }
   nav.sidebar ul li a:hover {
     color: #6c5b7b;
@@ -121,12 +126,12 @@
 <nav class="top-nav">
   <ul>
     <li><a href="language_of_love.html">사랑의 언어</a></li>
-    <li><a href="oulrim_of_language.html">울림의 언어</a></li>
+    <li><a href="language_of_reverbe.html">울림의 언어</a></li>
     <li><a href="luwein_trinity.html">루웨인 트리니티</a></li>
-    <li><a href="haneol.html">한얼</a></li>
-    <li><a href="goods.html" style="font-weight:bold; color:#2a9d8f;">굿즈</a></li>
-    <li><a href="help.html">도움말 및 공지</a></li>
-    <li><a href="contact.html">고객센터</a></li>
+    <li><a href="haneul.html">한얼</a></li>
+    <li><a href="goods.html">굿즈</a></li>
+    <li><a href="help&notices.html">도움말 및 공지</a></li>
+    <li><a href="customer_support.html">고객센터</a></li>
   </ul>
 </nav>
 
@@ -134,7 +139,7 @@
   <nav class="sidebar">
     <ul>
       <li><a href="#">전체</a></li>
-      <li><a href="#">베스트셀러</a></li>
+      <li><a onclick="showEbookList()">루웨인 도서관</a></li>
       <li><a href="#">신상품</a></li>
       <li><a href="#">티셔츠</a></li>
       <li><a href="#">머그컵</a></li>
@@ -143,7 +148,7 @@
       <li><a href="#">기타</a></li>
     </ul>
   </nav>
-  <main class="content">
+  <main class="content" id="content-area">
     <h1>굿즈 쇼핑</h1>
     <div class="product-grid">
       <div class="product-card">
@@ -169,6 +174,36 @@
     </div>
   </main>
 </div>
+
+<script>
+function showEbookList() {
+  const content = document.getElementById('content-area');
+  content.innerHTML = `
+    <h1>📚 루웨인 도서관</h1>
+    <div class="category">
+      <h2>🧠 철학</h2>
+      <ul>
+        <li><a href="epub/book1.html">0에서 시작하는 동양철학</a></li>
+        <li><a href="epub/book2.html">철학은 흘러야 한다</a></li>
+        <li><a href="epub/book3.html">흐르는 몸</a></li>
+      </ul>
+    </div>
+    <div class="category">
+      <h2>🧩 심리</h2>
+      <ul>
+        <li><a href="epub/book4.html">나는 가면으로 살기로 했다</a></li>
+        <li><a href="epub/book5.html">가면 제발 좀 벗어라</a></li>
+      </ul>
+    </div>
+    <div class="category">
+      <h2>🤖 AI</h2>
+      <ul>
+        <li><a href="epub/book6.html">쳇지피티, 언어를 처음부터 배우다</a></li>
+      </ul>
+    </div>
+  `;
+}
+</script>
 
 </body>
 </html>
