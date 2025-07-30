@@ -9,7 +9,7 @@
     <dc:description>‘0’이라는 철학적 개념을 통해 동양철학을 새롭게 조명하는 책.</dc:description>
   </metadata>
   <manifest>
-    <item href="text/prologue.xhtml" id="prologue" media-type="application/xhtml+xml"/>
+    <item href="text/index.xhtml" id="index" media-type="application/xhtml+xml"/>
     <item href="text/chapter1.xhtml" id="chapter1" media-type="application/xhtml+xml"/>
     <item href="text/chapter2.xhtml" id="chapter2" media-type="application/xhtml+xml"/>
     <item href="text/chapter3.xhtml" id="chapter3" media-type="application/xhtml+xml"/>
@@ -36,9 +36,12 @@
     <item href="text/appendix.xhtml" id="appendix" media-type="application/xhtml+xml"/>
     <item href="styles/style.css" id="css" media-type="text/css"/>
     <item href="toc.ncx" id="ncx" media-type="application/x-dtbncx+xml"/>
+
+    <!-- ✅ 선택: 커버 이미지 등록 -->
+    <item id="cover-image" href="images/cover.jpg" media-type="image/jpeg" properties="cover-image"/>
   </manifest>
   <spine toc="ncx">
-    <itemref idref="prologue"/>
+    <itemref idref="index"/>
     <itemref idref="chapter1"/>
     <itemref idref="chapter2"/>
     <itemref idref="chapter3"/>
