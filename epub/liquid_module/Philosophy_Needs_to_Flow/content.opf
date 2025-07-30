@@ -1,35 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" version="3.0">
-  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <dc:identifier id="bookid">urn:uuid:liquid-module-001</dc:identifier>
-    <dc:title>리퀴드 모듈; 철학은 흘러야 한다</dc:title>
-    <dc:language>ko</dc:language>
-    <dc:creator>한얼 프로젝트</dc:creator>
-    <meta property="dcterms:modified">2025-07-28T00:00:00Z</meta>
-  </metadata>
+<manifest>
+  <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+  <item id="style" href="stylesheet.css" media-type="text/css"/>
+  <item id="toc" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
 
-  <manifest>
-    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
-    <item id="style" href="stylesheet.css" media-type="text/css"/>
-    <item id="toc" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+  <!-- ✅ 커버 이미지 -->
+  <item id="cover-image" href="images/cover.jpg" media-type="image/jpeg" properties="cover-image"/>
 
-    <!-- 예시: 각 XHTML 항목들 -->
-    <item id="prologue" href="prologue.xhtml" media-type="application/xhtml+xml"/>
-    <item id="chapter1-1" href="chapter1-1.xhtml" media-type="application/xhtml+xml"/>
-    <!-- (중략: 나머지 항목들 추가) -->
-    <item id="epilogue" href="epilogue.xhtml" media-type="application/xhtml+xml"/>
-    <item id="appendix1" href="appendix1.xhtml" media-type="application/xhtml+xml"/>
-    <item id="appendix2" href="appendix2.xhtml" media-type="application/xhtml+xml"/>
-    <item id="appendix3" href="appendix3.xhtml" media-type="application/xhtml+xml"/>
-  </manifest>
-
-  <spine toc="toc">
-    <itemref idref="prologue"/>
-    <itemref idref="chapter1-1"/>
-    <!-- (중략) -->
-    <itemref idref="epilogue"/>
-    <itemref idref="appendix1"/>
-    <itemref idref="appendix2"/>
-    <itemref idref="appendix3"/>
-  </spine>
-</package>
+  <!-- 본문 -->
+  <item id="index" href="index.xhtml" media-type="application/xhtml+xml"/>
+  <item id="chapter1-1" href="chapter1-1.xhtml" media-type="application/xhtml+xml"/>
+  <!-- (중략) -->
+  <item id="epilogue" href="epilogue.xhtml" media-type="application/xhtml+xml"/>
+  <item id="appendix1" href="appendix1.xhtml" media-type="application/xhtml+xml"/>
+  <item id="appendix2" href="appendix2.xhtml" media-type="application/xhtml+xml"/>
+  <item id="appendix3" href="appendix3.xhtml" media-type="application/xhtml+xml"/>
+</manifest>
