@@ -14,7 +14,7 @@
   <navMap>
     <navPoint id="navPoint-1" playOrder="1">
       <navLabel><text>머리말</text></navLabel>
-      <content src="text/prologue.xhtml"/>
+      <content src="text/index.xhtml"/>
     </navPoint>
     <!-- 장별 navPoint 2~24 (23장 + 부록) -->
     <navPoint id="navPoint-2" playOrder="2"><navLabel><text>1장 0, 아무것도 아닌 모든 것</text></navLabel><content src="text/chapter1.xhtml"/></navPoint>
