@@ -14,7 +14,7 @@
   <navMap>
     <navPoint id="navPoint-1" playOrder="1">
       <navLabel><text>프롤로그 — 귀 있는 자는 들을지어다</text></navLabel>
-      <content src="text/prologue.xhtml"/>
+      <content src="text/index.xhtml"/>
     </navPoint>
     <navPoint id="navPoint-2" playOrder="2">
       <navLabel><text>1장 — 철학, 그거 별 거 아냐!</text></navLabel>
