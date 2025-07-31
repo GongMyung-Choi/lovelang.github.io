@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>언어 선택</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 2rem;
+      color: #2a9d8f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    header {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #af2465;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .language-list {
+      display: flex;
+      gap: 2rem;
+    }
+    .language-list a {
+      padding: 1rem 2rem;
+      background-color: #2a9d8f;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .language-list a:hover {
+      background-color: #af2465;
+    }
+  </style>
+</head>
+<body>
+  <header>언어 선택</header>
+  <div class="language-list">
+    <a href="en.html">English</a>
+    <a href="de.html">Deutsch</a>
+    <a href="ko.html">한국어</a>
+    <!-- 필요에 따라 언어 추가 가능 -->
+  </div>
+</body>
+</html>
