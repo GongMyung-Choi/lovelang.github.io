@@ -1,149 +1,98 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>루웨인 트리니티</title>
-<style>
-  body {
-    margin: 0;
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: #f9fafa;
-    color: #2a9d8f;
-  }
-
-  header {
-    text-align: center;
-    font-weight: bold;
-    font-size: 3rem;
-    letter-spacing: 1.5px;
-    color: #af2465;
-    margin: 1rem 0 0.5rem 0;
-  }
-
-  nav.top-nav {
-    background-color: #6c5b7b;
-    display: flex;
-    justify-content: center;
-    padding: 0.5rem 0;
-  }
-
-  nav.top-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 3rem;
-  }
-
-  nav.top-nav ul li {
-    font-size: 1rem;
-  }
-
-  nav.top-nav ul li a {
-    text-decoration: none;
-    color: white;
-    transition: color 0.3s ease;
-  }
-
-  nav.top-nav ul li a:hover {
-    color: #2a9d8f;
-  }
-
-  .main-container {
-    display: flex;
-    height: calc(100vh - 130px);
-    margin: 0 0rem;
-  }
-
-  .sidebar {
-    width: 220px;
-    background-color: #f2d1eb;
-    border-right: 1px solid #ae63a0;
-    padding: 1rem 1rem;
-    box-sizing: border-box;
-    overflow-y: auto;
-  }
-
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .sidebar ul li {
-    margin-bottom: 1rem;
-  }
-
-  .sidebar ul li a {
-    text-decoration: none;
-    color: #2a9d8f;
-    font-weight: 600;
-    font-size: 1.3rem;
-    line-height: 2;
-    writing-mode: horizontal-tb;
-    text-orientation: mixed;
-    white-space: nowrap;
-    transition: color 0.3s ease;
-  }
-
-  .sidebar ul li a:hover {
-    color: #6c5b7b;
-  }
-
-  .narrow-line {
-    line-height: 1.1;
-  }
-
-  .content {
-    flex-grow: 1;
-    padding: 2rem;
-    overflow-y: auto;
-  }
-
-  .content h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  .content p {
-    font-size: 1.2rem;
-    line-height: 1.5;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <title>한얼</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+      background-color: #f9fafa;
+      color: #2a9d8f;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      font-weight: bold;
+      font-size: 3rem;
+      letter-spacing: 1.5px;
+      color: #af2465;
+      text-align: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid #ccc;
+    }
+    .main-container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+    nav.sidebar {
+      width: 220px;
+      background-color: #f2d1eb;
+      border-right: 1px solid #ae63a0;
+      padding: 1rem;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+    nav.sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    nav.sidebar ul li {
+      margin-bottom: 1rem;
+    }
+    nav.sidebar ul li a {
+      text-decoration: none;
+      color: #2a9d8f;
+      font-weight: 600;
+      font-size: 1.3rem;
+      line-height: 2;
+      display: block;
+      transition: color 0.3s ease;
+    }
+    nav.sidebar ul li a:hover {
+      color: #6c5b7b;
+    }
+    main.content {
+      flex-grow: 1;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+    main.content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #2a9d8f;
+    }
+    main.content p {
+      font-size: 1.4rem;
+      line-height: 1.6;
+      color: #2a9d8f;
+    }
+  </style>
 </head>
 <body>
 
-<header>루웨인 트리니티</header>
-
-<nav class="top-nav">
-  <ul>
-    <li><a href="language_of_love.html">사랑의 언어</a></li>
-    <li><a href="language_of_reverbe.html">울림의 언어</a></li>
-    <li><a href="luwein_trinity.html">루웨인 트리니티</a></li>
-    <li><a href="haneul.html">한얼</a></li>
-    <li><a href="goods.html">굿즈</a></li>
-    <li><a href="help&notices.html">도움말 및 공지</a></li>
-    <li><a href="customer_support.html">고객센터</a></li>
-  </ul>
-</nav>
+<header>한얼</header>
 
 <div class="main-container">
   <nav class="sidebar">
     <ul>
-      <li><a href="#">한얼은</a></li>
-      <li><a href="#">쉴만한</a></li>
-      <li><a href="#">즐길만한</a></li>
-      <li><a href="#">유연한</a></li>
-      <li><a href="#">스마트한</a></li>
-      <li><a href="#">선한</a></li>
-      <li><a href="#">To Luwein Trinity</a></li>
+      <li><a href="Haneul_is/index.html">한얼은</a></li>
+      <li><a href="Shilmanhan/index.html">쉴만한</a></li>
+      <li><a href="Jeulgilmanhan/index.html">즐길만한</a></li>
+      <li><a href="Geonganghan/index.html">건강한</a></li>
+      <li><a href="Yuyeonhan/index.html">유연한</a></li>
+      <li><a href="Seumateuhan/index.html">스마트한</a></li>
+      <li><a href="Seonhan/index.html">선한</a></li>
+      <li><a href="../language_of_love/To_Luwein_Trinity_index.html">To Luwein Trinity</a></li>
     </ul>
   </nav>
 
   <main class="content">
-    <h1>한얼 프로젝트를 소개합니다.</h1>
-    <p>왼쪽 메뉴를 누르면 여기에 내용이 보임^^.</p>
+    <h1>한얼에 오신 것을 환영합니다</h1>
+    <p>한얼 섹션의 다양한 콘텐츠를 좌측 메뉴에서 선택해 주세요.</p>
   </main>
 </div>
 
