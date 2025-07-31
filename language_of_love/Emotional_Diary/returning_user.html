@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>감성일기 - 이어쓰기</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>감성일기</h1>
+    <p>당신의 감성 기록이 여기에 쌓이고 있습니다.</p>
+
+    <form id="diaryForm">
+      <textarea id="entry" placeholder="오늘은 어떤 마음이었나요?" rows="8"></textarea>
+      <button type="submit">기록 추가</button>
+    </form>
+
+    <div class="entry-list">
+      <h2>내가 쓴 일기</h2>
+      <ul id="entries"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
