@@ -15,8 +15,14 @@
     font-weight: bold;
     font-size: 3rem;
     letter-spacing: 1.5px;
-    color: #af2465;
     margin: 1rem 0 0.5rem 0;
+  }
+  header a {
+    color: #af2465;
+    text-decoration: none;
+  }
+  header a:hover {
+    text-decoration: underline;
   }
   nav {
     background-color: #6c5b7b;
@@ -40,6 +46,10 @@
     transition: color 0.3s ease;
   }
   nav ul li a:hover {
+    color: #2a9d8f;
+  }
+  nav ul li:nth-child(3) a {
+    font-weight: bold;
     color: #2a9d8f;
   }
   main {
@@ -76,13 +86,13 @@
 </style>
 </head>
 <body>
-<header>루웨인 트리니티</header>
+<header><a href="../index.html">루웨인 트리니티</a></header>
 
 <nav>
   <ul>
     <li><a href="../language_of_love/index.html">사랑의 언어</a></li>
     <li><a href="../language_of_reverberation/index.html">울림의 언어</a></li>
-    <li><a href="../luwein_trinity/index.html">루웨인 트리니티</a></li>
+    <li><a href="../luwein_trinity/index.html" class="active">루웨인 트리니티</a></li>
     <li><a href="../breathing_room/index.html">숨 틔움방</a></li>
     <li><a href="../haneul/index.html">한얼</a></li>
     <li><a href="../goods/index.html">굿즈</a></li>
