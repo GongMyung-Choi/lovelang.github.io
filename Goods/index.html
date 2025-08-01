@@ -17,10 +17,16 @@
       font-weight: bold;
       font-size: 3rem;
       letter-spacing: 1.5px;
-      color: #af2465;
       text-align: center;
       padding: 1rem 0;
       border-bottom: 1px solid #ccc;
+    }
+    header a {
+      color: #af2465;
+      text-decoration: none;
+    }
+    header a:hover {
+      text-decoration: underline;
     }
     nav.top-nav {
       background-color: #6c5b7b;
@@ -43,6 +49,10 @@
       transition: color 0.3s ease;
     }
     nav.top-nav ul li a:hover {
+      color: #2a9d8f;
+    }
+    nav.top-nav ul li:nth-child(6) a {
+      font-weight: bold;
       color: #2a9d8f;
     }
     .main-container {
@@ -101,7 +111,7 @@
 </head>
 <body>
 
-<header>굿즈</header>
+<header><a href="../index.html">굿즈</a></header>
 
 <nav class="top-nav">
   <ul>
