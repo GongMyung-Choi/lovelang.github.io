@@ -16,8 +16,14 @@
     font-weight: bold;
     font-size: 3rem;
     letter-spacing: 1.5px;
-    color: #af2465;
     margin: 1rem 0 0.5rem 0;
+  }
+  header a {
+    color: #af2465;
+    text-decoration: none;
+  }
+  header a:hover {
+    text-decoration: underline;
   }
   nav.top-nav {
     background-color: #6c5b7b;
@@ -38,6 +44,10 @@
     transition: color 0.3s ease;
   }
   nav.top-nav ul li a:hover {
+    color: #2a9d8f;
+  }
+  nav.top-nav ul li:nth-child(4) a {
+    font-weight: bold;
     color: #2a9d8f;
   }
   .main-container {
@@ -95,7 +105,7 @@
 </head>
 <body>
 
-<header>숨 틔움방</header>
+<header><a href="../index.html">숨 틔움방</a></header>
 
 <nav class="top-nav">
   <ul>
