@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>루웨인 트리니티</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f9fafa;
+    color: #2a9d8f;
+  }
+  header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 3rem;
+    letter-spacing: 1.5px;
+    color: #af2465;
+    margin: 1rem 0 0.5rem 0;
+  }
+  nav {
+    background-color: #6c5b7b;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 3rem;
+  }
+  nav ul li {
+    font-size: 1rem;
+  }
+  nav ul li a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+  }
+  nav ul li a:hover {
+    color: #2a9d8f;
+  }
+  nav ul li:nth-child(3) a {
+    color: white;
+    font-weight: normal;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  nav ul li:nth-child(3) a:hover {
+    color: #2a9d8f;
+  }
+  main {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 3rem;
+    color: #2a9d8f;
+  }
+  main p {
+    color: #7034df;
+    font-size: 2rem;
+    margin: 1rem 0 3rem 0;
+  }
+  form {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  label {
+    color: #af2465; /* 원하는 다른 색 */
+    font-size: 1.5rem; /* 글자 크기 줄임 */
+    margin-right: 0.1rem;
+    white-space: nowrap;
+  }
+  input[type="text"], select {
+    font-size: 1.2rem;
+    padding: 0.3rem 0.5rem;
+    width: 150px;
+    border: 2px solid #2a9d8f;
+    border-radius: 6px;
+  }
+  .welcome-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 4rem;
+  }
+  .welcome-buttons button {
+    background-color: white;
+    border: 2px solid #2a9d8f;
+    color: #2a9d8f;
+    font-size: 2rem;
+    padding: 1rem 4rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .welcome-buttons button:hover {
+    background-color: #2a9d8f;
+    color: white;
+  }
+</style>
+</head>
+<body>
+<header>루웨인 트리니티</header>
+<nav>
+  <ul>
+    <li><a href="#">사랑의 언어</a></li>
+    <li><a href="#">울림의 언어</a></li>
+    <li><a href="#">루웨인 트리니티</a></li>
+    <li><a href="#">한얼</a></li>
+    <li><a href="#">굿즈</a></li>
+    <li><a href="#">도움말 및 공지</a></li>
+    <li><a href="#">고객센터</a></li>
+  </ul>
+</nav>
+<main>
+  <h1>환영합니다</h1>
+  <p>당신의 말이 우리의 감정과 생각이 됩니다.<br /> 지금 느끼는 감정이나 떠오르는 말을<br /><br />툭, 적어 보실래요?</p>
+  <form>
+    <div>
+      <label for="nickname">지금 내 감정은요</label>
+      <input type="text" id="nickname" name="nickname" placeholder="예: 바쁘다" />
+    </div>
+    
+    <div>
+      <label for="speechStyle">하고 싶은 말/ 바람은요</label>
+      <input type="text" id="speechStyle" name="speechStyle" placeholder="예:집필,논문 정리" />
+    </div>
+  </form>
+  <div class="welcome-buttons">
+    <button type="submit" form="form">다음으로</button>
+    <button type="button">건너뛰기</button>
+  </div>
+</main>
+</body>
+</html>
