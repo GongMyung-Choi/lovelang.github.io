@@ -1,14 +1,232 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>루웨인 프레임 인덱스</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>루웨인 트리니티</title>
+  <style>
+    :root {
+      --header-color: #af2465;
+      --menu-bg-color: #6c5b7b;
+      --button-border-color: #2a9d8f;
+      --button-text-color: #2a9d8f;
+      --button-hover-bg: #2a9d8f;
+      --button-hover-text: #ffffff;
+      --message-font-size: 1.2rem;
+    }
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+    header {
+      background-color: #ffffff;
+      color: var(--header-color);
+      font-size: 2rem;
+      padding: 0.5rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid #ddd;
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      background-color: var(--menu-bg-color);
+      margin: 0;
+      padding: 0rem 0;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    nav ul li {
+      position: relative;
+      margin: 0 1rem;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem;
+      display: block;
+    }
+    nav ul li:hover > ul {
+      display: block;
+    }
+    nav ul li ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: var(--menu-bg-color);
+      padding: 0.5rem 0;
+      min-width: 160px;
+      z-index: 999;
+    }
+    nav ul li ul li a {
+      padding: 0.5rem 0.5rem;
+    }
+    main {
+      padding: 5rem;
+      min-height: 400px;
+      text-align: center;
+    }
+    .highlight {
+      color: var(--header-color);
+      font-weight: bold;
+      font-size: 3rem;
+    }
+    .message-text {
+      font-size: var(--message-font-size);
+    }
+    .welcome-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      margin-top: 5rem;
+    }
+    .welcome-buttons button {
+      background-color: white;
+      border: 2px solid var(--button-border-color);
+      color: var(--button-text-color);
+      font-size: 1.2rem;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .welcome-buttons button:hover {
+      background-color: var(--button-hover-bg);
+      color: var(--button-hover-text);
+    }
+    .control-group {
+      margin: 2rem auto;
+      max-width: 1200px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .control-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      background: #f9f9f9;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    }
+    #fontSizeDisplay {
+      min-width: 3rem;
+      text-align: right;
+      font-weight: bold;
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+      .welcome-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
-<frameset rows="80,*">
-  <frame src="top.html" name="topFrame">
-  <frameset cols="200,*">
-    <frame src="menu.html" name="menuFrame">
-    <frame src="main.html" name="mainFrame">
-  </frameset>
-</frameset>
+<body>
+  <header id="headerTitle">루웨인 트리니티</header>
+
+  <nav>
+    <ul>
+      <li><a href="#">사랑의 언어</a>
+        <ul>
+          <li><a href="#">말의 온도</a></li>
+          <li><a href="#">감성일기</a></li>
+          <li><a href="#">상처주는 말<br> VS 상처 받는 말</a></li>
+          <li><a href="#">사랑도<br> 연습이 필요하다</a></li>
+          <li><a href="#">사랑해 볼까?</a></li>
+          <li><a href="#">To<br> 루웨인 트리니티</a></li>
+          <li><a href="#">감응언어학</a></li>
+        </ul>
+      </li>
+      <li><a href="#">울림의 언어</a>
+        <ul>
+          <li><a href="#">음성안내</a></li>
+          <li><a href="#">언어선택</a></li>
+          <li><a href="#">기본설정</a></li>
+          <li><a href="#">울림의 언어는</a></li>
+          <li><a href="#">울림체조</a></li>
+          <li><a href="#">감응남기기</a></li>
+          <li><a href="#">놀이터</a></li>
+          <li><a href="#">AI협업</a></li>
+        </ul>
+      </li>
+      <li><a href="#">루웨인 트리니티 (홈)</a></li>
+      <li><a href="#">숨 틔움방</a>
+        <ul>
+          <li><a href="#">숨 카드</a></li>
+          <li><a href="#">숨 클립</a></li>
+          <li><a href="#">루웨인 도서관</a></li>
+          <li><a href="#">시나리오</a></li>
+          <li><a href="#">낙서장</a></li>
+          <li><a href="#">AI와 잡담하기</a></li>
+        </ul>
+      </li>
+      <li><a href="#">한얼</a>
+        <ul>
+          <li><a href="#">한얼이란</a></li>
+          <li><a href="#">쉴만한</a></li>
+          <li><a href="#">즐길만한</a></li>
+          <li><a href="#">건강한</a></li>
+          <li><a href="#">선한</a></li>
+          <li><a href="#">스마트한</a></li>
+          <li><a href="#">유연한</a></li>
+        </ul>
+      </li>
+      <li><a href="#">맑은샘</a>
+        <ul>
+          <li><a href="#">웹툰</a></li>
+          <li><a href="#">시나리오</a></li>
+          <li><a href="#">애니메이션</a></li>
+          <li><a href="#">한마음특공대</a></li>
+          <li><a href="#">루웨인도서관</a></li>
+        </ul>
+      </li>
+      <li><a href="help.html">도움말 및 공지</a></li>
+      <li><a href="customer.html">고객센터</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h1><span class="highlight">당신</span>에게만 열려 있는<br><span class="highlight">루웨인 트리니티</span>입니다.</h1>
+    <p class="message-text">오직, 당신만을 위한 울림이고 싶습니다.<br />당신의 한 마디 말이 울림의 시작입니다.</p>
+    <div class="welcome-buttons">
+      <button>처음이에요</button>
+      <button>이어 갈래요</button>
+    </div>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    const colorInputs = [
+      ['headerColorPicker', '--header-color'],
+      ['menuBgPicker', '--menu-bg-color'],
+      ['btnBorderPicker', '--button-border-color'],
+      ['btnTextPicker', '--button-text-color'],
+      ['btnHoverBgPicker', '--button-hover-bg'],
+      ['btnHoverTextPicker', '--button-hover-text']
+    ];
+
+    colorInputs.forEach(([id, cssVar]) => {
+      $(id).addEventListener('input', (e) => {
+        document.documentElement.style.setProperty(cssVar, e.target.value);
+      });
+    });
+
+    $('msgFontSize').addEventListener('input', (e) => {
+      const size = `${e.target.value}rem`;
+      document.documentElement.style.setProperty('--message-font-size', size);
+      document.getElementById('fontSizeDisplay').textContent = size;
+    });
+  </script>
+</body>
 </html>
