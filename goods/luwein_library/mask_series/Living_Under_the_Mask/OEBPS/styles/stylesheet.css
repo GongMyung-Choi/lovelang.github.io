@@ -1,0 +1,16 @@
+body {
+  font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  line-height: 1.6;
+  margin: 5%;
+}
+h1 {
+  font-size: 150%;
+  margin-bottom: 1em;
+  text-align: center;
+}
+p {
+  margin: 0.7em 0;
+}
+strong {
+  font-weight: bold;
+}
