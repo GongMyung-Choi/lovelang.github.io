@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN"
+  "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+  <head>
+    <meta name="dtb:uid" content="urn:uuid:12345"/>
+    <meta name="dtb:depth" content="2"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle>
+    <text>0, 동양철학은 왜?</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="navPoint-1" playOrder="1">
+      <navLabel><text>머리말</text></navLabel>
+      <content src="text/index.xhtml"/>
+    </navPoint>
+    <!-- 장별 navPoint 2~24 (23장 + 부록) -->
+    <navPoint id="navPoint-2" playOrder="2"><navLabel><text>1장 0, 아무것도 아닌 모든 것</text></navLabel><content src="text/chapter1.xhtml"/></navPoint>
+    <navPoint id="navPoint-3" playOrder="3"><navLabel><text>2장 無(무), 아무것도 하지 않음의 모든 작용</text></navLabel><content src="text/chapter2.xhtml"/></navPoint>
+    <navPoint id="navPoint-4" playOrder="4"><navLabel><text>3장 순환과 시간: 직선 아닌 원형의 세계</text></navLabel><content src="text/chapter3.xhtml"/></navPoint>
+    <navPoint id="navPoint-5" playOrder="5"><navLabel><text>4장 형태는 곧 공, 공은 곧 형태</text></navLabel><content src="text/chapter4.xhtml"/></navPoint>
+    <navPoint id="navPoint-6" playOrder="6"><navLabel><text>5장 흐르되 멈추지 않는 것</text></navLabel><content src="text/chapter5.xhtml"/></navPoint>
+    <navPoint id="navPoint-7" playOrder="7"><navLabel><text>6장 에너지란 무엇인가</text></navLabel><content src="text/chapter6.xhtml"/></navPoint>
+    <navPoint id="navPoint-8" playOrder="8"><navLabel><text>7장 비워야 채워진다</text></navLabel><content src="text/chapter7.xhtml"/></navPoint>
+    <navPoint id="navPoint-9" playOrder="9"><navLabel><text>8장 이름 없는 것들</text></navLabel><content src="text/chapter8.xhtml"/></navPoint>
+    <navPoint id="navPoint-10" playOrder="10"><navLabel><text>9장 숨(息) – 살아있다는 증거</text></navLabel><content src="text/chapter9.xhtml"/></navPoint>
+    <navPoint id="navPoint-11" playOrder="11"><navLabel><text>10장 중심(中心) – 흔들림 속에서 중심을 잡다</text></navLabel><content src="text/chapter10.xhtml"/></navPoint>
+    <navPoint id="navPoint-12" playOrder="12"><navLabel><text>11장 균형(均衡) – 움직이지 않아도 흐르고 있다</text></navLabel><content src="text/chapter11.xhtml"/></navPoint>
+    <navPoint id="navPoint-13" playOrder="13"><navLabel><text>12장 에너지(能源) – 무엇이 나를 움직이게 하는가</text></navLabel><content src="text/chapter12.xhtml"/></navPoint>
+    <navPoint id="navPoint-14" playOrder="14"><navLabel><text>13장 경계는 흐른다</text></navLabel><content src="text/chapter13.xhtml"/></navPoint>
+    <navPoint id="navPoint-15" playOrder="15"><navLabel><text>14장 노화(老化) – 사라지는 것들의 의미</text></navLabel><content src="text/chapter14.xhtml"/></navPoint>
+    <navPoint id="navPoint-16" playOrder="16"><navLabel><text>15장 여백 – 비어 있으나 가득한</text></navLabel><content src="text/chapter15.xhtml"/></navPoint>
+    <navPoint id="navPoint-17" playOrder="17"><navLabel><text>16장 엔트로피와 네겐트로피 – 질서의 붕괴인가, 새로운 탄생인가</text></navLabel><content src="text/chapter16.xhtml"/></navPoint>
+    <navPoint id="navPoint-18" playOrder="18"><navLabel><text>17장 균형과 평형: 움직이지 않아도 움직이고 있는 것들</text></navLabel><content src="text/chapter17.xhtml"/></navPoint>
+    <navPoint id="navPoint-19" playOrder="19"><navLabel><text>18장 중심이란 무엇인가 – 흔들림과 축에 대하여</text></navLabel><content src="text/chapter18.xhtml"/></navPoint>
+    <navPoint id="navPoint-20" playOrder="20"><navLabel><text>19장 나침반 – 어디로 가야 하는가</text></navLabel><content src="text/chapter19.xhtml"/></navPoint>
+    <navPoint id="navPoint-21" playOrder="21"><navLabel><text>20장 중심 – 흔들림 속의 고요</text></navLabel><content src="text/chapter20.xhtml"/></navPoint>
+    <navPoint id="navPoint-22" playOrder="22"><navLabel><text>21장 진동과 순환 – 멈추지 않는 리듬</text></navLabel><content src="text/chapter21.xhtml"/></navPoint>
+    <navPoint id="navPoint-23" playOrder="23"><navLabel><text>22장 소멸과 노화 – 끝은 진짜 끝일까</text></navLabel><content src="text/chapter22.xhtml"/></navPoint>
+    <navPoint id="navPoint-24" playOrder="24"><navLabel><text>23장 0으로 돌아가는 길</text></navLabel><content src="text/chapter23.xhtml"/></navPoint>
+    <navPoint id="navPoint-25" playOrder="25"><navLabel><text>부록 — 맺음말</text></navLabel><content src="text/appendix.xhtml"/></navPoint>
+  </navMap>
+</ncx>
