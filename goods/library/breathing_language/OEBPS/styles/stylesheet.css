@@ -1,0 +1,11 @@
+.rl-cover {
+  margin: 0 auto 2rem;
+  max-width: 920px;
+}
+.rl-cover img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid #ececf1;
+  border-radius: 12px;
+}
