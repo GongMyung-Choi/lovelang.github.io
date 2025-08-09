@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+  <head>
+    <meta name="dtb:uid" content="urn:uuid:liquid-module-001"/>
+    <meta name="dtb:depth" content="1"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle>
+    <text>리퀴드 모듈; 철학은 흘러야 한다</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="navPoint-1" playOrder="1">
+      <navLabel><text>프롤로그</text></navLabel>
+      <content src="prologue.xhtml"/>
+    </navPoint>
+    <navPoint id="navPoint-2" playOrder="2">
+      <navLabel><text>1장 말은 조립될 수 있는가</text></navLabel>
+      <content src="chapter1-1.xhtml"/>
+    </navPoint>
+    <!-- (중략: 각 절별 navPoint 추가) -->
+    <navPoint id="navPoint-99" playOrder="99">
+      <navLabel><text>부록3 리퀴드 모듈은 어디에</text></navLabel>
+      <content src="appendix3.xhtml"/>
+    </navPoint>
+  </navMap>
+</ncx>
