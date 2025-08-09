@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+  <head>
+    <meta name="dtb:uid" content="urn:uuid:affling-20250809"/>
+    <meta name="dtb:depth" content="1"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle><text>숨 쉬는 언어, 살아 있는 말(감응언어학)</text></docTitle>
+  <navMap>
+    <navPoint id="np-index" playOrder="1">
+      <navLabel><text>서두</text></navLabel>
+      <content src="text/index.xhtml"/>
+    </navPoint>
+    <navPoint id="np-ch1" playOrder="2">
+      <navLabel><text>1장 의사소통과 언어의 문제점</text></navLabel>
+      <content src="text/ch1.xhtml"/>
+    </navPoint>
+    <navPoint id="np-ch2" playOrder="3">
+      <navLabel><text>2장 감응언어학이란</text></navLabel>
+      <content src="text/ch2.xhtml"/>
+    </navPoint>
+    <navPoint id="np-ch3" playOrder="4">
+      <navLabel><text>3장 AI와 감응언어학 적용 및 실험</text></navLabel>
+      <content src="text/ch3.xhtml"/>
+    </navPoint>
+    <navPoint id="np-ch4" playOrder="5">
+      <navLabel><text>4장 감응언어학 전체 정리와 전망</text></navLabel>
+      <content src="text/ch4.xhtml"/>
+    </navPoint>
+    <navPoint id="np-appendix" playOrder="6">
+      <navLabel><text>부록</text></navLabel>
+      <content src="text/appendix.xhtml"/>
+    </navPoint>
+    <navPoint id="np-glossary" playOrder="7">
+      <navLabel><text>용어 사전</text></navLabel>
+      <content src="text/glossary.xhtml"/>
+    </navPoint>
+    <navPoint id="np-references" playOrder="8">
+      <navLabel><text>참고 문헌</text></navLabel>
+      <content src="text/references.xhtml"/>
+    </navPoint>
+  </navMap>
+</ncx>
