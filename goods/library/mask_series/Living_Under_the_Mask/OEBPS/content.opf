@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" version="3.0">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:title>나는 가면으로 살아야 했다</dc:title>
+    <dc:language>ko</dc:language>
+    <dc:identifier id="bookid">urn:uuid:masklife-epub</dc:identifier>
+    <dc:creator>여울빛, 공명</dc:creator>
+    <meta property="dcterms:modified">2025-07-31T00:00:00Z</meta>
+  </metadata>
+  <manifest>
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="css" href="styles/stylesheet.css" media-type="text/css"/>
+    <item id="index" href="text/index.xhtml" media-type="application/xhtml+xml"/>
+    <!-- ch1~ch20 -->
+    <item id="ch1" href="text/ch1.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch2" href="text/ch2.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch3" href="text/ch3.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch4" href="text/ch4.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch5" href="text/ch5.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch6" href="text/ch6.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch7" href="text/ch7.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch8" href="text/ch8.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch9" href="text/ch9.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch10" href="text/ch10.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch11" href="text/ch11.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch12" href="text/ch12.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch13" href="text/ch13.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch14" href="text/ch14.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch15" href="text/ch15.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch16" href="text/ch16.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch17" href="text/ch17.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch18" href="text/ch18.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch19" href="text/ch19.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch20" href="text/ch20.xhtml" media-type="application/xhtml+xml"/>
+    <item id="epilogue" href="text/epilogue.xhtml" media-type="application/xhtml+xml"/>
+  </manifest>
+  <spine>
+    <itemref idref="index"/>
+    <itemref idref="ch1"/>
+    <itemref idref="ch2"/>
+    <itemref idref="ch3"/>
+    <itemref idref="ch4"/>
+    <itemref idref="ch5"/>
+    <itemref idref="ch6"/>
+    <itemref idref="ch7"/>
+    <itemref idref="ch8"/>
+    <itemref idref="ch9"/>
+    <itemref idref="ch10"/>
+    <itemref idref="ch11"/>
+    <itemref idref="ch12"/>
+    <itemref idref="ch13"/>
+    <itemref idref="ch14"/>
+    <itemref idref="ch15"/>
+    <itemref idref="ch16"/>
+    <itemref idref="ch17"/>
+    <itemref idref="ch18"/>
+    <itemref idref="ch19"/>
+    <itemref idref="ch20"/>
+    <itemref idref="epilogue"/>
+  </spine>
+</package>
