@@ -1,53 +1,55 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>언어 선택</title>
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #fff;
-      margin: 0;
-      padding: 2rem;
-      color: #2a9d8f;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    header {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #af2465;
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-    .language-list {
-      display: flex;
-      gap: 2rem;
-    }
-    .language-list a {
-      padding: 1rem 2rem;
-      background-color: #2a9d8f;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .language-list a:hover {
-      background-color: #af2465;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>언어 선택</title>
+<style>
+:root{
+  --accent:#af2465; --btn-bg:#2a9d8f; --btn-hover:#af2465;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
+  background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;
+}
+h1{
+  font-size:2.4rem;color:var(--accent);margin-bottom:1rem;text-align:center
+}
+.sub{color:#555;margin-bottom:2rem;text-align:center}
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1.2rem;max-width:600px;width:100%
+}
+.card{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--btn-bg);color:#fff;text-decoration:none;border-radius:12px;
+  padding:1.4rem;transition:.2s;
+}
+.card:hover{background:var(--btn-hover);transform:translateY(-3px)}
+.flag{font-size:2rem;margin-bottom:.5rem}
+.card span{font-size:1.2rem;font-weight:500}
+</style>
 </head>
 <body>
-  <header>언어 선택</header>
-  <div class="language-list">
-    <a href="en.html">English</a>
-    <a href="de.html">Deutsch</a>
-    <a href="ko.html">한국어</a>
-    <!-- 필요에 따라 언어 추가 가능 -->
+  <h1>언어 선택</h1>
+  <p class="sub">원하는 언어로 루웨인 트리니티를 이용하세요.</p>
+  <div class="grid">
+    <a class="card" href="ko.html">
+      <div class="flag">🇰🇷</div>
+      <span>한국어</span>
+    </a>
+    <a class="card" href="en.html">
+      <div class="flag">🇺🇸</div>
+      <span>English</span>
+    </a>
+    <a class="card" href="de.html">
+      <div class="flag">🇩🇪</div>
+      <span>Deutsch</span>
+    </a>
+    <a class="card" href="ja.html">
+      <div class="flag">🇯🇵</div>
+      <span>日本語</span>
+    </a>
+    <!-- 필요 시 언어 더 추가 -->
   </div>
 </body>
 </html>
