@@ -1,34 +1,311 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!DOCTYPE html><html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>AI 도움 긴급 요청</title>
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #fff;
-      margin: 0;
-      padding: 2rem;
-      color: #2a9d8f;
-    }
-    header {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #af2465;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    main {
-      font-size: 1.4rem;
-      text-align: center;
-    }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 협업 · Prompt Builder</title>
+<style>
+:root{
+  --bg:#ffffff; --fg:#111; --muted:#666; --line:#ececf1; --tile:#fff;
+  --accent:#2a9d8f; --accent2:#af2465; --r:12px; --fs:16px; --lh:1.7;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;background:var(--bg);color:var(--fg);line-height:var(--lh);font-size:var(--fs)}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:18px}
+header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:4px 0 12px}
+h1{margin:0;font-size:1.9rem;color:var(--accent2)}
+.badge{border:1px solid var(--line);border-radius:999px;padding:.2rem .6rem;background:#fafafa;color:#444;font-size:.85rem}
+.grid{display:grid;grid-template-columns:420px 1fr;gap:16px}
+@media(max-width:1000px){.grid{grid-template-columns:1fr}}
+.card{background:var(--tile);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.card h2{margin:.1rem 0 .5rem;font-size:1.1rem;color:var(--accent)}
+label small{color:var(--muted)}
+input[type="text"],input[type="date"],select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fff}
+textarea{min-height:120px;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.two>*{flex:1}
+button{border:2px solid var(--accent);background:#fff;color:var(--accent);padding:.55rem 1rem;border-radius:12px;cursor:pointer}
+button:hover{background:#e8fbf6}
+.btn2{border-color:var(--accent2);color:var(--accent2)}
+.ghost{border:1px solid var(--line);color:#333}
+.kbd{border:1px solid var(--line);background:#fafafa;border-radius:6px;padding:.05rem .35rem}
+.meta{color:var(--muted);font-size:.9rem}
+.list{display:flex;flex-direction:column;gap:10px;max-height:48vh;overflow:auto;margin-top:8px}
+.item{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff}
+.item h3{margin:0 0 4px;font-size:1rem}
+.item .meta{margin:0 0 6px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{border:1px solid var(--line);border-radius:999px;padding:.1rem .5rem;font-size:.8rem;background:#fafafa}
+.out{min-height:240px}
+hr.sep{border:none;border-top:1px dashed var(--line);margin:10px 0}
+.note{border:1px dashed var(--line);border-radius:10px;padding:8px 10px;background:#fff;color:#444;margin:0 0 10px}
+:focus{outline:2px solid #005fcc;outline-offset:2px}
+</style>
 </head>
 <body>
-  <header>AI 도움 긴급 요청</header>
-  <main>
-    <p>여기는 AI 도움 긴급 요청 섹션입니다.<br />
-       필요한 내용을 자유롭게 추가해 주세요.</p>
-  </main>
+<div class="wrap">
+  <header>
+    <h1>AI 협업</h1>
+    <span class="badge">브리핑 → 프롬프트 자동 생성 → 복사/저장</span>
+  </header>
+
+  <div class="grid">
+    <!-- 좌: 브리핑 입력 -->
+    <section class="card" aria-labelledby="b1">
+      <h2 id="b1">협업 브리핑</h2>
+      <div class="row">
+        <label style="flex:1">목표/산출물
+          <input id="goal" type="text" placeholder="예) ‘말의 온도’ 소개 페이지 초안 / 800자">
+        </label>
+      </div>
+      <div class="row two">
+        <label>대상/톤
+          <select id="tone">
+            <option>따뜻하고 친근하게</option><option>차분하고 명확하게</option>
+            <option>전문적이지만 쉽게</option><option>간결하고 요점만</option>
+          </select>
+        </label>
+        <label>언어
+          <select id="lang">
+            <option>한국어</option><option>English</option><option>Deutsch</option>
+          </select>
+        </label>
+      </div>
+      <div class="row two">
+        <label>형식
+          <select id="format">
+            <option>블로그 글</option><option>웹페이지 섹션</option>
+            <option>요약/불릿</option><option>이메일 초안</option><option>스크립트</option>
+          </select>
+        </label>
+        <label>길이 가이드
+          <select id="length">
+            <option>짧게(≤300자)</option><option selected>보통(~800자)</option><option>길게(>1200자)</option>
+          </select>
+        </label>
+      </div>
+      <label>맥락/참고(원문 붙여넣기 가능)
+        <textarea id="context" placeholder="핵심 포인트, 참고 문단, 링크 설명 등"></textarea>
+      </label>
+      <label>제약/스타일 지시
+        <textarea id="constraints" placeholder="금지어, 반드시 포함할 항목, 섹션 순서 등"></textarea>
+      </label>
+      <div class="row two">
+        <label>마감일(선택)
+          <input id="due" type="date">
+        </label>
+        <label>태그(쉼표 구분)
+          <input id="tags" type="text" placeholder="예) 사랑의언어, 말의온도">
+        </label>
+      </div>
+
+      <hr class="sep">
+      <div class="row">
+        <button id="build" class="btn2">프롬프트 생성</button>
+        <button id="clear" class="ghost">입력 초기화</button>
+        <span class="meta">단축키: <span class="kbd">Ctrl/⌘ + Enter</span> 생성</span>
+      </div>
+
+      <hr class="sep">
+      <h2>빠른 템플릿</h2>
+      <div class="row" style="flex-wrap:wrap">
+        <button class="tpl" data-id="summ">요약 요청</button>
+        <button class="tpl" data-id="draft">초안 작성</button>
+        <button class="tpl" data-id="brain">아이디어 10개</button>
+        <button class="tpl" data-id="fix">교정·톤 다듬기</button>
+        <button class="tpl" data-id="trans">번역</button>
+      </div>
+    </section>
+
+    <!-- 우: 결과/히스토리 -->
+    <section class="card" aria-labelledby="b2">
+      <h2 id="b2">프롬프트 미리보기</h2>
+      <div class="note">
+        생성된 텍스트를 복사해서 너가 쓰는 모델에게 붙여 넣으면 끝.  
+        (여기 저장은 이 브라우저에만 남아.)
+      </div>
+      <textarea id="out" class="out" placeholder="여기에 프롬프트가 생성됩니다"></textarea>
+      <div class="row" style="margin-top:8px">
+        <button id="copy" class="btn2">복사</button>
+        <button id="save" class="ghost">히스토리에 저장</button>
+        <button id="dl" class="ghost">TXT로 내보내기</button>
+      </div>
+
+      <hr class="sep">
+      <div class="row">
+        <h2 style="margin:0">히스토리</h2>
+        <span class="meta" id="count"></span>
+        <span style="margin-left:auto"></span>
+        <button id="exportJson">JSON 내보내기</button>
+        <input id="importFile" type="file" accept="application/json" style="display:none">
+        <button id="importJson" class="ghost">JSON 가져오기</button>
+        <button id="clearAll" class="ghost">모두 삭제</button>
+      </div>
+      <div id="list" class="list" aria-live="polite"></div>
+    </section>
+  </div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const KEY='ai_collab_prompts_v1';
+
+// 템플릿
+function buildPrompt(d){
+  const tags = d.tags? d.tags.split(',').map(s=>s.trim()).filter(Boolean):[];
+  const due = d.due ? `\n- 마감: ${d.due}` : '';
+  const ctx = d.context ? `\n\n[참고/맥락]\n${d.context.trim()}` : '';
+  const cons = d.constraints ? `\n\n[제약/스타일]\n${d.constraints.trim()}` : '';
+  return `당신은 협업 중인 조력자입니다. 아래 브리핑에 맞춰 결과를 작성하세요.
+
+[목표/산출물]
+${d.goal || '(명확히 적어주세요)'}
+
+[요청 형식]
+- 형식: ${d.format}
+- 톤: ${d.tone}
+- 언어: ${d.lang}
+- 길이 가이드: ${d.length}${due}
+- 태그: ${tags.join(', ') || '(없음)'}
+
+[출력 지침]
+- 불필요한 서론 최소화, 핵심부터.
+- 섹션/불릿을 적절히 활용.
+- 가능하면 간단 예시 1개 포함.
+- 모호하면 가정 명시 후 진행.
+
+${ctx}${cons}
+
+[끝]`;
+}
+
+// 폼 → 데이터
+function formData(){
+  return {
+    goal: $('#goal').value.trim(),
+    tone: $('#tone').value,
+    lang: $('#lang').value,
+    format: $('#format').value,
+    length: $('#length').value,
+    context: $('#context').value,
+    constraints: $('#constraints').value,
+    due: $('#due').value,
+    tags: $('#tags').value
+  };
+}
+
+// 빠른 템플릿 세팅
+const QUICK={
+  summ:{goal:'붙여넣은 원문을 5줄 요약', format:'요약/불릿', length:'보통(~800자)', tone:'차분하고 명확하게'},
+  draft:{goal:'웹페이지 섹션 초안 작성', format:'웹페이지 섹션', length:'보통(~800자)', tone:'전문적이지만 쉽게'},
+  brain:{goal:'신규 아이디어 10개 제시', format:'요약/불릿', length:'짧게(≤300자)', tone:'간결하고 요점만'},
+  fix:{goal:'아래 문단을 자연스럽게 교정/톤을 따뜻하게', format:'블로그 글', length:'보통(~800자)', tone:'따뜻하고 친근하게'},
+  trans:{goal:'원문을 한국어↔영어 자연스러운 번역', format:'요약/불릿', length:'보통(~800자)', tone:'차분하고 명확하게'}
+};
+document.querySelectorAll('.tpl').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const t=QUICK[b.dataset.id]; if(!t) return;
+    $('#goal').value=t.goal; $('#format').value=t.format; $('#length').value=t.length; $('#tone').value=t.tone;
+    $('#out').value=buildPrompt(formData());
+  });
+});
+
+// 생성/복사/저장
+function build(){ $('#out').value = buildPrompt(formData()); }
+$('#build').addEventListener('click',build);
+window.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey) && e.key==='Enter'){ e.preventDefault(); build(); }
+});
+$('#copy').addEventListener('click', async ()=>{
+  const v=$('#out').value; if(!v.trim()) return;
+  try{ await navigator.clipboard.writeText(v); alert('복사 완료'); }catch{ alert('복사 실패… 수동으로 복사하세요.'); }
+});
+$('#dl').addEventListener('click',()=>{
+  const blob=new Blob([$('#out').value],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='prompt.txt'; a.click(); URL.revokeObjectURL(a.href);
+});
+
+// 히스토리
+function load(){ try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(_){return[]} }
+function saveAll(a){ localStorage.setItem(KEY, JSON.stringify(a)) }
+function addHistory(){
+  const prompt=$('#out').value.trim(); if(!prompt) return;
+  const d=formData();
+  const obj={id:'p_'+Date.now()+Math.random().toString(36).slice(2,7), time:Date.now(), title:d.goal||'(무제)', tags:d.tags||'', prompt};
+  const arr=load(); arr.unshift(obj); saveAll(arr); render();
+}
+$('#save').addEventListener('click', addHistory);
+
+function render(){
+  const list=$('#list'); list.innerHTML='';
+  const arr=load();
+  $('#count').textContent = arr.length? `${arr.length}건` : '';
+  arr.forEach(it=>{
+    const div=document.createElement('div'); div.className='item';
+    const d=new Date(it.time).toLocaleString('ko-KR');
+    const tags=it.tags? it.tags.split(',').map(s=>s.trim()).filter(Boolean):[];
+    div.innerHTML=`
+      <h3>${escapeHtml(it.title)}</h3>
+      <p class="meta">${d}</p>
+      <div class="tags">${tags.map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join(' ')}</div>
+      <pre style="white-space:pre-wrap;margin-top:6px">${escapeHtml(it.prompt)}</pre>
+      <div class="row" style="margin-top:8px">
+        <button data-act="use" data-id="${it.id}" class="btn2">이 프롬프트 사용</button>
+        <button data-act="del" data-id="${it.id}" class="ghost">삭제</button>
+        <button data-act="txt" data-id="${it.id}" class="ghost">TXT</button>
+      </div>`;
+    list.appendChild(div);
+  });
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]))}
+$('#list').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  const id=b.dataset.id, act=b.dataset.act;
+  const arr=load(); const it=arr.find(x=>x.id===id); if(!it) return;
+  if(act==='use'){ $('#out').value=it.prompt; window.scrollTo({top:0,behavior:'smooth'}); }
+  if(act==='del'){ if(confirm('삭제할까요?')){ saveAll(arr.filter(x=>x.id!==id)); render(); } }
+  if(act==='txt'){
+    const blob=new Blob([it.prompt],{type:'text/plain;charset=utf-8'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='prompt.txt'; a.click(); URL.revokeObjectURL(a.href);
+  }
+});
+
+// JSON 내보내기/가져오기/초기화
+$('#exportJson').addEventListener('click',()=>{
+  const blob=new Blob([JSON.stringify(load(),null,2)],{type:'application/json;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='prompts.json'; a.click(); URL.revokeObjectURL(a.href);
+});
+$('#importJson').addEventListener('click',()=>$('#importFile').click());
+$('#importFile').addEventListener('change',e=>{
+  const f=e.target.files?.[0]; if(!f) return;
+  const r=new FileReader(); r.onload=()=>{ try{
+    const data=JSON.parse(r.result); if(!Array.isArray(data)) throw 0;
+    const cur=load(); const map=new Map(cur.map(x=>[x.id,x]));
+    data.forEach(x=>map.set(x.id||('p_'+Date.now()), {...x, id:x.id||('p_'+Date.now()+Math.random().toString(36).slice(2,5))}));
+    saveAll(Array.from(map.values())); render(); alert('가져오기 완료');
+  }catch(_){ alert('JSON 형식 오류'); } };
+  r.readAsText(f,'utf-8');
+});
+$('#clearAll').addEventListener('click',()=>{ if(confirm('모든 히스토리를 삭제합니다.')){ localStorage.removeItem(KEY); render(); } });
+
+// 입력 초기화
+$('#clear').addEventListener('click',()=>{
+  ['goal','context','constraints','tags'].forEach(id=>$('#'+id).value='');
+  $('#due').value=''; $('#tone').value='따뜻하고 친근하게'; $('#lang').value='한국어'; $('#format').value='블로그 글'; $('#length').value='보통(~800자)';
+  $('#out').value='';
+});
+
+function escapeNewline(s){return (s||'').replace(/\r?\n/g,' ');}
+
+// 헬퍼
+function download(name, text){
+  const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.click(); URL.revokeObjectURL(a.href);
+}
+function escape(s){return s.replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]))}
+
+// 시작
+render();
+</script>
 </body>
 </html>
