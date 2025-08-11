@@ -3,21 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>감성일기</title>
+  <title>감성일기 — 처음 오셨군요</title>
   <link rel="stylesheet" href="style.css" />
-  <script>
-    window.onload = function () {
-      const visited = localStorage.getItem("gamsung_ilgi_visited");
-      if (visited) {
-        window.location.href = "returning_user.html";
-      } else {
-        localStorage.setItem("gamsung_ilgi_visited", "yes");
-        window.location.href = "first_time.html";
-      }
-    };
-  </script>
+  <style>
+    .center {max-width:700px;margin:3rem auto;padding:2rem;background:#fff;
+      box-shadow:0 0 12px rgba(0,0,0,.05);border-radius:12px}
+    .btn {display:inline-block;margin-top:1rem;padding:.7rem 1.4rem;border-radius:8px;
+      background:#af2465;color:#fff;text-decoration:none}
+    .btn:hover {background:#942051}
+    .muted{color:#666}
+  </style>
 </head>
 <body>
-  <p>잠시만 기다려 주세요... 감성일기로 이동 중입니다.</p>
+  <div class="center">
+    <h1>감성일기 시작하기</h1>
+    <p class="muted">오늘의 말·감정·몸의 느낌을 간단히 남기면,<br>이 브라우저에만 안전하게 저장됩니다.</p>
+    <ul class="muted" style="line-height:1.7">
+      <li>서버 전송 없음 — <b>로컬 저장</b></li>
+      <li>언제든 <b>이어쓰기</b> 가능</li>
+      <li>JSON으로 <b>내보내기/불러오기</b> 가능</li>
+    </ul>
+    <a class="btn" id="start">시작하기</a>
+  </div>
+
+  <script>
+    document.getElementById('start').addEventListener('click', function(){
+      localStorage.setItem('gamsung_ilgi_visited', 'yes');
+      location.href = 'returning_user.html';
+    });
+  </script>
 </body>
 </html>
