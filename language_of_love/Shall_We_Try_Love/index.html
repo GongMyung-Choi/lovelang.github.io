@@ -1,32 +1,283 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>사랑해 볼까?</title>
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #fefefe;
-      margin: 0;
-      padding: 2rem;
-      color: #444;
-    }
-    header {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #af2465;
-      margin-bottom: 1rem;
-    }
-    main {
-      font-size: 1.2rem;
-      line-height: 1.8;
-    }
-  </style>
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>사랑, 연습해 볼까?</title>
+<style id="themeVars">
+:root{
+  /* 테마 (관리자 모드에서 ?admin=1 로 즉시 조절) */
+  --bg:#ffffff; --ink:#111; --muted:#666; --line:#ececf1;
+  --accent:#af2465; --accent-2:#6c5b7b; --ok:#2a9d8f; --warn:#d62e5b;
+  --radius:14px; --maxw:980px; --base:1rem; --h1:2rem; --h2:1.2rem; --btn:1rem;
+}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:24px}
+h1{font-size:var(--h1);margin:0 0 6px} .sub{color:var(--muted);margin:0 0 16px}
+.grid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+@media(max-width:960px){.grid{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:14px}
+h2{font-size:var(--h2);margin:.2rem 0 .6rem}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:.5rem 0}
+button, .chip{font-size:var(--btn);border:1px solid var(--line);background:#fff;border-radius:999px;padding:.5rem .9rem;cursor:pointer}
+button.primary{border-color:var(--accent);color:var(--accent)}
+button.ok{border-color:var(--ok);color:var(--ok)}
+button.warn{border-color:var(--warn);color:var(--warn)}
+button.ghost{border-color:var(--line);color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{user-select:none}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.step{display:flex;gap:10px;flex-wrap:wrap}
+.step .chip{border-radius:12px}
+textarea, input[type="text"]{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;font-size:var(--base)}
+.badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.25rem .6rem;background:#fafafa;font-size:.85rem;color:#555}
+.meta{color:#777;font-size:.9rem}
+ul{margin:.4rem 0 0 1.1rem} li{margin:.4rem 0}
+.item{border:1px solid var(--line);border-radius:12px;padding:.6rem}
+.tools{display:flex;gap:8px;margin-top:.4rem}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:10px 0}
+.panel{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid var(--line);
+  display:none;gap:.6rem;flex-wrap:wrap;justify-content:center;padding:.5rem}
+.ctrl{display:flex;align-items:center;gap:.35rem;border:1px solid var(--line);border-radius:8px;background:#fafafa;padding:.3rem .5rem}
+.ctrl input[type="color"]{width:28px;height:28px;border:none;background:transparent}
+.ctrl input[type="range"]{width:140px}
+.val{min-width:3rem;text-align:right;font-variant-numeric:tabular-nums;font-size:.85rem}
+.notice{color:var(--ok)}
+</style>
 </head>
 <body>
-  <header>사랑해 볼까?</header>
-  <main>
-    <p>이곳은 "사랑해 볼까?" 섹션입니다. 자유롭게 내용을 채워주세요.</p>
-  </main>
-</body>
-</html>
+
+<!-- 관리자 패널 (?admin=1에서 표시) -->
+<div id="adminPanel" class="panel">
+  <div class="ctrl"><label>포인트</label><input type="color" data-var="--accent" value="#af2465"></div>
+  <div class="ctrl"><label>보조</label><input type="color" data-var="--accent-2" value="#6c5b7b"></div>
+  <div class="ctrl"><label>성공</label><input type="color" data-var="--ok" value="#2a9d8f"></div>
+  <div class="ctrl"><label>경고</label><input type="color" data-var="--warn" value="#d62e5b"></div>
+  <div class="ctrl"><label>라운드</label><input type="range" min="6" max="24" step="1" data-var="--radius" value="14"><span class="val">14px</span></div>
+  <div class="ctrl"><label>제목</label><input type="range" min="1.6" max="3.2" step="0.1" data-var="--h1" value="2"><span class="val">2rem</span></div>
+  <div class="ctrl"><label>본문</label><input type="range" min="0.9" max="1.3" step="0.05" data-var="--base" value="1"><span class="val">1rem</span></div>
+</div>
+
+<div class="wrap">
+  <h1>사랑, 연습해 볼까? <span class="badge">단계형 + 톤 보정</span></h1>
+  <p class="sub">“관찰→의도→제안→여지”를 클릭해서 예시를 붙이고, 톤(다정/직진/배려)을 골라 다듬어요.
+    <span class="meta">저장은 브라우저 로컬에만 보관.</span></p>
+
+  <div class="grid">
+    <!-- 왼쪽: 작성 -->
+    <section class="card">
+      <h2>① 단계 선택</h2>
+      <div class="step">
+        <span class="chip" data-step="관찰">관찰: 오늘 좀 피곤해 보이네</span>
+        <span class="chip" data-step="의도">의도: 내가 도와주고 싶어</span>
+        <span class="chip" data-step="제안">제안: 저녁은 내가 챙길게</span>
+        <span class="chip" data-step="여지">여지: 괜찮으면 말해줘</span>
+      </div>
+
+      <h2 style="margin-top:.9rem">② 톤 선택</h2>
+      <div class="chips" id="tones">
+        <span class="chip on" data-tone="kind">다정</span>
+        <span class="chip" data-tone="direct">직진</span>
+        <span class="chip" data-tone="care">배려</span>
+      </div>
+
+      <h2 style="margin-top:.9rem">③ 내 문장</h2>
+      <textarea id="input" placeholder="예시칩을 눌러 문장을 붙이거나, 직접 적어도 됩니다." rows="5"></textarea>
+
+      <div class="row">
+        <button class="primary" id="refine">다듬기</button>
+        <button class="ghost" id="clear">지우기</button>
+        <span class="meta" id="status"></span>
+      </div>
+
+      <div id="out" class="card" style="display:none;margin-top:8px">
+        <div class="meta">제안된 문장</div>
+        <div id="outText" style="margin-top:.3rem"></div>
+        <div class="tools">
+          <button class="ok" id="save">저장</button>
+          <button class="ghost" id="copy">복사</button>
+        </div>
+      </div>
+
+      <hr class="sep">
+      <h2>표현 변환 템플릿</h2>
+      <ul>
+        <li>“빨리 해” → “<b>가능하면</b> 오늘 중으로 부탁해.”</li>
+        <li>“됐어” → “여기까지만 해도 <b>충분해</b>.”</li>
+        <li>“왜 그랬어?” → “어떤 이유가 있었을까?”</li>
+        <li>“그게 문제야” → “<b>이 부분</b>을 같이 보면 좋겠어.”</li>
+        <li>“너 때문에” → “<b>내가</b> 이런 느낌이 들었어.”</li>
+      </ul>
+    </section>
+
+    <!-- 오른쪽: 히스토리/검색 -->
+    <aside class="card">
+      <div class="row" style="justify-content:space-between">
+        <h2 style="margin:0">내 히스토리</h2>
+        <span class="badge" id="count">0개</span>
+      </div>
+      <div class="row">
+        <input id="q" type="text" placeholder="검색(문장/메모)">
+      </div>
+      <div id="list" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div class="row" style="margin-top:.6rem">
+        <button class="ghost" id="export">내보내기(JSON)</button>
+        <label class="ghost" for="importFile" style="cursor:pointer;padding:.5rem .9rem">불러오기</label>
+        <input id="importFile" type="file" accept="application/json" style="display:none">
+        <button class="warn" id="wipe">모두 삭제</button>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+/* ===== 도우미 ===== */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const KEY='love_practice_v1';
+const params = new URLSearchParams(location.search);
+
+/* ===== 관리자 패널 ===== */
+(function admin(){
+  if(params.get('admin')!=='1') return;
+  const panel = document.getElementById('adminPanel'); panel.style.display='flex';
+  const root = document.documentElement;
+  panel.querySelectorAll('input[type="color"]').forEach(inp=>{
+    const v=inp.dataset.var; root.style.setProperty(v, inp.value);
+    inp.addEventListener('input', e=>root.style.setProperty(v, e.target.value));
+  });
+  panel.querySelectorAll('input[type="range"]').forEach(inp=>{
+    const v=inp.dataset.var; const out=inp.parentElement.querySelector('.val');
+    const apply=()=>{const unit=(v==='--radius')?'px':'rem'; const val=inp.value+unit; root.style.setProperty(v,val); if(out) out.textContent=val;};
+    apply(); inp.addEventListener('input', apply);
+  });
+})();
+
+/* ===== 단계칩 → 입력란 삽입 ===== */
+const examples = {
+  '관찰':'오늘 좀 피곤해 보이네',
+  '의도':'내가 도와주고 싶어',
+  '제안':'저녁은 내가 챙길게',
+  '여지':'괜찮으면 말해줘'
+};
+$$('.step .chip').forEach(ch=>{
+  ch.addEventListener('click', ()=>{
+    const t = $('#input'); t.value = (t.value? t.value.trim()+' ' : '') + examples[ch.dataset.step];
+    t.focus();
+  });
+});
+
+/* ===== 톤 선택 ===== */
+let tone='kind';
+$('#tones').addEventListener('click', e=>{
+  const c=e.target.closest('.chip'); if(!c) return;
+  $$('#tones .chip').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on'); tone = c.dataset.tone;
+});
+
+/* ===== 정제 로직 ===== */
+function soften(s){
+  // 과격어 일부 완화
+  const map = [
+    [/빨리/g,'가능하면'],
+    [/당장/g,'먼저'],
+    [/왜 그랬어\??/g,'어떤 이유가 있었을까?'],
+    [/너 때문에/g,'내가 이렇게 느꼈어'],
+    [/그게 문제야/g,'이 부분을 같이 보면 좋겠어']
+  ];
+  map.forEach(([a,b])=>s=s.replace(a,b));
+
+  // 문장부호 정리
+  s=s.replace(/!{2,}/g,'!').replace(/\?{2,}/g,'?').replace(/\s{2,}/g,' ').trim();
+  if(!/[.?!…]$/.test(s)) s+='.';
+  return s;
+}
+function applyTone(s, t){
+  if(t==='kind'){ // 다정
+    if(!s.startsWith('혹시')) s='혹시, '+s;
+    s=s.replace(/\.$/,'요.');
+  }
+  if(t==='direct'){ // 직진
+    s=s.replace(/^혹시[,\s]*/,'');
+    s=s.replace(/요\.$/,'.');
+  }
+  if(t==='care'){ // 배려
+    if(!/괜찮(으)?면/.test(s)) s = s.replace(/\.$/,'') + ' (괜찮으면 말해줘).';
+    s=s.replace(/^혹시[,\s]*/,'혹시, ');
+  }
+  return s;
+}
+function refineLine(s){
+  if(!s||!s.trim()) return '';
+  return applyTone(soften(s.trim()), tone);
+}
+
+/* ===== 출력/복사/저장 ===== */
+$('#refine').addEventListener('click', ()=>{
+  const src = $('#input').value;
+  const out = refineLine(src);
+  if(!out){ $('#status').textContent='문장을 입력해 주세요.'; return; }
+  $('#outText').textContent = out;
+  $('#out').style.display='block';
+  $('#status').textContent='다듬었어요.';
+  setTimeout(()=>$('#status').textContent='',1200);
+});
+$('#clear').addEventListener('click', ()=>{ $('#input').value=''; $('#out').style.display='none'; });
+$('#copy').addEventListener('click', ()=>{
+  const t=$('#outText').textContent; if(!t) return;
+  navigator.clipboard.writeText(t).then(()=>{ $('#status').textContent='복사했어요.'; setTimeout(()=>$('#status').textContent='',1200);});
+});
+
+/* ===== 히스토리 저장/검색 ===== */
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY))||[] }catch(e){ return [] } }
+function saveAll(a){ localStorage.setItem(KEY, JSON.stringify(a)) }
+function render(list=load()){
+  const q = $('#q').value.trim().toLowerCase();
+  const data = list.filter(x=> (x.src+x.out).toLowerCase().includes(q));
+  $('#count').textContent = data.length+'개';
+  const box = $('#list'); box.innerHTML='';
+  data.forEach(it=>{
+    const el=document.createElement('div'); el.className='item';
+    el.innerHTML = `
+      <div class="meta">${new Date(it.time).toLocaleString()}</div>
+      <div><b>원문</b> — ${escape(it.src)}</div>
+      <div style="margin-top:.25rem"><b>제안</b> — ${escape(it.out)}</div>
+      <div class="tools">
+        <button data-act="use" class="ok">불러와 수정</button>
+        <button data-act="del" class="ghost">삭제</button>
+      </div>`;
+    el.dataset.id = it.id;
+    box.appendChild(el);
+  });
+}
+function escape(s){return (s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+$('#save').addEventListener('click', ()=>{
+  const src=$('#input').value.trim(); const out=$('#outText').textContent.trim(); if(!out) return;
+  const arr=load(); arr.unshift({id:'id_'+Date.now(), src, out, time:Date.now()}); saveAll(arr); render(arr);
+  $('#status').textContent='저장했어요.'; setTimeout(()=>$('#status').textContent='',1200);
+});
+$('#list').addEventListener('click', e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  const id=b.closest('.item').dataset.id; const arr=load(); const it=arr.find(x=>x.id===id); if(!it) return;
+  if(b.dataset.act==='use'){ $('#input').value=it.src; $('#outText').textContent=it.out; $('#out').style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); }
+  if(b.dataset.act==='del'){ saveAll(arr.filter(x=>x.id!==id)); render(); }
+});
+$('#q').addEventListener('input', ()=>render());
+
+/* ===== 내보내기/불러오기/전체삭제 ===== */
+$('#export').addEventListener('click', ()=>{
+  const blob = new Blob([JSON.stringify(load(),null,2)], {type:'application/json;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='love-practice.json'; a.click(); URL.revokeObjectURL(a.href);
+});
+$('#importFile').addEventListener('change', e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader(); r.onload=()=>{ try{
+    const arr=JSON.parse(r.result||'[]'); if(!Array.isArray(arr)) throw 0;
+    const map=new Map(load().map(x=>[x.id,x])); arr.forEach(x=>map.set(x.id||('id_'+Date.now()),x));
+    const merged=[...map.values()].sort((a,b)=>b.time-a.time); saveAll(merged); render(merged);
+  }catch{ alert('불러오기 실패: JSON 확인'); } }; r.readAsText(f,'utf-8');
+});
+$('#wipe').addEventListener('click', ()=>{ if(confirm('모든 기록 삭제?')){ localStorage.removeItem(KEY); render(); }});
+
+/* ===== 초기 렌더 ===== */
+render();
+</script>
+</body></html>
