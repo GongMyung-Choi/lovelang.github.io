@@ -2,42 +2,170 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>To 루웨인 트리니티</title>
 <style>
-  :root{--border:#ececf1;--muted:#666}
-  *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.7}
-  .wrap{max-width:820px;margin:0 auto;padding:24px} h1{margin:0 0 6px;font-size:2rem}
-  .sub{color:var(--muted);margin:0 0 14px} .card{border:1px solid var(--border);border-radius:12px;background:#fff;padding:16px}
-  textarea,input{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px}
-  .row{margin:.6rem 0} button{padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:#fff;cursor:pointer}
-</style></head><body><div class="wrap">
-  <h1>To 루웨인 트리니티</h1>
-  <p class="sub">트리니티에게 남기는 말/편지/제안.</p>
+  :root{--border:#ececf1;--muted:#666;--accent:#af2465;--ok:#2a9d8f}
+  *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.7;background:#fff}
+  .wrap{max-width:880px;margin:0 auto;padding:24px}
+  h1{margin:0 0 6px;font-size:2rem} .sub{color:var(--muted);margin:0 0 16px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:960px){.grid{grid-template-columns:1fr}}
+  .card{border:1px solid var(--border);border-radius:12px;background:#fff;padding:16px}
+  input,textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:.5rem 0}
+  button{padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:#fff;cursor:pointer}
+  button.primary{border-color:var(--accent);color:var(--accent)}
+  button.ok{border-color:var(--ok);color:var(--ok)}
+  .meta{color:#777;font-size:.9rem}
+  .badge{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:.25rem .6rem;background:#fafafa;font-size:.82rem;color:#555}
+  .item{border:1px solid var(--border);border-radius:10px;padding:.6rem}
+  .tools{display:flex;gap:8px;margin-top:.35rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>To 루웨인 트리니티 <span class="badge">편지쓰기</span></h1>
+  <p class="sub">트리니티에게 남기는 말/편지/제안. 데이터는 기본적으로 <b>이 브라우저에만</b> 저장돼요.</p>
 
-  <section class="card">
-    <div class="row"><input id="name" placeholder="이름 또는 별명 (선택)"></div>
-    <div class="row"><textarea id="msg" placeholder="편지 내용을 적어주세요" rows="8"></textarea></div>
-    <div class="row">
-      <button id="save">내 브라우저에 저장</button>
-      <a id="mailto" href="#" style="margin-left:6px">메일로 보내기</a>
-    </div>
-    <div id="ok" class="row" style="color:#2a9d8f"></div>
-  </section>
+  <div class="grid">
+    <!-- 작성 영역 -->
+    <section class="card">
+      <div class="row"><input id="name" placeholder="이름 또는 별명 (선택)"></div>
+      <div class="row"><input id="title" placeholder="제목 (선택)"></div>
+      <div class="row" style="width:100%">
+        <textarea id="msg" rows="10" placeholder="편지 내용을 적어주세요"></textarea>
+      </div>
+      <div class="row" style="justify-content:space-between;width:100%">
+        <div class="row">
+          <button class="primary" id="save">내 브라우저에 저장</button>
+          <button id="clear">지우기</button>
+          <button class="ok" id="mailto">메일로 보내기</button>
+        </div>
+        <span id="status" class="meta"></span>
+      </div>
+      <p class="meta">※ 메일은 기기 기본 메일 앱을 열어 전송합니다. 주소/제목/본문이 자동 채워져요.</p>
+    </section>
+
+    <!-- 목록/검색/백업 -->
+    <aside class="card">
+      <div class="row" style="justify-content:space-between;width:100%">
+        <h2 style="margin:.2rem 0;font-size:1.2rem">내 편지함</h2>
+        <span id="count" class="badge">0개</span>
+      </div>
+      <div class="row" style="width:100%"><input id="q" placeholder="검색(제목/내용/이름)"></div>
+      <div id="list" style="display:flex;flex-direction:column;gap:8px;margin-top:.4rem"></div>
+      <div class="row" style="margin-top:.6rem">
+        <button id="export">내보내기(JSON)</button>
+        <label for="importFile" style="border:1px solid var(--border);border-radius:10px;padding:10px 14px;cursor:pointer;background:#fff">불러오기</label>
+        <input id="importFile" type="file" accept="application/json" style="display:none">
+        <button id="wipe" style="border-color:#d62e5b;color:#d62e5b">모두 삭제</button>
+      </div>
+    </aside>
+  </div>
 </div>
+
 <script>
-const KEY='to_luwein_letters_v1';
-document.getElementById('save').addEventListener('click',()=>{
-  const name=document.getElementById('name').value.trim();
-  const msg=document.getElementById('msg').value.trim();
-  if(!msg){alert('내용을 적어주세요');return;}
-  const arr=JSON.parse(localStorage.getItem(KEY)||'[]');
-  arr.unshift({name,msg,time:Date.now()});
-  localStorage.setItem(KEY,JSON.stringify(arr));
-  document.getElementById('ok').textContent='저장되었습니다 (이 브라우저에만).';
+const KEY='to_luwein_letters_v2';
+const $=s=>document.querySelector(s);
+const $$=s=>Array.from(document.querySelectorAll(s));
+
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return[]}}
+function saveAll(a){localStorage.setItem(KEY,JSON.stringify(a))}
+function addToast(txt){const s=$('#status');s.textContent=txt;setTimeout(()=>s.textContent='',1400)}
+function fmt(t){return new Date(t).toLocaleString('ko-KR')}
+
+function render(){
+  const q=($('#q').value||'').trim().toLowerCase();
+  const arr=load().filter(it=>{
+    const hay=[it.title||'',it.msg||'',it.name||''].join(' ').toLowerCase();
+    return hay.includes(q);
+  });
+  $('#count').textContent=arr.length+'개';
+  const box=$('#list'); box.innerHTML='';
+  arr.forEach(it=>{
+    const el=document.createElement('div'); el.className='item'; el.dataset.id=it.id;
+    el.innerHTML = `
+      <div class="meta">${fmt(it.time)} ${it.name?('· '+escapeHtml(it.name)) : ''}</div>
+      <div style="font-weight:700;margin:.15rem 0">${escapeHtml(it.title||'(제목 없음)')}</div>
+      <div style="white-space:pre-wrap;word-break:break-word">${escapeHtml((it.msg||'').slice(0,200))}${(it.msg||'').length>200?'…':''}</div>
+      <div class="tools">
+        <button data-act="open">열기</button>
+        <button data-act="copy">복사</button>
+        <button data-act="del">삭제</button>
+      </div>`;
+    box.appendChild(el);
+  });
+}
+function escapeHtml(s){return (s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]))}
+
+$('#save').addEventListener('click',()=>{
+  const name=$('#name').value.trim();
+  const title=$('#title').value.trim();
+  const msg=$('#msg').value.trim();
+  if(!msg){alert('내용을 적어주세요');return}
+  const arr=load();
+  arr.unshift({id:'id_'+Date.now(), name, title, msg, time:Date.now()});
+  saveAll(arr);
+  addToast('저장했어요 (이 브라우저에만).');
+  $('#msg').value=''; $('#title').value='';
+  render();
 });
-document.getElementById('mailto').addEventListener('click',e=>{
-  const name=document.getElementById('name').value.trim();
-  const msg=document.getElementById('msg').value.trim();
-  const sub=encodeURIComponent('To 루웨인 트리니티');
-  const body=encodeURIComponent((name?`[${name}] `:'')+msg);
-  e.target.href=`mailto:contact@lovelang.github.io?subject=${sub}&body=${body}`;
+
+$('#clear').addEventListener('click',()=>{
+  $('#msg').value=''; $('#title').value='';
 });
-</script></body></html>
+
+$('#mailto').addEventListener('click',()=>{
+  const name=$('#name').value.trim();
+  const title=$('#title').value.trim() || 'To 루웨인 트리니티';
+  const msg=$('#msg').value.trim();
+  const sub=encodeURIComponent(title);
+  const body=encodeURIComponent((name?`[${name}] `:'') + msg);
+  // 필요 시 메일 주소 바꿔
+  const to='contact@lovelang.github.io';
+  location.href=`mailto:${to}?subject=${sub}&body=${body}`;
+});
+
+$('#list').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  const item=b.closest('.item'); const id=item.dataset.id;
+  const arr=load(); const it=arr.find(x=>x.id===id);
+  if(!it) return;
+  if(b.dataset.act==='open'){
+    // 열기 팝업
+    const text = `제목: ${it.title||'(제목 없음)'}\n이름: ${it.name||'-'}\n시간: ${fmt(it.time)}\n\n${it.msg||''}`;
+    alert(text);
+  }
+  if(b.dataset.act==='copy'){
+    navigator.clipboard.writeText(it.msg||'').then(()=>addToast('본문을 복사했어요.'));
+  }
+  if(b.dataset.act==='del'){
+    if(confirm('삭제할까요?')){
+      saveAll(arr.filter(x=>x.id!==id)); render();
+    }
+  }
+});
+
+$('#q').addEventListener('input',render);
+
+$('#export').addEventListener('click',()=>{
+  const blob = new Blob([JSON.stringify(load(),null,2)], {type:'application/json;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='to-luwein-letters.json'; a.click(); URL.revokeObjectURL(a.href);
+});
+$('#importFile').addEventListener('change',e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ try{
+    const add=JSON.parse(r.result||'[]'); if(!Array.isArray(add)) throw 0;
+    const map=new Map(load().map(x=>[x.id,x])); add.forEach(x=>map.set(x.id||('id_'+Date.now()), x));
+    const merged=[...map.values()].sort((a,b)=>b.time-a.time); saveAll(merged); render(); addToast('불러왔어요.');
+  }catch{ alert('불러오기 실패: JSON 형식 확인'); } };
+  r.readAsText(f,'utf-8');
+});
+$('#wipe').addEventListener('click',()=>{
+  if(confirm('모든 로컬 편지를 삭제할까요?')){
+    localStorage.removeItem(KEY); render();
+  }
+});
+
+render();
+</script>
+</body></html>
