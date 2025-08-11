@@ -1,32 +1,43 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>To Luwein Trinity</title>
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #ffffff;
-      margin: 0;
-      padding: 2rem;
-      color: #333;
-    }
-    header {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #af2465;
-      margin-bottom: 1rem;
-    }
-    main {
-      font-size: 1.2rem;
-      line-height: 1.8;
-    }
-  </style>
-</head>
-<body>
-  <header>To Luwein Trinity</header>
-  <main>
-    <p>이곳은 "To Luwein Trinity" 섹션입니다. 전하고 싶은 말을 이곳에 적어주세요.</p>
-  </main>
-</body>
-</html>
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>To 루웨인 트리니티</title>
+<style>
+  :root{--border:#ececf1;--muted:#666}
+  *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+  .wrap{max-width:820px;margin:0 auto;padding:24px} h1{margin:0 0 6px;font-size:2rem}
+  .sub{color:var(--muted);margin:0 0 14px} .card{border:1px solid var(--border);border-radius:12px;background:#fff;padding:16px}
+  textarea,input{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px}
+  .row{margin:.6rem 0} button{padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:#fff;cursor:pointer}
+</style></head><body><div class="wrap">
+  <h1>To 루웨인 트리니티</h1>
+  <p class="sub">트리니티에게 남기는 말/편지/제안.</p>
+
+  <section class="card">
+    <div class="row"><input id="name" placeholder="이름 또는 별명 (선택)"></div>
+    <div class="row"><textarea id="msg" placeholder="편지 내용을 적어주세요" rows="8"></textarea></div>
+    <div class="row">
+      <button id="save">내 브라우저에 저장</button>
+      <a id="mailto" href="#" style="margin-left:6px">메일로 보내기</a>
+    </div>
+    <div id="ok" class="row" style="color:#2a9d8f"></div>
+  </section>
+</div>
+<script>
+const KEY='to_luwein_letters_v1';
+document.getElementById('save').addEventListener('click',()=>{
+  const name=document.getElementById('name').value.trim();
+  const msg=document.getElementById('msg').value.trim();
+  if(!msg){alert('내용을 적어주세요');return;}
+  const arr=JSON.parse(localStorage.getItem(KEY)||'[]');
+  arr.unshift({name,msg,time:Date.now()});
+  localStorage.setItem(KEY,JSON.stringify(arr));
+  document.getElementById('ok').textContent='저장되었습니다 (이 브라우저에만).';
+});
+document.getElementById('mailto').addEventListener('click',e=>{
+  const name=document.getElementById('name').value.trim();
+  const msg=document.getElementById('msg').value.trim();
+  const sub=encodeURIComponent('To 루웨인 트리니티');
+  const body=encodeURIComponent((name?`[${name}] `:'')+msg);
+  e.target.href=`mailto:contact@lovelang.github.io?subject=${sub}&body=${body}`;
+});
+</script></body></html>
