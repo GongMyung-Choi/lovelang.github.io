@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>사랑의 언어</title>
+<style>
+  :root{--accent:#af2465;--text:#111;--muted:#666;--border:#ececf1;--bg:#fff;--maxw:1060px}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:24px}
+  h1{margin:0 0 .25rem;font-size:2rem} .lead{color:var(--muted);margin:0 0 1rem}
+  .intro{border:1px solid var(--border);border-radius:12px;padding:16px;background:#fff}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+  @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}} @media (max-width:640px){.grid{grid-template-columns:1fr}}
+  .card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;transition:.12s}
+  .card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.06)}
+  .card h3{margin:.1rem 0 .4rem;font-size:1.05rem} .card p{margin:0;color:var(--muted);font-size:.95rem}
+  .pill{display:inline-block;margin-top:.6rem;padding:.25rem .55rem;border:1px solid var(--border);border-radius:999px;font-size:.82rem;background:#fafafa}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>사랑의 언어</h1>
+  <p class="lead">말의 온도·기록·연습·연구를 한 곳에서.</p>
+
+  <section class="intro" id="intro">
+    <!-- 여기 ‘내용만’ 붙여넣으세요 (네가 준 텍스트) -->
+    <p>사랑의 언어 소개 문구가 들어갑니다. (본문만 교체)</p>
+  </section>
+
+  <section class="grid" aria-label="사랑의 언어 하위 메뉴">
+    <a class="card" href="/language_of_love/The_Warmth_of_Words/index.html">
+      <h3>말의 온도 (1:1 대응)</h3><p>내 문장의 느낌을 판정하고 더 따뜻한 표현을 제안.</p><span class="pill">대화형</span>
+    </a>
+    <a class="card" href="/language_of_love/Emotional_Diary/index.html">
+      <h3>감성일기</h3><p>오늘의 말/감정/몸의 느낌을 기록 (브라우저 로컬 저장).</p><span class="pill">기록</span>
+    </a>
+    <a class="card" href="/language_of_love/Shall_We_Try_Love/index.html">
+      <h3>사랑, 연습해 볼까?</h3><p>단계형 말 다듬기 + 표현 변환 템플릿.</p><span class="pill">연습</span>
+    </a>
+    <a class="card" href="/goods/library/breathing_language/index.html">
+      <h3>감응언어학</h3><p>숨 쉬는 언어, 살아 있는 말 — 이론·사례·전자책.</p><span class="pill">연구</span>
+    </a>
+    <a class="card" href="/language_of_love/To_Luwein_Trinity/index.html">
+      <h3>To 루웨인 트리니티</h3><p>트리니티에게 남기는 말/편지/제안.</p><span class="pill">참여</span>
+    </a>
+  </section>
+</div>
+</body>
+</html>
