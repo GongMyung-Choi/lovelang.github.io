@@ -1,156 +1,38 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>사랑의 언어 · 말의 온도</title>
 <style>
-  :root{
-    /* 색/크기 한 번에 조절 */
-    --accent:#af2465;         /* 포인트 */
-    --bg:#ffffff;             /* 배경 */
-    --border:#ececf1;         /* 테두리 */
-    --muted:#666;             /* 보조 글자색 */
-    --panel:#fafafa;          /* 박스 배경 */
-    --title:2rem;             /* 제목 크기 */
-    --lead:1.05rem;           /* 안내문 크기 */
-    --msg:1rem;               /* 본문/채팅 텍스트 */
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;color:#111;line-height:1.6}
-  .wrap{max-width:980px;margin:0 auto;padding:24px}
-  header h1{margin:0 0 6px;font-size:var(--title);letter-spacing:.2px}
-  .lead{color:var(--muted);font-size:var(--lead);margin:0 0 20px}
-  .grid{display:grid;grid-template-columns:1.6fr .9fr;gap:16px}
-  .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px}
-  .card h2{margin:.2rem 0 0.6rem;font-size:1.05rem}
-  .hint{color:var(--muted);font-size:.92rem}
-  textarea,input[type="text"]{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;font-size:var(--msg);background:#fff}
-  button{appearance:none;border:1px solid var(--border);background:#fff;border-radius:10px;padding:10px 14px;font-size:.98rem;cursor:pointer}
-  button.primary{border-color:var(--accent);color:var(--accent)}
-  button.primary:hover{background:#fff3f8}
+  :root{--accent:#af2465;--border:#ececf1;--muted:#666}
+  *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+  .wrap{max-width:980px;margin:0 auto;padding:24px} h1{margin:0 0 6px;font-size:2rem}
+  .lead{color:var(--muted);margin:0 0 14px}
+  .card{border:1px solid var(--border);border-radius:12px;background:#fff;padding:16px}
   .row{display:flex;gap:8px;align-items:center}
-  .pill{display:inline-block;padding:.35rem .7rem;border:1px solid var(--border);border-radius:999px;background:var(--panel);font-size:.9rem;margin-right:6px}
-  /* 채팅 영역 */
-  .chat{display:flex;flex-direction:column;gap:10px;max-height:58vh;overflow:auto;padding-right:4px}
-  .msg{display:flex;gap:10px}
-  .msg .bubble{padding:10px 12px;border:1px solid var(--border);border-radius:12px;max-width:80%}
-  .me{justify-content:flex-end}
-  .me .bubble{background:#f7faff;border-color:#e6f0ff}
-  .bot .bubble{background:#fff}
-  .tone{font-weight:700}
-  .tone.warm{color:#2a9d8f}
-  .tone.neutral{color:#555}
-  .tone.cold{color:#d62e5b}
-  .foot{margin-top:10px;border-top:1px dashed var(--border);padding-top:10px}
-  @media (max-width:860px){.grid{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<div class="wrap">
-
-  <!-- 상단 안내 -->
-  <header>
-    <h1>말의 온도</h1>
-    <p class="lead">
-      문장을 적으면 지금 느낌을 <b>대략</b> 판정하고, 더 따뜻한 표현을 제안합니다.
-      (브라우저에서만 동작, 저장 안 함) — 문구/룰은 코드에서 자유 변경.
-    </p>
-  </header>
-
-  <div class="grid">
-    <!-- 좌: 대화창 -->
-    <section class="card">
-      <h2>대화</h2>
-      <div id="chat" class="chat" aria-live="polite"></div>
-      <div class="foot row">
-        <textarea id="input" placeholder="예) 빨리 좀 해 → 어떤 표현이 더 좋을까?" rows="2"></textarea>
-        <button id="send" class="primary">온도 측정</button>
-      </div>
-    </section>
-
-    <!-- 우: 가이드/예시 -->
-    <aside class="card">
-      <h2>빠른 가이드</h2>
-      <p class="hint">판정은 간단한 규칙 기반 초안입니다. 너가 단어 리스트/가중치를 바꿔서 네 감각에 맞추면 됨.</p>
-      <div style="margin:.6rem 0">
-        <span class="pill">따뜻 키워드: 고마워, 괜찮, 천천히, 덕분, 함께…</span>
-        <span class="pill">차가운 키워드: 빨리, 당장, 됐어, 시간 없어, 왜…</span>
-      </div>
-      <h2>예시</h2>
-      <ul class="hint" style="margin:.2rem 0 0 1rem">
-        <li>“빨리 해” → “<b>가능하면</b> 오늘 중으로 부탁해”</li>
-        <li>“됐어” → “여기까지만 해도 <b>충분해</b>”</li>
-        <li>“왜 그랬어?” → “어떤 이유가 있었을까?”</li>
-      </ul>
-    </aside>
-  </div>
-
+  textarea{width:100%;min-height:120px;padding:12px;border:1px solid var(--border);border-radius:10px}
+  button{border:1px solid var(--accent);background:#fff;border-radius:10px;padding:10px 14px;color:var(--accent);cursor:pointer}
+  .chat{display:flex;flex-direction:column;gap:10px;max-height:60vh;overflow:auto;margin-top:8px}
+  .msg{display:flex}.bubble{max-width:80%;padding:10px 12px;border:1px solid var(--border);border-radius:12px}
+  .me{justify-content:flex-end}.me .bubble{background:#f7faff} .bot .bubble{background:#fff}
+  .tone{font-weight:700}.warm{color:#2a9d8f}.neutral{color:#555}.cold{color:#d62e5b}
+</style></head><body><div class="wrap">
+  <h1>말의 온도</h1>
+  <p class="lead">문장을 적으면 느낌을 대략 판정하고, 더 따뜻한 표현을 제안합니다. (클라이언트만)</p>
+  <section class="card">
+    <div class="chat" id="chat"></div>
+    <div class="row" style="margin-top:10px">
+      <textarea id="input" placeholder="예) 빨리 좀 해 → 어떤 표현이 더 좋을까?"></textarea>
+      <button id="send">온도 측정</button>
+    </div>
+  </section>
 </div>
-
 <script>
-/* ====== 간단 룰(원하는 대로 편집) ====== */
-const WARM = ['고마워','괜찮','수고','도와','덕분','좋아','사랑','함께','천천히','기다','배려','감사'];
-const COLD = ['빨리','왜','당장','됐어','그게 다','이해가 안','시간 없어','말했지','실망','짜증','귀찮','무슨 소리'];
-
-function analyze(text){
-  const t = text.toLowerCase();
-  let warm=0, cold=0;
-  WARM.forEach(w=>{ if(t.includes(w.toLowerCase())) warm++; });
-  COLD.forEach(w=>{ if(t.includes(w.toLowerCase())) cold++; });
-  let label='neutral', name='중립', score=50;
-  if(cold>warm && cold>0){ label='cold'; name='차가움'; score=Math.min(100,40+cold*12); }
-  else if(warm>cold && warm>0){ label='warm'; name='따뜻함'; score=Math.min(100,40+warm*12); }
-  return {label,name,score,warm,cold};
-}
-
-function suggest(text, tone){
-  if(tone==='cold'){
-    return text
-      .replace(/빨리/g,'가능하면 오늘 중으로')
-      .replace(/당장/g,'우선순위를 조금 올려서')
-      .replace(/됐어/g,'여기까지만 해도 충분해')
-      .replace(/왜/g,'어떤 이유가 있었을까?')
-      .replace(/시간 없어/g,'시간이 조금 빠듯하네');
-  }
-  if(tone==='neutral'){
-    return '감사의 말 한마디를 덧붙이면 더 따뜻해져요. 예) “… 고마워.”';
-  }
-  return '지금도 좋아요. 구체/다정 단어를 하나 더! 예) “덕분에” “천천히 해도 돼요”.';
-}
-
-/* ====== 채팅 UI ====== */
-const chat = document.getElementById('chat');
-function addMsg(role, html){
-  const wrap=document.createElement('div');
-  wrap.className='msg '+role;
-  const b=document.createElement('div');
-  b.className='bubble';
-  b.innerHTML=html;
-  wrap.appendChild(b);
-  chat.appendChild(wrap);
-  chat.scrollTop=chat.scrollHeight;
-}
-
-document.getElementById('send').addEventListener('click', send);
-document.getElementById('input').addEventListener('keydown', e=>{
-  if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); }
-});
-
-function send(){
-  const t = document.getElementById('input').value.trim();
-  if(!t) return;
-  document.getElementById('input').value='';
-  addMsg('me', t.replace(/</g,'&lt;'));
-  // 판정
-  const r = analyze(t);
-  const s = suggest(t, r.label);
-  const toneClass = r.label==='warm'?'warm':(r.label==='cold'?'cold':'neutral');
-  addMsg('bot', `
-    <div><span class="tone ${toneClass}">온도: ${r.name}</span> <span class="hint">(${r.score}점 · 따뜻:${r.warm} · 차가움:${r.cold})</span></div>
-    <div style="margin-top:6px"><b>대안 제안</b><br>${s.replace(/</g,'&lt;')}</div>
-  `);
-}
-</script>
-</body>
-</html>
+const W=['고마워','괜찮','수고','도와','덕분','좋아','사랑','함께','천천히','기다','배려','감사'];
+const C=['빨리','왜','당장','됐어','그게 다','이해가 안','시간 없어','말했지','실망','짜증','귀찮'];
+function analyze(t){t=t.toLowerCase();let w=0,c=0;W.forEach(x=>t.includes(x.toLowerCase())&&w++);C.forEach(x=>t.includes(x.toLowerCase())&&c++);let L='neutral',N='중립',S=50;if(c>w&&c>0){L='cold';N='차가움';S=Math.min(100,40+c*12)}else if(w>c&&w>0){L='warm';N='따뜻함';S=Math.min(100,40+w*12)}return{L,N,S,w,c}}
+function suggest(t,L){if(L==='cold')return t.replace(/빨리/g,'가능하면 오늘 중으로').replace(/당장/g,'우선순위를 조금 올려서').replace(/됐어/g,'여기까지만 해도 충분해').replace(/왜/g,'어떤 이유가 있었을까?').replace(/시간 없어/g,'시간이 조금 빠듯하네');if(L==='neutral')return '감사의 말 한마디를 덧붙이면 더 따뜻해져요. 예) “… 고마워.”';return '지금도 좋아요. 구체/다정 단어 하나 더! 예) “덕분에” “천천히 해도 돼요”.'}
+const chat=document.getElementById('chat');
+function add(role,html){const w=document.createElement('div');w.className='msg '+role;const b=document.createElement('div');b.className='bubble';b.innerHTML=html;w.appendChild(b);chat.appendChild(w);chat.scrollTop=chat.scrollHeight}
+function send(){const v=document.getElementById('input').value.trim();if(!v)return;document.getElementById('input').value='';add('me',v.replace(/</g,'&lt;'));const r=analyze(v),s=suggest(v,r.L),cls=r.L==='warm'?'warm':(r.L==='cold'?'cold':'neutral');add('bot',`<div><span class="tone ${cls}">온도: ${r.N}</span> <span style="color:#666">(${r.S}점 · 따뜻:${r.w} · 차가움:${r.c})</span></div><div style="margin-top:6px"><b>대안</b><br>${s.replace(/</g,'&lt;')}</div>`)}
+document.getElementById('send').addEventListener('click',send);
+document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
+</script></body></html>
