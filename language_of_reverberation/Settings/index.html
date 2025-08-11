@@ -1,34 +1,284 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <title>Settings</title>
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #fff;
-      margin: 0;
-      padding: 2rem;
-      color: #2a9d8f;
-    }
-    header {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #af2465;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    main {
-      font-size: 1.4rem;
-      text-align: center;
-    }
-  </style>
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>울림의 언어 · 기본설정</title>
+<style id="themeVars">
+:root{
+  /* === 사이트 공용 변수(이 이름들, 다른 페이지와 동일) === */
+  --header-color:#af2465;
+  --menu-bg-color:#6c5b7b;
+  --menu-text-color:#ffffff;
+  --menu-hover-text:#2a9d8f;
+
+  --btn-border:#2a9d8f;
+  --btn-text:#2a9d8f;
+  --btn-hover-bg:#2a9d8f;
+  --btn-hover-text:#ffffff;
+
+  --title-size:2.2rem;
+  --intro-strong-size:3.2rem;
+  --intro-message-size:1.2rem;
+  --menu-size:1.0rem;
+  --submenu-size:0.95rem;
+  --button-size:1.2rem;
+
+  --page-padding:5rem;
+  --intro-gap:5rem;
+
+  /* 페이지 보조(선택) */
+  --body-bg:#ffffff;
+  --body-text:#111111;
+  --line:#ececf1;
+}
+</style>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.7;background:var(--body-bg);color:var(--body-text)}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+h1{margin:0 0 8px;font-size:2rem}
+.sub{color:#666;margin:0 0 16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:960px){.grid{grid-template-columns:1fr}}
+
+.card{border:1px solid var(--line);border-radius:14px;background:#fff;padding:16px}
+.ctrl{display:flex;align-items:center;gap:10px;margin:.5rem 0;flex-wrap:wrap}
+.ctrl label{min-width:140px;color:#444}
+.ctrl input[type="color"]{width:40px;height:40px;border:none;background:#fff;border-radius:8px}
+.ctrl input[type="range"]{width:240px}
+.val{min-width:70px;text-align:right;color:#555}
+
+button{padding:.6rem 1rem;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer}
+button.primary{border-color:#af2465;color:#af2465}
+button.ok{border-color:#2a9d8f;color:#2a9d8f}
+.badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.25rem .6rem;background:#fafafa;font-size:.82rem;color:#555}
+
+.preview{border:1px dashed var(--line);border-radius:12px;padding:16px;margin-top:10px}
+nav ul{display:flex;gap:12px;list-style:none;margin:0;padding:10px;background:var(--menu-bg-color);border-radius:10px}
+nav a{color:var(--menu-text-color);text-decoration:none;font-size:var(--menu-size);padding:.4rem .7rem;border-radius:8px;transition:.15s}
+nav a:hover{color:var(--menu-hover-text);background:rgba(255,255,255,.08)}
+header{color:var(--header-color);font-size:var(--title-size);text-align:center;margin:6px 0 10px}
+.highlight{color:var(--header-color);font-size:var(--intro-strong-size);font-weight:700}
+.message{font-size:var(--intro-message-size);margin-top:8px}
+.btnDemo{border:2px solid var(--btn-border);color:var(--btn-text);font-size:var(--button-size);padding:.6rem 1.2rem;border-radius:10px;background:#fff}
+.btnDemo:hover{background:var(--btn-hover-bg);color:var(--btn-hover-text)}
+code.block{display:block;white-space:pre;overflow:auto;background:#0f172a;color:#e5e7eb;border-radius:10px;padding:12px;font-size:.88rem}
+</style>
 </head>
 <body>
-  <header>Settings</header>
-  <main>
-    <p>이곳은 Settings 섹션입니다.<br />
-       자유롭게 내용을 추가해 주세요.</p>
-  </main>
-</body>
-</html>
+<div class="wrap">
+  <h1>기본설정 <span class="badge">테마 커스터마이저</span></h1>
+  <p class="sub">색·크기·여백을 즉시 바꾸고 저장하세요. 이 브라우저에 기억됩니다.</p>
+
+  <div class="grid">
+    <!-- 좌: 컨트롤 -->
+    <section class="card">
+      <h2 style="margin:.2rem 0 8px">색상</h2>
+
+      <div class="ctrl"><label>제목 색</label>
+        <input type="color" data-var="--header-color" value="#af2465"></div>
+
+      <div class="ctrl"><label>메뉴 배경</label>
+        <input type="color" data-var="--menu-bg-color" value="#6c5b7b"></div>
+
+      <div class="ctrl"><label>메뉴 글자</label>
+        <input type="color" data-var="--menu-text-color" value="#ffffff"></div>
+
+      <div class="ctrl"><label>메뉴 호버</label>
+        <input type="color" data-var="--menu-hover-text" value="#2a9d8f"></div>
+
+      <div class="ctrl"><label>버튼 선</label>
+        <input type="color" data-var="--btn-border" value="#2a9d8f"></div>
+
+      <div class="ctrl"><label>버튼 글자</label>
+        <input type="color" data-var="--btn-text" value="#2a9d8f"></div>
+
+      <div class="ctrl"><label>버튼 호버 배경</label>
+        <input type="color" data-var="--btn-hover-bg" value="#2a9d8f"></div>
+
+      <div class="ctrl"><label>버튼 호버 글자</label>
+        <input type="color" data-var="--btn-hover-text" value="#ffffff"></div>
+
+      <div class="ctrl"><label>본문 배경</label>
+        <input type="color" data-var="--body-bg" value="#ffffff"></div>
+
+      <div class="ctrl"><label>본문 글자</label>
+        <input type="color" data-var="--body-text" value="#111111"></div>
+
+      <hr style="margin:14px 0">
+
+      <h2 style="margin:.2rem 0 8px">크기</h2>
+
+      <div class="ctrl"><label>제목 크기</label>
+        <input type="range" min="1.2" max="4.0" step="0.1" value="2.2" data-var="--title-size">
+        <span class="val" data-val="--title-size">2.2rem</span></div>
+
+      <div class="ctrl"><label>인트로 강조</label>
+        <input type="range" min="1.2" max="6.0" step="0.1" value="3.2" data-var="--intro-strong-size">
+        <span class="val" data-val="--intro-strong-size">3.2rem</span></div>
+
+      <div class="ctrl"><label>인트로 문장</label>
+        <input type="range" min="0.8" max="3.0" step="0.1" value="1.2" data-var="--intro-message-size">
+        <span class="val" data-val="--intro-message-size">1.2rem</span></div>
+
+      <div class="ctrl"><label>메뉴 크기</label>
+        <input type="range" min="0.8" max="2.0" step="0.05" value="1.0" data-var="--menu-size">
+        <span class="val" data-val="--menu-size">1.0rem</span></div>
+
+      <div class="ctrl"><label>하위메뉴 크기</label>
+        <input type="range" min="0.7" max="2.0" step="0.05" value="0.95" data-var="--submenu-size">
+        <span class="val" data-val="--submenu-size">0.95rem</span></div>
+
+      <div class="ctrl"><label>버튼 크기</label>
+        <input type="range" min="0.8" max="2.4" step="0.05" value="1.2" data-var="--button-size">
+        <span class="val" data-val="--button-size">1.2rem</span></div>
+
+      <div class="ctrl"><label>페이지 여백</label>
+        <input type="range" min="1" max="8" step="0.5" value="5" data-var="--page-padding">
+        <span class="val" data-val="--page-padding">5rem</span></div>
+
+      <div class="ctrl"><label>인트로 간격</label>
+        <input type="range" min="1" max="10" step="0.5" value="5" data-var="--intro-gap">
+        <span class="val" data-val="--intro-gap">5rem</span></div>
+
+      <hr style="margin:14px 0">
+
+      <div class="ctrl" style="gap:8px">
+        <button class="ok" id="save">저장</button>
+        <button id="reset">초기화</button>
+        <button id="export">내보내기(JSON)</button>
+        <label for="importFile" style="border:1px solid var(--line);border-radius:10px;padding:.6rem 1rem;cursor:pointer;background:#fff">불러오기</label>
+        <input id="importFile" type="file" accept="application/json" style="display:none">
+        <span id="status" class="badge">대기</span>
+      </div>
+    </section>
+
+    <!-- 우: 미리보기 -->
+    <aside class="card">
+      <h2 style="margin:.2rem 0 8px">미리보기</h2>
+      <div class="preview">
+        <header>루웨인 트리니티</header>
+        <nav>
+          <ul>
+            <li><a href="#">사랑의 언어</a></li>
+            <li><a href="#">울림의 언어</a></li>
+            <li><a href="#">숨 틔움방</a></li>
+            <li><a href="#">한얼</a></li>
+          </ul>
+        </nav>
+        <div style="padding:20px;text-align:center">
+          <div class="highlight">당신</div>
+          <p class="message">오직, 당신만을 위한 울림이고 싶습니다.</p>
+          <button class="btnDemo">버튼 미리보기</button>
+        </div>
+      </div>
+
+      <h3 style="margin:16px 0 6px">CSS 변수 내보내기 (복사용)</h3>
+      <code id="cssOut" class="block">/* 저장을 누르면 갱신됩니다 */</code>
+    </aside>
+  </div>
+</div>
+
+<script>
+/* ===== 테마 로딩/적용 ===== */
+const KEY='luwein_theme_v1';
+const root=document.documentElement;
+const themeVars = [
+  '--header-color','--menu-bg-color','--menu-text-color','--menu-hover-text',
+  '--btn-border','--btn-text','--btn-hover-bg','--btn-hover-text',
+  '--title-size','--intro-strong-size','--intro-message-size',
+  '--menu-size','--submenu-size','--button-size',
+  '--page-padding','--intro-gap',
+  '--body-bg','--body-text','--line'
+];
+
+function readComputed(v){return getComputedStyle(root).getPropertyValue(v).trim();}
+function applyTheme(obj){
+  themeVars.forEach(v=>{
+    if(obj && obj[v]) root.style.setProperty(v, obj[v]);
+  });
+}
+function loadTheme(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function saveTheme(obj){
+  localStorage.setItem(KEY, JSON.stringify(obj));
+}
+function exportCSS(){
+  const lines = themeVars.map(v=>`  ${v}: ${readComputed(v)};`);
+  return `:root{\n${lines.join('\n')}\n}`;
+}
+function setStatus(txt){document.getElementById('status').textContent=txt;}
+
+/* 초기 로딩 */
+applyTheme(loadTheme());
+
+/* 입력 컨트롤 ↔ CSS 변수 실시간 바인딩 */
+document.querySelectorAll('input[type="color"],input[type="range"]').forEach(inp=>{
+  const v = inp.dataset.var;
+  // 현재 적용값으로 초기 세팅
+  const cur = readComputed(v);
+  if(inp.type==='color' && cur) inp.value = toColor(cur) || inp.value;
+  if(inp.type==='range' && cur.endsWith('rem')) inp.value = parseFloat(cur);
+
+  const update = ()=>{
+    const val = (inp.type==='range') ? (inp.value+'rem') : inp.value;
+    root.style.setProperty(v, val);
+    const valOut = document.querySelector(`.val[data-val="${v}"]`);
+    if(valOut) valOut.textContent = val;
+  };
+  inp.addEventListener('input', update);
+});
+
+/* 저장 */
+document.getElementById('save').addEventListener('click',()=>{
+  const obj={};
+  themeVars.forEach(v=>obj[v]=readComputed(v));
+  saveTheme(obj);
+  document.getElementById('cssOut').textContent = exportCSS();
+  setStatus('저장됨');
+});
+
+/* 초기화(이 파일의 <style id="themeVars"> 기본값으로 복원) */
+document.getElementById('reset').addEventListener('click',()=>{
+  localStorage.removeItem(KEY);
+  // 인라인 스타일 제거(=기본값으로)
+  themeVars.forEach(v=>root.style.removeProperty(v));
+  // 컨트롤도 기본으로 재동기화
+  location.reload();
+});
+
+/* 내보내기 */
+document.getElementById('export').addEventListener('click',()=>{
+  const data = JSON.stringify(loadTheme(), null, 2);
+  const blob = new Blob([data], {type:'application/json;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='luwein-theme.json';
+  a.click(); URL.revokeObjectURL(a.href);
+});
+
+/* 불러오기 */
+document.getElementById('importFile').addEventListener('change',e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ try{
+    const obj=JSON.parse(r.result||'{}');
+    applyTheme(obj); saveTheme(obj);
+    document.getElementById('cssOut').textContent = exportCSS();
+    setStatus('불러옴/적용됨');
+  }catch{ alert('JSON 형식이 올바르지 않습니다.'); } };
+  r.readAsText(f,'utf-8');
+});
+
+/* 색 문자열 → #RRGGBB 보정 */
+function toColor(s){
+  if(!s) return null;
+  const ctx=document.createElement('canvas').getContext('2d'); ctx.fillStyle=s; 
+  const v=ctx.fillStyle; // 브라우저 정규화된 값
+  if(/^#[0-9a-f]{6}$/i.test(v)) return v;
+  return null;
+}
+
+/* 첫 화면 CSS 출력 준비 */
+document.getElementById('cssOut').textContent = exportCSS();
+setStatus('대기');
+</script>
+</body></html>
