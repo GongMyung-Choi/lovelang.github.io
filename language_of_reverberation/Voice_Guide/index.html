@@ -1,64 +1,265 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <title>음성 안내</title>
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #fff;
-      margin: 0;
-      padding: 2rem;
-      color: #2a9d8f;
-    }
-    header {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #af2465;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    nav {
-      margin-bottom: 2rem;
-    }
-    nav ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      gap: 2rem;
-      justify-content: center;
-    }
-    nav ul li a {
-      text-decoration: none;
-      color: #2a9d8f;
-      font-weight: 600;
-      font-size: 1.2rem;
-      border: 2px solid #2a9d8f;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    nav ul li a:hover {
-      background-color: #af2465;
-      color: white;
-    }
-    main {
-      text-align: center;
-      font-size: 1.4rem;
-    }
-  </style>
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>울림의 언어 · 음성안내</title>
+<style>
+:root{
+  --accent:#af2465; --ok:#2a9d8f; --line:#ececf1; --muted:#666;
+  --radius:14px; --maxw:980px;
+}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.7;color:#111;background:#fff}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:24px}
+h1{margin:0 0 6px;font-size:2rem} .sub{color:var(--muted);margin:0 0 16px}
+.card{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:16px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:.5rem 0}
+select,input[type="range"]{padding:.5rem;border:1px solid var(--line);border-radius:10px}
+button{padding:.6rem 1rem;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer}
+button.primary{border-color:var(--accent);color:var(--accent)}
+button.ok{border-color:var(--ok);color:var(--ok)}
+.badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.25rem .6rem;background:#fafafa;font-size:.82rem;color:#555}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+hr{border:0;border-top:1px dashed var(--line);margin:12px 0}
+.meta{color:#777;font-size:.9rem}
+label small{color:#777;margin-left:.35rem}
+.kbd{font:inherit;border:1px solid var(--line);padding:.1rem .35rem;border-radius:6px;background:#fafafa}
+</style>
 </head>
 <body>
-  <header>음성 안내</header>
-  <nav>
-    <ul>
-      <li><a href="en.html">English</a></li>
-      <li><a href="de.html">Deutsch</a></li>
-      <li><a href="ko.html">한국어</a></li>
-    </ul>
-  </nav>
-  <main>
-    <p>언어를 선택해주세요.</p>
-  </main>
-</body>
-</html>
+<div class="wrap">
+  <h1>음성안내 <span class="badge">TTS 코칭</span></h1>
+  <p class="sub">호흡 · 속도 · 톤을 짧게 맞춰보고 바로 말해보세요. (브라우저 내장 음성합성 사용)</p>
+
+  <!-- 상단 컨트롤 -->
+  <section class="card">
+    <div class="row">
+      <label>언어
+        <select id="lang">
+          <option value="ko-KR" selected>한국어 (ko-KR)</option>
+          <option value="en-US">English (en-US)</option>
+          <option value="de-DE">Deutsch (de-DE)</option>
+        </select>
+      </label>
+      <label>속도 <small id="rateVal">1.0</small>
+        <input id="rate" type="range" min="0.7" max="1.4" step="0.05" value="1.0">
+      </label>
+      <label>톤(피치) <small id="pitchVal">1.0</small>
+        <input id="pitch" type="range" min="0.8" max="1.3" step="0.05" value="1.0">
+      </label>
+      <label>볼륨 <small id="volVal">1.0</small>
+        <input id="vol" type="range" min="0.0" max="1.0" step="0.05" value="1.0">
+      </label>
+      <button class="primary" id="test">테스트 음성</button>
+      <button id="stopAll">정지</button>
+    </div>
+    <div class="meta">팁: <span class="kbd">Enter</span> = “한 줄 코치” 재생, <span class="kbd">Shift+Enter</span> = 줄바꿈</div>
+  </section>
+
+  <div class="grid" style="margin-top:16px">
+    <!-- 왼쪽: 루틴 -->
+    <section class="card">
+      <h2 style="margin:.2rem 0 6px">① 빠른 루틴</h2>
+      <div class="row">
+        <button class="ok" data-routine="breath30">호흡 30초</button>
+        <button class="ok" data-routine="pace40">속도 맞추기 40초</button>
+        <button class="ok" data-routine="tone30">톤 조율 30초</button>
+      </div>
+      <hr>
+      <h3 style="margin:.2rem 0 6px">② 한 줄 코치</h3>
+      <div class="row" style="width:100%">
+        <input id="oneLine" style="flex:1" placeholder="예) 오늘은 천천히, 따뜻하게 말해볼게요.">
+        <button id="speakLine">재생</button>
+      </div>
+      <p class="meta" id="hint"></p>
+      <hr>
+      <h3 style="margin:.2rem 0 6px">③ 예시 문장</h3>
+      <div class="row" id="examples" style="gap:8px;flex-wrap:wrap"></div>
+    </section>
+
+    <!-- 오른쪽: 연습장 -->
+    <section class="card">
+      <h2 style="margin:.2rem 0 6px">연습장</h2>
+      <textarea id="practice" rows="8" placeholder="여기에 스크립트를 적고, 아래 버튼으로 들어보세요." style="width:100%;padding:12px;border:1px solid var(--line);border-radius:12px"></textarea>
+      <div class="row">
+        <button class="primary" id="speakPractice">스크립트 읽기</button>
+        <button id="soft">다정 톤</button>
+        <button id="clear">지우기</button>
+      </div>
+      <p class="meta">다정 톤: 끝을 완곡하게, 속도를 약간 낮추어 읽어줍니다.</p>
+    </section>
+  </div>
+</div>
+
+<script>
+const synth = window.speechSynthesis;
+const $ = s => document.querySelector(s);
+const say = (text, opts={})=>{
+  if(!text) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = opts.lang || $('#lang').value;
+  u.rate = (opts.rate ?? parseFloat($('#rate').value)) || 1.0;
+  u.pitch = (opts.pitch ?? parseFloat($('#pitch').value)) || 1.0;
+  u.volume = (opts.volume ?? parseFloat($('#vol').value)) || 1.0;
+  synth.speak(u);
+  return u;
+};
+const stopAll = ()=> synth.cancel();
+
+/* 슬라이더 값 표시 */
+const bindVal = (id, out) => {
+  const el=$(id), o=$(out);
+  const sync=()=>{o.textContent=el.value};
+  el.addEventListener('input', sync); sync();
+};
+bindVal('#rate','#rateVal'); bindVal('#pitch','#pitchVal'); bindVal('#vol','#volVal');
+
+/* 언어별 예시 */
+const EXAMPLES = {
+  'ko-KR': [
+    '천천히 말해도 괜찮아요.',
+    '지금 느끼는 마음을 한 문장으로 말해볼까요?',
+    '듣고 있어요. 계속해 주세요.',
+  ],
+  'en-US': [
+    'It’s okay to speak slowly.',
+    'Try one sentence about how you feel.',
+    'I’m listening. Please go on.',
+  ],
+  'de-DE': [
+    'Du darfst langsam sprechen.',
+    'Sag einen Satz dazu, wie du dich fühlst.',
+    'Ich höre zu. Bitte mach weiter.',
+  ]
+};
+function renderExamples(){
+  const box = $('#examples'); box.innerHTML='';
+  (EXAMPLES[$('#lang').value]||[]).forEach(txt=>{
+    const b=document.createElement('button');
+    b.textContent=txt; b.style.border='1px solid var(--line)'; b.style.borderRadius='999px'; b.style.background='#fff'; b.style.padding='.4rem .8rem'; b.style.cursor='pointer';
+    b.addEventListener('click',()=>say(txt));
+    box.appendChild(b);
+  });
+}
+$('#lang').addEventListener('change',renderExamples); renderExamples();
+
+/* 한 줄 코치 */
+$('#speakLine').addEventListener('click',()=> say($('#oneLine').value.trim()));
+$('#oneLine').addEventListener('keydown',(e)=>{
+  if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); $('#speakLine').click(); }
+});
+
+/* 테스트 음성 & 정지 */
+$('#test').addEventListener('click',()=>{
+  const L=$('#lang').value;
+  const msg = L==='ko-KR' ? '테스트입니다. 속도와 톤을 조절해 보세요.'
+           : L==='en-US' ? 'This is a test. Try adjusting rate and pitch.'
+           : 'Das ist ein Test. Stell die Geschwindigkeit und Tonhöhe ein.';
+  say(msg);
+});
+$('#stopAll').addEventListener('click',stopAll);
+
+/* 빠른 루틴 */
+function sequence(lines, gap=600){
+  // lines: [{text,opts},{...}]
+  (async ()=>{
+    stopAll();
+    for(const it of lines){
+      say(it.text, it.opts||{});
+      await new Promise(r=>setTimeout(r, (it.delay ?? 1200)));
+    }
+  })();
+}
+const HINTS = {
+  'breath30': {
+    'ko-KR': '4초 들이쉬고, 4초 멈추고, 6초 내쉬기. 3~4회.',
+    'en-US': 'Inhale 4, hold 4, exhale 6. 3–4 rounds.',
+    'de-DE': '4 einatmen, 4 halten, 6 ausatmen. 3–4 Runden.'
+  },
+  'pace40': {
+    'ko-KR': '한 문장을 1.0배 → 0.9배 → 1.1배로 바꿔 읽어요.',
+    'en-US': 'Read one line at 1.0x → 0.9x → 1.1x.',
+    'de-DE': 'Einen Satz mit 1.0x → 0.9x → 1.1x lesen.'
+  },
+  'tone30': {
+    'ko-KR': '끝을 올리기보다 부드럽게 막아주세요.',
+    'en-US': 'End gently rather than sharply.',
+    'de-DE': 'Sätze weich enden lassen, nicht abrupt.'
+  }
+};
+function hint(key){ $('#hint').textContent = HINTS[key][$('#lang').value] || ''; }
+
+document.querySelectorAll('[data-routine]').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const L=$('#lang').value;
+    const k=b.dataset.routine;
+    hint(k);
+    if(k==='breath30'){
+      const lines = (L==='ko-KR') ?
+        [
+          {text:'숨을 준비하세요.'},{text:'들이마십니다. 하나, 둘, 셋, 넷.'},
+          {text:'멈춥니다. 하나, 둘, 셋, 넷.'},
+          {text:'내쉽니다. 하나, 둘, 셋, 넷, 다섯, 여섯.', delay:1800},
+          {text:'한 번 더.'},
+          {text:'들이마십니다. 하나, 둘, 셋, 넷.'},
+          {text:'멈춥니다. 하나, 둘, 셋, 넷.'},
+          {text:'내쉽니다. 하나, 둘, 셋, 넷, 다섯, 여섯.'},
+        ] :
+      (L==='en-US') ?
+        [
+          {text:'Get ready to breathe.'},{text:'Inhale. One, two, three, four.'},
+          {text:'Hold. One, two, three, four.'},
+          {text:'Exhale. One, two, three, four, five, six.', delay:1800},
+          {text:'Again.'},
+          {text:'Inhale. One, two, three, four.'},
+          {text:'Hold. One, two, three, four.'},
+          {text:'Exhale. One, two, three, four, five, six.'},
+        ] :
+        [
+          {text:'Bereite dich auf die Atmung vor.'},{text:'Einatmen. Eins, zwei, drei, vier.'},
+          {text:'Halten. Eins, zwei, drei, vier.'},
+          {text:'Ausatmen. Eins, zwei, drei, vier, fünf, sechs.', delay:1800},
+          {text:'Noch einmal.'},
+          {text:'Einatmen. Eins, zwei, drei, vier.'},
+          {text:'Halten. Eins, zwei, drei, vier.'},
+          {text:'Ausatmen. Eins, zwei, drei, vier, fünf, sechs.'},
+        ];
+      sequence(lines, 800);
+    }
+    if(k==='pace40'){
+      const base = (L==='ko-KR') ? '천천히, 분명하게 말해 볼게요.'
+                 : (L==='en-US') ? 'I will speak slowly and clearly.'
+                 : 'Ich spreche langsam und deutlich.';
+      sequence([
+        {text:base, opts:{rate:1.0}},
+        {text:base, opts:{rate:0.9}},
+        {text:base, opts:{rate:1.1}},
+      ], 1000);
+    }
+    if(k==='tone30'){
+      const line = (L==='ko-KR') ? '괜찮아요. 여기까지도 충분해요.'
+                 : (L==='en-US') ? 'It’s okay. This is already enough.'
+                 : 'Es ist in Ordnung. Das reicht schon.';
+      sequence([
+        {text:line, opts:{pitch:1.05, rate:0.95}},
+        {text:line, opts:{pitch:1.00, rate:1.0}},
+        {text:line, opts:{pitch:0.95, rate:1.05}},
+      ], 900);
+    }
+  });
+});
+
+/* 연습장 */
+$('#speakPractice').addEventListener('click',()=>{
+  const t=$('#practice').value.trim(); if(!t) return;
+  say(t);
+});
+$('#soft').addEventListener('click',()=>{
+  const t=$('#practice').value.trim(); if(!t) return;
+  say(t,{rate:Math.max(0.8, parseFloat($('#rate').value)-0.1),
+         pitch:Math.min(1.2, parseFloat($('#pitch').value)+0.05)});
+});
+$('#clear').addEventListener('click',()=>{$('#practice').value='';});
+
+/* 접근성: 페이지 벗어나면 재생 중지 */
+window.addEventListener('beforeunload', stopAll);
+</script>
+</body></html>
