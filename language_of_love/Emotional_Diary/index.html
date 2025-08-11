@@ -1,23 +1,11 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>감성일기</title>
-  <link rel="stylesheet" href="style.css" />
-  <script>
-    window.onload = function () {
-      const visited = localStorage.getItem("gamsung_ilgi_visited");
-      if (visited) {
-        window.location.href = "returning_user.html";
-      } else {
-        localStorage.setItem("gamsung_ilgi_visited", "yes");
-        window.location.href = "first_time.html";
-      }
-    };
-  </script>
-</head>
-<body>
-  <p>잠시만 기다려 주세요... 감성일기로 이동 중입니다.</p>
-</body>
-</html>
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>감성일기</title>
+<script>
+  (function () {
+    const visited = localStorage.getItem('gamsung_ilgi_visited') === 'yes';
+    location.replace(visited ? 'returning_user.html' : 'first_time.html');
+  })();
+</script>
+<noscript>자바스크립트를 켜 주세요.</noscript>
+</head><body></body></html>
