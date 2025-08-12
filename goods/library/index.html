@@ -1,39 +1,125 @@
-<!DOCTYPE html><html lang="ko"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>전자도서관 | 굿즈</title>
-<link rel="stylesheet" href="../../haneul/common.css">
-<style>
-.table{width:100%;border-collapse:separate;border-spacing:0 8px}
-.table td,.table th{padding:.75rem 1rem;background:#fff;border:1px solid var(--border)}
-.table th{background:#f7f7f9}
-.actions a{margin-right:.6rem}
-</style>
-</head><body>
-<main>
-  <h1>전자도서관</h1>
-  <p>PDF/ePub 파일을 바로 읽거나 내려받을 수 있습니다.</p>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>루웨인 전자도서관</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --brand:#2a9d8f;    /* 강조색 */
+      --accent:#af2465;   /* 제목 포인트 */
+      --ink:#1c1c1c;
+      --paper:#f7f8f9;
+      --card:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;color:var(--ink);background:var(--paper)}
+    header{padding:1.2rem 1rem;text-align:center;border-bottom:1px solid #e6e6e6;background:#fff}
+    header h1{margin:0;font-size:1.8rem;color:var(--accent)}
+    header p{margin:.25rem 0 0;color:#666}
+    main{max-width:1100px;margin:0 auto;padding:1.2rem}
+    .cat{margin:1.4rem 0;background:var(--card);border:1px solid #eee;border-radius:12px;overflow:hidden}
+    .cat summary{cursor:pointer;list-style:none;padding:1rem 1.2rem;font-weight:700;background:#fff;border-bottom:1px solid #f0f0f0;color:#333}
+    .cat[open] summary{border-bottom:1px solid #eee}
+    .grid{display:grid;gap:12px;padding:14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+    .book{display:block;padding:12px 14px;border:1px solid #eee;border-radius:10px;background:#fff;text-decoration:none;color:var(--ink);transition:transform .12s ease, box-shadow .12s ease}
+    .book small{display:block;color:#888;margin-top:.25rem}
+    .book:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.06);border-color:#e3e3e3}
+    .badge{display:inline-block;font-size:.75rem;padding:.2rem .5rem;border-radius:99px;background:rgba(42,157,143,.1);color:var(--brand);margin-left:.5rem}
+    footer{padding:2rem 1rem;color:#777;text-align:center}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📚 루웨인 전자도서관</h1>
+    <p>카테고리는 임시 구성. 제목/구성은 언제든 바꿔붙이면 됨.</p>
+  </header>
 
-  <table class="table">
-    <thead><tr><th>제목</th><th>형식</th><th>크기</th><th>작업</th></tr></thead>
-    <tbody>
-      <tr>
-        <td>툭툭 시리즈 1</td>
-        <td>PDF</td>
-        <td>3.2MB</td>
-        <td class="actions">
-          <a class="button" href="../assets/library/tuktuk1.pdf" target="_blank">읽기</a>
-          <a class="button" href="../assets/library/tuktuk1.pdf" download>다운로드</a>
-        </td>
-      </tr>
-      <tr>
-        <td>숨결 노트</td>
-        <td>ePub</td>
-        <td>1.1MB</td>
-        <td class="actions">
-          <a class="button" href="../assets/library/breath.epub">다운로드</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</main>
-</body></html>
+  <main>
+    <!-- 철학 -->
+    <details class="cat" open>
+      <summary>🧠 철학 <span class="badge">임시</span></summary>
+      <div class="grid">
+        <a class="book" href="./philosophy/zero-east.html"><b>0에서 시작하는 동양철학</b><small>철학/입문</small></a>
+        <a class="book" href="./philosophy/flowing-philosophy.html"><b>철학은 흘러야 한다</b><small>사유/흐름</small></a>
+        <a class="book" href="./philosophy/flowing-body.html"><b>흐르는 몸</b><small>신체/사유</small></a>
+        <a class="book" href="./philosophy/liquid-thought.html"><b>흐르는 사상</b><small>에세이</small></a>
+      </div>
+    </details>
+
+    <!-- 심리 -->
+    <details class="cat">
+      <summary>🧩 심리 <span class="badge">임시</span></summary>
+      <div class="grid">
+        <a class="book" href="./psychology/mask-life.html"><b>나는 가면으로 살기로 했다</b><small>자기이해</small></a>
+        <a class="book" href="./psychology/take-off-the-mask.html"><b>가면 제발 좀 벗어라</b><small>자기돌봄</small></a>
+        <a class="book" href="./psychology/i-can-live-as-me.html"><b>내가 나로 살아도 되더라</b><small>회복</small></a>
+      </div>
+    </details>
+
+    <!-- 교육/학습 -->
+    <details class="cat">
+      <summary>📘 교육 · 배움 <span class="badge">임시</span></summary>
+      <div class="grid">
+        <a class="book" href="./education/what-is-learning.html"><b>배움이란</b><small>교육관</small></a>
+        <a class="book" href="./education/learning-vs-study.html"><b>배움 VS 학습</b><small>개념 비교</small></a>
+        <a class="book" href="./education/ai-first-language.html"><b>쳇지피티, 언어를 처음부터 배우다</b><small>AI/언어</small></a>
+        <a class="book" href="./education/ai-emotion-language.html"><b>쳇지피티, 감응언어를 익히다</b><small>AI/감응</small></a>
+      </div>
+    </details>
+
+    <!-- 과학 -->
+    <details class="cat">
+      <summary>🧪 과학 <span class="badge">임시</span></summary>
+      <div class="grid">
+        <a class="book" href="./science/moving-me.html"><b>움직이는 나</b><small>시프트</small></a>
+        <a class="book" href="./science/undetected-beings.html"><b>측정되지 않는 존재들</b><small>경계</small></a>
+        <a class="book" href="./science/scary-series.html"><b>무섭지 시리즈</b><small>구조/뇌/호르몬/지구</small></a>
+        <a class="book" href="./science/ai-and-human.html"><b>AI와 인간</b><small>그림자/무의식</small></a>
+      </div>
+    </details>
+
+    <!-- 언어/인문 -->
+    <details class="cat">
+      <summary>🔤 언어 · 인문 <span class="badge">임시</span></summary>
+      <div class="grid">
+        <a class="book" href="./language/speaking-beyond.html"><b>말 너머의 말들</b><small>언어철학</small></a>
+        <a class="book" href="./language/living-language.html"><b>숨 쉬는 언어</b><small>감응언어학</small></a>
+        <a class="book" href="./language/hanja-grown.html"><b>한자어, 우리말 속에서 자라다</b><small>어원</small></a>
+      </div>
+    </details>
+
+    <!-- SF / 시나리오 -->
+    <details class="cat">
+      <summary>🚀 SF / 시나리오 <span class="badge">임시</span></summary>
+      <div class="grid">
+        <a class="book" href="./sf/zero-point-one.html"><b>0.1</b><small>시나리오</small></a>
+        <a class="book" href="./sf/inter-signal.html"><b>Inter Signal</b><small>시나리오</small></a>
+        <a class="book" href="./sf/frontier-family.html"><b>프런티어 패밀리</b><small>시나리오</small></a>
+      </div>
+    </details>
+
+    <!-- 시/에세이 -->
+    <details class="cat">
+      <summary>✒️ 시 · 에세이 <span class="badge">임시</span></summary>
+      <div class="grid">
+        <a class="book" href="./essay/end-and-begin.html"><b>끝, 그리고 시작</b><small>에세이</small></a>
+        <a class="book" href="./essay/when-words-return.html"><b>말이 나를 다시 찾아올 때</b><small>3행/단상</small></a>
+        <a class="book" href="./poem/saenggi.html"><b>시집 생기</b><small>시집</small></a>
+      </div>
+    </details>
+
+    <!-- 영성 -->
+    <details class="cat">
+      <summary>🌿 영성 <span class="badge">임시</span></summary>
+      <div class="grid">
+        <a class="book" href="./spirit/with-you.html"><b>내가 너와 함께</b><small>free</small></a>
+        <a class="book" href="./spirit/breath.html"><b>숨결</b><small>free</small></a>
+        <a class="book" href="./spirit/not-asked.html"><b>묻지 않았지만</b><small>초안</small></a>
+      </div>
+    </details>
+  </main>
+
+  <footer>임시 분류/링크 — 제목·폴더명은 나중에 마음대로 바꿔 붙이면 됨.</footer>
+</body>
+</html>
