@@ -1,17 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Goods Section</title>
-</head>
-<frameset rows="100px,*" frameborder="no" border="0">
-  <frame src="top.html" name="topFrame" scrolling="no" noresize>
-  <frameset cols="250px,*" frameborder="no" border="0">
-    <frame src="menu.html" name="menuFrame" scrolling="auto">
-    <frame src="main.html" name="mainFrame" scrolling="auto">
-  </frameset>
-</frameset>
-<noframes>
-  <body>프레임을 지원하지 않는 브라우저입니다.</body>
-</noframes>
-</html>
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>전자도서관 | 굿즈</title>
+<link rel="stylesheet" href="../../haneul/common.css">
+<style>
+.table{width:100%;border-collapse:separate;border-spacing:0 8px}
+.table td,.table th{padding:.75rem 1rem;background:#fff;border:1px solid var(--border)}
+.table th{background:#f7f7f9}
+.actions a{margin-right:.6rem}
+</style>
+</head><body>
+<main>
+  <h1>전자도서관</h1>
+  <p>PDF/ePub 파일을 바로 읽거나 내려받을 수 있습니다.</p>
+
+  <table class="table">
+    <thead><tr><th>제목</th><th>형식</th><th>크기</th><th>작업</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>툭툭 시리즈 1</td>
+        <td>PDF</td>
+        <td>3.2MB</td>
+        <td class="actions">
+          <a class="button" href="../assets/library/tuktuk1.pdf" target="_blank">읽기</a>
+          <a class="button" href="../assets/library/tuktuk1.pdf" download>다운로드</a>
+        </td>
+      </tr>
+      <tr>
+        <td>숨결 노트</td>
+        <td>ePub</td>
+        <td>1.1MB</td>
+        <td class="actions">
+          <a class="button" href="../assets/library/breath.epub">다운로드</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+</body></html>
