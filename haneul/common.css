@@ -1,0 +1,100 @@
+/* =========================
+   한얼 공통 스타일 (haneul/common.css)
+   - 색/크기 변수만 바꾸면 전체 톤앤매너 통일
+   ========================= */
+:root{
+  /* Colors */
+  --bg:#ffffff;
+  --text:#222222;
+  --muted:#666666;
+  --accent:#af2465;   /* 포인트 컬러 */
+  --link:#2a9d8f;     /* 링크/버튼 기본 */
+  --border:#ececf1;
+  --shadow:0 2px 10px rgba(0,0,0,.04);
+
+  /* Sizes */
+  --container:1100px;
+  --page-pad:2.4rem;
+  --h1:2.0rem;
+  --lead:1.05rem;
+  --item:1.0rem;
+  --radius:14px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+
+main{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:var(--page-pad);
+}
+
+/* 제목/리드문 */
+h1{
+  margin:0 0 0.6rem;
+  font-size:var(--h1);
+  font-weight:800;
+  letter-spacing:.02em;
+  color:var(--accent);
+}
+p{
+  margin:.4rem 0 1.2rem;
+  font-size:var(--lead);
+  color:var(--muted);
+}
+
+/* 리스트(각 섹션의 항목 버튼 느낌) */
+ul{list-style:none;margin:1rem 0 0;padding:0;display:grid;gap:.7rem}
+@media (min-width:680px){ ul{grid-template-columns:repeat(2, minmax(0,1fr));} }
+@media (min-width:980px){ ul{grid-template-columns:repeat(3, minmax(0,1fr));} }
+
+ul li a{
+  display:block;
+  padding:0.9rem 1rem;
+  font-size:var(--item);
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  transition:transform .12s ease, background-color .12s ease, color .12s ease;
+}
+ul li a:hover{
+  transform:translateY(-2px);
+  background:var(--link);
+  color:#fff;
+  text-decoration:none;
+}
+
+/* 카드 레이아웃을 쓰고 싶을 때 사용할 수 있는 보조 클래스 */
+.card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:1rem;display:flex;flex-direction:column;gap:.6rem;
+}
+.card h3{margin:0;font-size:1.12rem;color:var(--text)}
+.card p{margin:0;color:var(--muted)}
+
+/* 버튼 공통 */
+.button{
+  display:inline-block;border:2px solid var(--link);color:var(--link);
+  padding:.5rem .85rem;border-radius:10px;font-weight:600;
+  transition:all .15s ease;background:#fff;
+}
+.button:hover{background:var(--link);color:#fff;text-decoration:none}
+
+/* 좁은 화면 여백 */
+@media (max-width:768px){
+  main{padding:1.6rem}
+}
