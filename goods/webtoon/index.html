@@ -1,17 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Goods Section</title>
-</head>
-<frameset rows="100px,*" frameborder="no" border="0">
-  <frame src="top.html" name="topFrame" scrolling="no" noresize>
-  <frameset cols="250px,*" frameborder="no" border="0">
-    <frame src="menu.html" name="menuFrame" scrolling="auto">
-    <frame src="main.html" name="mainFrame" scrolling="auto">
-  </frameset>
-</frameset>
-<noframes>
-  <body>프레임을 지원하지 않는 브라우저입니다.</body>
-</noframes>
-</html>
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>웹툰 | 굿즈</title>
+<link rel="stylesheet" href="../../haneul/common.css">
+<style>
+.grid{display:grid;gap:1rem}
+@media(min-width:720px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card img{width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid var(--border)}
+.card .meta{display:flex;justify-content:space-between;align-items:center}
+.badge{font-size:.85rem;color:#fff;background:var(--link);padding:.2rem .5rem;border-radius:8px}
+</style>
+</head><body>
+<main>
+  <h1>웹툰</h1>
+  <p>썸네일을 클릭하면 회차 페이지(또는 뷰어)로 이동합니다.</p>
+
+  <div class="grid">
+    <!-- 필요한 만큼 복붙 -->
+    <a class="card" href="./ep1.html">
+      <img src="../assets/webtoon/ep1.jpg" alt="EP1 썸네일(없으면 임시 이미지)">
+      <h3>#01 첫 만남</h3>
+      <div class="meta"><span class="muted">10컷</span><span class="badge">NEW</span></div>
+    </a>
+    <a class="card" href="./ep2.html">
+      <img src="../assets/webtoon/ep2.jpg" alt="EP2 썸네일">
+      <h3>#02 빛</h3>
+      <div class="meta"><span class="muted">12컷</span></div>
+    </a>
+  </div>
+
+  <!-- 뷰어는 나중에 epX.html로 만들면 됨 (세로 이미지 나열/슬라이더 등) -->
+</main>
+</body></html>
