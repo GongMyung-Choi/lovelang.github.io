@@ -2,14 +2,17 @@
 <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId" version="2.0">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
     <dc:title>배움이란 – 사람, 그 사이의 울림</dc:title>
-    <dc:creator>최공명</dc:creator>
+    <dc:creator>에이수</dc:creator>
     <dc:language>ko</dc:language>
     <dc:identifier id="BookId">urn:uuid:ba-eu-mi-ran-2025-epub</dc:identifier>
     <dc:date>2025-08-16</dc:date>
+    <meta name="cover" content="cover-image" />
   </metadata>
   <manifest>
-    <item id="titlepage" href="titlepage.xhtml" media-type="application/xhtml+xml"/>
     <item id="css" href="stylesheet.css" media-type="text/css"/>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>
+    <item id="cover-image" href="Images/cover.png" media-type="image/png"/>
     <item id="chap01" href="chapter01.xhtml" media-type="application/xhtml+xml"/>
     <item id="chap02" href="chapter02.xhtml" media-type="application/xhtml+xml"/>
     <item id="chap03" href="chapter03.xhtml" media-type="application/xhtml+xml"/>
@@ -17,10 +20,10 @@
     <item id="chap05" href="chapter05.xhtml" media-type="application/xhtml+xml"/>
     <item id="chap06" href="chapter06.xhtml" media-type="application/xhtml+xml"/>
     <item id="chap07" href="chapter07.xhtml" media-type="application/xhtml+xml"/>
-    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="chap08" href="chapter08.xhtml" media-type="application/xhtml+xml"/>
   </manifest>
   <spine toc="ncx">
-    <itemref idref="titlepage"/>
+    <itemref idref="cover"/>
     <itemref idref="chap01"/>
     <itemref idref="chap02"/>
     <itemref idref="chap03"/>
@@ -28,5 +31,9 @@
     <itemref idref="chap05"/>
     <itemref idref="chap06"/>
     <itemref idref="chap07"/>
+    <itemref idref="chap08"/>
   </spine>
+  <guide>
+    <reference type="cover" title="표지" href="cover.xhtml"/>
+  </guide>
 </package>
