@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="3.0"
+  xmlns="http://www.idpf.org/2007/opf"
+  unique-identifier="bookid"
+  xml:lang="ko">
+
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="bookid">urn:uuid:KYEOLLON-SCI-0001</dc:identifier>
+    <dc:title>결론이… : 과학편 — 과학이 답하지 않는 방식</dc:title>
+    <dc:language>ko</dc:language>
+    <dc:creator>한얼 프로젝트</dc:creator>
+    <meta property="dcterms:modified">2025-08-16T00:00:00Z</meta>
+  </metadata>
+
+  <manifest>
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="cover_page" href="cover.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch00" href="ch00.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch01" href="ch01.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch02" href="ch02.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch03" href="ch03.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch04" href="ch04.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch035" href="ch035.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch04b" href="ch04b.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch05" href="ch05.xhtml" media-type="application/xhtml+xml"/>
+    <item id="epilogue" href="epilogue.xhtml" media-type="application/xhtml+xml"/>
+    <item id="last" href="last.xhtml" media-type="application/xhtml+xml"/>
+    <item id="cover_image" href="images/cover.png" media-type="image/png" properties="cover-image"/>
+  </manifest>
+
+  <spine>
+    <itemref idref="cover_page"/>
+    <itemref idref="ch00"/>
+    <itemref idref="ch01"/>
+    <itemref idref="ch02"/>
+    <itemref idref="ch03"/>
+    <itemref idref="ch04"/>
+    <itemref idref="ch035"/>
+    <itemref idref="ch04b"/>
+    <itemref idref="ch05"/>
+    <itemref idref="epilogue"/>
+    <itemref idref="last"/>
+  </spine>
+</package>
