@@ -5,41 +5,47 @@
   <head>
     <meta name="dtb:uid" content="urn:uuid:ba-eu-mi-ran-2025-epub"/>
     <meta name="dtb:depth" content="1"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
   </head>
   <docTitle><text>배움이란 – 사람, 그 사이의 울림</text></docTitle>
-  <docAuthor><text>최공명</text></docAuthor>
+  <docAuthor><text>에이수</text></docAuthor>
   <navMap>
     <navPoint id="navPoint-0" playOrder="0">
       <navLabel><text>표지</text></navLabel>
-      <content src="titlepage.xhtml"/>
+      <content src="cover.xhtml"/>
     </navPoint>
     <navPoint id="navPoint-1" playOrder="1">
-      <navLabel><text>서문</text></navLabel>
+      <navLabel><text>서문 – 교실에서 날아온 편지</text></navLabel>
       <content src="chapter01.xhtml"/>
     </navPoint>
     <navPoint id="navPoint-2" playOrder="2">
-      <navLabel><text>1장</text></navLabel>
+      <navLabel><text>1장. 배움은 모두 다르다</text></navLabel>
       <content src="chapter02.xhtml"/>
     </navPoint>
     <navPoint id="navPoint-3" playOrder="3">
-      <navLabel><text>2장</text></navLabel>
+      <navLabel><text>2장. 내 안의 배움은 침묵에서 시작되었다</text></navLabel>
       <content src="chapter03.xhtml"/>
     </navPoint>
     <navPoint id="navPoint-4" playOrder="4">
-      <navLabel><text>3장</text></navLabel>
+      <navLabel><text>3장. 나는 교사이기 전에 사람이었다</text></navLabel>
       <content src="chapter04.xhtml"/>
     </navPoint>
     <navPoint id="navPoint-5" playOrder="5">
-      <navLabel><text>4장</text></navLabel>
+      <navLabel><text>4장. 배움은 삶을 바꿔야 한다는 부담을 내려놓고</text></navLabel>
       <content src="chapter05.xhtml"/>
     </navPoint>
     <navPoint id="navPoint-6" playOrder="6">
-      <navLabel><text>5장</text></navLabel>
+      <navLabel><text>5장. 기억되지 않아도 괜찮은 배움</text></navLabel>
       <content src="chapter06.xhtml"/>
     </navPoint>
     <navPoint id="navPoint-7" playOrder="7">
-      <navLabel><text>6장</text></navLabel>
+      <navLabel><text>6장. 다온아 , 이건 그냥 기억 안 나도 되는 이야기야</text></navLabel>
       <content src="chapter07.xhtml"/>
+    </navPoint>
+    <navPoint id="navPoint-8" playOrder="8">
+      <navLabel><text>에필로그 . 책은 끝나지만 배움은 어디에나</text></navLabel>
+      <content src="chapter08.xhtml"/>
     </navPoint>
   </navMap>
 </ncx>
