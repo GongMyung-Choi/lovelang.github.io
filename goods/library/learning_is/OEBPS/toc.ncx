@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN"
+  "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+  <head>
+    <meta name="dtb:uid" content="urn:uuid:ba-eu-mi-ran-2025-epub"/>
+    <meta name="dtb:depth" content="1"/>
+  </head>
+  <docTitle><text>배움이란 – 사람, 그 사이의 울림</text></docTitle>
+  <docAuthor><text>최공명</text></docAuthor>
+  <navMap>
+    <navPoint id="navPoint-0" playOrder="0">
+      <navLabel><text>표지</text></navLabel>
+      <content src="titlepage.xhtml"/>
+    </navPoint>
+    <navPoint id="navPoint-1" playOrder="1">
+      <navLabel><text>서문</text></navLabel>
+      <content src="chapter01.xhtml"/>
+    </navPoint>
+    <navPoint id="navPoint-2" playOrder="2">
+      <navLabel><text>1장</text></navLabel>
+      <content src="chapter02.xhtml"/>
+    </navPoint>
+    <navPoint id="navPoint-3" playOrder="3">
+      <navLabel><text>2장</text></navLabel>
+      <content src="chapter03.xhtml"/>
+    </navPoint>
+    <navPoint id="navPoint-4" playOrder="4">
+      <navLabel><text>3장</text></navLabel>
+      <content src="chapter04.xhtml"/>
+    </navPoint>
+    <navPoint id="navPoint-5" playOrder="5">
+      <navLabel><text>4장</text></navLabel>
+      <content src="chapter05.xhtml"/>
+    </navPoint>
+    <navPoint id="navPoint-6" playOrder="6">
+      <navLabel><text>5장</text></navLabel>
+      <content src="chapter06.xhtml"/>
+    </navPoint>
+    <navPoint id="navPoint-7" playOrder="7">
+      <navLabel><text>6장</text></navLabel>
+      <content src="chapter07.xhtml"/>
+    </navPoint>
+  </navMap>
+</ncx>
