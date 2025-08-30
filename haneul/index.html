@@ -1,252 +1,42 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>한얼 | 루웨인 트리니티</title>
-
-<!-- ===== 전역 변수: index.html과 호환되는 이름 유지 ===== -->
-<style id="themeVars">
-:root{
-  /* 색상 (index.html 변수명 재사용) */
-  --header-color:#af2465;            /* 섹션 타이틀 포인트 */
-  --menu-bg-color:#6c5b7b;           /* 섹션 네비 배경 */
-  --menu-text-color:#ffffff;         /* 섹션 네비 글자 */
-  --menu-hover-text:#2a9d8f;         /* 섹션 네비 hover 글자 */
-  --btn-border:#2a9d8f;              /* 카드/버튼 테두리 */
-  --btn-text:#2a9d8f;                /* 버튼/링크 텍스트 */
-  --btn-hover-bg:#2a9d8f;            /* 버튼 hover 배경 */
-  --btn-hover-text:#ffffff;          /* 버튼 hover 글자 */
-
-  /* 크기 */
-  --title-size:2.0rem;               /* 페이지 제목 */
-  --section-nav-size:1.0rem;         /* 한얼 서브탭 글자 */
-  --card-title-size:1.15rem;         /* 카드 타이틀 */
-  --card-text-size:0.98rem;          /* 카드 본문 */
-
-  /* 간격 */
-  --page-padding:2.4rem;
-  --grid-gap:1rem;
-  --card-pad:1rem;
-}
-</style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>즐길만한 | 한얼</title>
+<link rel="stylesheet" href="../common.css">
 <style>
-*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.55;color:#222}
-a{text-decoration:none}
-
-main{padding:var(--page-padding);max-width:1100px;margin:0 auto}
-.haneol-header{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
-.haneol-title{font-size:var(--title-size);font-weight:800;color:var(--header-color);letter-spacing:.02em}
-.haneol-sub{opacity:.8;font-size:.95rem}
-
-/* 한얼 서브 네비게이션 (7개) */
-.section-nav{position:sticky;top:.25rem;z-index:10;background:var(--menu-bg-color);border-radius:10px;padding:.35rem .5rem;margin-bottom:1rem;display:flex;flex-wrap:wrap;gap:.4rem}
-.section-nav a{color:var(--menu-text-color);padding:.45rem .75rem;border-radius:8px;font-size:var(--section-nav-size)}
-.section-nav a.active,.section-nav a:hover{color:var(--menu-hover-text);background:rgba(255,255,255,.08)}
-
-/* 그리드 카드 */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--grid-gap)}
-@media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.grid{grid-template-columns:1fr}}
-
-.card{background:#fff;border:1px solid #eee;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.04);padding:var(--card-pad);display:flex;flex-direction:column;gap:.6rem}
-.card h3{margin:0;font-size:var(--card-title-size)}
-.card p{margin:0;font-size:var(--card-text-size);opacity:.9}
-.card .actions{margin-top:.4rem}
-.button{display:inline-block;border:2px solid var(--btn-border);color:var(--btn-text);padding:.5rem .8rem;border-radius:10px;font-weight:600}
-.button:hover{background:var(--btn-hover-bg);color:var(--btn-hover-text)}
-
-/* 섹션 블록 */
-.block{display:none;gap:1rem}
-.block.active{display:block}
-
-/* 관리 패널 (?admin=1에서만 노출) */
-.panel{display:none;position:sticky;top:0;z-index:20;background:#fff;border:1px solid #eee;border-radius:12px;margin-bottom:.8rem;padding:.6rem .8rem;display:flex;flex-wrap:wrap;gap:.6rem}
-.ctrl{display:flex;align-items:center;gap:.4rem;background:#f7f7f9;border:1px solid #ececf1;border-radius:8px;padding:.35rem .55rem}
-.ctrl label{font-size:.85rem;opacity:.85}
-.ctrl input[type="color"]{width:26px;height:26px;border:none;background:transparent;padding:0}
-.ctrl input[type="range"]{width:140px}
-.val{min-width:3.1rem;text-align:right;font-variant-numeric:tabular-nums;font-size:.82rem}
+  .grid{display:grid;gap:1rem;margin-top:1.2rem}
+  @media(min-width:720px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media(min-width:1080px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+  .card{display:block;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--text);box-shadow:var(--shadow)}
+  .card img{width:100%;display:block}
+  .card h3{margin:.5rem 1rem .25rem;font-size:1.05rem}
+  .card p{margin:0 1rem 1rem;color:var(--muted);font-size:.9rem}
 </style>
 </head>
 <body>
-
 <main>
-  <!-- 상단: 섹션 타이틀 -->
-  <div class="haneol-header">
-    <div>
-      <div class="haneol-title">한얼</div>
-      <div class="haneol-sub">루웨인 일상의 7결 — 한얼이란 · 쉴만한 · 즐길만한 · 건강한 · 선한 · 스마트한 · 유연한</div>
-    </div>
+  <h1>즐길만한</h1>
+  <p>작은 기쁨과 여유를 나누는 한얼의 놀이·문화 공간입니다.</p>
+
+  <div class="grid">
+    <a class="card" href="./assets/001.png" target="_blank">
+      <img src="./assets/001.png" alt="갯벌 체험">
+      <h3>갯벌 체험</h3>
+      <p>함께 조개를 캐며 즐기는 여유</p>
+    </a>
+    <a class="card" href="./assets/002.png" target="_blank">
+      <img src="./assets/002.png" alt="야외 바비큐">
+      <h3>야외 바비큐</h3>
+      <p>노을 속에서 함께하는 저녁</p>
+    </a>
+    <a class="card" href="./assets/007.png" target="_blank">
+      <img src="./assets/007.png" alt="실내 배구">
+      <h3>스포츠 놀이</h3>
+      <p>함께 뛰고 웃는 실내 배구 시간</p>
+    </a>
   </div>
-
-  <!-- 관리자 전용 편집 패널 (?admin=1) -->
-  <div class="panel" id="adminPanel">
-    <div class="ctrl"><label>포인트</label><input type="color" id="cPoint" value="#af2465"></div>
-    <div class="ctrl"><label>탭배경</label><input type="color" id="cTabBg" value="#6c5b7b"></div>
-    <div class="ctrl"><label>탭글자</label><input type="color" id="cTabTxt" value="#ffffff"></div>
-    <div class="ctrl"><label>탭호버</label><input type="color" id="cTabHv" value="#2a9d8f"></div>
-    <div class="ctrl"><label>버튼선</label><input type="color" id="cBtnBd" value="#2a9d8f"></div>
-    <div class="ctrl"><label>버튼글자</label><input type="color" id="cBtnTx" value="#2a9d8f"></div>
-    <div class="ctrl"><label>버튼호버BG</label><input type="color" id="cBtnBg" value="#2a9d8f"></div>
-    <div class="ctrl"><label>버튼호버TXT</label><input type="color" id="cBtnHvTx" value="#ffffff"></div>
-
-    <div class="ctrl"><label>제목크기</label><input type="range" id="sTitle" min="1.4" max="3.2" step="0.1" value="2.0"><span class="val" id="vTitle">2.0rem</span></div>
-    <div class="ctrl"><label>카드제목</label><input type="range" id="sCardT" min="0.9" max="1.6" step="0.05" value="1.15"><span class="val" id="vCardT">1.15rem</span></div>
-    <div class="ctrl"><label>카드본문</label><input type="range" id="sCardB" min="0.8" max="1.3" step="0.05" value="0.98"><span class="val" id="vCardB">0.98rem</span></div>
-  </div>
-
-  <!-- 한얼 서브 네비 (앵커/탭 겸용) -->
-  <nav class="section-nav" id="subNav">
-    <a href="#about" data-target="about" class="active">한얼이란</a>
-    <a href="#rest" data-target="rest">쉴만한</a>
-    <a href="#joy" data-target="joy">즐길만한</a>
-    <a href="#health" data-target="health">건강한</a>
-    <a href="#good" data-target="good">선한</a>
-    <a href="#smart" data-target="smart">스마트한</a>
-    <a href="#flex" data-target="flex">유연한</a>
-  </nav>
-
-  <!-- 섹션: 한얼이란 -->
-  <section id="about" class="block active">
-    <div class="grid">
-      <article class="card">
-        <h3>한얼 소개</h3>
-        <p>한얼은 루웨인의 일상 철학을 7가지 감각으로 풀어내는 생활 프레임입니다.</p>
-        <div class="actions"><a class="button" href="#">자세히</a></div>
-      </article>
-      <article class="card">
-        <h3>핵심 원칙</h3>
-        <p>간결·호흡·관조 — 말보다 리듬, 기능보다 흐름.</p>
-        <div class="actions"><a class="button" href="#">원칙 보기</a></div>
-      </article>
-      <article class="card">
-        <h3>적용 가이드</h3>
-        <p>웹, 글, 만남에 동일 리듬 적용. 누구나 복붙 가능한 형태.</p>
-        <div class="actions"><a class="button" href="#">가이드</a></div>
-      </article>
-    </div>
-  </section>
-
-  <!-- 섹션: 쉴만한 -->
-  <section id="rest" class="block">
-    <div class="grid">
-      <article class="card">
-        <h3>쉼의 카드</h3><p>짧은 호흡 문장으로 긴장을 푼다.</p>
-        <div class="actions"><a class="button" href="#">열람</a></div>
-      </article>
-      <article class="card">
-        <h3>정적 플레이리스트</h3><p>저역 중심의 잔향, 번아웃 회복.</p>
-        <div class="actions"><a class="button" href="#">듣기</a></div>
-      </article>
-      <article class="card">
-        <h3>루틴 제안</h3><p>아침 3분, 저녁 3분. 리듬 회복 루틴.</p>
-        <div class="actions"><a class="button" href="#">적용</a></div>
-      </article>
-    </div>
-  </section>
-
-  <!-- 섹션: 즐길만한 -->
-  <section id="joy" class="block">
-    <div class="grid">
-      <article class="card"><h3>툭툭 셀렉트</h3><p>짧다. 그래서 웃는다.</p><div class="actions"><a class="button" href="#">보기</a></div></article>
-      <article class="card"><h3>소소한 놀이터</h3><p>1분 놀이, 과몰입 금지.</p><div class="actions"><a class="button" href="#">시작</a></div></article>
-      <article class="card"><h3>감응 사진</h3><p>말 이전의 장면 저장.</p><div class="actions"><a class="button" href="#">보기</a></div></article>
-    </div>
-  </section>
-
-  <!-- 섹션: 건강한 -->
-  <section id="health" class="block">
-    <div class="grid">
-      <article class="card"><h3>숨 체조</h3><p>5-2-7 호흡. 하루 3회.</p><div class="actions"><a class="button" href="#">가이드</a></div></article>
-      <article class="card"><h3>수면 리듬</h3><p>빛·온도·소리 정렬.</p><div class="actions"><a class="button" href="#">체크</a></div></article>
-      <article class="card"><h3>먹는 리듬</h3><p>과식보다 간격.</p><div class="actions"><a class="button" href="#">메모</a></div></article>
-    </div>
-  </section>
-
-  <!-- 섹션: 선한 -->
-  <section id="good" class="block">
-    <div class="grid">
-      <article class="card"><h3>작은 선행</h3><p>하루 하나, 이름 없이.</p><div class="actions"><a class="button" href="#">기록</a></div></article>
-      <article class="card"><h3>말의 온도</h3><p>차갑지 않되 뜨겁지도 않게.</p><div class="actions"><a class="button" href="#">연습</a></div></article>
-      <article class="card"><h3>관계의 간격</h3><p>가까움 = 간결함.</p><div class="actions"><a class="button" href="#">메모</a></div></article>
-    </div>
-  </section>
-
-  <!-- 섹션: 스마트한 -->
-  <section id="smart" class="block">
-    <div class="grid">
-      <article class="card"><h3>자동정합</h3><p>링크·배열·검증의 기본.</p><div class="actions"><a class="button" href="#">체크</a></div></article>
-      <article class="card"><h3>도구의 윤리</h3><p>빠름보다 정확.</p><div class="actions"><a class="button" href="#">읽기</a></div></article>
-      <article class="card"><h3>루틴 자동화</h3><p>반복을 구조화.</p><div class="actions"><a class="button" href="#">설정</a></div></article>
-    </div>
-  </section>
-
-  <!-- 섹션: 유연한 -->
-  <section id="flex" class="block">
-    <div class="grid">
-      <article class="card"><h3>변경에 강한 구조</h3><p>바뀌어도 무너지지 않게.</p><div class="actions"><a class="button" href="#">원칙</a></div></article>
-      <article class="card"><h3>느슨한 연결</h3><p>구멍으로 들어가 구멍으로 나오기.</p><div class="actions"><a class="button" href="#">보기</a></div></article>
-      <article class="card"><h3>속도 조절</h3><p>급히 먹으면 체한다.</p><div class="actions"><a class="button" href="#">메모</a></div></article>
-    </div>
-  </section>
 </main>
-
-<script>
-/* ===== 서브탭 전환(본문만 바뀜) ===== */
-const links = document.querySelectorAll('.section-nav a');
-const blocks = document.querySelectorAll('.block');
-links.forEach(a=>{
-  a.addEventListener('click', (e)=>{
-    e.preventDefault();
-    const id = a.dataset.target;
-    links.forEach(x=>x.classList.remove('active'));
-    a.classList.add('active');
-    blocks.forEach(b=>b.classList.toggle('active', b.id===id));
-    history.replaceState(null,'',`#${id}`); // 앵커 갱신
-  });
-});
-// 해시로 직진입 지원
-const hash = location.hash.replace('#','');
-if(hash){
-  const target = document.querySelector(`.section-nav a[data-target="${hash}"]`);
-  if(target) target.click();
-}
-
-/* ===== 관리자 모드 (?admin=1) ===== */
-const params = new URLSearchParams(location.search);
-const isAdmin = params.get('admin')==='1';
-const panel = document.getElementById('adminPanel');
-if(isAdmin){ panel.style.display='flex'; }
-
-function setVar(name,val){ document.documentElement.style.setProperty(name,val); }
-function bindColor(id,varName){
-  const el=document.getElementById(id); if(!el) return;
-  setVar(varName, el.value);
-  el.addEventListener('input', e=> setVar(varName, e.target.value));
-}
-function bindSize(id,varName,viewId){
-  const el=document.getElementById(id), v=document.getElementById(viewId);
-  if(!el||!v) return;
-  const apply=()=>{ const r=el.value+'rem'; setVar(varName,r); v.textContent=r; };
-  apply(); el.addEventListener('input', apply);
-}
-
-if(isAdmin){
-  bindColor('cPoint','--header-color');
-  bindColor('cTabBg','--menu-bg-color');
-  bindColor('cTabTxt','--menu-text-color');
-  bindColor('cTabHv','--menu-hover-text');
-  bindColor('cBtnBd','--btn-border');
-  bindColor('cBtnTx','--btn-text');
-  bindColor('cBtnBg','--btn-hover-bg');
-  bindColor('cBtnHvTx','--btn-hover-text');
-
-  bindSize('sTitle','--title-size','vTitle');
-  bindSize('sCardT','--card-title-size','vCardT');
-  bindSize('sCardB','--card-text-size','vCardB');
-}
-</script>
 </body>
 </html>
