@@ -1,20 +1,86 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>유연한 | 한얼</title>
-<link rel="stylesheet" href="../common.css">
+<link rel="stylesheet" href="../common.css" />
+<style>
+  main{max-width:1000px;margin:0 auto;padding:1rem}
+  .lead{color:var(--muted);margin:.4rem 0 1rem}
+
+  /* 갤러리 */
+  .grid{display:grid;gap:10px;margin:12px 0 18px}
+  @media (min-width:640px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+  @media (min-width:960px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));}}
+  .thumb{position:relative;display:block;border:1px solid var(--border);
+    border-radius:12px;overflow:hidden;background:#fff;box-shadow:var(--shadow);text-decoration:none}
+  .thumb img{width:100%;height:170px;object-fit:cover;display:block}
+  .cap{position:absolute;left:8px;bottom:8px;padding:.2rem .5rem;border-radius:8px;
+    background:rgba(0,0,0,.55);color:#fff;font-size:.85rem}
+
+  /* 링크 리스트 */
+  ul.linklist{list-style:none;padding:0;margin:0}
+  .linklist li{margin:.5rem 0}
+  .linklist a{display:inline-block;padding:.5rem .7rem;border:1px solid var(--border);
+    border-radius:10px;text-decoration:none;color:var(--text);background:#fff}
+  .linklist a:hover{box-shadow:var(--shadow)}
+</style>
 </head>
 <body>
 <main>
   <h1>유연한</h1>
-  <p>변화와 연결에 부드럽게 대응하는 한얼의 유연성 공간입니다.</p>
-  <ul>
-    <li><a href="#">변경에 강한 구조</a></li>
-    <li><a href="#">느슨한 연결</a></li>
-    <li><a href="#">속도 조절</a></li>
+  <p class="lead">변화와 연결에 부드럽게 대응하는 한얼의 유연성 공간입니다.</p>
+
+  <!-- 사진 갤러리 (assets 폴더에 이미지가 있어야 합니다) -->
+  <div class="grid">
+    <a class="thumb" href="./assets/002.png" target="_blank">
+      <img src="./assets/002.png" alt="창고/물류 허브">
+      <span class="cap">물류 허브</span>
+    </a>
+    <a class="thumb" href="./assets/003.png" target="_blank">
+      <img src="./assets/003.png" alt="현장 운영·AI 연동">
+      <span class="cap">현장 운영</span>
+    </a>
+    <a class="thumb" href="./assets/004.png" target="_blank">
+      <img src="./assets/004.png" alt="유연한 피킹/패킹">
+      <span class="cap">피킹·패킹</span>
+    </a>
+    <a class="thumb" href="./assets/005.png" target="_blank">
+      <img src="./assets/005.png" alt="라스트마일 로봇 연계">
+      <span class="cap">라스트마일</span>
+    </a>
+    <a class="thumb" href="./assets/007.png" target="_blank">
+      <img src="./assets/007.png" alt="재해 상황 대체 경로">
+      <span class="cap">대체 경로</span>
+    </a>
+    <a class="thumb" href="./assets/008.png" target="_blank">
+      <img src="./assets/008.png" alt="친환경 배송">
+      <span class="cap">친환경 배송</span>
+    </a>
+    <a class="thumb" href="./assets/010.png" target="_blank">
+      <img src="./assets/010.png" alt="파트너 네트워크">
+      <span class="cap">파트너 네트워크</span>
+    </a>
+  </div>
+
+  <!-- 텍스트 메뉴는 유지 -->
+  <ul class="linklist">
+    <li>
+      <a href="./resilient-structure.html">변경에 강한 구조</a>
+      <span class="desc">— 모듈형 창고·대체 경로·리스크 분산</span>
+    </li>
+    <li>
+      <a href="./loose-connections.html">느슨한 연결</a>
+      <span class="desc">— 파트너 네트워크·표준 인터페이스·위임 운영</span>
+    </li>
+    <li>
+      <a href="./pacing.html">속도 조절</a>
+      <span class="desc">— 수요 기반 가속/감속·라스트마일 최적화</span>
+    </li>
   </ul>
+
+  <p style="margin-top:1.5rem"><a href="../index.html">← 한얼 인덱스로 돌아가기</a></p>
 </main>
 </body>
 </html>
