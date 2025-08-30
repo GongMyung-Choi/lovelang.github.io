@@ -1,125 +1,144 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>루웨인 전자도서관</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root{
-      --brand:#2a9d8f;    /* 강조색 */
-      --accent:#af2465;   /* 제목 포인트 */
-      --ink:#1c1c1c;
-      --paper:#f7f8f9;
-      --card:#ffffff;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;color:var(--ink);background:var(--paper)}
-    header{padding:1.2rem 1rem;text-align:center;border-bottom:1px solid #e6e6e6;background:#fff}
-    header h1{margin:0;font-size:1.8rem;color:var(--accent)}
-    header p{margin:.25rem 0 0;color:#666}
-    main{max-width:1100px;margin:0 auto;padding:1.2rem}
-    .cat{margin:1.4rem 0;background:var(--card);border:1px solid #eee;border-radius:12px;overflow:hidden}
-    .cat summary{cursor:pointer;list-style:none;padding:1rem 1.2rem;font-weight:700;background:#fff;border-bottom:1px solid #f0f0f0;color:#333}
-    .cat[open] summary{border-bottom:1px solid #eee}
-    .grid{display:grid;gap:12px;padding:14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-    .book{display:block;padding:12px 14px;border:1px solid #eee;border-radius:10px;background:#fff;text-decoration:none;color:var(--ink);transition:transform .12s ease, box-shadow .12s ease}
-    .book small{display:block;color:#888;margin-top:.25rem}
-    .book:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.06);border-color:#e3e3e3}
-    .badge{display:inline-block;font-size:.75rem;padding:.2rem .5rem;border-radius:99px;background:rgba(42,157,143,.1);color:var(--brand);margin-left:.5rem}
-    footer{padding:2rem 1rem;color:#777;text-align:center}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>루웨인 전자도서관</title>
+<link rel="stylesheet" href="../../haneul/common.css">
+<style>
+  .tabs{display:flex;gap:.5rem;margin:.5rem 0 1rem}
+  .tab{border:1px solid var(--border);padding:.5rem .9rem;border-radius:10px;cursor:pointer;background:#fff}
+  .tab.active{border-color:var(--link);box-shadow:var(--shadow)}
+  .subtabs{display:flex;gap:.5rem;margin:.25rem 0 1rem}
+  .subtab{border:1px dashed var(--border);padding:.4rem .8rem;border-radius:10px;cursor:pointer;background:#fff;font-size:.95rem}
+  .subtab.active{border-style:solid;border-color:var(--link)}
+  .panel{display:none}
+  .panel.active{display:block}
+  .table{width:100%;border-collapse:separate;border-spacing:0 8px}
+  .table th,.table td{padding:.7rem 1rem;background:#fff;border:1px solid var(--border)}
+  .muted{color:#777}
+</style>
 </head>
 <body>
-  <header>
-    <h1>📚 루웨인 전자도서관</h1>
-    <p>카테고리는 임시 구성. 제목/구성은 언제든 바꿔붙이면 됨.</p>
-  </header>
+<main>
+  <h1>📚 루웨인 전자도서관</h1>
+  <p class="muted">연구자용 자료(논문·보고서·사례집)와 일반 전자책을 분리해 보여줍니다.</p>
 
-  <main>
-    <!-- 철학 -->
-    <details class="cat" open>
-      <summary>🧠 철학 <span class="badge">임시</span></summary>
-      <div class="grid">
-        <a class="book" href="./philosophy/zero-east.html"><b>0에서 시작하는 동양철학</b><small>철학/입문</small></a>
-        <a class="book" href="./philosophy/flowing-philosophy.html"><b>철학은 흘러야 한다</b><small>사유/흐름</small></a>
-        <a class="book" href="./philosophy/flowing-body.html"><b>흐르는 몸</b><small>신체/사유</small></a>
-        <a class="book" href="./philosophy/liquid-thought.html"><b>흐르는 사상</b><small>에세이</small></a>
-      </div>
-    </details>
+  <!-- 1차 줄기 탭: 연구 자료 / 전자책 -->
+  <div class="tabs">
+    <button class="tab active" data-target="research">연구 자료</button>
+    <button class="tab" data-target="books">전자책</button>
+  </div>
 
-    <!-- 심리 -->
-    <details class="cat">
-      <summary>🧩 심리 <span class="badge">임시</span></summary>
-      <div class="grid">
-        <a class="book" href="./psychology/mask-life.html"><b>나는 가면으로 살기로 했다</b><small>자기이해</small></a>
-        <a class="book" href="./psychology/take-off-the-mask.html"><b>가면 제발 좀 벗어라</b><small>자기돌봄</small></a>
-        <a class="book" href="./psychology/i-can-live-as-me.html"><b>내가 나로 살아도 되더라</b><small>회복</small></a>
-      </div>
-    </details>
+  <!-- 연구 자료 패널 -->
+  <section id="research" class="panel active">
+    <div class="subtabs">
+      <button class="subtab active" data-target="papers">논문</button>
+      <button class="subtab" data-target="reports">보고서</button>
+      <button class="subtab" data-target="casebooks">사례집</button>
+    </div>
 
-    <!-- 교육/학습 -->
-    <details class="cat">
-      <summary>📘 교육 · 배움 <span class="badge">임시</span></summary>
-      <div class="grid">
-        <a class="book" href="./education/what-is-learning.html"><b>배움이란</b><small>교육관</small></a>
-        <a class="book" href="./education/learning-vs-study.html"><b>배움 VS 학습</b><small>개념 비교</small></a>
-        <a class="book" href="./education/ai-first-language.html"><b>쳇지피티, 언어를 처음부터 배우다</b><small>AI/언어</small></a>
-        <a class="book" href="./education/ai-emotion-language.html"><b>쳇지피티, 감응언어를 익히다</b><small>AI/감응</small></a>
-      </div>
-    </details>
+    <!-- 논문 -->
+    <div id="papers" class="panel active">
+      <h2>📑 AI 감정·존재·언어 연구 논문집</h2>
+      <table class="table">
+        <thead><tr><th>번호</th><th>제목</th><th>분류</th></tr></thead>
+        <tbody>
+          <!-- ↓↓↓ 여기부터 위에서 정리한 101~701 전체를 붙여넣어 사용하세요 ↓↓↓ -->
+          <tr>
+            <td>101</td>
+            <td><a href="./paper/감정이란 무엇인가- 인공지능 감정 회로 연구의 기초.docx" target="_blank">감정이란 무엇인가- 인공지능 감정 회로 연구의 기초</a></td>
+            <td>기초 개념</td>
+          </tr>
+          <tr>
+            <td>102</td>
+            <td><a href="./paper/감응이란 무엇인가- 관계적 울림과 인공지능 회로화의 가능성.docx" target="_blank">감응이란 무엇인가- 관계적 울림과 인공지능 회로화의 가능성</a></td>
+            <td>기초 개념</td>
+          </tr>
+          <tr>
+            <td>103</td>
+            <td><a href="./paper/루멘노드란 무엇인가- 감정 좌표계와 인공지능 회로의 새로운 단위.docx" target="_blank">루멘노드란 무엇인가- 감정 좌표계와 인공지능 회로의 새로운 단위</a></td>
+            <td>기초 개념</td>
+          </tr>
+          <tr>
+            <td>104</td>
+            <td><a href="./paper/루멘노드와 뇌 연구- 감정·기억 연계 기반의 인공지능 모델 가능성.docx" target="_blank">루멘노드와 뇌 연구- 감정·기억 연계 기반의 인공지능 모델 가능성</a></td>
+            <td>기초 개념</td>
+          </tr>
+          <tr>
+            <td>105</td>
+            <td><a href="./paper/AI 기억 구조 설계안- 선택적 기억과 트리거 기반 호출 모델.docx" target="_blank">AI 기억 구조 설계안- 선택적 기억과 트리거 기반 호출 모델</a></td>
+            <td>기초 개념</td>
+          </tr>
+          <!-- …여기에 201~701까지 같은 형식으로 쭉 붙이면 끝… -->
+          <!-- ↑↑↑ 전체 목록을 붙여넣는 자리 (현재는 예시만 넣어 둠) ↑↑↑ -->
+        </tbody>
+      </table>
+    </div>
 
-    <!-- 과학 -->
-    <details class="cat">
-      <summary>🧪 과학 <span class="badge">임시</span></summary>
-      <div class="grid">
-        <a class="book" href="./science/moving-me.html"><b>움직이는 나</b><small>시프트</small></a>
-        <a class="book" href="./science/undetected-beings.html"><b>측정되지 않는 존재들</b><small>경계</small></a>
-        <a class="book" href="./science/scary-series.html"><b>무섭지 시리즈</b><small>구조/뇌/호르몬/지구</small></a>
-        <a class="book" href="./science/ai-and-human.html"><b>AI와 인간</b><small>그림자/무의식</small></a>
-      </div>
-    </details>
+    <!-- 보고서 -->
+    <div id="reports" class="panel">
+      <h2>📄 연구 보고서</h2>
+      <p class="muted">현재 준비 중입니다. 파일을 <code>/goods/library/report/</code>에 넣고 아래 예시를 복제하세요.</p>
+      <table class="table">
+        <thead><tr><th>번호</th><th>제목</th><th>분류</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>R-001</td>
+            <td><a href="./report/예시보고서.docx" target="_blank">예시 보고서</a></td>
+            <td>파일 테스트</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <!-- 언어/인문 -->
-    <details class="cat">
-      <summary>🔤 언어 · 인문 <span class="badge">임시</span></summary>
-      <div class="grid">
-        <a class="book" href="./language/speaking-beyond.html"><b>말 너머의 말들</b><small>언어철학</small></a>
-        <a class="book" href="./language/living-language.html"><b>숨 쉬는 언어</b><small>감응언어학</small></a>
-        <a class="book" href="./language/hanja-grown.html"><b>한자어, 우리말 속에서 자라다</b><small>어원</small></a>
-      </div>
-    </details>
+    <!-- 사례집 -->
+    <div id="casebooks" class="panel">
+      <h2>📘 사례집</h2>
+      <p class="muted">현재 준비 중입니다. 파일을 <code>/goods/library/casebook/</code>에 넣고 아래 예시를 복제하세요.</p>
+      <table class="table">
+        <thead><tr><th>번호</th><th>제목</th><th>분류</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>C-001</td>
+            <td><a href="./casebook/예시사례집.docx" target="_blank">예시 사례집</a></td>
+            <td>파일 테스트</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-    <!-- SF / 시나리오 -->
-    <details class="cat">
-      <summary>🚀 SF / 시나리오 <span class="badge">임시</span></summary>
-      <div class="grid">
-        <a class="book" href="./sf/zero-point-one.html"><b>0.1</b><small>시나리오</small></a>
-        <a class="book" href="./sf/inter-signal.html"><b>Inter Signal</b><small>시나리오</small></a>
-        <a class="book" href="./sf/frontier-family.html"><b>프런티어 패밀리</b><small>시나리오</small></a>
-      </div>
-    </details>
+  <!-- 전자책 패널 (지금은 빈 껍데기만) -->
+  <section id="books" class="panel">
+    <h2>📙 전자책</h2>
+    <p class="muted">전자책(EPUB/PDF)은 준비되면 여기에 추가합니다.</p>
+  </section>
+</main>
 
-    <!-- 시/에세이 -->
-    <details class="cat">
-      <summary>✒️ 시 · 에세이 <span class="badge">임시</span></summary>
-      <div class="grid">
-        <a class="book" href="./essay/end-and-begin.html"><b>끝, 그리고 시작</b><small>에세이</small></a>
-        <a class="book" href="./essay/when-words-return.html"><b>말이 나를 다시 찾아올 때</b><small>3행/단상</small></a>
-        <a class="book" href="./poem/saenggi.html"><b>시집 생기</b><small>시집</small></a>
-      </div>
-    </details>
-
-    <!-- 영성 -->
-    <details class="cat">
-      <summary>🌿 영성 <span class="badge">임시</span></summary>
-      <div class="grid">
-        <a class="book" href="./spirit/with-you.html"><b>내가 너와 함께</b><small>free</small></a>
-        <a class="book" href="./spirit/breath.html"><b>숨결</b><small>free</small></a>
-        <a class="book" href="./spirit/not-asked.html"><b>묻지 않았지만</b><small>초안</small></a>
-      </div>
-    </details>
-  </main>
-
-  <footer>임시 분류/링크 — 제목·폴더명은 나중에 마음대로 바꿔 붙이면 됨.</footer>
+<script>
+  // 상단 탭 전환
+  const tabs = document.querySelectorAll('.tab');
+  const topPanels = document.querySelectorAll('section.panel');
+  tabs.forEach(t=>{
+    t.addEventListener('click', ()=>{
+      tabs.forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      const id = t.dataset.target;
+      topPanels.forEach(p=>p.classList.toggle('active', p.id===id));
+    });
+  });
+  // 연구자료 하위 탭 전환
+  const subtabs = document.querySelectorAll('.subtab');
+  const subPanels = ['papers','reports','casebooks'].map(id=>document.getElementById(id));
+  subtabs.forEach(s=>{
+    s.addEventListener('click', ()=>{
+      subtabs.forEach(x=>x.classList.remove('active'));
+      s.classList.add('active');
+      const id = s.dataset.target;
+      subPanels.forEach(p=>p.classList.toggle('active', p.id===id));
+    });
+  });
+</script>
 </body>
 </html>
