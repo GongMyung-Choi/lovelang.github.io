@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         unique-identifier="bookid" version="3.0">
+  <metadata>
+    <dc:identifier id="bookid">liquid-101</dc:identifier>
+    <dc:title>0에서 시작하는 동양철학</dc:title>
+    <dc:creator>다온</dc:creator>
+    <dc:language>ko</dc:language>
+    <dc:description>‘0’은 아무것도 아니면서 동시에 모든 것의 시작입니다. 동양철학의 고전적 주제를 따라가기보다, 우리의 질문에서 출발한 감응적 사유의 여정. 장자, 노자, 공자, 혜시 등 주요 철학자들의 개념과 삶을 지금의 언어로 다시 풀어낸 동양철학 입문서.</dc:description>
+    <meta property="dcterms:modified">2025-08-29T00:00:00Z</meta>
+    <meta property="price">무료</meta>
+    <meta property="series">리퀴드 모듈</meta>
+    <meta property="volume">1</meta>
+    <meta property="category">100 철학</meta>
+    <meta property="tags">동양철학, 감응, 장자, 노자, 존재, 사유, 입문서</meta>
+  </metadata>
+
+  <manifest>
+    <item id="css" href="style.css" media-type="text/css"/>
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="front" href="front.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch01" href="ch01.xhtml" media-type="application/xhtml+xml"/>
+    ...
+    <item id="ch23" href="ch23.xhtml" media-type="application/xhtml+xml"/>
+    <item id="epilogue" href="epilogue.xhtml" media-type="application/xhtml+xml"/>
+    <item id="cover-image" href="images/cover.png" media-type="image/png" properties="cover-image"/>
+  </manifest>
+
+  <spine>
+    <itemref idref="front"/>
+    <itemref idref="ch01"/>
+    ...
+    <itemref idref="ch23"/>
+    <itemref idref="epilogue"/>
+  </spine>
+</package>
