@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         unique-identifier="bookid" version="3.0">
+  <metadata xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:identifier id="bookid">urn:uuid:00000000-0000-0000-0000-00000000abcd</dc:identifier>
+    <dc:title>퇴고는 곱씹기다</dc:title>
+    <dc:creator>다온</dc:creator>
+    <dc:language>ko</dc:language>
+    <dc:description>말은 쓰는 순간보다 다시 읽는 순간에 더 나를 닮는다. 『퇴고는 곱씹기다』는 다시 읽고, 다시 살아내는 퇴고의 의미를 되새기는 책이다.</dc:description>
+    <meta property="dcterms:modified">2025-08-31T00:00:00Z</meta>
+    <meta property="price">12000</meta>
+    <meta property="tags">에세이, 글쓰기, 퇴고, 감응</meta>
+  </metadata>
+
+  <manifest>
+    <item id="css" href="style.css" media-type="text/css"/>
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="front" href="front.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch01" href="ch01.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch02" href="ch02.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch03" href="ch03.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch04" href="ch04.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch05" href="ch05.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch06" href="ch06.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ch07" href="ch07.xhtml" media-type="application/xhtml+xml"/>
+    <item id="epilogue" href="epilogue.xhtml" media-type="application/xhtml+xml"/>
+    <item id="cover-image" href="images/cover.png" media-type="image/png" properties="cover-image"/>
+  </manifest>
+
+  <spine>
+    <itemref idref="front"/>
+    <itemref idref="ch01"/>
+    <itemref idref="ch02"/>
+    <itemref idref="ch03"/>
+    <itemref idref="ch04"/>
+    <itemref idref="ch05"/>
+    <itemref idref="ch06"/>
+    <itemref idref="ch07"/>
+    <itemref idref="epilogue"/>
+  </spine>
+</package>
