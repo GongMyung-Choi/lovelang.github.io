@@ -1,61 +1,224 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>루웨인 트리니티 | 메인</title>
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Arial; margin:0; background:#0b0d10; color:#e8eef5}
-    header{padding:14px 18px; border-bottom:1px solid #1f2937; display:flex; justify-content:space-between; align-items:center}
-    nav ul{list-style:none; display:flex; gap:14px; margin:0; padding:0}
-    nav a{color:#e8eef5; text-decoration:none}
-    nav a:hover{text-decoration:underline}
-    .wrap{max-width:980px; margin:0 auto; padding:24px}
-    h1{margin:0 0 6px; font-size:22px}
-    .lead{opacity:.8; margin-bottom:18px}
-    .grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-    .card{border:1px solid #263442; border-radius:14px; padding:18px; background:#11161b; text-decoration:none; color:#e8eef5}
-    .card:hover{border-color:#8b5cf6; box-shadow:0 8px 20px rgba(0,0,0,.25)}
-    .card h3{margin:0 0 6px}
-    footer{opacity:.7; text-align:center; padding:18px}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>루웨인 트리니티</title>
+<style id="themeVars">
+:root{
+  /* === 편집: 값만 바꾸면 전체 반영됨 === */
+  --header-color:#af2465;
+  --menu-bg-color:#6c5b7b;
+  --menu-text-color:#ffffff;
+  --menu-hover-text:#2a9d8f;
+  --btn-border:#2a9d8f;
+  --btn-text:#2a9d8f;
+  --btn-hover-bg:#2a9d8f;
+  --btn-hover-text:#ffffff;
+
+  --title-size:2.2rem;
+  --intro-strong-size:3.2rem;
+  --intro-message-size:1.7rem;
+  --menu-size:1.0rem;
+  --submenu-size:0.95rem;
+  --button-size:1.6rem;
+
+  --page-padding:5rem;
+  --intro-gap:5rem;
+}
+</style>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.5}
+header{background:#fff;color:var(--header-color);font-size:var(--title-size);padding:.6rem .5rem;text-align:center;position:sticky;top:0;z-index:1000;border-bottom:1px solid #ddd}
+nav ul{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:1.2rem;background:var(--menu-bg-color);margin:0;padding:.3rem .6rem;list-style:none}
+nav ul li{position:relative;font-size:var(--menu-size)}
+nav ul li>a{color:var(--menu-text-color);text-decoration:none;padding:.4rem .5rem;display:block;transition:color .2s}
+nav ul li>a:hover{color:var(--menu-hover-text)}
+nav ul li:hover>ul{display:block}
+nav ul li ul{display:none;position:absolute;top:100%;left:0;min-width:200px;background:var(--menu-bg-color);padding:.6rem 0;margin:0;list-style:none;z-index:999}
+nav ul li ul li a{display:block;padding:.6rem 1rem;color:var(--menu-text-color);font-size:var(--submenu-size);white-space:nowrap}
+nav ul li ul li a:hover{color:var(--menu-hover-text)}
+main{padding:var(--page-padding);min-height:400px;text-align:center}
+.highlight{color:var(--header-color);font-weight:700;font-size:var(--intro-strong-size);line-height:1.2}
+.message-text{font-size:var(--intro-message-size);margin-top:2rem}
+.welcome-buttons{display:flex;justify-content:center;gap:4rem;margin-top:var(--intro-gap);flex-wrap:wrap}
+.welcome-buttons button{background:#fff;border:2px solid var(--btn-border);color:var(--btn-text);font-size:var(--button-size);padding:1rem 2rem;border-radius:8px;cursor:pointer;transition:all .2s}
+.welcome-buttons button:hover{background:var(--btn-hover-bg);color:var(--btn-hover-text)}
+/* 편집 패널(관리자 모드 전용) */
+.panel{position:sticky;top:0;z-index:1100;background:#fff;border-bottom:1px solid #eee;padding:.6rem .8rem;display:none;flex-wrap:wrap;gap:.6rem;justify-content:center}
+.ctrl{display:flex;align-items:center;gap:.4rem;background:#f7f7f9;border:1px solid #ececf1;border-radius:8px;padding:.35rem .55rem}
+.ctrl label{font-size:.85rem;opacity:.85}
+.ctrl input[type="color"]{width:28px;height:28px;border:none;background:transparent;padding:0}
+.ctrl input[type="range"]{width:140px}
+.val{min-width:3.2rem;text-align:right;font-variant-numeric:tabular-nums;font-size:.85rem}
+@media(max-width:768px){main{padding:2rem}.welcome-buttons{gap:1rem}}
+</style>
 </head>
 <body>
-  <header>
-    <div><strong>루웨인 트리니티</strong></div>
-    <nav>
-      <ul>
-        <li><a href="love/index.html">사랑의 언어</a></li>
-        <li><a href="breath/index.html">숨 틔움방</a></li>
-        <li><a href="trinity/index.html">루웨인 트리니티</a></li>
-        <li><a href="haneol/index.html">한얼</a></li>
-        <li><a href="goods/index.html">굿즈</a></li>
-        <li><a href="help/index.html">도움말</a></li>
-        <li><a href="support/index.html">고객센터</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <div class="wrap">
-    <h1>환영합니다</h1>
-    <p class="lead">새로 시작하거나, 이어서 진행하세요.</p>
-
-    <div class="grid">
-      <a class="card" href="new_1.html">
-        <h3>새로 시작하기</h3>
-        <p>신규 사용자 온보딩을 통해 나만의 공간을 준비합니다.</p>
-      </a>
-      <a class="card" href="old_1.html">
-        <h3>이어하기</h3>
-        <p>기존 사용자라면 바로 내 쉼터(개인 아카이브)로 이동합니다.</p>
-      </a>
-      <a class="card" href="with_luwein.html">
-        <h3>루웨인 소개</h3>
-        <p>루웨인의 철학과 사용법을 간단히 봅니다.</p>
-      </a>
-    </div>
+<!-- 관리자 모드에서만 보임 (?admin=1) -->
+<div class="panel" id="adminPanel">
+  <!-- 색상 -->
+  <div class="ctrl"><label>제목</label><input type="color" data-var="--header-color" value="#af2465"></div>
+  <div class="ctrl"><label>메뉴배경</label><input type="color" data-var="--menu-bg-color" value="#6c5b7b"></div>
+  <div class="ctrl"><label>메뉴글자</label><input type="color" data-var="--menu-text-color" value="#ffffff"></div>
+  <div class="ctrl"><label>메뉴호버</label><input type="color" data-var="--menu-hover-text" value="#2a9d8f"></div>
+  <div class="ctrl"><label>버튼선</label><input type="color" data-var="--btn-border" value="#2a9d8f"></div>
+  <div class="ctrl"><label>버튼글자</label><input type="color" data-var="--btn-text" value="#2a9d8f"></div>
+  <div class="ctrl"><label>버튼호버BG</label><input type="color" data-var="--btn-hover-bg" value="#2a9d8f"></div>
+  <div class="ctrl"><label>버튼호버TXT</label><input type="color" data-var="--btn-hover-text" value="#ffffff"></div>
+  <!-- 글자 크기 -->
+  <div class="ctrl"><label>제목크기</label><input type="range" min="1.2" max="4.0" step="0.1" data-var="--title-size" value="2.2"><span class="val">2.2rem</span></div>
+  <div class="ctrl"><label>강조크기</label><input type="range" min="1.2" max="6.0" step="0.1" data-var="--intro-strong-size" value="3.2"><span class="val">3.2rem</span></div>
+  <div class="ctrl"><label>문장크기</label><input type="range" min="0.6" max="3.0" step="0.1" data-var="--intro-message-size" value="1.2"><span class="val">1.2rem</span></div>
+  <div class="ctrl"><label>메뉴크기</label><input type="range" min="0.8" max="2.0" step="0.05" data-var="--menu-size" value="1.0"><span class="val">1.0rem</span></div>
+  <div class="ctrl"><label>하위메뉴</label><input type="range" min="0.7" max="1.8" step="0.05" data-var="--submenu-size" value="0.95"><span class="val">0.95rem</span></div>
+  <div class="ctrl"><label>버튼크기</label><input type="range" min="0.8" max="2.0" step="0.05" data-var="--button-size" value="1.2"><span class="val">1.2rem</span></div>
+  <!-- 저장 -->
+  <div class="ctrl">
+    <button id="exportHtml">내 테마 저장(HTML)</button>
   </div>
+</div>
 
-  <footer>© LUWAIN</footer>
+<header>루웨인 트리니티</header>
+
+<nav>
+  <ul>
+    <li><a href="#">사랑의 언어</a>
+      <ul>
+        <li><a href="#">말의 온도</a></li>
+        <li><a href="#">감성일기</a></li>
+        <li><a href="#">상처주는 말 VS 상처 받는 말</a></li>
+        <li><a href="#">사랑도 연습이 필요하다</a></li>
+        <li><a href="#">사랑해 볼까?</a></li>
+        <li><a href="#">To 루웨인 트리니티</a></li>
+      </ul>
+    </li>
+    <li><a href="#">울림의 언어</a>
+      <ul>
+        <li><a href="#">음성안내</a></li>
+        <li><a href="#">언어선택</a></li>
+        <li><a href="#">기본설정</a></li>
+        <li><a href="#">울림의 언어는</a></li>
+        <li><a href="#">울림체조</a></li>
+        <li><a href="#">감응남기기</a></li>
+        <li><a href="#">놀이터</a></li>
+        <li><a href="#">AI협업</a></li>
+      </ul>
+    </li>
+    <li><a href="#">루웨인 트리니티</a></li>
+    <li><a href="#">숨 틔움방</a>
+      <ul>
+        <li><a href="#">숨 카드</a></li>
+        <li><a href="#">숨 클립</a></li>
+        <li><a href="#">루웨인 도서관</a></li>
+        <li><a href="#">시나리오</a></li>
+        <li><a href="#">낙서장</a></li>
+        <li><a href="#">AI와 잡담하기</a></li>
+        <li><a href="#">기타 항목</a></li>
+      </ul>
+    </li>
+    <li><a href="#">한얼</a>
+      <ul>
+        <li><a href="#">한얼이란</a></li>
+        <li><a href="#">쉴만한</a></li>
+        <li><a href="#">즐길만한</a></li>
+        <li><a href="#">건강한</a></li>
+        <li><a href="#">선한</a></li>
+        <li><a href="#">스마트한</a></li>
+        <li><a href="#">유연한</a></li>
+      </ul>
+    </li>
+    <li><a href="#">맑은샘</a>
+      <ul>
+        <li><a href="#">웹툰</a></li>
+        <li><a href="#">시나리오</a></li>
+        <li><a href="#">애니메이션</a></li>
+        <li><a href="#">한마음특공대</a></li>
+        <li><a href="#">루웨인도서관</a></li>
+      </ul>
+    </li>
+    <li><a href="help.html">도움말 및 공지</a></li>
+    <li><a href="customer.html">고객센터</a></li>
+  </ul>
+</nav>
+
+<main>
+  <h1>
+    <span class="highlight">당신</span>에게만 열려 있는<br />
+    <span class="highlight">루웨인 트리니티</span>입니다.
+  </h1>
+
+  <p class="message-text">
+    오직, 당신만을 위한 울림이고 싶습니다.<br />
+    당신의 한 마디 말이 울림의 시작입니다.
+  </p>
+
+  <div class="welcome-buttons">
+    <!-- ✅ 버튼 동작 연결 -->
+    <button onclick="location.href='new_1.html'">처음이에요</button>
+    <button onclick="location.href='old_1.html'">이어 갈래요</button>
+  </div>
+</main>
+
+<script>
+(function(){
+  // 관리자 모드: ?admin=1 일 때만 패널 표시
+  const params = new URLSearchParams(location.search);
+  const admin = params.get('admin') === '1';
+  const panel = document.getElementById('adminPanel');
+  if(admin){ panel.style.display='flex'; }
+
+  if(!admin) return;
+
+  const root = document.documentElement;
+  document.querySelectorAll('#adminPanel input[type="color"]').forEach(inp=>{
+    const v = inp.getAttribute('data-var');
+    root.style.setProperty(v, inp.value);
+    inp.addEventListener('input', e=>{
+      root.style.setProperty(v, e.target.value);
+    });
+  });
+  document.querySelectorAll('#adminPanel input[type="range"]').forEach(inp=>{
+    const v = inp.getAttribute('data-var');
+    const out = inp.parentElement.querySelector('.val');
+    const apply = ()=>{
+      const val = inp.value + 'rem';
+      root.style.setProperty(v, val);
+      if(out) out.textContent = val;
+    };
+    apply();
+    inp.addEventListener('input', apply);
+  });
+
+  document.getElementById('exportHtml').addEventListener('click', ()=>{
+    const theme = document.getElementById('themeVars');
+    const comp = getComputedStyle(root);
+    const vars = [
+      '--header-color','--menu-bg-color','--menu-text-color','--menu-hover-text',
+      '--btn-border','--btn-text','--btn-hover-bg','--btn-hover-text',
+      '--title-size','--intro-strong-size','--intro-message-size',
+      '--menu-size','--submenu-size','--button-size',
+      '--page-padding','--intro-gap'
+    ];
+    const lines = vars.map(v=>`  ${v}:${comp.getPropertyValue(v).trim() || 'initial'};`);
+    theme.textContent = `:root{\n${lines.join('\n')}\n}\n`;
+
+    const doc = document.documentElement.cloneNode(true);
+    const p = doc.querySelector('#adminPanel');
+    if(p) p.remove();
+    doc.querySelectorAll('script').forEach(s=>s.remove());
+
+    const html = '<!DOCTYPE html>\n' + doc.outerHTML;
+    const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'index-themed.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+})();
+</script>
 </body>
 </html>
