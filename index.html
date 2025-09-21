@@ -1,14 +1,28 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>루웨인 트리니티</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>루웨인 트리니티 | 메인</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Arial; margin:0; background:#0b0d10; color:#e8eef5}
+    header{padding:14px 18px; border-bottom:1px solid #1f2937; display:flex; justify-content:space-between; align-items:center}
+    nav ul{list-style:none; display:flex; gap:14px; margin:0; padding:0}
+    nav a{color:#e8eef5; text-decoration:none}
+    nav a:hover{text-decoration:underline}
+    .wrap{max-width:980px; margin:0 auto; padding:24px}
+    h1{margin:0 0 6px; font-size:22px}
+    .lead{opacity:.8; margin-bottom:18px}
+    .grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .card{border:1px solid #263442; border-radius:14px; padding:18px; background:#11161b; text-decoration:none; color:#e8eef5}
+    .card:hover{border-color:#8b5cf6; box-shadow:0 8px 20px rgba(0,0,0,.25)}
+    .card h3{margin:0 0 6px}
+    footer{opacity:.7; text-align:center; padding:18px}
+  </style>
 </head>
 <body>
   <header>
-    <h1>루웨인 트리니티</h1>
+    <div><strong>루웨인 트리니티</strong></div>
     <nav>
       <ul>
         <li><a href="love/index.html">사랑의 언어</a></li>
@@ -22,9 +36,26 @@
     </nav>
   </header>
 
-  <main>
-    <h2>환영합니다</h2>
-    <p>루웨인 트리니티 웹에 오신 것을 환영합니다.</p>
-  </main>
+  <div class="wrap">
+    <h1>환영합니다</h1>
+    <p class="lead">새로 시작하거나, 이어서 진행하세요.</p>
+
+    <div class="grid">
+      <a class="card" href="new_1.html">
+        <h3>새로 시작하기</h3>
+        <p>신규 사용자 온보딩을 통해 나만의 공간을 준비합니다.</p>
+      </a>
+      <a class="card" href="old_1.html">
+        <h3>이어하기</h3>
+        <p>기존 사용자라면 바로 내 쉼터(개인 아카이브)로 이동합니다.</p>
+      </a>
+      <a class="card" href="with_luwein.html">
+        <h3>루웨인 소개</h3>
+        <p>루웨인의 철학과 사용법을 간단히 봅니다.</p>
+      </a>
+    </div>
+  </div>
+
+  <footer>© LUWAIN</footer>
 </body>
 </html>
