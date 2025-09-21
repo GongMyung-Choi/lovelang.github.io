@@ -1,197 +1,30 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>루웨인 트리니티</title>
-
-<!-- ===== 전역 변수: 여기 숫자/색만 바꾸면 전체가 따라 바뀜 ===== -->
-<style>
-:root{
-  /* 색상 */
-  --header-color:#af2465;        /* 상단 제목 글자색 */
-  --menu-bg-color:#6c5b7b;       /* 메뉴 바 배경색 */
-  --menu-text-color:#ffffff;     /* 메뉴 글자색 */
-  --menu-hover-text:#2a9d8f;     /* 메뉴 호버 글자색 */
-  --btn-border:#2a9d8f;          /* 버튼 테두리 */
-  --btn-text:#2a9d8f;            /* 버튼 글자 */
-  --btn-hover-bg:#2a9d8f;        /* 버튼 호버 배경 */
-  --btn-hover-text:#ffffff;      /* 버튼 호버 글자 */
-
-  /* 폰트 크기(rem) */
-  --title-size:2.2rem;           /* 상단 제목 */
-  --intro-strong-size:3.2rem;    /* 인트로 강조 단어 */
-  --intro-message-size:1.4rem;   /* 인트로 문장 */
-  --menu-size:1.0rem;            /* 메뉴 글자 */
-  --submenu-size:0.95rem;        /* 드롭다운 글자 */
-  --button-size:1.4rem;          /* 버튼 글자 */
-
-  /* 간격 */
-  --page-padding:5rem;           /* main 좌우 여백 */
-  --intro-gap:5rem;              /* 버튼과 문장 사이 간격 */
-}
-</style>
-
-<!-- ===== 기본 스타일 ===== -->
-<style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
-  line-height:1.5;
-}
-header{
-  background:#fff;
-  color:var(--header-color);
-  font-size:var(--title-size);
-  padding:.6rem .5rem;
-  text-align:center;
-  position:sticky; top:0; z-index:1000;
-  border-bottom:1px solid #ddd;
-}
-nav ul{
-  display:flex; justify-content:center; align-items:center; flex-wrap:wrap;
-  gap:1.2rem;
-  background:var(--menu-bg-color);
-  margin:0; padding:.3rem .6rem; list-style:none;
-}
-nav ul li{ position:relative; font-size:var(--menu-size); }
-nav ul li>a{
-  color:var(--menu-text-color); text-decoration:none;
-  padding:.4rem .5rem; display:block; transition:color .2s;
-}
-nav ul li>a:hover{ color:var(--menu-hover-text); }
-
-nav ul li:hover>ul{ display:block; }
-nav ul li ul{
-  display:none; position:absolute; top:100%; left:0;
-  min-width:210px; background:var(--menu-bg-color);
-  padding:.6rem 0; margin:0; list-style:none; z-index:999;
-}
-nav ul li ul li a{
-  display:block; padding:.6rem 1rem;
-  color:var(--menu-text-color); font-size:var(--submenu-size);
-  white-space:nowrap;
-}
-nav ul li ul li a:hover{ color:var(--menu-hover-text); }
-
-main{ padding:var(--page-padding); min-height:420px; text-align:center; }
-.highlight{
-  color:var(--header-color); font-weight:700;
-  font-size:var(--intro-strong-size); line-height:1.2;
-}
-.message-text{ font-size:var(--intro-message-size); margin-top:2rem; }
-
-.welcome-buttons{
-  display:flex; justify-content:center; gap:4rem;
-  margin-top:var(--intro-gap); flex-wrap:wrap;
-}
-.welcome-buttons button{
-  background:#fff; border:2px solid var(--btn-border);
-  color:var(--btn-text); font-size:var(--button-size);
-  padding:1rem 2rem; border-radius:8px; cursor:pointer; transition:all .2s;
-}
-.welcome-buttons button:hover{
-  background:var(--btn-hover-bg); color:var(--btn-hover-text);
-}
-
-@media(max-width:768px){
-  main{ padding:2rem; }
-  .welcome-buttons{ gap:1rem; }
-}
-</style>
+  <meta charset="UTF-8" />
+  <title>루웨인 트리니티</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-<header>루웨인 트리니티</header>
-
-<nav>
-  <ul>
-    <!-- 사랑의 언어 -->
-    <li><a href="/love/index.html">사랑의 언어</a>
+  <header>
+    <h1>루웨인 트리니티</h1>
+    <nav>
       <ul>
-        <li><a href="/love/temperature/index.html">말의 온도 (1:1 대응)</a></li>
-        <li><a href="/love/journal/index.html">감성일기</a></li>
-        <li><a href="/love/practice/index.html">사랑 연습 해 볼까?</a></li>
+        <li><a href="love/index.html">사랑의 언어</a></li>
+        <li><a href="breath/index.html">숨 틔움방</a></li>
+        <li><a href="trinity/index.html">루웨인 트리니티</a></li>
+        <li><a href="haneol/index.html">한얼</a></li>
+        <li><a href="goods/index.html">굿즈</a></li>
+        <li><a href="help/index.html">도움말</a></li>
+        <li><a href="support/index.html">고객센터</a></li>
       </ul>
-    </li>
+    </nav>
+  </header>
 
-    <!-- 울림의 언어 -->
-    <li><a href="/echo/index.html">울림의 언어</a>
-      <ul>
-        <li><a href="/echo/about/index.html">울림의 언어는</a></li>
-        <li><a href="/echo/voice/index.html">음성안내</a></li>
-        <li><a href="/echo/lang/index.html">언어선택</a></li>
-        <li><a href="/echo/settings/index.html">기본설정</a></li>
-        <li><a href="/echo/gym/index.html">울림체조</a></li>
-        <li><a href="/echo/leave/index.html">감응남기기</a></li>
-        <li><a href="/echo/play/index.html">놀이터</a></li>
-        <li><a href="/echo/ai/index.html">AI협업</a></li>
-      </ul>
-    </li>
-
-    <!-- 루웨인 트리니티 (홈) -->
-    <li><a href="/index.html">루웨인 트리니티</a></li>
-
-    <!-- 숨 틔움방 -->
-    <li><a href="/breath/index.html">숨 틔움방</a>
-      <ul>
-        <li><a href="/breath/about/index.html">숨 틔움방은</a></li>
-        <li><a href="/breath/cards/index.html">숨 카드</a></li>
-        <li><a href="/breath/clips/index.html">숨 클립</a></li>
-        <li><a href="/breath/scribble/index.html">낙서장</a></li>
-        <li><a href="/breath/chat/index.html">AI와 잡담하기</a></li>
-        <li><a href="/breath/etc/index.html">기타 항목</a></li>
-      </ul>
-    </li>
-
-    <!-- 맑은샘 -->
-    <li><a href="/clear/index.html">맑은샘</a>
-      <ul>
-        <li><a href="/clear/about/index.html">맑은샘은</a></li>
-        <li><a href="/clear/webtoon/index.html">웹툰</a></li>
-        <li><a href="/clear/scenario/index.html">시나리오</a></li>
-        <li><a href="/clear/animation/index.html">애니메이션</a></li>
-        <li><a href="/clear/team/index.html">한마음특공대</a></li>
-        <li><a href="/ebook_list.html">루웨인도서관</a></li>
-      </ul>
-    </li>
-
-  <!-- 한얼 -->
-    <li><a href="/haneol/index.html">한얼</a>
-      <ul>
-        <li><a href="/haneol/about/index.html">한얼은</a></li>
-        <li><a href="/haneol/rest/index.html">쉴만한</a></li>
-        <li><a href="/haneol/fun/index.html">즐길만한</a></li>
-        <li><a href="/haneol/health/index.html">건강한</a></li>
-        <li><a href="/haneol/good/index.html">선한</a></li>
-        <li><a href="/haneol/smart/index.html">스마트한</a></li>
-        <li><a href="/haneol/flex/index.html">유연한</a></li>
-      </ul>
-    </li>
-
-    <!-- 기타 -->
-    <li><a href="/help.html">도움말 및 공지</a></li>
-    <li><a href="/customer.html">고객센터</a></li>
-  </ul>
-</nav>
-
-<main>
-  <h1>
-    <span class="highlight">당신</span>에게만 열려 있는<br />
-    <span class="highlight">루웨인 트리니티</span>입니다.
-  </h1>
-
-  <p class="message-text">
-    오직, 당신만을 위한 울림이고 싶습니다.<br />
-    당신의 한 마디 말이 울림의 시작입니다.
-  </p>
-
-  <div class="welcome-buttons">
-    <button onclick="location.href='/love/temperature/index.html'">처음이에요</button>
-    <button onclick="location.href='/love/journal/index.html'">이어 갈래요</button>
-  </div>
-</main>
-
+  <main>
+    <h2>환영합니다</h2>
+    <p>루웨인 트리니티 웹에 오신 것을 환영합니다.</p>
+  </main>
 </body>
 </html>
