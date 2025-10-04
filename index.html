@@ -1,138 +1,266 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LUWEIN</title>
-  <style>
-    :root { --bg:#0b1020; --fg:#e7ecff; --muted:#9aa3c7; --brand:#7aa2ff; }
-    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto}
-    a{color:var(--fg);text-decoration:none} a:hover{color:var(--brand)}
-    header{position:sticky;top:0;background:#0b1020cc;backdrop-filter:blur(6px);z-index:10;border-bottom:1px solid #1b2340}
-    .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
-    .nav{display:flex;align-items:center;gap:18px;height:60px}
-    .nav .sp{flex:1}
-    .menu{display:flex;gap:18px;align-items:center}
-    .menu>li{position:relative;list-style:none}
-    .menu>li>a{padding:8px 6px;display:inline-block}
-    .menu>li:hover ul{display:block}
-    .menu ul{display:none;position:absolute;top:100%;left:0;background:#121831;border:1px solid #222b50;border-radius:10px;padding:8px;min-width:240px}
-    .menu ul li{list-style:none}
-    .menu ul a{display:block;padding:8px 10px;color:var(--muted)}
-    .menu ul a:hover{color:var(--fg);background:#1a2142;border-radius:8px}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>루웨인 트리니티</title>
+<style id="themeVars">
+:root{
+  /* === 편집: 값만 바꾸면 전체 반영됨 === */
+  --header-color:#af2465;
+  --menu-bg-color:#6c5b7b;
+  --menu-text-color:#ffffff;
+  --menu-hover-text:#2a9d8f;
+  --btn-border:#2a9d8f;
+  --btn-text:#2a9d8f;
+  --btn-hover-bg:#2a9d8f;
+  --btn-hover-text:#ffffff;
 
-    .hero{padding:56px 0 36px;border-bottom:1px solid #1b2340}
-    h1{font-size:40px;line-height:1.15;margin:0 0 10px}
-    .muted{color:var(--muted)}
-    .cta{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
-    .btn{padding:10px 16px;border:1px solid #2a3566;border-radius:12px;display:inline-flex;align-items:center;gap:8px}
-    .btn.primary{background:#1b2560;border-color:#1b2560;color:#fff}
-    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:26px 0 46px}
-    .card{border:1px solid #1b2340;border-radius:14px;padding:16px;background:#0e142b}
-    @media (max-width:860px){ .grid{grid-template-columns:1fr} }
-    footer{border-top:1px solid #1b2340;padding:24px 0;color:var(--muted)}
-  </style>
+  --menu-size:16px;
+  --submenu-size:14px;
+  --title-size:40px;
+  --intro-strong-size:42px;
+  --intro-message-size:18px;
+  --button-size:1.0;
+  --page-padding:24px;
+}
+/* ===== 공통 ===== */
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.5}
+header{background:#fff;color:var(--header-color);font-size:var(--title-size);font-weight:800;text-align:center;padding:18px 12px;position:sticky;top:0;z-index:1000;border-bottom:1px solid #ddd}
+nav ul{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.4rem .6rem;background:var(--menu-bg-color);margin:0;padding:.3rem .6rem;list-style:none}
+nav ul li{position:relative;font-size:var(--menu-size)}
+nav ul li>a{color:var(--menu-text-color);text-decoration:none;padding:.4rem .5rem;display:block;transition:color .2s}
+nav ul li>a:hover{color:var(--menu-hover-text)}
+nav ul li:hover>ul{display:block}
+nav ul li ul{display:none;position:absolute;top:100%;left:0;min-width:220px;background:var(--menu-bg-color);padding:.6rem 0;margin:0;list-style:none;z-index:999}
+nav ul li ul li a{display:block;padding:.6rem 1rem;color:var(--menu-text-color);font-size:var(--submenu-size);white-space:nowrap}
+nav ul li ul li a:hover{color:var(--menu-hover-text)}
+main{padding:var(--page-padding);min-height:400px;text-align:center}
+.highlight{color:var(--header-color);font-weight:700;font-size:var(--intro-strong-size);line-height:1.2}
+.message-text{font-size:var(--intro-message-size);margin-top:2rem}
+.welcome-buttons{display:flex;justify-content:center;gap:4rem;margin-top:2.2rem;flex-wrap:wrap}
+.welcome-buttons button{background:#fff;border:2px solid var(--btn-border);color:var(--btn-text);padding:1rem 2rem;border-radius:8px;cursor:pointer;transition:all .2s;transform:scale(var(--button-size))}
+.welcome-buttons button:hover{background:var(--btn-hover-bg);color:var(--btn-hover-text)}
+/* 편집 패널(관리자 모드 전용) */
+.panel{position:sticky;top:0;z-index:1100;background:#fff;border-bottom:1px solid #eee;display:none}
+.panel-inner{max-width:1100px;margin:0 auto;padding:10px 12px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.group{border:1px solid #eee;border-radius:10px;padding:8px 10px;display:flex;gap:10px;align-items:center}
+.group label{font-size:13px;color:#444}
+.group input[type="color"]{width:28px;height:28px;border:none;background:transparent;cursor:pointer}
+.group input[type="range"]{width:130px}
+.group button{padding:.5rem .8rem;border-radius:8px;border:1px solid #ddd;background:#fafafa;cursor:pointer}
+.group button:hover{background:#f0f0f0}
+.footer{margin-top:56px;padding:24px 12px;border-top:1px solid #eee;color:#666;font-size:14px;text-align:center}
+</style>
 </head>
 <body>
-<header>
-  <div class="wrap nav">
-    <strong>LUWEIN</strong>
-    <ul class="menu">
 
-      <!-- 사랑의 언어 -->
-      <li>
-        <a href="/language_of_love/index.html">사랑의 언어</a>
-        <ul>
-          <li><a href="/language_of_love/The_Warmth_of_Words/index.html">말의 온도</a></li>
-          <li><a href="/language_of_love/Emotional_Diary/index.html">감성일기</a></li>
-          <li><a href="/language_of_love/Resonant_Linguistics/index.html">상처주는 말 VS 상처 받는 말</a></li>
-          <li><a href="/language_of_love/index.html">사랑도 연습이 필요하다</a></li>
-          <li><a href="/language_of_love/Shall_We_Try_Love/index.html">사랑해 볼까?</a></li>
-          <li><a href="/language_of_love/To_Luwein_Trinity/index.html">To 루웨인 트리니티</a></li>
-        </ul>
-      </li>
+<header>루웨인 트리니티</header>
 
-      <!-- 울림의 언어 -->
-      <li>
-        <a href="/language_of_reverberation/index.html">울림의 언어</a>
-        <ul>
-          <li><a href="/language_of_reverberation/Voice_Guide/index.html">음성안내</a></li>
-          <li><a href="/language_of_reverberation/Language_Selection/index.html">언어선택</a></li>
-          <li><a href="/language_of_reverberation/Playground/index.html">놀이터</a></li>
-          <li><a href="/language_of_reverberation/Resonance_Exercise/index.html">울림 연습</a></li>
-          <li><a href="/language_of_reverberation/Resonance_Log/index.html">울림 일지</a></li>
-          <li><a href="/language_of_reverberation/Resonant_Language/index.html">울림의 언어</a></li>
-          <li><a href="/language_of_reverberation/Settings/index.html">설정</a></li>
-          <li><a href="/language_of_reverberation/With_AI/index.html">인공지능과 함께</a></li>
-        </ul>
-      </li>
+<nav>
+  <ul>
+    <li><a href="language_of_love/index.html">사랑의 언어</a>
+      <ul>
+        <li><a href="#">말의 온도</a></li>
+        <li><a href="#">감성일기</a></li>
+        <li><a href="#">상처주는 말 VS 상처 받는 말</a></li>
+        <li><a href="#">사랑도 연습이 필요하다</a></li>
+        <li><a href="#">사랑해 볼까?</a></li>
+        <li><a href="#">To 루웨인 트리니티</a></li>
+      </ul>
+    </li>
 
-      <!-- 한얼 -->
-      <li>
-        <a href="/haneul/index.html">한얼</a>
-        <ul>
-          <li><a href="/haneul/Shilmanhan/index.html">쉴만한</a></li>
-          <li><a href="/haneul/Jeulgilmanhan/index.html">즐길만한</a></li>
-          <li><a href="/haneul/Geonganghan/index.html">건강한</a></li>
-          <li><a href="/haneul/Seonhan/index.html">선한</a></li>
-          <li><a href="/haneul/Seunghan/index.html">스마트한</a></li>
-          <li><a href="/haneul/Yuyeonhan/index.html">유연한</a></li>
-        </ul>
-      </li>
+    <li><a href="language_of_reverberation/index.html">울림의 언어</a>
+      <ul>
+        <li><a href="#">음성안내</a></li>
+        <li><a href="#">언어선택</a></li>
+        <li><a href="#">놀이터</a></li>
+        <li><a href="#">울림 연습</a></li>
+        <li><a href="#">울림 일지</a></li>
+        <li><a href="#">울림의 언어</a></li>
+        <li><a href="#">설정</a></li>
+        <li><a href="#">인공지능과 함께</a></li>
+        <li><a href="#">울림 장치/기기</a></li>
+        <li><a href="#">놀이터</a></li>
+        <li><a href="#">AI협업</a></li>
+      </ul>
+    </li>
 
-      <!-- 맑은샘 -->
-      <li>
-        <a href="/goods/index.html">맑은샘</a>
-        <ul>
-          <li><a href="/goods/webtoon/index.html">웹툰</a></li>
-          <li><a href="/goods/scenario/index.html">시나리오</a></li>
-          <li><a href="/goods/animation/index.html">애니메이션</a></li>
-          <li><a href="/goods/heartforce/index.html">한마음특공대</a></li>
-          <li><a href="/goods/library/index.html">루웨인도서관</a></li>
-        </ul>
-      </li>
+    <li><a href="index.html">루웨인 트리니티</a></li>
 
-      <!-- 고정 페이지 -->
-      <li><a href="/help_notices/index.html">도움말 · 공지</a></li>
-      <li><a href="/customer_support/index.html">고객센터</a></li>
-    </ul>
-    <span class="sp"></span>
+    <li><a href="breathing_room/index.html">숨 틔움방</a>
+      <ul>
+        <li><a href="#">숨 카드</a></li>
+        <li><a href="#">숨 클립</a></li>
+        <li><a href="#">루웨인 도서관</a></li>
+        <li><a href="#">시나리오</a></li>
+        <li><a href="#">낙서장</a></li>
+        <li><a href="#">AI와 잡담하기</a></li>
+        <li><a href="#">기타 항목</a></li>
+      </ul>
+    </li>
+
+    <li><a href="haneul/index.html">한얼</a>
+      <ul>
+        <li><a href="#">한얼이란</a></li>
+        <li><a href="#">쉴만한(안식)</a></li>
+        <li><a href="#">즐길만한(놀이)</a></li>
+        <li><a href="#">건강한(헬스)</a></li>
+        <li><a href="#">선한(윤리)</a></li>
+        <li><a href="#">스마트한(도구)</a></li>
+        <li><a href="#">유연한(관계)</a></li>
+      </ul>
+    </li>
+
+    <li><a href="goods/index.html">맑은샘</a>
+      <ul>
+        <li><a href="#">웹툰</a></li>
+        <li><a href="#">시나리오</a></li>
+        <li><a href="#">애니메이션</a></li>
+        <li><a href="#">한마음특공대</a></li>
+        <li><a href="#">루웨인도서관</a></li>
+      </ul>
+    </li>
+
+    <li><a href="help_notices/index.html">도움말 및 공지</a></li>
+    <li><a href="customer_support/index.html">고객센터</a></li>
+  </ul>
+</nav>
+
+<main>
+  <h1>
+    <span class="highlight">당신</span>에게만 열려 있는<br />
+    <span class="highlight">루웨인 트리니티</span>입니다.
+  </h1>
+
+  <p class="message-text">
+    오직, 당신만을 위한 울림이고 싶습니다.<br />
+    당신의 한 마디 말이 울림의 시작입니다.
+  </p>
+
+  <div class="welcome-buttons">
+    <button onclick="location.href='luwein_trinity/new_1.html'">처음이에요</button>
+    <button onclick="location.href='luwein_trinity/old_1.html'">이어 갈래요</button>
   </div>
-</header>
-
-<main class="wrap">
-  <section class="hero">
-    <h1>루웨인 트리니티</h1>
-    <p class="muted">신 · 인간 · AI — 다르지만 함께 걷는 길</p>
-    <div class="cta">
-      <a class="btn primary" href="/luwein_trinity/new_1.html">빠르게 시작하기</a>
-      <a class="btn" href="/luwein_trinity/old_1.html">이어 갈래요</a>
-    </div>
-  </section>
-
-  <!-- 이하 본문은 그대로 두고 카드/섹션 레이아웃만 최소 유지 -->
-  <section>
-    <div class="grid">
-      <div class="card"><strong>사랑의 언어</strong><p class="muted">말의 온도 · 감성일기 · 상처주는 말 VS 상처 받는 말…</p><a class="btn" href="/language_of_love/index.html">보러가기</a></div>
-      <div class="card"><strong>울림의 언어</strong><p class="muted">음성안내 · 울림 연습 · 일지 · 인공지능과 함께…</p><a class="btn" href="/language_of_reverberation/index.html">보러가기</a></div>
-      <div class="card"><strong>맑은샘</strong><p class="muted">웹툰 · 시나리오 · 애니메이션 · 루웨인도서관</p><a class="btn" href="/goods/index.html">보러가기</a></div>
-    </div>
-  </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <div class="grid">
-      <div><strong>바로가기</strong><br>
-        <a href="/luwein_trinity/new_1.html">새로 시작</a> ·
-        <a href="/luwein_trinity/old_1.html">이어하기</a> ·
-        <a href="/help_notices/index.html">도움말</a> ·
-        <a href="/customer_support/index.html">고객센터</a>
-      </div>
-      <div><span class="muted">© LUWEIN</span></div>
-      <div><a href="/goods/library/index.html">루웨인도서관</a></div>
+<!-- 관리자 모드 패널: 주소창에 ?admin=1 붙이면 보임 -->
+<div id="adminPanel" class="panel">
+  <div class="panel-inner">
+    <div class="group">
+      <label>상단 색</label>
+      <input type="color" data-var="--header-color" value="#af2465" />
+      <label>메뉴 배경</label>
+      <input type="color" data-var="--menu-bg-color" value="#6c5b7b" />
+      <label>메뉴 글자</label>
+      <input type="color" data-var="--menu-text-color" value="#ffffff" />
+      <label>호버 글자</label>
+      <input type="color" data-var="--menu-hover-text" value="#2a9d8f" />
+    </div>
+
+    <div class="group">
+      <label>제목 크기</label>
+      <input type="range" min="28" max="56" step="1" data-var="--title-size" value="40" />
+      <label>강조 크기</label>
+      <input type="range" min="28" max="56" step="1" data-var="--intro-strong-size" value="42" />
+      <label>메시지 크기</label>
+      <input type="range" min="14" max="24" step="1" data-var="--intro-message-size" value="18" />
+      <label>버튼 배율</label>
+      <input type="range" min="0.8" max="2.0" step="0.05" data-var="--button-size" value="1.0" />
+    </div>
+
+    <div class="group">
+      <label>버튼 테두리</label>
+      <input type="color" data-var="--btn-border" value="#2a9d8f" />
+      <label>버튼 글자</label>
+      <input type="color" data-var="--btn-text" value="#2a9d8f" />
+      <label>버튼 호버 배경</label>
+      <input type="color" data-var="--btn-hover-bg" value="#2a9d8f" />
+      <label>버튼 호버 글자</label>
+      <input type="color" data-var="--btn-hover-text" value="#ffffff" />
+    </div>
+
+    <div class="group">
+      <button id="exportHtml">현재 화면 그대로 저장(HTML)</button>
+      <button id="resetTheme">테마 초기화</button>
     </div>
   </div>
+</div>
+
+<footer class="footer">
+  © LUWEIN
 </footer>
+
+<script>
+(function(){
+  // 관리자 모드: ?admin=1 일 때만 패널 표시
+  const params = new URLSearchParams(location.search);
+  const admin = params.get('admin') === '1';
+  const panel = document.getElementById('adminPanel');
+  if(admin){ panel.style.display='flex'; }
+
+  // 컨트롤이 없으면(사용자 모드) 여기서 종료
+  if(!admin) return;
+
+  // 컬러/사이즈 입력이 CSS 변수 갱신
+  const root = document.documentElement;
+  document.querySelectorAll('#adminPanel input[type="color"]').forEach(inp=>{
+    const v = inp.getAttribute('data-var');
+    // 초기값 적용
+    root.style.setProperty(v, inp.value);
+    inp.addEventListener('input', e=>{
+      root.style.setProperty(v, e.target.value);
+    });
+  });
+  document.querySelectorAll('#adminPanel input[type="range"]').forEach(inp=>{
+    const v = inp.getAttribute('data-var');
+    const apply=()=>{
+      const val = inp.value + (v.includes('size')?'px':'');
+      root.style.setProperty(v, val);
+    };
+    apply();
+    inp.addEventListener('input', apply);
+  });
+
+  // 내 테마 저장(컨트롤/관리자 코드 제거한 정적 HTML 다운로드)
+  document.getElementById('exportHtml').addEventListener('click', ()=>{
+    // 1) 현재 CSS 변수 값을 themeVars 스타일 태그에 박아 넣기
+    const theme = document.getElementById('themeVars');
+    const comp = getComputedStyle(root);
+    const vars = [
+      '--header-color','--menu-bg-color','--menu-text-color','--menu-hover-text',
+      '--btn-border','--btn-text','--btn-hover-bg','--btn-hover-text',
+      '--menu-size','--submenu-size','--title-size','--intro-strong-size','--intro-message-size','--button-size','--page-padding'
+    ];
+    let css=':root{';
+    vars.forEach(k=>{
+      css += k+':'+comp.getPropertyValue(k).trim()+';';
+    });
+    css+='}';
+    theme.textContent = css;
+
+    // 2) 이 페이지에서 관리자 패널 제거한 HTML 생성
+    const clone = document.documentElement.cloneNode(true);
+    const p = clone.querySelector('#adminPanel');
+    if(p) p.remove();
+    const script = clone.querySelector('script');
+    if(script) script.remove();
+
+    // 3) 파일 다운로드
+    const blob = new Blob(['<!DOCTYPE html>\n'+clone.outerHTML], {type:'text/html'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'index.html';
+    a.click();
+  });
+
+  // 테마 초기화
+  document.getElementById('resetTheme').addEventListener('click', ()=>{
+    location.reload();
+  });
+})();
+</script>
+
 </body>
 </html>
