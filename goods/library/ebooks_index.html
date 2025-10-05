@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>📖 루웨인 전자책 라이브러리</title>
+<style>
+body{font-family:'Noto Sans KR',sans-serif;background:#f9f9f9;margin:0;}
+header{background:#004d60;color:#fff;padding:20px;text-align:center;font-size:1.6rem;font-weight:700;}
+main{max-width:1100px;margin:0 auto;padding:24px;}
+.section{margin-bottom:48px;}
+.section h2{color:#004d60;border-left:6px solid #007f91;padding-left:10px;margin-bottom:12px;}
+.subsection h3{color:#555;border-left:4px solid #aaa;padding-left:8px;margin-top:20px;margin-bottom:10px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;}
+.card{background:#fff;border-radius:12px;box-shadow:0 3px 6px rgba(0,0,0,0.12);padding:16px;}
+.card h4{margin:0 0 6px;font-size:1.05rem;color:#005b78;}
+.card a{text-decoration:none;color:inherit;}
+.badges{margin-top:4px;}
+.badge{display:inline-block;background:#cce7ea;color:#333;padding:4px 8px;border-radius:6px;font-size:0.8rem;margin:2px;}
+footer{text-align:center;padding:16px;color:#666;font-size:0.9rem;}
+</style>
+</head>
+<body>
+<header>📚 루웨인 전자책 라이브러리 (E-Books)</header>
+<main id="library"></main>
+<footer>루웨인 디지털 라이브러리 · 전자책 © 2025</footer>
+
+<script>
+// 📘 1️⃣ 전자책 목록 (자동화 가능)
+const sources = [
+  './ebooks/a_301/summary.txt',
+  './ebooks/a_401/summary.txt',
+  './ebooks/a_501/summary.txt'
+];
+
+// 📘 2️⃣ summary.txt 분석
+async function parseSummary(path){
+  const res = await fetch(path);
+  const text = await res.text();
+  const title = (text.match(/Title:\s*(.*)/i)||[])[1]||'제목 미상';
+  const category = (text.match(/Category:\s*(.*)/i)||[])[1]||'미분류';
+  const sub = (text.match(/Sub:\s*(.*)/i)||[])[1]||'기타';
+  const file = (text.match(/File:\s*(.*)/i)||[])[1]||'';
+  const tagsLine = (text.match(/Tags:\s*(.*)/i)||[])[1]||'';
+  const summary = (text.match(/Summary:\s*([\s\S]*)/i)||[])[1]||'';
+  const tags = tagsLine.split(/[#,]/).map(t=>t.trim()).filter(Boolean);
+
+  // 자동 감응 태그
+  const auto=[];
+  const lower=summary.toLowerCase();
+  if(/언어|communication/.test(lower)) auto.push('언어');
+  if(/철학|존재|의미/.test(lower)) auto.push('철학');
+  if(/예술|art|감성|창의/.test(lower)) auto.push('예술');
+  if(/기술|ai|system|tech/.test(lower)) auto.push('기술');
+  const allTags=[...new Set([...tags,...auto])];
+  return {title,category,sub,file,tags:allTags,summary};
+}
+
+// 📘 3️⃣ 인덱스 구성
+async function buildLibrary(){
+  const container=document.getElementById('library');
+  const items=await Promise.all(sources.map(parseSummary));
+  const grouped={};
+
+  // 대분류>중분류
+  items.forEach(({title,category,sub,file,tags,summary})=>{
+    if(!grouped[category]) grouped[category]={};
+    if(!grouped[category][sub]) grouped[category][sub]=[];
+    grouped[category][sub].push({title,file,tags,summary});
+  });
+
+  // 출력
+  for(const cat in grouped){
+    const section=document.createElement('section');
+    section.className='section';
+    section.innerHTML=`<h2>${cat}</h2>`;
+    const subCats=grouped[cat];
+
+    for(const sub in subCats){
+      const subsection=document.createElement('div');
+      subsection.className='subsection';
+      subsection.innerHTML=`<h3>${sub}</h3><div class="grid"></div>`;
+      const grid=subsection.querySelector('.grid');
+
+      subCats[sub].forEach(({title,file,tags,summary})=>{
+        const div=document.createElement('div');
+        div.className='card';
+        const badges=tags.map(t=>`<span class="badge">#${t}</span>`).join('');
+        const link=file?`<a href="${file}" target="_blank"><h4>${title}</h4></a>`:`<h4>${title}</h4>`;
+        div.innerHTML=`${link}<p>${summary.slice(0,100)}...</p><div class="badges">${badges}</div>`;
+        grid.appendChild(div);
+      });
+      section.appendChild(subsection);
+    }
+    container.appendChild(section);
+  }
+}
+buildLibrary();
+</script>
+</body>
+</html>
