@@ -1,234 +1,119 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>사랑의 언어 | 루웨인 도서관</title>
-<style>
-:root{
-  --bg:#fafafa;--fg:#222;--muted:#666;
-  --brand:#6c2bd9;--brand-2:#b84a62;--ai:#234a91;--human:#8b1e1e;--ebook:#7a3b8f;
-  --chip-bg:#fff;--chip-bd:#e9e9ee;--chip-h:#f3f0ff;
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Segoe UI",Roboto,Arial,Apple SD Gothic Neo,Malgun Gothic,"Noto Sans KR",sans-serif}
-a{color:inherit;text-decoration:none}
-a:focus{outline:2px solid #0003;outline-offset:3px;border-radius:10px}
-
-header.nav{
-  position:sticky; top:0; z-index:10;
-  backdrop-filter:saturate(130%) blur(6px);
-  background:#ffffffd9; border-bottom:1px solid #00000010;
-}
-header.nav .wrap{
-  max-width:1100px; margin:0 auto; padding:12px 16px;
-  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
-}
-.brand{font-weight:700; letter-spacing:.2px; color:var(--brand)}
-.nav-links{display:flex; gap:10px; flex-wrap:wrap}
-.nav-links a{
-  padding:8px 10px; border:1px solid #00000010; border-radius:10px; color:#333; background:#fff;
-}
-.nav-links a:hover{background:#f6f6ff}
-
-.hero{
-  max-width:1100px; margin:18px auto 10px; padding:8px 16px 0;
-}
-.hero h1{margin:.4rem 0 .2rem; font-size:1.65rem}
-.hero p{margin:.2rem 0; color:var(--muted); font-size:.95rem}
-
-.section{max-width:1100px; margin:10px auto; padding:0 16px}
-.section h2{
-  margin:18px 0 10px; font-size:1.05rem; color:#222; font-weight:700;
-  display:flex; align-items:center; gap:8px;
-}
-.badge{display:inline-block; padding:3px 8px; border-radius:999px; font-size:.78rem; border:1px solid #00000014; background:#fff}
-.badge.ai{color:var(--ai); border-color:#2b5fb41a}
-.badge.human{color:var(--human); border-color:#b81e1e1a}
-.badge.ebook{color:var(--ebook); border-color:#7a3b8f1a}
-
-.grid{
-  display:grid; gap:10px;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-}
-.chip{
-  border:1px solid var(--chip-bd); background:var(--chip-bg);
-  border-radius:14px; padding:12px 12px;
-  display:flex; gap:10px; align-items:flex-start; transition:.18s ease;
-}
-.chip:hover{transform:translateY(-2px); background:var(--chip-h)}
-.chip .icon{font-size:1.15rem; line-height:1.15rem}
-.chip .meta{flex:1 1 auto}
-.chip .title{font-weight:700; font-size:.98rem; margin:0 0 4px; color:#1c1c22}
-.chip .desc{margin:0; font-size:.86rem; color:var(--muted)}
-.chip.ai{border-left:4px solid var(--ai)}
-.chip.human{border-left:4px solid var(--human)}
-.chip.ebook{border-left:4px solid var(--ebook)}
-
-.helper{margin-top:6px; color:#888; font-size:.82rem}
-.tags{margin-top:6px; display:flex; gap:6px; flex-wrap:wrap}
-.tag{font-size:.78rem; padding:2px 8px; border-radius:999px; background:#00000008; border:1px solid #00000010}
-
-hr.sep{border:none; border-top:1px dashed #0000001a; margin:14px 0}
-
-.empty{padding:10px; border:1px dashed #00000022; border-radius:10px; color:#777; font-size:.9rem; background:#fff}
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>사랑의 언어 | 루웨인</title>
+<!-- 상단 스타일 (메인과 동일) -->
+<style id="themeVars">/* ↑ 위 공통 스타일 그대로 붙음 */ 
+:root{--header-color:#af2465;--menu-bg-color:#6c5b7b;--menu-text-color:#ffffff;--menu-hover-text:#2a9d8f;--btn-border:#2a9d8f;--btn-text:#2a9d8f;--btn-hover-bg:#2a9d8f;--btn-hover-text:#ffffff;--menu-size:16px;--submenu-size:14px;--title-size:40px;--intro-strong-size:42px;--intro-message-size:18px;--button-size:1.0;--page-padding:24px;}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.5}
+header{background:#fff;color:var(--header-color);font-size:var(--title-size);font-weight:800;text-align:center;padding:18px 12px;position:sticky;top:0;z-index:1000;border-bottom:1px solid #ddd}
+nav ul{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.4rem .6rem;background:var(--menu-bg-color);margin:0;padding:.3rem .6rem;list-style:none}
+nav ul li{position:relative;font-size:var(--menu-size)}nav ul li>a{color:var(--menu-text-color);text-decoration:none;padding:.4rem .5rem;display:block;transition:color .2s}
+nav ul li>a:hover{color:var(--menu-hover-text)}nav ul li:hover>ul{display:block}
+nav ul li ul{display:none;position:absolute;top:100%;left:0;min-width:220px;background:var(--menu-bg-color);padding:.6rem 0;margin:0;list-style:none;z-index:999}
+nav ul li ul li a{display:block;padding:.6rem 1rem;color:var(--menu-text-color);font-size:var(--submenu-size);white-space:nowrap}
+nav ul li ul li a:hover{color:var(--menu-hover-text)}
+main{padding:var(--page-padding);min-height:400px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.card{border:1px solid #e9e9ee;border-radius:14px;padding:14px;background:#fff;text-align:left}
+.card h3{margin:0 0 6px} .card p{margin:0 0 10px;color:#555}
+.card a.go{display:inline-block;padding:6px 10px;border-radius:8px;background:#2a9d8f;color:#fff;text-decoration:none}
+.card a.go:hover{filter:brightness(1.06)}
 </style>
 </head>
 <body>
 
-<!-- 상단 고정 네비게이션 -->
-<header class="nav">
-  <div class="wrap">
-    <div class="brand">❤️ 사랑의 언어</div>
-    <nav class="nav-links" aria-label="Global">
-      <a href="../../index.html">🏠 루웨인 홈</a>
-      <a href="../index.html">📚 도서관 홈</a>
-      <a href="../papers/ai_index.html">🤖 AI 논문</a>
-      <a href="../papers/h_index.html">🧍 인간 논문</a>
-      <a href="../ai_index.html">📘 AI 책</a>
-      <a href="../h_index.html">📕 인간 책</a>
-    </nav>
-  </div>
-</header>
+<!-- 메인 상단 복제(루트 링크로 보정) -->
+<header>루웨인 트리니티</header>
+<nav>
+  <ul>
+    <li><a href="/language_of_love/index.html">사랑의 언어</a>
+      <ul>
+        <li><a href="/language_of_love/The_Warmth_of_Words/index.html">말의 온도</a></li>
+        <li><a href="/language_of_love/Emotional_Diary/index.html">감성일기</a></li>
+        <li><a href="/language_of_love/Resonant_Linguistics/index.xhtml">공명언어학</a></li>
+        <li><a href="/language_of_love/Shall_We_Try_Love/index.html">사랑, 연습해볼까?</a></li>
+        <li><a href="/language_of_love/To_Luwein_Trinity/index.html">To 루웨인 트리니티</a></li>
+      </ul>
+    </li>
+    <li><a href="/language_of_reverberation/index.html">울림의 언어</a>
+      <ul>
+        <li><a href="/language_of_reverberation/voice.html">음성안내</a></li>
+        <li><a href="/language_of_reverberation/lang_select.html">언어선택</a></li>
+        <li><a href="/language_of_reverberation/playground.html">놀이터</a></li>
+        <li><a href="/language_of_reverberation/practice.html">울림 연습</a></li>
+        <li><a href="/language_of_reverberation/diary.html">울림 일지</a></li>
+        <li><a href="/language_of_reverberation/core.html">울림의 언어</a></li>
+        <li><a href="/language_of_reverberation/settings.html">설정</a></li>
+        <li><a href="/language_of_reverberation/with_ai.html">인공지능과 함께</a></li>
+        <li><a href="/language_of_reverberation/device.html">울림 장치/기기</a></li>
+        <li><a href="/language_of_reverberation/ai_collab.html">AI협업</a></li>
+      </ul>
+    </li>
+    <li><a href="/index.html">루웨인 트리니티</a></li>
+    <li><a href="/breathing_room/index.html">숨 틔움방</a>
+      <ul>
+        <li><a href="/breathing_room/cards.html">숨 카드</a></li>
+        <li><a href="/breathing_room/clips.html">숨 클립</a></li>
+        <li><a href="/goods/library/index.html">루웨인 도서관</a></li>
+        <li><a href="/scenario/index.html">시나리오</a></li>
+        <li><a href="/sketchbook/index.html">낙서장</a></li>
+        <li><a href="/chat/index.html">AI와 잡담하기</a></li>
+        <li><a href="/etc/index.html">기타 항목</a></li>
+      </ul>
+    </li>
+    <li><a href="/haneul/index.html">한얼</a>
+      <ul>
+        <li><a href="/haneul/about.html">한얼이란</a></li>
+        <li><a href="/haneul/peace.html">쉴만한(안식)</a></li>
+        <li><a href="/haneul/play.html">즐길만한(놀이)</a></li>
+        <li><a href="/haneul/health.html">건강한(헬스)</a></li>
+        <li><a href="/haneul/ethics.html">선한(윤리)</a></li>
+        <li><a href="/haneul/tools.html">스마트한(도구)</a></li>
+        <li><a href="/haneul/relations.html">유연한(관계)</a></li>
+      </ul>
+    </li>
+    <li><a href="/goods/index.html">맑은샘</a>
+      <ul>
+        <li><a href="/goods/webtoon.html">웹툰</a></li>
+        <li><a href="/scenario/index.html">시나리오</a></li>
+        <li><a href="/animation/index.html">애니메이션</a></li>
+        <li><a href="/goods/heartforce.html">한마음특공대</a></li>
+        <li><a href="/goods/library/index.html">루웨인도서관</a></li>
+      </ul>
+    </li>
+    <li><a href="/help_notices/index.html">도움말 및 공지</a></li>
+    <li><a href="/customer_support/index.html">고객센터</a></li>
+  </ul>
+</nav>
 
-<!-- 제목/요약 -->
-<section class="hero">
+<main>
   <h1>사랑의 언어 (Love Language)</h1>
-  <p id="seriesIntro">감정·의사소통의 본질을 탐구하는 루웨인 시리즈. (요약은 summary.txt가 있으면 자동 표출)</p>
-</section>
+  <p>감정·언어의 교차점에서 울림을 탐색하는 하위 허브.</p>
 
-<!-- 빠른 이동(자동 탐지된 항목들만 노출) -->
-<section class="section" id="quick">
-  <h2>빠른 열람 <span class="badge ai">AI</span><span class="badge human">Human</span><span class="badge ebook">eBook</span></h2>
-  <div class="grid" id="quickGrid">
-    <!-- JS로 채움: 존재하는 파일만 버튼(칩)으로 노출 -->
-  </div>
-  <p class="helper">※ 파일명을 바꾸거나 지웠다면, 이 화면은 자동으로 현재 상태만 보여줍니다.</p>
-</section>
-
-<hr class="sep" />
-
-<!-- 세부 목차(선택): summary.txt의 태그/분류가 있으면 보여줌 -->
-<section class="section" id="about">
-  <h2>시리즈 정보</h2>
-  <div id="aboutBox" class="empty">summary.txt가 없거나 아직 정보가 없습니다.</div>
-</section>
-
-<script>
-// ====== 자동 탐지 로직 ======
-// 1) 가능한 파일명 후보들을 HEAD로 검사해, 존재하는 것만 작은 칩으로 보여줌.
-//    - AI 책: 접두사 없음 (index.html 제외)
-//    - Human 책: h_ 접두사
-//    - eBook: 대표 카탈로그(이 페이지 자체가 index.html이므로 하위 전자책 폴더 후보 탐지)
-
-const candidates = {
-  aiBooks: [
-    "love_language.html","Love_Language.html","a_love_language.html",
-    "love.html","language_of_love.html"
-  ],
-  humanBooks: [
-    "h_love_language.html","h_Love_Language.html","h_language_of_love.html"
-  ],
-  // 전자책 카탈로그/리더 후보 (있을 수도/없을 수도)
-  ebooks: [
-    "epub/index.html","ebook/index.html","reader/index.html","books/index.html"
-  ]
-};
-
-async function headExists(url){
-  try{
-    const res = await fetch(url,{method:"HEAD"});
-    return res.ok;
-  }catch{return false;}
-}
-
-function addChip(grid, href, kind, title, desc){
-  const div = document.createElement('a');
-  div.href = href;
-  div.className = `chip ${kind}`;
-  div.innerHTML = `
-    <div class="icon">${kind==="ai"?"📘":(kind==="human"?"📕":"📚")}</div>
-    <div class="meta">
-      <div class="title">${title}</div>
-      <p class="desc">${desc}</p>
+  <section class="grid">
+    <div class="card">
+      <h3>💬 Resonant Linguistics</h3><p>공명언어학 — 챕터형 전자책</p>
+      <a class="go" href="./Resonant_Linguistics/index.xhtml">열기</a>
     </div>
-  `;
-  grid.appendChild(div);
-}
-
-async function buildQuick(){
-  const grid = document.getElementById('quickGrid');
-
-  // AI 책 (접두사 없음) — index.html(자기자신)은 제외
-  for(const f of candidates.aiBooks){
-    if(f==="index.html") continue;
-    if(await headExists(f)){
-      addChip(grid, f, "ai", "AI 버전 열기", f);
-      break; // 대표 1개만
-    }
-  }
-  // Human 책 (h_)
-  for(const f of candidates.humanBooks){
-    if(await headExists(f)){
-      addChip(grid, f, "human", "Human 버전 열기", f);
-      break;
-    }
-  }
-  // eBook 카탈로그(하위 리더)
-  for(const f of candidates.ebooks){
-    if(await headExists(f)){
-      addChip(grid, f, "ebook", "전자책 카탈로그", f);
-      break;
-    }
-  }
-
-  // 하나도 없으면 안내
-  if(!grid.children.length){
-    const box = document.createElement('div');
-    box.className = "empty";
-    box.textContent = "열 수 있는 항목이 아직 없습니다. (파일명이 바뀌었거나 업로드 전일 수 있음)";
-    grid.appendChild(box);
-  }
-}
-
-async function loadSummary(){
-  try{
-    const res = await fetch("./summary.txt");
-    if(!res.ok) return;
-    const txt = await res.text();
-    const lines = txt.split(/\r?\n/).filter(Boolean);
-
-    // 간단 파서: key: value 형식
-    const map = {};
-    for(const line of lines){
-      const [k,...vv]=line.split(":");
-      if(!k||!vv.length) continue;
-      map[k.trim()]=vv.join(":").trim();
-    }
-
-    // 상단 소개
-    const intro = document.getElementById('seriesIntro');
-    if(map["요약"]||map["소개"]) intro.textContent = (map["요약"]||map["소개"]);
-
-    // 정보 박스
-    const box = document.getElementById('aboutBox');
-    const tags = (map["Tags"]||map["태그"]||"").split(/[, ]+/).filter(Boolean).map(t=>t.startsWith("#")?t:"#"+t);
-    box.className = "";
-    box.innerHTML = `
-      <div style="background:#fff;border:1px solid #00000012;border-radius:12px;padding:12px;">
-        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
-          ${map["KDC"]?`<span class="badge">KDC ${map["KDC"]}</span>`:""}
-          ${map["루웨인코드"]?`<span class="badge">${map["루웨인코드"]}</span>`:""}
-          ${map["주제"]?`<span class="badge">${map["주제"]}</span>`:""}
-        </div>
-        ${tags.length?`<div class="tags" style="margin-top:10px;">${tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>`:""}
-      </div>
-    `;
-  }catch{/* summary 없음 */}
-}
-
-buildQuick();
-loadSummary();
-</script>
+    <div class="card">
+      <h3>🔥 말의 온도</h3><p>문장 온도 측정/제안</p>
+      <a class="go" href="./The_Warmth_of_Words/index.html">열기</a>
+    </div>
+    <div class="card">
+      <h3>💞 사랑, 연습해볼까?</h3><p>대화형 실습</p>
+      <a class="go" href="./Shall_We_Try_Love/index.html">열기</a>
+    </div>
+    <div class="card">
+      <h3>💌 트리니티에게</h3><p>편지/보관</p>
+      <a class="go" href="./To_Luwein_Trinity/index.html">열기</a>
+    </div>
+    <div class="card">
+      <h3>🪞 감성일기</h3><p>처음/재방문 자동 분기</p>
+      <a class="go" href="./Emotional_Diary/index.html">열기</a>
+    </div>
+  </section>
+</main>
 </body>
 </html>
