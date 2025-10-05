@@ -6,7 +6,6 @@
 <title>루웨인 트리니티</title>
 <style id="themeVars">
 :root{
-  /* === 편집: 값만 바꾸면 전체 반영됨 === */
   --header-color:#af2465;
   --menu-bg-color:#6c5b7b;
   --menu-text-color:#ffffff;
@@ -15,7 +14,6 @@
   --btn-text:#2a9d8f;
   --btn-hover-bg:#2a9d8f;
   --btn-hover-text:#ffffff;
-
   --menu-size:16px;
   --submenu-size:14px;
   --title-size:40px;
@@ -24,7 +22,6 @@
   --button-size:1.0;
   --page-padding:24px;
 }
-/* ===== 공통 ===== */
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.5}
 header{background:#fff;color:var(--header-color);font-size:var(--title-size);font-weight:800;text-align:center;padding:18px 12px;position:sticky;top:0;z-index:1000;border-bottom:1px solid #ddd}
@@ -42,15 +39,6 @@ main{padding:var(--page-padding);min-height:400px;text-align:center}
 .welcome-buttons{display:flex;justify-content:center;gap:4rem;margin-top:2.2rem;flex-wrap:wrap}
 .welcome-buttons button{background:#fff;border:2px solid var(--btn-border);color:var(--btn-text);padding:1rem 2rem;border-radius:8px;cursor:pointer;transition:all .2s;transform:scale(var(--button-size))}
 .welcome-buttons button:hover{background:var(--btn-hover-bg);color:var(--btn-hover-text)}
-/* 편집 패널(관리자 모드 전용) */
-.panel{position:sticky;top:0;z-index:1100;background:#fff;border-bottom:1px solid #eee;display:none}
-.panel-inner{max-width:1100px;margin:0 auto;padding:10px 12px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-.group{border:1px solid #eee;border-radius:10px;padding:8px 10px;display:flex;gap:10px;align-items:center}
-.group label{font-size:13px;color:#444}
-.group input[type="color"]{width:28px;height:28px;border:none;background:transparent;cursor:pointer}
-.group input[type="range"]{width:130px}
-.group button{padding:.5rem .8rem;border-radius:8px;border:1px solid #ddd;background:#fafafa;cursor:pointer}
-.group button:hover{background:#f0f0f0}
 .footer{margin-top:56px;padding:24px 12px;border-top:1px solid #eee;color:#666;font-size:14px;text-align:center}
 </style>
 </head>
@@ -62,28 +50,27 @@ main{padding:var(--page-padding);min-height:400px;text-align:center}
   <ul>
     <li><a href="language_of_love/index.html">사랑의 언어</a>
       <ul>
-        <li><a href="#">말의 온도</a></li>
-        <li><a href="#">감성일기</a></li>
-        <li><a href="#">상처주는 말 VS 상처 받는 말</a></li>
-        <li><a href="#">사랑도 연습이 필요하다</a></li>
-        <li><a href="#">사랑해 볼까?</a></li>
-        <li><a href="#">To 루웨인 트리니티</a></li>
+        <li><a href="language_of_love/warmth_of_words.html">말의 온도</a></li>
+        <li><a href="language_of_love/emotion_diary.html">감성일기</a></li>
+        <li><a href="language_of_love/hurt_words.html">상처주는 말 VS 상처 받는 말</a></li>
+        <li><a href="language_of_love/love_practice.html">사랑도 연습이 필요하다</a></li>
+        <li><a href="language_of_love/love_try.html">사랑해 볼까?</a></li>
+        <li><a href="language_of_love/to_luwein.html">To 루웨인 트리니티</a></li>
       </ul>
     </li>
 
     <li><a href="language_of_reverberation/index.html">울림의 언어</a>
       <ul>
-        <li><a href="#">음성안내</a></li>
-        <li><a href="#">언어선택</a></li>
-        <li><a href="#">놀이터</a></li>
-        <li><a href="#">울림 연습</a></li>
-        <li><a href="#">울림 일지</a></li>
-        <li><a href="#">울림의 언어</a></li>
-        <li><a href="#">설정</a></li>
-        <li><a href="#">인공지능과 함께</a></li>
-        <li><a href="#">울림 장치/기기</a></li>
-        <li><a href="#">놀이터</a></li>
-        <li><a href="#">AI협업</a></li>
+        <li><a href="language_of_reverberation/voice.html">음성안내</a></li>
+        <li><a href="language_of_reverberation/lang_select.html">언어선택</a></li>
+        <li><a href="language_of_reverberation/playground.html">놀이터</a></li>
+        <li><a href="language_of_reverberation/practice.html">울림 연습</a></li>
+        <li><a href="language_of_reverberation/diary.html">울림 일지</a></li>
+        <li><a href="language_of_reverberation/core.html">울림의 언어</a></li>
+        <li><a href="language_of_reverberation/settings.html">설정</a></li>
+        <li><a href="language_of_reverberation/with_ai.html">인공지능과 함께</a></li>
+        <li><a href="language_of_reverberation/device.html">울림 장치/기기</a></li>
+        <li><a href="language_of_reverberation/ai_collab.html">AI협업</a></li>
       </ul>
     </li>
 
@@ -91,35 +78,35 @@ main{padding:var(--page-padding);min-height:400px;text-align:center}
 
     <li><a href="breathing_room/index.html">숨 틔움방</a>
       <ul>
-        <li><a href="#">숨 카드</a></li>
-        <li><a href="#">숨 클립</a></li>
-        <li><a href="#">루웨인 도서관</a></li>
-        <li><a href="#">시나리오</a></li>
-        <li><a href="#">낙서장</a></li>
-        <li><a href="#">AI와 잡담하기</a></li>
-        <li><a href="#">기타 항목</a></li>
+        <li><a href="breathing_room/cards.html">숨 카드</a></li>
+        <li><a href="breathing_room/clips.html">숨 클립</a></li>
+        <li><a href="goods/library/index.html">루웨인 도서관</a></li>
+        <li><a href="scenario/index.html">시나리오</a></li>
+        <li><a href="sketchbook/index.html">낙서장</a></li>
+        <li><a href="chat/index.html">AI와 잡담하기</a></li>
+        <li><a href="etc/index.html">기타 항목</a></li>
       </ul>
     </li>
 
     <li><a href="haneul/index.html">한얼</a>
       <ul>
-        <li><a href="#">한얼이란</a></li>
-        <li><a href="#">쉴만한(안식)</a></li>
-        <li><a href="#">즐길만한(놀이)</a></li>
-        <li><a href="#">건강한(헬스)</a></li>
-        <li><a href="#">선한(윤리)</a></li>
-        <li><a href="#">스마트한(도구)</a></li>
-        <li><a href="#">유연한(관계)</a></li>
+        <li><a href="haneul/about.html">한얼이란</a></li>
+        <li><a href="haneul/peace.html">쉴만한(안식)</a></li>
+        <li><a href="haneul/play.html">즐길만한(놀이)</a></li>
+        <li><a href="haneul/health.html">건강한(헬스)</a></li>
+        <li><a href="haneul/ethics.html">선한(윤리)</a></li>
+        <li><a href="haneul/tools.html">스마트한(도구)</a></li>
+        <li><a href="haneul/relations.html">유연한(관계)</a></li>
       </ul>
     </li>
 
     <li><a href="goods/index.html">맑은샘</a>
       <ul>
-        <li><a href="#">웹툰</a></li>
-        <li><a href="#">시나리오</a></li>
-        <li><a href="#">애니메이션</a></li>
-        <li><a href="#">한마음특공대</a></li>
-        <li><a href="#">루웨인도서관</a></li>
+        <li><a href="goods/webtoon.html">웹툰</a></li>
+        <li><a href="scenario/index.html">시나리오</a></li>
+        <li><a href="animation/index.html">애니메이션</a></li>
+        <li><a href="goods/heartforce.html">한마음특공대</a></li>
+        <li><a href="goods/library/index.html">루웨인도서관</a></li>
       </ul>
     </li>
 
@@ -133,134 +120,57 @@ main{padding:var(--page-padding);min-height:400px;text-align:center}
     <span class="highlight">당신</span>에게만 열려 있는<br />
     <span class="highlight">루웨인 트리니티</span>입니다.
   </h1>
-
   <p class="message-text">
     오직, 당신만을 위한 울림이고 싶습니다.<br />
     당신의 한 마디 말이 울림의 시작입니다.
   </p>
-
   <div class="welcome-buttons">
     <button onclick="location.href='luwein_trinity/new_1.html'">처음이에요</button>
     <button onclick="location.href='luwein_trinity/old_1.html'">이어 갈래요</button>
   </div>
 </main>
 
-<!-- 관리자 모드 패널: 주소창에 ?admin=1 붙이면 보임 -->
-<div id="adminPanel" class="panel">
-  <div class="panel-inner">
-    <div class="group">
-      <label>상단 색</label>
-      <input type="color" data-var="--header-color" value="#af2465" />
-      <label>메뉴 배경</label>
-      <input type="color" data-var="--menu-bg-color" value="#6c5b7b" />
-      <label>메뉴 글자</label>
-      <input type="color" data-var="--menu-text-color" value="#ffffff" />
-      <label>호버 글자</label>
-      <input type="color" data-var="--menu-hover-text" value="#2a9d8f" />
-    </div>
-
-    <div class="group">
-      <label>제목 크기</label>
-      <input type="range" min="28" max="56" step="1" data-var="--title-size" value="40" />
-      <label>강조 크기</label>
-      <input type="range" min="28" max="56" step="1" data-var="--intro-strong-size" value="42" />
-      <label>메시지 크기</label>
-      <input type="range" min="14" max="24" step="1" data-var="--intro-message-size" value="18" />
-      <label>버튼 배율</label>
-      <input type="range" min="0.8" max="2.0" step="0.05" data-var="--button-size" value="1.0" />
-    </div>
-
-    <div class="group">
-      <label>버튼 테두리</label>
-      <input type="color" data-var="--btn-border" value="#2a9d8f" />
-      <label>버튼 글자</label>
-      <input type="color" data-var="--btn-text" value="#2a9d8f" />
-      <label>버튼 호버 배경</label>
-      <input type="color" data-var="--btn-hover-bg" value="#2a9d8f" />
-      <label>버튼 호버 글자</label>
-      <input type="color" data-var="--btn-hover-text" value="#ffffff" />
-    </div>
-
-    <div class="group">
-      <button id="exportHtml">현재 화면 그대로 저장(HTML)</button>
-      <button id="resetTheme">테마 초기화</button>
-    </div>
-  </div>
-</div>
-
 <footer class="footer">
   © LUWEIN
 </footer>
 
+<!-- 루웨인 링크 점검 모듈 -->
 <script>
-(function(){
-  // 관리자 모드: ?admin=1 일 때만 패널 표시
-  const params = new URLSearchParams(location.search);
-  const admin = params.get('admin') === '1';
-  const panel = document.getElementById('adminPanel');
-  if(admin){ panel.style.display='flex'; }
-
-  // 컨트롤이 없으면(사용자 모드) 여기서 종료
-  if(!admin) return;
-
-  // 컬러/사이즈 입력이 CSS 변수 갱신
-  const root = document.documentElement;
-  document.querySelectorAll('#adminPanel input[type="color"]').forEach(inp=>{
-    const v = inp.getAttribute('data-var');
-    // 초기값 적용
-    root.style.setProperty(v, inp.value);
-    inp.addEventListener('input', e=>{
-      root.style.setProperty(v, e.target.value);
-    });
-  });
-  document.querySelectorAll('#adminPanel input[type="range"]').forEach(inp=>{
-    const v = inp.getAttribute('data-var');
-    const apply=()=>{
-      const val = inp.value + (v.includes('size')?'px':'');
-      root.style.setProperty(v, val);
-    };
-    apply();
-    inp.addEventListener('input', apply);
-  });
-
-  // 내 테마 저장(컨트롤/관리자 코드 제거한 정적 HTML 다운로드)
-  document.getElementById('exportHtml').addEventListener('click', ()=>{
-    // 1) 현재 CSS 변수 값을 themeVars 스타일 태그에 박아 넣기
-    const theme = document.getElementById('themeVars');
-    const comp = getComputedStyle(root);
-    const vars = [
-      '--header-color','--menu-bg-color','--menu-text-color','--menu-hover-text',
-      '--btn-border','--btn-text','--btn-hover-bg','--btn-hover-text',
-      '--menu-size','--submenu-size','--title-size','--intro-strong-size','--intro-message-size','--button-size','--page-padding'
-    ];
-    let css=':root{';
-    vars.forEach(k=>{
-      css += k+':'+comp.getPropertyValue(k).trim()+';';
-    });
-    css+='}';
-    theme.textContent = css;
-
-    // 2) 이 페이지에서 관리자 패널 제거한 HTML 생성
-    const clone = document.documentElement.cloneNode(true);
-    const p = clone.querySelector('#adminPanel');
-    if(p) p.remove();
-    const script = clone.querySelector('script');
-    if(script) script.remove();
-
-    // 3) 파일 다운로드
-    const blob = new Blob(['<!DOCTYPE html>\n'+clone.outerHTML], {type:'text/html'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'index.html';
-    a.click();
-  });
-
-  // 테마 초기화
-  document.getElementById('resetTheme').addEventListener('click', ()=>{
-    location.reload();
-  });
-})();
+async function checkLinks() {
+  const links = Array.from(document.querySelectorAll("a"));
+  const results = [];
+  for (const link of links) {
+    const url = link.href;
+    try {
+      const response = await fetch(url, { method: "HEAD", mode: "no-cors" });
+      const status = response.status || "ok";
+      results.push({ url, status });
+      console.log(`✅ ${url} (${status})`);
+    } catch (err) {
+      results.push({ url, status: "error" });
+      console.warn(`❌ ${url}`);
+    }
+  }
+  console.log("🔍 루웨인 링크 점검 완료");
+  console.table(results);
+  alert("루웨인 링크 점검 완료 — 결과는 콘솔(console)에 출력됨");
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.createElement("button");
+  btn.innerText = "🔗 루웨인 링크 점검 실행";
+  btn.style.position = "fixed";
+  btn.style.bottom = "20px";
+  btn.style.right = "20px";
+  btn.style.zIndex = "9999";
+  btn.style.padding = "10px 15px";
+  btn.style.background = "#222";
+  btn.style.color = "#fff";
+  btn.style.border = "none";
+  btn.style.borderRadius = "8px";
+  btn.style.cursor = "pointer";
+  btn.onclick = checkLinks;
+  document.body.appendChild(btn);
+});
 </script>
-
 </body>
 </html>
