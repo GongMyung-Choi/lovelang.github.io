@@ -30,6 +30,20 @@
     summary{cursor:pointer;color:#444;font-weight:600}
     @media (max-width:800px){.grid{grid-template-columns:1fr}}
   </style>
+  <script>
+    // 자동 정렬 및 최신순 갱신 스크립트
+    document.addEventListener('DOMContentLoaded',()=>{
+      const list=document.querySelector('#notice-list');
+      const items=[...list.querySelectorAll('li')];
+      items.sort((a,b)=>{
+        const da=new Date(a.querySelector('small').textContent.trim());
+        const db=new Date(b.querySelector('small').textContent.trim());
+        return db-da; // 최신순 정렬
+      });
+      list.innerHTML='';
+      items.forEach(li=>list.appendChild(li));
+    });
+  </script>
 </head>
 <body>
   <header><h1>도움말 및 공지</h1></header>
@@ -42,7 +56,7 @@
     <div class="grid">
       <section>
         <h2>📢 최신 공지</h2>
-        <ul>
+        <ul id="notice-list">
           <li><a href="docs/루웨인_트리니티.docx">《루웨인 트리니티》 정식판 공개</a> <small>2025-10-06</small></li>
           <li><a href="docs/루웨인_트리니티_250709_155134.txt">트리니티 UX·브랜드 가이드</a> <small>2025-10-06</small></li>
           <li><a href="docs/루웨인_빌리지.docx">《루웨인 빌리지 — 가능태의 유토피아》 발간</a> <small>2025-10-06</small></li>
