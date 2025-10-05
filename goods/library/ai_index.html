@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><title>AI Books Index</title></head>
+<body style="font-family:Pretendard;padding:20px;background:#fffdfc;">
+<h1>📘 AI Books</h1>
+<ul id="list"></ul>
+<a href="./index.html">← Back to Library</a>
+<script>
+async function scan(dir='.') {
+  const list=document.getElementById('list');
+  try{
+    const res=await fetch(dir+'/');
+    const text=await res.text();
+    const doc=new DOMParser().parseFromString(text,'text/html');
+    const links=Array.from(doc.querySelectorAll('a'))
+      .map(a=>a.getAttribute('href'))
+      .filter(f=>f && f.endsWith('.html') && !f.startsWith('h_') && f!=='index.html');
+    for(const f of links){
+      const path=dir+'/'+f;
+      const ok=await fetch(path,{method:'HEAD'}).then(r=>r.ok).catch(()=>false);
+      const li=document.createElement('li');
+      li.innerHTML=ok?`<a href="${path}">${path}</a>`:`<span style="color:#b00">⚠️ ${path}</span>`;
+      list.appendChild(li);
+    }
+    const subdirs=Array.from(doc.querySelectorAll('a'))
+      .map(a=>a.getAttribute('href')).filter(f=>f && f.endsWith('/'));
+    for(const sub of subdirs) if(sub!=='./' && sub!=='../') await scan(dir+'/'+sub.replace('/',''));
+  }catch{}
+}
+scan();
+</script>
+</body>
+</html>
