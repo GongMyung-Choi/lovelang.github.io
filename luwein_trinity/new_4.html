@@ -1,160 +1,41 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8" />
-<title>루웨인 트리니티</title>
+<head><meta charset="UTF-8"/><title>루웨인 트리니티</title>
 <style>
-  body {
-    margin: 0;
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: #f9fafa;
-    color: #2a9d8f;
-  }
-  header {
-    text-align: center;
-    font-weight: bold;
-    font-size: 3rem;
-    letter-spacing: 1.5px;
-    color: #af2465;
-    margin: 1rem 0 0.5rem 0;
-  }
-  nav {
-    background-color: #6c5b7b;
-    display: flex;
-    justify-content: center;
-    padding: 0.5rem 0;
-  }
-  nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 3rem;
-  }
-  nav ul li {
-    font-size: 1rem;
-  }
-  nav ul li a {
-    text-decoration: none;
-    color: white;
-    transition: color 0.3s ease;
-  }
-  nav ul li a:hover {
-    color: #2a9d8f;
-  }
-  nav ul li:nth-child(3) a {
-    color: white;
-    font-weight: normal;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-  }
-  nav ul li:nth-child(3) a:hover {
-    color: #2a9d8f;
-  }
-  main {
-    text-align: center;
-    font-size: 2rem;
-    margin-top: 3rem;
-    color: #2a9d8f;
-  }
-  main p {
-    color: #7034df;
-    font-size: 2rem;
-    margin: 1rem 0 3rem 0;
-  }
-  form {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    align-items: center;
-    margin-top: 2rem;
-    flex-wrap: wrap;
-  }
-  label {
-    color: #af2465;
-    font-size: 1.5rem;
-    margin-right: 0.1rem;
-    white-space: nowrap;
-  }
-  input[type="text"], select {
-    font-size: 1.2rem;
-    padding: 0.3rem 0.5rem;
-    width: 150px;
-    border: 2px solid #2a9d8f;
-    border-radius: 6px;
-  }
-  .welcome-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 4rem;
-  }
-  .welcome-buttons button {
-    background-color: white;
-    border: 2px solid #2a9d8f;
-    color: #2a9d8f;
-    font-size: 2rem;
-    padding: 1rem 4rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  .welcome-buttons button:hover {
-    background-color: #2a9d8f;
-    color: white;
-  }
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#f9fafa;color:#2a9d8f;}
+header{text-align:center;font-weight:bold;font-size:3rem;color:#af2465;margin:1rem 0;}
+nav{background:#6c5b7b;display:flex;justify-content:center;padding:.5rem 0;}
+nav ul{display:flex;gap:3rem;list-style:none;margin:0;padding:0;}
+nav a{text-decoration:none;color:white;transition:.3s;}
+nav a:hover{color:#2a9d8f;}
+main{text-align:center;margin-top:3rem;}
+main p{color:#7034df;font-size:2rem;margin:1rem 0 3rem;}
+.welcome-buttons{display:flex;justify-content:center;gap:2rem;margin-top:4rem;}
+.welcome-buttons button{background:#fff;border:2px solid #2a9d8f;color:#2a9d8f;font-size:2rem;padding:1rem 4rem;border-radius:8px;cursor:pointer;transition:.3s;}
+.welcome-buttons button:hover{background:#2a9d8f;color:#fff;}
 </style>
 </head>
 <body>
 <header>루웨인 트리니티</header>
 <nav>
-  <ul>
-    <li><a href="#">사랑의 언어</a></li>
-    <li><a href="#">울림의 언어</a></li>
-    <li><a href="#">루웨인 트리니티</a></li>
-    <li><a href="#">한얼</a></li>
-    <li><a href="#">굿즈</a></li>
-    <li><a href="#">도움말 및 공지</a></li>
-    <li><a href="#">고객센터</a></li>
-  </ul>
+<ul>
+  <li><a href="../language_of_love/index.html">사랑의 언어</a></li>
+  <li><a href="../language_of_reverberation/index.html">울림의 언어</a></li>
+  <li><a href="../index.html">루웨인 트리니티</a></li>
+  <li><a href="../haneul/index.html">한얼</a></li>
+  <li><a href="../goods/index.html">굿즈</a></li>
+  <li><a href="../help_notices/index.html">도움말 및 공지</a></li>
+  <li><a href="../customer_support/index.html">고객센터</a></li>
+</ul>
 </nav>
 <main>
-  <h1>오늘의 당신</h1>
-  <p>마음에 어떤 결 하나를 남기셨나요?<br /><br />당신의 하루를 적어 보실래요?</p>
-  <form id="dailyForm">
-    <div>
-      <label for="nickname">지금 내 감정은요</label>
-      <input type="text" id="nickname" name="nickname" placeholder="예: 바쁘다" />
-    </div>
-    <div>
-      <label for="speechStyle">하고 싶은 말/ 바람은요</label>
-      <input type="text" id="speechStyle" name="speechStyle" placeholder="예: 집필, 논문 정리" />
-    </div>
-  </form>
-  <div class="welcome-buttons">
-    <button type="submit" form="dailyForm" onclick="submitForm()">지난 일기 보기</button>
-    <button type="button" onclick="skipForm()">마음 보내기</button>
-    <button type="button" onclick="skipForm()">처음으로</button>
-  </div>
+<h1>오늘의 당신</h1>
+<p>마음에 어떤 결 하나를 남기셨나요?<br/>당신의 하루를 적어 보실래요?</p>
+<div class="welcome-buttons">
+  <button onclick="location.href='new_5.html'">지난 일기 보기</button>
+  <button onclick="location.href='new_6.html'">마음 보내기</button>
+  <button onclick="location.href='../index.html'">처음으로</button>
+</div>
 </main>
-
-<script>
-  function submitForm() {
-    // 임시 처리: 입력값 유효성 체크 및 알림
-    const form = document.getElementById('dailyForm');
-    const nickname = form.nickname.value.trim();
-    const speechStyle = form.speechStyle.value.trim();
-    if(!nickname && !speechStyle){
-      alert('감정이나 바라는 말을 입력해 주세요.');
-      return false;
-    }
-    alert(`입력하신 내용\n감정: ${nickname}\n바라는 것: ${speechStyle}\n다음 단계로 이동합니다.`);
-    // 다음 단계 이동 코드 여기에 작성
-  }
-  function skipForm() {
-    alert('입력 없이 건너뛰셨습니다.\n처음 페이지로 이동합니다.');
-    // 처음 페이지 이동 코드 여기에 작성
-  }
-</script>
 </body>
 </html>
