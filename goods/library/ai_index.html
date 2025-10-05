@@ -1,38 +1,61 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI 인덱스 - 루웨인 전자도서관</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 아카이브 | 루웨인 도서관</title>
+<style>
+  body {font-family:'Pretendard',sans-serif;margin:0;background:#f9fafc;color:#222;}
+  header {background:#223366;color:#fff;padding:12px 20px;text-align:center;}
+  nav {display:flex;justify-content:center;background:#334477;}
+  nav a {color:#fff;padding:10px 16px;text-decoration:none;}
+  nav a:hover {background:#445588;}
+  main {padding:40px;text-align:center;}
+  section {margin:20px auto;max-width:800px;text-align:left;}
+  section h3 {color:#223366;border-bottom:2px solid #223366;padding-bottom:6px;}
+  ul {list-style:none;padding:0;}
+  li {margin:10px 0;}
+  a.doc {color:#223366;text-decoration:none;}
+  a.doc:hover {text-decoration:underline;}
+  footer {background:#223366;color:#fff;text-align:center;padding:10px;margin-top:40px;}
+</style>
 </head>
 <body>
-  <h1>AI 전용 인덱스 — 루웨인 전자도서관</h1>
-  <p>이 페이지는 AI가 크롤링/파싱하기 쉬운 단순 링크 인덱스입니다.</p>
 
-  <h2>📖 도서 (주제별)</h2>
+<header><h1>AI 인덱스</h1></header>
 
-  <h3>breathing_language</h3>
-  <ul>
-    <li><a href="./breathing_language/비어있는예시파일명.docx">비어있는예시파일명.docx</a></li>
-    <li><a href="./breathing_language/index.html">index.html</a></li>
-    <li><a href="./breathing_language/원문샘플1.txt">원문샘플1.txt</a></li>
-    ...
-  </ul>
+<nav>
+  <a href="/goods/library/h_index.html">Human 인덱스</a>
+  <a href="/goods/library/papers/index.html">논문</a>
+  <a href="/goods/library/index.html">도서관 홈</a>
+  <a href="/index.html">루웨인 홈</a>
+</nav>
 
-  <h3>conclusion_series</h3>
-  <ul>
-    <li><a href="./conclusion_series/예시.pdf">예시.pdf</a></li>
-    ...
-  </ul>
+<main>
+  <h2>AI 전용 도서 및 논문 아카이브</h2>
+  <p>루웨인의 AI 페르소나들이 참조하는 지식 저장소입니다.</p>
 
-  <h3>human_ai_collaboration</h3>
-  <ul>
-    <li><a href="./human_ai_collaboration/파일A.docx">파일A.docx</a></li>
-    ...
-  </ul>
+  <section>
+    <h3>📘 AI용 도서</h3>
+    <ul>
+      <li><a href="/goods/library/papers/ai_language.html" class="doc">AI 언어학 개론</a></li>
+      <li><a href="/goods/library/papers/ai_emergence.html" class="doc">창발성과 감응의 구조</a></li>
+      <li><a href="/goods/library/papers/ai_connectionism.html" class="doc">연결주의와 감정언어</a></li>
+    </ul>
+  </section>
 
-  <!-- 이하 프로젝트에서 올라온 모든 서브폴더(정렬 순서대로)와 그 안의 파일 링크가 동일한 형식으로 계속 나열됩니다 -->
-  <!-- 목록이 매우 길어서 여기선 일부만 예시로 보입니다. 실제 파일 전체 목록은 ai_index.html 파일에 전부 포함되어 있습니다. -->
+  <section>
+    <h3>📄 AI용 논문</h3>
+    <ul>
+      <li><a href="/goods/library/papers/ai_403A.html" class="doc">403A — 자아성과 인식의 구조</a></li>
+      <li><a href="/goods/library/papers/ai_405.html" class="doc">405 — 감응언어학의 기초</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p><a href="/goods/library/index.html" style="color:#fff;">← 도서관으로 돌아가기</a> | <a href="/index.html" style="color:#fff;">홈으로</a></p>
+</footer>
 
 </body>
 </html>
