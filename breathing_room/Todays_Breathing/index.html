@@ -1,33 +1,81 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>오늘의 숨결</title>
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #fff;
-      margin: 0;
-      padding: 2rem;
-      color: #2a9d8f;
-      text-align: center;
-    }
-    header {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #af2465;
-      margin-bottom: 1rem;
-    }
-    main {
-      font-size: 1.4rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>오늘의 숨결 | Today's Breathing</title>
+<style>
+body{
+  margin:0;
+  font-family:'Noto Sans KR',sans-serif;
+  background:#e0f2ff;
+  color:#333;
+  text-align:center;
+}
+header{
+  background:#5aa6d8;
+  color:#fff;
+  padding:18px;
+  font-size:1.6rem;
+  font-weight:700;
+}
+main{
+  max-width:900px;
+  margin:0 auto;
+  padding:20px;
+}
+img{
+  width:90%;
+  max-width:800px;
+  border-radius:16px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+  margin-top:20px;
+}
+p{
+  font-size:1.1rem;
+  color:#444;
+}
+footer{
+  text-align:center;
+  padding:16px;
+  color:#666;
+  font-size:.9rem;
+}
+</style>
 </head>
 <body>
-  <header>오늘의 숨결</header>
-  <main>
-    <p>이곳은 오늘의 숨결 섹션입니다.<br />
-       매일 새로운 감성 메시지를 전달합니다.</p>
-  </main>
+<header>🌤 오늘의 숨결 | Today's Breathing</header>
+
+<main>
+  <p>하루에 한 번, 위로의 숨결을 전합니다.</p>
+  <img id="dailyImage" src="" alt="오늘의 위로 이미지">
+</main>
+
+<footer>루웨인 숨 틔움방 · 오늘의 숨결 © 2025</footer>
+
+<script>
+// 이미지 자동 순환 (매일 0시, 파일 추가 자동 인식)
+function loadDailyImage(){
+  const folder='./images/';
+  const total=100; // 기본 이미지 개수
+  const today=Math.floor(Date.now()/86400000);
+  const index=(today%total)+1;
+  const img=document.getElementById('dailyImage');
+  img.src=`${folder}${index}.jpg`;
+}
+function scheduleNextMidnight(){
+  const now=new Date();
+  const msUntilMidnight=new Date(
+    now.getFullYear(),now.getMonth(),now.getDate()+1,0,0,5
+  )-now;
+  setTimeout(()=>{
+    loadDailyImage();
+    scheduleNextMidnight();
+  },msUntilMidnight);
+}
+loadDailyImage();
+scheduleNextMidnight();
+</script>
+
 </body>
 </html>
