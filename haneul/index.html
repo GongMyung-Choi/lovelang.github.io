@@ -5,38 +5,69 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>한얼 프로젝트 | Haneul Project</title>
 <link rel="stylesheet" href="./common.css">
+<style>
+body{background:#f9f9f9;margin:0;font-family:'Noto Sans KR',sans-serif;}
+header{
+  background:#004d60;color:#fff;text-align:center;padding:40px 10px;
+  background-image:linear-gradient(135deg,#004d60 0%,#007f91 100%);
+}
+header h1{margin:0;font-size:2.4rem;}
+header p{margin-top:10px;font-size:1.1rem;color:#dff4f9;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+gap:24px;max-width:1100px;margin:40px auto;padding:0 20px;}
+.card{
+  background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,0.12);
+  transition:transform .25s ease, box-shadow .25s ease;text-align:center;
+}
+.card:hover{transform:translateY(-6px);box-shadow:0 6px 14px rgba(0,0,0,0.18);}
+.card img{width:100%;height:180px;object-fit:cover;}
+.card h2{margin:12px 0 6px;font-size:1.3rem;}
+.card p{margin:0 0 14px;color:#555;font-size:.95rem;}
+footer{text-align:center;padding:18px;font-size:.9rem;color:#666;}
+a{text-decoration:none;color:inherit;}
+</style>
 </head>
 <body>
-<header>🌤 한얼 프로젝트 | Haneul Project</header>
 
-<main class="container">
-  <section class="intro">
-    <h2>루웨인 한얼 프로젝트</h2>
-    <p>사람과 시스템이 함께 성장하는 여섯 가지 길 — 쉴만한, 스마트한, 유연한, 건강한, 즐길만한, 선한.</p>
-  </section>
+<header>
+  <h1>🌤 한얼 프로젝트 | Haneul Project</h1>
+  <p>루웨인의 여섯 빛깔 공간 — 쉼, 지성, 흐름, 건강, 놀이, 그리고 선함</p>
+</header>
 
-  <section class="grid">
-    <a class="card" href="./Shilmanhan/index.html">
-      <h3>🌿 쉴만한</h3><p>쉼과 회복, 여유의 기술</p>
-    </a>
-    <a class="card" href="./Seumateuhan/index.html">
-      <h3>💡 스마트한</h3><p>지성과 효율, 기술의 온도</p>
-    </a>
-    <a class="card" href="./Yuyeonhan/index.html">
-      <h3>🌊 유연한</h3><p>관계와 협력, 조화의 힘</p>
-    </a>
-    <a class="card" href="./Geonganghan/index.html">
-      <h3>💪 건강한</h3><p>몸과 마음의 균형</p>
-    </a>
-    <a class="card" href="./Jeulgilmanhan/index.html">
-      <h3>🎵 즐길만한</h3><p>놀이와 문화, 감성의 확장</p>
-    </a>
-    <a class="card" href="./Seonhan/index.html">
-      <h3>✨ 선한</h3><p>윤리, 나눔, 인간의 따뜻함</p>
-    </a>
-  </section>
-</main>
+<section class="grid">
+  <a href="./Shilmanhan/index.html" class="card">
+    <img src="./Shilmanhan/assets/001.png" alt="쉴만한">
+    <h2>🌿 쉴만한</h2>
+    <p>멈춤 속의 회복, 루웨인의 호흡 공간</p>
+  </a>
+  <a href="./Seumateuhan/index.html" class="card">
+    <img src="./Seumateuhan/assets/001.png" alt="스마트한">
+    <h2>💡 스마트한</h2>
+    <p>기술의 온도, 사람의 마음으로 따뜻하게</p>
+  </a>
+  <a href="./Yuyeonhan/index.html" class="card">
+    <img src="./Yuyeonhan/assets/001.png" alt="유연한">
+    <h2>🌊 유연한</h2>
+    <p>흐름과 협력, 연결의 미학</p>
+  </a>
+  <a href="./Geonganghan/index.html" class="card">
+    <img src="./Geonganghan/assets/001.png" alt="건강한">
+    <h2>💪 건강한</h2>
+    <p>몸과 마음의 리듬, 균형의 기술</p>
+  </a>
+  <a href="./Jeulgilmanhan/index.html" class="card">
+    <img src="./Jeulgilmanhan/assets/001.png" alt="즐길만한">
+    <h2>🎵 즐길만한</h2>
+    <p>놀이의 철학, 감성의 확장</p>
+  </a>
+  <a href="./Seonhan/index.html" class="card">
+    <img src="./Seonhan/assets/001.png" alt="선한">
+    <h2>✨ 선한</h2>
+    <p>존재의 방향, 따뜻한 윤리</p>
+  </a>
+</section>
 
 <footer>루웨인 한얼 프로젝트 © 2025</footer>
+
 </body>
 </html>
