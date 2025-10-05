@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><title>Human Papers Index</title>
+<style>
+body{font-family:'Pretendard',sans-serif;margin:0;padding:20px;background:#fafafa;}
+h1{color:#660000;}
+li{margin:6px 0;}
+.error{color:#b00;}
+a{text-decoration:none;color:#660000;}
+a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<h1>🧍 Human Papers</h1>
+<ul id="list"></ul>
+<a href="../index.html">← Back to Library</a>
+
+<script>
+async function listFiles() {
+  const list=document.getElementById('list');
+  const base='./';
+  try{
+    const res=await fetch(base);
+    const text=await res.text();
+    const parser=new DOMParser();
+    const doc=parser.parseFromString(text,'text/html');
+    const files=Array.from(doc.querySelectorAll('a'))
+      .map(a=>a.getAttribute('href'))
+      .filter(h=>h && h.startsWith('h_') && h.endsWith('.html'));
+    if(files.length===0)list.innerHTML='<li><em>No Human paper found.</em></li>';
+    for(const f of files){
+      const ok=await fetch(base+f,{method:'HEAD'}).then(r=>r.ok).catch(()=>false);
+      const li=document.createElement('li');
+      li.innerHTML=ok?`<a href="${f}">${f}</a>`:`<span class="error">⚠️ ${f}</span>`;
+      list.appendChild(li);
+    }
+  }catch{
+    list.innerHTML='<li class="error">⚠️ Unable to load folder.</li>';
+  }
+}
+listFiles();
+</script>
+</body>
+</html>
