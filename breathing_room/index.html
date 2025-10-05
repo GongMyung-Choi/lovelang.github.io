@@ -1,74 +1,86 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>숨틔움방 | 한얼</title>
-  <link rel="stylesheet" href="../haneul/common.css" />
-  <style>
-    main{max-width:1000px;margin:0 auto;padding:1rem}
-    .lead{color:var(--muted);margin:.4rem 0 1rem}
-    .grid{display:grid;gap:1rem;margin-top:1.2rem}
-    @media(min-width:640px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-    @media(min-width:960px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
-    .card{display:block;background:#fff;border:1px solid var(--border);border-radius:12px;
-      overflow:hidden;text-decoration:none;color:var(--text);box-shadow:var(--shadow)}
-    .card img{width:100%;height:180px;object-fit:cover;display:block}
-    .card h3{margin:.5rem 1rem .25rem;font-size:1.05rem}
-    .card p{margin:0 1rem 1rem;color:var(--muted);font-size:.9rem}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>숨틔움방 | 나만의 공간</title>
+<style>
+  body {
+    font-family:'Pretendard',sans-serif;margin:0;
+    background:linear-gradient(to bottom,#f6f8fa,#eef2f3);
+    color:#222;
+  }
+  header {background:#2f4858;color:#fff;text-align:center;padding:20px 0;}
+  nav {display:flex;justify-content:center;background:#405e72;}
+  nav a {color:#fff;text-decoration:none;padding:10px 16px;}
+  nav a:hover {background:#527a91;}
+  main {padding:50px;text-align:center;}
+  h1 {margin-bottom:10px;}
+  p.intro {color:#444;margin-bottom:40px;}
+  .grid {
+    display:flex;flex-wrap:wrap;justify-content:center;gap:30px;
+    max-width:900px;margin:0 auto;
+  }
+  .card {
+    background:#fff;border-radius:12px;
+    box-shadow:0 3px 8px rgba(0,0,0,0.08);
+    width:260px;padding:20px;text-align:center;
+    transition:transform 0.2s;
+  }
+  .card:hover {transform:translateY(-6px);}
+  .card h3 {color:#2f4858;margin-bottom:8px;}
+  .card p {font-size:14px;color:#555;margin-bottom:16px;}
+  .card a {
+    display:inline-block;background:#2f4858;color:#fff;
+    padding:8px 14px;border-radius:8px;text-decoration:none;
+  }
+  .card a:hover {background:#3e5d70;}
+  footer {background:#2f4858;color:#fff;text-align:center;padding:14px;margin-top:50px;}
+</style>
 </head>
+
 <body>
+
+<header>
+  <h1>숨틔움방 — 나만의 공간</h1>
+  <p>기록하고, 정리하고, 숨 쉬는 곳</p>
+</header>
+
+<nav>
+  <a href="/goods/library/index.html">도서관</a>
+  <a href="/with_luwein.html">루웨인과 함께</a>
+  <a href="/index.html">루웨인 홈</a>
+</nav>
+
 <main>
-  <h1>숨틔움방</h1>
-  <p class="lead">호흡하고 쉬며, 감응을 나누는 다양한 공간</p>
+  <h2>나의 아카이브</h2>
+  <p class="intro">이곳은 루웨인 빌리지 내에서 당신만의 공간입니다.<br>
+  노트, 앨범, 아이디어, 대화 기록을 자유롭게 저장하고 확장할 수 있습니다.</p>
 
   <div class="grid">
-    <a class="card" href="./Doodle_Board/index.html">
-      <img src="./Doodle_Board/cover.jpg" alt="Doodle Board">
-      <h3>내 쉼터</h3>
-      <p>나만의 앨범, 창작물, 낙서와 그림으로 숨 쉬기</p>
-    </a>
-    <a class="card" href="./Todays_Breathing/index.html">
-      <img src="./Todays_Breathing/cover.jpg" alt="Today's Breathing">
-      <h3>Today's Breathing</h3>
-      <p>오늘의 감성일기</p>
-    </a>
-      <a class="card" href="./Images/index.html">
-      <img src="./Images/cover.jpg" alt="Images">
-      <h3>Images</h3>
-      <p>숨틔움방의 이미지 모음</p>
-    </a>
-   <a class="card" href="./Cards/index.html">
-      <img src="./Cards/cover.jpg" alt="Cards">
-      <h3>Cards</h3>
-      <p>짧은 문장, 즉흥의 울림 카드</p>
-    </a>
-      <a class="card" href="./Clips/index.html">
-      <img src="./Clips/cover.jpg" alt="Clips">
-      <h3>Clips</h3>
-      <p>짧은 오디오·비디오 숨 조각</p>
-    </a>
-     <a class="card" href="./recovery/index.html">
-      <img src="./recovery/cover.jpg" alt="Recovery">
-      <h3>Recovery</h3>
-      <p>몸과 맘, 영의 회복과 쉼의 순간들</p>
-    </a>
-    <a class="card" href="./Chat/index.html">
-      <img src="./Chat/cover.jpg" alt="Chat">
-      <h3>Chat</h3>
-      <p>소통과 대화의 공간,페이스북, 엑스 역할</p>
-    </a>
-     <a class="card" href="./Talk_to_AI/index.html">
-      <img src="./Talk_to_AI/cover.jpg" alt="Talk to AI">
-      <h3>Talk to AI</h3>
-      <p>AI와 나누는 대화</p>
-    </a>
-  </div>
+    <div class="card">
+      <h3>📘 나의 노트</h3>
+      <p>아이디어, 일기, 영감 등 자유롭게 적는 공간</p>
+      <a href="/breathing_room/notes/index.html">열기</a>
+    </div>
 
-  <p style="margin-top:1.5rem">
-    <a href="../index.html">← 숨 틔움방 인덱스로 돌아가기</a>
-  </p>
+    <div class="card">
+      <h3>🖼 나의 앨범</h3>
+      <p>사진, 이미지, 그림을 모으는 나만의 아카이브</p>
+      <a href="/breathing_room/gallery/index.html">열기</a>
+    </div>
+
+    <div class="card">
+      <h3>🎞 나의 클립</h3>
+      <p>링크, 영상, 파일 등 영감의 흔적을 저장</p>
+      <a href="/breathing_room/clips/index.html">열기</a>
+    </div>
+  </div>
 </main>
+
+<footer>
+  <p><a href="/index.html" style="color:#fff;">← 루웨인 홈으로 돌아가기</a></p>
+</footer>
+
 </body>
 </html>
