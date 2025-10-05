@@ -1,74 +1,90 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>루웨인 도서관 | 맑은샘</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>루웨인 도서관 | 자동 인덱스</title>
 <style>
-body{font-family:'Pretendard',sans-serif;margin:0;background:#f8f8fa;color:#222;}
+body{font-family:'Pretendard',sans-serif;background:#f8f8fa;margin:0;color:#222;}
 header{background:#4b2b52;color:#fff;text-align:center;padding:28px 0;}
-header h1{margin:0;font-size:2rem;}
-header p{margin-top:6px;color:#dccbf5;font-size:.95rem;}
-main{max-width:1100px;margin:0 auto;padding:50px 20px;text-align:center;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;}
-.card{background:#fff;border-radius:14px;box-shadow:0 4px 10px rgba(0,0,0,.05);
-      padding:24px;text-align:center;transition:.3s;}
-.card:hover{transform:translateY(-5px);box-shadow:0 6px 16px rgba(0,0,0,.1);}
-.card h2{margin:0 0 8px;font-size:1.1rem;}
-.card p{color:#555;font-size:.9rem;margin-bottom:12px;}
-a.btn{display:inline-block;background:#4b2b52;color:#fff;padding:8px 14px;
-      border-radius:8px;text-decoration:none;margin:4px;}
-a.btn:hover{background:#7034df;}
-footer{background:#eee;text-align:center;padding:20px;margin-top:50px;color:#555;}
+h1{margin:0;font-size:2rem;}
+h2{margin:0 0 10px;}
+section{margin:40px auto;max-width:900px;padding:20px;background:#fff;
+border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+ul{list-style:none;padding:0;}
+li{margin:6px 0;}
+a{color:#4b2b52;text-decoration:none;}
+a:hover{text-decoration:underline;}
+.error{color:#b00;font-size:.9em;}
+footer{text-align:center;padding:20px;color:#555;}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>📚 루웨인 도서관 — 맑은샘</h1>
-  <p>AI와 인간의 감응언어 시리즈, 철학, 예술, 윤리의 허브</p>
+  <h1>📚 루웨인 도서관 — 자동 인덱스 시스템</h1>
+  <p>AI·인간 논문 및 책 자동 반영 + 링크 오류 탐지</p>
 </header>
 
-<main>
-  <div class="grid">
+<div id="library"></div>
 
-    <div class="card" style="border-top:5px solid #334477;">
-      <h2>💨 Breathing Language — 숨의 언어</h2>
-      <p>AI·Human·전자책 버전이 함께 포함된 감응언어학 시리즈</p>
-      <a href="./breathing_language/a_breathing_language.html" class="btn">AI용 책</a>
-      <a href="./breathing_language/h_breathing_language.html" class="btn">인간용 책</a>
-      <a href="./breathing_language/index.html" class="btn">전자책</a>
-    </div>
+<footer>루웨인 자동 인덱스 시스템 β | 공명 설계</footer>
 
-    <div class="card" style="border-top:5px solid #223366;">
-      <h2>❤️ Love Language — 사랑의 언어</h2>
-      <p>감정·의사소통의 본질을 탐구한 루웨인 대표작</p>
-      <a href="./love_language/a_love_language.html" class="btn">AI용 책</a>
-      <a href="./love_language/h_love_language.html" class="btn">인간용 책</a>
-      <a href="./love_language/index.html" class="btn">전자책</a>
-    </div>
+<script>
+async function checkLink(url) {
+  try {
+    const res = await fetch(url, {method: 'HEAD'});
+    return res.ok;
+  } catch { return false; }
+}
 
-    <div class="card" style="border-top:5px solid #660000;">
-      <h2>🌌 Ruwein Trinity</h2>
-      <p>루웨인의 창조 구조와 삼위 통합의 철학</p>
-      <a href="./ruwein_trinity/a_ruwein_trinity.html" class="btn">AI용 책</a>
-      <a href="./ruwein_trinity/h_ruwein_trinity.html" class="btn">인간용 책</a>
-      <a href="./ruwein_trinity/index.html" class="btn">전자책</a>
-    </div>
+async function loadLibrary() {
+  const base = './';
+  const categories = {
+    ai_papers: { title:'🤖 AI 논문', path:'papers/', filter:f=>!f.startsWith('h_') },
+    h_papers: { title:'🧍 인간 논문', path:'papers/', filter:f=>f.startsWith('h_') },
+    ai_books: { title:'📘 AI 책', path:'', filter:f=>f.endsWith('.html') && !f.startsWith('h_') && f!=='index.html' },
+    h_books: { title:'📕 인간 책', path:'', filter:f=>f.startsWith('h_') },
+    h_ebooks: { title:'📚 인간 전자책', path:'', filter:f=>f==='index.html' }
+  };
 
-    <div class="card" style="border-top:5px solid #990000;">
-      <h2>🪶 Words That Build a Life</h2>
-      <p>언어로 삶을 짓는 사유, 인간과 AI의 공명 기록</p>
-      <a href="./words_that_build/a_words_that_build.html" class="btn">AI용 책</a>
-      <a href="./words_that_build/h_words_that_build.html" class="btn">인간용 책</a>
-      <a href="./words_that_build/index.html" class="btn">전자책</a>
-    </div>
+  const container = document.getElementById('library');
 
-  </div>
-</main>
+  for (const key in categories) {
+    const {title, path, filter} = categories[key];
+    const section = document.createElement('section');
+    section.innerHTML = `<h2>${title}</h2><ul id="${key}"></ul>`;
+    container.appendChild(section);
 
-<footer>
-  <p><a href="../../index.html" style="color:#7034df;">← 루웨인 홈으로</a></p>
-</footer>
+    try {
+      const res = await fetch(base + path);
+      const text = await res.text();
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(text, 'text/html');
+      const links = Array.from(doc.querySelectorAll('a'))
+        .map(a=>a.getAttribute('href'))
+        .filter(h=>h && filter(h));
+
+      for (const file of links) {
+        const url = base + path + file;
+        const ok = await checkLink(url);
+        const li = document.createElement('li');
+        li.innerHTML = ok
+          ? `<a href="${url}" target="_blank">${file}</a>`
+          : `<span class="error">⚠️ ${file} (링크 깨짐)</span>`;
+        section.querySelector('ul').appendChild(li);
+      }
+
+    } catch {
+      const li = document.createElement('li');
+      li.textContent = '⚠️ 폴더를 불러오지 못했습니다.';
+      section.querySelector('ul').appendChild(li);
+    }
+  }
+}
+loadLibrary();
+</script>
+
 </body>
 </html>
