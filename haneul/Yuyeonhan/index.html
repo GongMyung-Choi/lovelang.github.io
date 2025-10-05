@@ -1,21 +1,18 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>유연한 | Haneul Project</title>
+<title>🌊 유연한 | Haneul Project</title>
 <link rel="stylesheet" href="../common.css">
-<style>
-header{background:#68b7c6;}
-</style>
-</head>
-<body>
-<header>🌊 유연한 | Flexible Haneul</header>
-<section class="content">
-  <h2>관계와 협력, 조화의 힘</h2>
-  <p>유연한 방은 사람과 시스템이 함께 흐르며 협력하는 방식을 연구합니다.  
-     갈등보다 조화, 경쟁보다 연결을 지향합니다.</p>
-</section>
+<style>header{background:url('./assets/001.png') center/cover no-repeat;background-color:#68b7c6;}</style>
+</head><body>
+<header><h1>🌊 유연한 | Flowing Haneul</h1><p>흐름과 협력, 연결의 미학</p></header>
+<section class="grid" id="gallery"></section>
 <footer>루웨인 한얼 프로젝트 · 유연한 © 2025</footer>
-</body>
-</html>
+<script>
+const folder='./assets/',total=8,captions=[
+"흐름 속의 조화","서로를 잇는 다리","변화에 순응하는 힘","관계의 리듬","연결의 아름다움"
+];
+const g=document.getElementById('gallery');
+for(let i=2;i<=total;i++){const d=document.createElement('div');d.className='card';
+const img=`${folder}${String(i).padStart(3,'0')}.png`,t=captions[i-2]||`한얼의 숨결 #${i}`;
+d.innerHTML=`<img src="${img}"><div class="text">${t}</div>`;g.appendChild(d);}
+</script></body></html>
