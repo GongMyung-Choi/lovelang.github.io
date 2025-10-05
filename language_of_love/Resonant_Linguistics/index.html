@@ -1,71 +1,46 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>숨 쉬는 언어, 살아 있는 말 (감응언어학)</title>
-
-<!-- 이 한 줄로 내부 상대경로를 /goods/library/breathing_language/ 기준으로 처리 -->
-<base href="/goods/library/breathing_language/">
-
-<!-- 전자책 스타일 (이미 폴더에 있는 stylesheet.css 사용) -->
-<link rel="stylesheet" href="stylesheet.css" />
-
-<style>
-  /* 웹용 약간의 보강 스타일 */
-  .wrap { max-width: 960px; margin: 0 auto; padding: 24px; }
-  .cover { margin: 0 0 20px; }
-  .cover img { width: 100%; height: auto; display: block;
-               border: 1px solid #ececf1; border-radius: 12px; }
-  .lead  { color: #555; margin: 0 0 18px; }
-  .toc   { background: #fff; border: 1px solid #ececf1; border-radius: 12px; padding: 16px; }
-  .toc h2{ margin: 0 0 10px; font-size: 1.2em; }
-  .toc ul{ margin: 0; padding-left: 1.2em; }
-  .xlinks{ margin-top: 18px; color:#666; }
-  .xlinks a { color:#af2465; text-underline-offset: 2px; }
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Resonant Linguistics | 공명언어학</title>
+<style id="themeVars">/* 메인 상단 스타일 (XHTML 호환) */ 
+:root{--header-color:#af2465;--menu-bg-color:#6c5b7b;--menu-text-color:#ffffff;--menu-hover-text:#2a9d8f;--page-padding:24px}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
+header{background:#fff;color:#af2465;font-size:40px;font-weight:800;text-align:center;padding:18px 12px;position:sticky;top:0;border-bottom:1px solid #ddd}
+nav ul{display:flex;justify-content:center;flex-wrap:wrap;gap:.4rem .6rem;background:#6c5b7b;margin:0;padding:.3rem .6rem;list-style:none}
+nav ul li{position:relative;font-size:16px}nav ul li>a{color:#fff;text-decoration:none;padding:.4rem .5rem;display:block}
+nav ul li>a:hover{color:#2a9d8f}nav ul li:hover>ul{display:block}
+nav ul li ul{display:none;position:absolute;top:100%;left:0;min-width:220px;background:#6c5b7b;padding:.6rem 0;margin:0;list-style:none;z-index:999}
+nav ul li ul li a{display:block;padding:.6rem 1rem;color:#fff;font-size:14px}
+main{padding:var(--page-padding)} .toc{background:#fff;border:1px solid #ececf1;border-radius:12px;padding:16px;max-width:900px}
+.toc h2{margin:0 0 10px} .toc ul{margin:0;padding-left:1.2em}
 </style>
-
-<!-- 공유 썸네일(커버) 메타: 커버 생기면 자동 반영됨(같은 파일명 유지 권장) -->
-<meta property="og:title" content="숨 쉬는 언어, 살아 있는 말 (감응언어학)">
-<meta property="og:description" content="감응과 울림으로 이어지는 새로운 소통의 언어.">
-<meta property="og:image" content="https://lovelang.github.io/goods/library/breathing_language/images/cover.png">
-<meta property="og:type" content="article">
-<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-<div class="wrap">
+<header>루웨인 트리니티</header>
+<nav>
+  <ul>
+    <li><a href="/language_of_love/index.html">사랑의 언어</a></li>
+    <li><a href="/index.html">루웨인 트리니티</a></li>
+    <li><a href="/goods/library/index.html">루웨인 도서관</a></li>
+  </ul>
+</nav>
 
-  <!-- 커버: 지금은 임시 이미지(없어도 페이지는 뜸). 나중에 cover.png로 교체만 하면 자동 반영 -->
-  <div class="cover" id="top">
-    <img src="images/cover.png" alt="숨 쉬는 언어, 살아 있는 말 (감응언어학) 표지">
-  </div>
-
-  <!-- 서두/소개: 필요 시 자유 수정 -->
-  <p class="lead" id="intro">
-    언어의 울림과 공명, 그리고 인간과 AI의 감응 소통을 다룹니다.  
-    아래 목차에서 원하는 장을 선택해 읽으세요.
-  </p>
-
-  <!-- 목차 -->
-  <section class="toc" id="toc">
+<main>
+  <h1>Resonant Linguistics</h1>
+  <p>공명(Resonance)을 축으로 언어·감정·의미의 구조를 탐구하는 챕터형 전자책.</p>
+  <section class="toc">
     <h2>목차</h2>
     <ul>
-      <li><a href="ch1.xhtml">1장 — 의사소통과 언어의 문제점</a></li>
-      <li><a href="ch2.xhtml">2장 — 감응언어학이란</a></li>
-      <li><a href="ch3.xhtml">3장 — AI 시대의 감응언어학 적용</a></li>
-      <li><a href="ch4.xhtml">4장 — 감응언어학의 종합과 미래 전망</a></li>
-      <li><a href="appendix.xhtml">부록</a></li>
-      <li><a href="glossary.xhtml">용어 사전</a></li>
-      <li><a href="references.xhtml">참고 문헌</a></li>
+      <li><a href="./ch1.xhtml">1장 — 공명의 원리</a></li>
+      <li><a href="./ch2.xhtml">2장 — 감응과 언어</a></li>
+      <li><a href="./ch3.xhtml">3장 — 시스템과 파동</a></li>
+      <li><a href="./ch4.xhtml">4장 — 응용과 실천</a></li>
+      <li><a href="./glossary.xhtml">용어집</a></li>
+      <li><a href="./references.xhtml">참고문헌</a></li>
+      <li><a href="./appendix.xhtml">부록</a></li>
     </ul>
   </section>
-
-  <!-- 루웨인 흐름으로 돌아가기/교차 링크 (원하면 수정/삭제) -->
-  <p class="xlinks">
-    돌아가기: <a href="/language_of_love/index.html">사랑의 언어</a> ·
-    <a href="/">메인</a>
-  </p>
-
-</div>
+</main>
 </body>
 </html>
