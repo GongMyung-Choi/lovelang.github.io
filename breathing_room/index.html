@@ -1,86 +1,48 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>숨틔움방 | 나만의 공간</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>숨 틔움방 | Breathing Room</title>
 <style>
-  body {
-    font-family:'Pretendard',sans-serif;margin:0;
-    background:linear-gradient(to bottom,#f6f8fa,#eef2f3);
-    color:#222;
-  }
-  header {background:#2f4858;color:#fff;text-align:center;padding:20px 0;}
-  nav {display:flex;justify-content:center;background:#405e72;}
-  nav a {color:#fff;text-decoration:none;padding:10px 16px;}
-  nav a:hover {background:#527a91;}
-  main {padding:50px;text-align:center;}
-  h1 {margin-bottom:10px;}
-  p.intro {color:#444;margin-bottom:40px;}
-  .grid {
-    display:flex;flex-wrap:wrap;justify-content:center;gap:30px;
-    max-width:900px;margin:0 auto;
-  }
-  .card {
-    background:#fff;border-radius:12px;
-    box-shadow:0 3px 8px rgba(0,0,0,0.08);
-    width:260px;padding:20px;text-align:center;
-    transition:transform 0.2s;
-  }
-  .card:hover {transform:translateY(-6px);}
-  .card h3 {color:#2f4858;margin-bottom:8px;}
-  .card p {font-size:14px;color:#555;margin-bottom:16px;}
-  .card a {
-    display:inline-block;background:#2f4858;color:#fff;
-    padding:8px 14px;border-radius:8px;text-decoration:none;
-  }
-  .card a:hover {background:#3e5d70;}
-  footer {background:#2f4858;color:#fff;text-align:center;padding:14px;margin-top:50px;}
+:root{
+  --theme-color:#6cbba4;
+  --header-color:#ffffff;
+  --menu-bg:#3a655c;
+  --menu-hover:#d5f0e3;
+  --font-main:'Noto Sans KR',sans-serif;
+}
+body{margin:0;font-family:var(--font-main);background:#eaf6f0;color:#333;}
+header{background:var(--menu-bg);color:var(--header-color);
+  font-size:2rem;font-weight:700;text-align:center;padding:18px;}
+nav ul{display:flex;flex-wrap:wrap;justify-content:center;list-style:none;
+  margin:0;padding:0;background:var(--menu-bg);}
+nav li{margin:4px;}
+nav a{color:#fff;text-decoration:none;padding:8px 12px;border-radius:6px;display:block;}
+nav a:hover{background:var(--menu-hover);color:#2a9d8f;}
+iframe{width:100%;height:calc(100vh - 180px);border:none;}
+footer{text-align:center;padding:12px;font-size:.9rem;color:#666;}
 </style>
 </head>
-
 <body>
 
-<header>
-  <h1>숨틔움방 — 나만의 공간</h1>
-  <p>기록하고, 정리하고, 숨 쉬는 곳</p>
-</header>
-
+<header>🌿 숨 틔움방 | Breathing Room</header>
 <nav>
-  <a href="/goods/library/index.html">도서관</a>
-  <a href="/with_luwein.html">루웨인과 함께</a>
-  <a href="/index.html">루웨인 홈</a>
+  <ul>
+    <li><a href="./Cards/index.html" target="contentFrame">감정카드</a></li>
+    <li><a href="./Chat/index.html" target="contentFrame">수다방</a></li>
+    <li><a href="./Clips/index.html" target="contentFrame">클립</a></li>
+    <li><a href="./Doodle_Board/index.html" target="contentFrame">낙서장</a></li>
+    <li><a href="./Images/index.html" target="contentFrame">이미지스</a></li>
+    <li><a href="./Recovery/index.html" target="contentFrame">리커버리</a></li>
+  </ul>
 </nav>
 
 <main>
-  <h2>나의 아카이브</h2>
-  <p class="intro">이곳은 루웨인 빌리지 내에서 당신만의 공간입니다.<br>
-  노트, 앨범, 아이디어, 대화 기록을 자유롭게 저장하고 확장할 수 있습니다.</p>
-
-  <div class="grid">
-    <div class="card">
-      <h3>📘 나의 노트</h3>
-      <p>아이디어, 일기, 영감 등 자유롭게 적는 공간</p>
-      <a href="/breathing_room/notes/index.html">열기</a>
-    </div>
-
-    <div class="card">
-      <h3>🖼 나의 앨범</h3>
-      <p>사진, 이미지, 그림을 모으는 나만의 아카이브</p>
-      <a href="/breathing_room/gallery/index.html">열기</a>
-    </div>
-
-    <div class="card">
-      <h3>🎞 나의 클립</h3>
-      <p>링크, 영상, 파일 등 영감의 흔적을 저장</p>
-      <a href="/breathing_room/clips/index.html">열기</a>
-    </div>
-  </div>
+  <iframe src="./Cards/index.html" name="contentFrame"></iframe>
 </main>
 
-<footer>
-  <p><a href="/index.html" style="color:#fff;">← 루웨인 홈으로 돌아가기</a></p>
-</footer>
+<footer>루웨인 숨 틔움방 © 2025</footer>
 
 </body>
 </html>
