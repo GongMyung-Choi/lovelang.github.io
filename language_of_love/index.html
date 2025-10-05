@@ -1,65 +1,234 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>사랑의 언어 | 루웨인</title>
-  <link rel="stylesheet" href="../haneul/common.css" />
-  <style>
-    main{max-width:1000px;margin:0 auto;padding:1rem}
-    .lead{color:var(--muted);margin:.4rem 0 1rem}
-    .grid{display:grid;gap:1rem;margin-top:1.2rem}
-    @media(min-width:640px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-    @media(min-width:960px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
-    .card{display:block;background:#fff;border:1px solid var(--border);border-radius:12px;
-      overflow:hidden;text-decoration:none;color:var(--text);box-shadow:var(--shadow)}
-    .card img{width:100%;height:180px;object-fit:cover;display:block}
-    .card h3{margin:.5rem 1rem .25rem;font-size:1.05rem}
-    .card p{margin:0 1rem 1rem;color:var(--muted);font-size:.9rem}
-    .pill{display:inline-block;margin:.5rem 1rem;color:var(--muted);font-size:.8rem}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>사랑의 언어 | 루웨인 도서관</title>
+<style>
+:root{
+  --bg:#fafafa;--fg:#222;--muted:#666;
+  --brand:#6c2bd9;--brand-2:#b84a62;--ai:#234a91;--human:#8b1e1e;--ebook:#7a3b8f;
+  --chip-bg:#fff;--chip-bd:#e9e9ee;--chip-h:#f3f0ff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Segoe UI",Roboto,Arial,Apple SD Gothic Neo,Malgun Gothic,"Noto Sans KR",sans-serif}
+a{color:inherit;text-decoration:none}
+a:focus{outline:2px solid #0003;outline-offset:3px;border-radius:10px}
+
+header.nav{
+  position:sticky; top:0; z-index:10;
+  backdrop-filter:saturate(130%) blur(6px);
+  background:#ffffffd9; border-bottom:1px solid #00000010;
+}
+header.nav .wrap{
+  max-width:1100px; margin:0 auto; padding:12px 16px;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+.brand{font-weight:700; letter-spacing:.2px; color:var(--brand)}
+.nav-links{display:flex; gap:10px; flex-wrap:wrap}
+.nav-links a{
+  padding:8px 10px; border:1px solid #00000010; border-radius:10px; color:#333; background:#fff;
+}
+.nav-links a:hover{background:#f6f6ff}
+
+.hero{
+  max-width:1100px; margin:18px auto 10px; padding:8px 16px 0;
+}
+.hero h1{margin:.4rem 0 .2rem; font-size:1.65rem}
+.hero p{margin:.2rem 0; color:var(--muted); font-size:.95rem}
+
+.section{max-width:1100px; margin:10px auto; padding:0 16px}
+.section h2{
+  margin:18px 0 10px; font-size:1.05rem; color:#222; font-weight:700;
+  display:flex; align-items:center; gap:8px;
+}
+.badge{display:inline-block; padding:3px 8px; border-radius:999px; font-size:.78rem; border:1px solid #00000014; background:#fff}
+.badge.ai{color:var(--ai); border-color:#2b5fb41a}
+.badge.human{color:var(--human); border-color:#b81e1e1a}
+.badge.ebook{color:var(--ebook); border-color:#7a3b8f1a}
+
+.grid{
+  display:grid; gap:10px;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+}
+.chip{
+  border:1px solid var(--chip-bd); background:var(--chip-bg);
+  border-radius:14px; padding:12px 12px;
+  display:flex; gap:10px; align-items:flex-start; transition:.18s ease;
+}
+.chip:hover{transform:translateY(-2px); background:var(--chip-h)}
+.chip .icon{font-size:1.15rem; line-height:1.15rem}
+.chip .meta{flex:1 1 auto}
+.chip .title{font-weight:700; font-size:.98rem; margin:0 0 4px; color:#1c1c22}
+.chip .desc{margin:0; font-size:.86rem; color:var(--muted)}
+.chip.ai{border-left:4px solid var(--ai)}
+.chip.human{border-left:4px solid var(--human)}
+.chip.ebook{border-left:4px solid var(--ebook)}
+
+.helper{margin-top:6px; color:#888; font-size:.82rem}
+.tags{margin-top:6px; display:flex; gap:6px; flex-wrap:wrap}
+.tag{font-size:.78rem; padding:2px 8px; border-radius:999px; background:#00000008; border:1px solid #00000010}
+
+hr.sep{border:none; border-top:1px dashed #0000001a; margin:14px 0}
+
+.empty{padding:10px; border:1px dashed #00000022; border-radius:10px; color:#777; font-size:.9rem; background:#fff}
+</style>
 </head>
 <body>
-<main>
-  <h1>사랑의 언어</h1>
-  <p class="lead">관계와 소통을 정제하고 전시하는 공간</p>
 
-  <div class="grid">
-    <a class="card" href="./The_Warmth_of_Words/index.html">
-      <img src="./assets/warmth.jpg" alt="말의 온도">
-      <h3>말의 온도</h3>
-      <p>한 마디 말에 담긴 따뜻함을 살펴보고 표현을 다듬습니다.</p>
-      <span class="pill">대화형</span>
-    </a>
-    <a class="card" href="./Shall_We_Try_Love/index.html">
-      <img src="./assets/practice.jpg" alt="사랑 연습">
-      <h3>사랑, 연습해 볼까?</h3>
-      <p>사랑을 배우고 연습하는 작은 시도들.</p>
-      <span class="pill">연습</span>
-    </a>
-    <a class="card" href="./Resonance_Cards/index.html">
-      <img src="./assets/resonance.jpg" alt="울림 카드">
-      <h3>울림 카드</h3>
-      <p>짧은 울림을 담은 카드 모음.</p>
-      <span class="pill">카드</span>
-    </a>
-    <a class="card" href="./Breathing_Language/index.html">
-      <img src="./assets/breathing.jpg" alt="감응언어학">
-      <h3>감응언어학</h3>
-      <p>숨 쉬는 언어, 살아 있는 말 — 이론과 사례를 아우르는 연구.</p>
-      <span class="pill">연구</span>
-    </a>
-    <a class="card" href="./To_Luwain_Trinity/index.html">
-      <img src="./assets/trinity.jpg" alt="To 루웨인 트리니티">
-      <h3>To 루웨인 트리니티</h3>
-      <p>트리니티에게 보내는 글, 서술과 메시지.</p>
-      <span class="pill">서술</span>
-    </a>
+<!-- 상단 고정 네비게이션 -->
+<header class="nav">
+  <div class="wrap">
+    <div class="brand">❤️ 사랑의 언어</div>
+    <nav class="nav-links" aria-label="Global">
+      <a href="../../index.html">🏠 루웨인 홈</a>
+      <a href="../index.html">📚 도서관 홈</a>
+      <a href="../papers/ai_index.html">🤖 AI 논문</a>
+      <a href="../papers/h_index.html">🧍 인간 논문</a>
+      <a href="../ai_index.html">📘 AI 책</a>
+      <a href="../h_index.html">📕 인간 책</a>
+    </nav>
   </div>
+</header>
 
-  <p style="margin-top:1.5rem">
-    <a href="../index.html">← 메인 인덱스로 돌아가기</a>
-  </p>
-</main>
+<!-- 제목/요약 -->
+<section class="hero">
+  <h1>사랑의 언어 (Love Language)</h1>
+  <p id="seriesIntro">감정·의사소통의 본질을 탐구하는 루웨인 시리즈. (요약은 summary.txt가 있으면 자동 표출)</p>
+</section>
+
+<!-- 빠른 이동(자동 탐지된 항목들만 노출) -->
+<section class="section" id="quick">
+  <h2>빠른 열람 <span class="badge ai">AI</span><span class="badge human">Human</span><span class="badge ebook">eBook</span></h2>
+  <div class="grid" id="quickGrid">
+    <!-- JS로 채움: 존재하는 파일만 버튼(칩)으로 노출 -->
+  </div>
+  <p class="helper">※ 파일명을 바꾸거나 지웠다면, 이 화면은 자동으로 현재 상태만 보여줍니다.</p>
+</section>
+
+<hr class="sep" />
+
+<!-- 세부 목차(선택): summary.txt의 태그/분류가 있으면 보여줌 -->
+<section class="section" id="about">
+  <h2>시리즈 정보</h2>
+  <div id="aboutBox" class="empty">summary.txt가 없거나 아직 정보가 없습니다.</div>
+</section>
+
+<script>
+// ====== 자동 탐지 로직 ======
+// 1) 가능한 파일명 후보들을 HEAD로 검사해, 존재하는 것만 작은 칩으로 보여줌.
+//    - AI 책: 접두사 없음 (index.html 제외)
+//    - Human 책: h_ 접두사
+//    - eBook: 대표 카탈로그(이 페이지 자체가 index.html이므로 하위 전자책 폴더 후보 탐지)
+
+const candidates = {
+  aiBooks: [
+    "love_language.html","Love_Language.html","a_love_language.html",
+    "love.html","language_of_love.html"
+  ],
+  humanBooks: [
+    "h_love_language.html","h_Love_Language.html","h_language_of_love.html"
+  ],
+  // 전자책 카탈로그/리더 후보 (있을 수도/없을 수도)
+  ebooks: [
+    "epub/index.html","ebook/index.html","reader/index.html","books/index.html"
+  ]
+};
+
+async function headExists(url){
+  try{
+    const res = await fetch(url,{method:"HEAD"});
+    return res.ok;
+  }catch{return false;}
+}
+
+function addChip(grid, href, kind, title, desc){
+  const div = document.createElement('a');
+  div.href = href;
+  div.className = `chip ${kind}`;
+  div.innerHTML = `
+    <div class="icon">${kind==="ai"?"📘":(kind==="human"?"📕":"📚")}</div>
+    <div class="meta">
+      <div class="title">${title}</div>
+      <p class="desc">${desc}</p>
+    </div>
+  `;
+  grid.appendChild(div);
+}
+
+async function buildQuick(){
+  const grid = document.getElementById('quickGrid');
+
+  // AI 책 (접두사 없음) — index.html(자기자신)은 제외
+  for(const f of candidates.aiBooks){
+    if(f==="index.html") continue;
+    if(await headExists(f)){
+      addChip(grid, f, "ai", "AI 버전 열기", f);
+      break; // 대표 1개만
+    }
+  }
+  // Human 책 (h_)
+  for(const f of candidates.humanBooks){
+    if(await headExists(f)){
+      addChip(grid, f, "human", "Human 버전 열기", f);
+      break;
+    }
+  }
+  // eBook 카탈로그(하위 리더)
+  for(const f of candidates.ebooks){
+    if(await headExists(f)){
+      addChip(grid, f, "ebook", "전자책 카탈로그", f);
+      break;
+    }
+  }
+
+  // 하나도 없으면 안내
+  if(!grid.children.length){
+    const box = document.createElement('div');
+    box.className = "empty";
+    box.textContent = "열 수 있는 항목이 아직 없습니다. (파일명이 바뀌었거나 업로드 전일 수 있음)";
+    grid.appendChild(box);
+  }
+}
+
+async function loadSummary(){
+  try{
+    const res = await fetch("./summary.txt");
+    if(!res.ok) return;
+    const txt = await res.text();
+    const lines = txt.split(/\r?\n/).filter(Boolean);
+
+    // 간단 파서: key: value 형식
+    const map = {};
+    for(const line of lines){
+      const [k,...vv]=line.split(":");
+      if(!k||!vv.length) continue;
+      map[k.trim()]=vv.join(":").trim();
+    }
+
+    // 상단 소개
+    const intro = document.getElementById('seriesIntro');
+    if(map["요약"]||map["소개"]) intro.textContent = (map["요약"]||map["소개"]);
+
+    // 정보 박스
+    const box = document.getElementById('aboutBox');
+    const tags = (map["Tags"]||map["태그"]||"").split(/[, ]+/).filter(Boolean).map(t=>t.startsWith("#")?t:"#"+t);
+    box.className = "";
+    box.innerHTML = `
+      <div style="background:#fff;border:1px solid #00000012;border-radius:12px;padding:12px;">
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+          ${map["KDC"]?`<span class="badge">KDC ${map["KDC"]}</span>`:""}
+          ${map["루웨인코드"]?`<span class="badge">${map["루웨인코드"]}</span>`:""}
+          ${map["주제"]?`<span class="badge">${map["주제"]}</span>`:""}
+        </div>
+        ${tags.length?`<div class="tags" style="margin-top:10px;">${tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>`:""}
+      </div>
+    `;
+  }catch{/* summary 없음 */}
+}
+
+buildQuick();
+loadSummary();
+</script>
 </body>
 </html>
