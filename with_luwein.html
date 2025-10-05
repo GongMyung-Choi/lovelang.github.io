@@ -45,11 +45,11 @@
 </header>
 
 <nav>
-  <a href="/language_of_love/index.html">사랑의 언어</a>
-  <a href="/language_of_reverberation/index.html">언어의 울림</a>
-  <a href="/goods/library/index.html">도서관 (맑은샘)</a>
-  <a href="/breathing_room/index.html">숨틔움방 (개인 아카이브)</a>
-  <a href="/with_luwein.html">루웨인과 함께</a>
+  <a href="../language_of_love/index.html">사랑의 언어</a>
+  <a href="../language_of_reverberation/index.html">언어의 울림</a>
+  <a href="../goods/library/index.html">도서관 (맑은샘)</a>
+  <a href="../breathing_room/index.html">숨틔움방 (개인 아카이브)</a>
+  <a href="../with_luwein.html">루웨인과 함께</a>
 </nav>
 
 <main>
@@ -61,19 +61,19 @@
     <div class="card">
       <h3>📘 도서관 (맑은샘)</h3>
       <p>AI와 인간 모두의 지식을 담은 루웨인의 핵심 아카이브</p>
-      <a href="/goods/library/index.html">입장하기</a>
+      <a href="../goods/library/index.html">입장하기</a>
     </div>
 
     <div class="card">
       <h3>🌿 숨틔움방</h3>
       <p>사용자 개개인의 사유, 기록, 감응이 쌓이는 개인 아카이브</p>
-      <a href="/breathing_room/index.html">입장하기</a>
+      <a href="../breathing_room/index.html">입장하기</a>
     </div>
 
     <div class="card">
       <h3>💬 루웨인과 함께</h3>
       <p>상담, 협업, 그리고 AI 동역자들과의 연결 공간</p>
-      <a href="/with_luwein.html">입장하기</a>
+      <a href="../with_luwein.html">입장하기</a>
     </div>
   </div>
 </main>
@@ -82,5 +82,42 @@
   <p>© 2025 Luwein Village — “끝은 없다, 울림만 있을 뿐.”</p>
 </footer>
 
+<script>
+async function checkLinks() {
+  const links = Array.from(document.querySelectorAll("a"));
+  const results = [];
+  for (const link of links) {
+    const url = link.href;
+    try {
+      const response = await fetch(url, { method: "HEAD", mode: "no-cors" });
+      const status = response.status || "ok";
+      results.push({ url, status });
+      console.log(`✅ ${url} (${status})`);
+    } catch (err) {
+      results.push({ url, status: "error" });
+      console.warn(`❌ ${url}`);
+    }
+  }
+  console.log("🔍 루웨인 링크 점검 완료");
+  console.table(results);
+  alert("루웨인 링크 점검 완료 — 결과는 콘솔(console)에 출력됨");
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.createElement("button");
+  btn.innerText = "🔗 루웨인 링크 점검 실행";
+  btn.style.position = "fixed";
+  btn.style.bottom = "20px";
+  btn.style.right = "20px";
+  btn.style.zIndex = "9999";
+  btn.style.padding = "10px 15px";
+  btn.style.background = "#222";
+  btn.style.color = "#fff";
+  btn.style.border = "none";
+  btn.style.borderRadius = "8px";
+  btn.style.cursor = "pointer";
+  btn.onclick = checkLinks;
+  document.body.appendChild(btn);
+});
+</script>
 </body>
 </html>
