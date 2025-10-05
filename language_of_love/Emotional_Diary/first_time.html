@@ -1,36 +1,51 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>감성일기 — 처음 오셨군요</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    .center {max-width:700px;margin:3rem auto;padding:2rem;background:#fff;
-      box-shadow:0 0 12px rgba(0,0,0,.05);border-radius:12px}
-    .btn {display:inline-block;margin-top:1rem;padding:.7rem 1.4rem;border-radius:8px;
-      background:#af2465;color:#fff;text-decoration:none}
-    .btn:hover {background:#942051}
-    .muted{color:#666}
-  </style>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>감성일기 | 처음</title>
+<style id="themeVars">/* 상단 스타일 (동일) */ 
+:root{--header-color:#af2465;--menu-bg-color:#6c5b7b;--menu-text-color:#ffffff;--menu-hover-text:#2a9d8f;--page-padding:24px}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
+header{background:#fff;color:#af2465;font-size:40px;font-weight:800;text-align:center;padding:18px 12px;position:sticky;top:0;border-bottom:1px solid #ddd}
+nav ul{display:flex;justify-content:center;flex-wrap:wrap;gap:.4rem .6rem;background:#6c5b7b;margin:0;padding:.3rem .6rem;list-style:none}
+nav ul li{position:relative;font-size:16px}nav ul li>a{color:#fff;text-decoration:none;padding:.4rem .5rem;display:block}
+nav ul li>a:hover{color:#2a9d8f}nav ul li:hover>ul{display:block}
+nav ul li ul{display:none;position:absolute;top:100%;left:0;min-width:220px;background:#6c5b7b;padding:.6rem 0}
+nav ul li ul li a{display:block;padding:.6rem 1rem;color:#fff;font-size:14px}
+main{padding:var(--page-padding)}.box{background:#fff;border:1px solid #e9e9ee;border-radius:14px;padding:16px;max-width:720px}
+input,button{font:inherit}input{width:100%;padding:10px;border:1px solid #e9e9ee;border-radius:10px}
+button{background:#2a9d8f;color:#fff;border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
+</style>
 </head>
 <body>
-  <div class="center">
-    <h1>감성일기 시작하기</h1>
-    <p class="muted">오늘의 말·감정·몸의 느낌을 간단히 남기면,<br>이 브라우저에만 안전하게 저장됩니다.</p>
-    <ul class="muted" style="line-height:1.7">
-      <li>서버 전송 없음 — <b>로컬 저장</b></li>
-      <li>언제든 <b>이어쓰기</b> 가능</li>
-      <li>JSON으로 <b>내보내기/불러오기</b> 가능</li>
-    </ul>
-    <a class="btn" id="start">시작하기</a>
-  </div>
+<header>루웨인 트리니티</header>
+<nav>
+  <ul>
+    <li><a href="/language_of_love/index.html">사랑의 언어</a></li>
+    <li><a href="/index.html">루웨인 트리니티</a></li>
+  </ul>
+</nav>
 
-  <script>
-    document.getElementById('start').addEventListener('click', function(){
-      localStorage.setItem('gamsung_ilgi_visited', 'yes');
-      location.href = 'returning_user.html';
-    });
-  </script>
+<main>
+  <h1>처음 오신 분</h1>
+  <div class="box">
+    <label for="name">닉네임</label>
+    <input id="name" placeholder="예: 공명" />
+    <div style="margin-top:10px;display:flex;gap:8px">
+      <button id="go">저장하고 시작</button>
+      <a href="./index.html">취소</a>
+    </div>
+  </div>
+</main>
+
+<script>
+const KEY_USER="ed_user";
+function saveUser(name){localStorage.setItem(KEY_USER,JSON.stringify({name,created:new Date().toLocaleString()}));}
+document.getElementById('go').addEventListener('click',()=>{
+  const name=document.getElementById('name').value.trim();
+  if(!name){alert('닉네임을 입력해주세요');return;}
+  saveUser(name); location.href='./returning_user.html';
+});
+</script>
 </body>
 </html>
