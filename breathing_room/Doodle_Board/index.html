@@ -1,132 +1,38 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>내 쉼터 | 개인 아카이브</title>
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #f9fafa;
-      margin: 0;
-      padding: 2rem;
-      color: #2a9d8f;
-    }
-    header {
-      font-size: 2.2rem;
-      font-weight: bold;
-      color: #af2465;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .lead {
-      text-align: center;
-      color: #7034df;
-      margin-bottom: 2rem;
-    }
-    .grid {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-    .card {
-      background: #fff;
-      border: 2px solid #2a9d8f;
-      border-radius: 12px;
-      padding: 1rem;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,.1);
-      transition: all 0.2s ease;
-    }
-    .card:hover {
-      background: #2a9d8f;
-      color: #fff;
-    }
-    .add-card {
-      border: 2px dashed #af2465;
-      color: #af2465;
-      font-weight: bold;
-    }
-    .add-card:hover {
-      background: #af2465;
-      color: #fff;
-    }
-    .rename-input {
-      width: 80%;
-      padding: .3rem;
-      font-size: 1rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>낙서장 | Doodle Board</title>
+<style>
+body{margin:0;background:#fff;font-family:'Noto Sans KR',sans-serif;text-align:center;}
+header{background:#6cbba4;color:#fff;padding:16px;font-size:1.5rem;font-weight:700;}
+img{max-width:90%;margin-top:20px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+footer{padding:12px;color:#666;font-size:.9rem;}
+</style>
 </head>
 <body>
-  <header>내 쉼터</header>
-  <p class="lead">나만의 앨범, 클립, 카드, 노트 등을 자유롭게 관리하는 공간</p>
+<header>🎨 낙서장 | Doodle Board</header>
+<main>
+  <img id="dailyImage" src="" alt="오늘의 낙서">
+</main>
+<footer>루웨인 낙서장 © 2025</footer>
 
-  <div class="grid" id="grid"></div>
+<script>
+// 자동 순환 이미지 표시 (매일 변경 + 추가 자동 인식)
+const folder='./images/';
+let total=100; // 기본 이미지 개수
 
-  <script>
-    // 기본값 폴더 (최초 1회만 적용)
-    const defaultFolders = [
-      { id: "album", title: "앨범" },
-      { id: "clips", title: "클립" },
-      { id: "cards", title: "카드" },
-      { id: "notes", title: "노트" }
-    ];
-
-    // localStorage에서 불러오기
-    function loadFolders() {
-      const saved = localStorage.getItem("myspace-folders");
-      return saved ? JSON.parse(saved) : defaultFolders;
-    }
-
-    // 저장
-    function saveFolders(folders) {
-      localStorage.setItem("myspace-folders", JSON.stringify(folders));
-    }
-
-    // 카드 렌더링
-    function renderFolders() {
-      const grid = document.getElementById("grid");
-      grid.innerHTML = "";
-      const folders = loadFolders();
-
-      folders.forEach((folder, idx) => {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `<h3 contenteditable="true" 
-            onblur="renameFolder(${idx}, this.innerText)">${folder.title}</h3>
-            <p>클릭해서 들어가기</p>`;
-        card.onclick = () => alert(folder.title + " 페이지로 이동 (추후 연결)");
-        grid.appendChild(card);
-      });
-
-      // + 새 폴더 카드
-      const add = document.createElement("div");
-      add.className = "card add-card";
-      add.innerText = "+ 새 폴더 만들기";
-      add.onclick = () => addFolder();
-      grid.appendChild(add);
-    }
-
-    // 폴더 추가
-    function addFolder() {
-      const name = prompt("새 폴더 이름:");
-      if(!name) return;
-      const folders = loadFolders();
-      folders.push({ id: Date.now(), title: name });
-      saveFolders(folders);
-      renderFolders();
-    }
-
-    // 폴더 이름 변경
-    function renameFolder(index, newName) {
-      const folders = loadFolders();
-      folders[index].title = newName.trim() || folders[index].title;
-      saveFolders(folders);
-    }
-
-    // 초기 렌더링
-    renderFolders();
-  </script>
+function getIndex(total){
+  const today=Math.floor(Date.now()/86400000);
+  return (today % total) + 1;
+}
+function loadImage(){
+  const img=document.getElementById('dailyImage');
+  const index=getIndex(total);
+  img.src=`${folder}${index}.jpg`;
+}
+loadImage();
+</script>
 </body>
 </html>
