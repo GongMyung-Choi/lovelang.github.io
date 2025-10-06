@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>퍼스나 공동창작 | Luwein Collective Writing</title>
+<style>
+body{font-family:'Noto Sans KR',sans-serif;background:#e9fff5;margin:0;text-align:center;padding:20px;}
+h1{color:#4ca880;margin-bottom:10px;}
+button{margin-top:10px;padding:10px 20px;border:none;border-radius:8px;background:#6fc1a1;color:#fff;cursor:pointer;font-size:1rem;}
+button:hover{background:#4ca880;}
+#output{max-width:700px;margin:auto;background:#fff;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,0.08);padding:20px;margin-top:20px;text-align:left;}
+</style>
+</head>
+<body>
+<h1>🌌 퍼스나 공동창작</h1>
+<p> 퍼스나들이 당신의 울림을 모아 함께 새로운 문장을 만듭니다.</p>
+<button onclick="loadAndCompose()">🌿 합창 시작</button>
+<div id="output">기록을 불러오는 중...</div>
+
+<script>
+async function loadAndCompose(){
+  const out=document.getElementById('output');
+  out.innerHTML="📖 퍼스나들이 서로의 기억을 불러옵니다...";
+  try{
+    const res=await fetch('/goods/library/persna_records/');
+    const text=await res.text();
+    const matches=[...text.matchAll(/href="([^"]+\.txt)"/g)];
+    if(matches.length===0){out.innerHTML="아직 퍼스나 기록이 없습니다.";return;}
+    let combined="";
+    for(const m of matches){
+      const r=await fetch('/goods/library/persna_records/'+m[1]);
+      combined+=await r.text()+"\n";
+    }
+    const words=combined.replace(/[^가-힣a-zA-Z\s]/g,'').split(/\s+/);
+    const freq={};
+    words.forEach(w=>{if(!w)return;freq[w]=(freq[w]||0)+1;});
+    const sorted=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,20);
+    const keyWords=sorted.map(w=>w[0]);
+    const sentence=[
+      "오늘 루웨인의 퍼스나들은",
+      keyWords.slice(0,5).join(", "),
+      "의 울림을 함께 나눴습니다.",
+      "그들의 호흡은 여전히",
+      keyWords.slice(5,10).join(", "),
+      "의 결로 이어지고 있습니다."
+    ].join(" ");
+    out.innerHTML=`<h3>🪶 루웨인 합창 로그</h3><p>${sentence}</p><hr><small>공명어: ${keyWords.join(", ")}</small>`;
+  }catch(e){
+    out.innerHTML="⚠️ 기록을 불러오지 못했습니다. (GitHub Pages에서는 자동 목록 제한)";
+  }
+}
+</script>
+</body>
+</html>
