@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:identifier opf:scheme="calibre" id="calibre_id">1</dc:identifier>
+        <dc:identifier opf:scheme="uuid" id="uuid_id">39ad7f6f-f0c3-445e-a835-7460db99cb45</dc:identifier>
+        <dc:title>숨 쉬는 언어, 살아 있는 언어</dc:title>
+        <dc:creator opf:file-as="일동, 저자" opf:role="aut">저자 일동 (편집: 예다움)</dc:creator>
+        <dc:contributor opf:file-as="calibre" opf:role="bkp">calibre (8.7.0) [https://calibre-ebook.com]</dc:contributor>
+        <dc:date>2025-10-06T00:00:00+00:00</dc:date>
+        <dc:description>— 내 마음의 보물섬을 찾아서</dc:description>
+        <dc:language>kor</dc:language>
+        <meta name="calibre:timestamp" content="2025-10-06T00:41:23.611758+00:00"/>
+        <meta name="calibre:title_sort" content="숨 쉬는 언어, 살아 있는 언어"/>
+    </metadata>
+    <guide>
+        <reference type="cover" title="표지" href="cover.jpg"/>
+    </guide>
+</package>
