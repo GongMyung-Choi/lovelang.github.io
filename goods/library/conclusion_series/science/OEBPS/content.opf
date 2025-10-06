@@ -1,44 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<package version="3.0"
-  xmlns="http://www.idpf.org/2007/opf"
-  unique-identifier="bookid"
-  xml:lang="ko">
-
+<!-- 📂 conclusion_1/OEBPS/content.opf -->
+<?xml version="1.0" encoding="utf-8"?>
+<package version="3.0" xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" xml:lang="ko">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <dc:identifier id="bookid">urn:uuid:KYEOLLON-SCI-0001</dc:identifier>
-    <dc:title>결론이… : 과학편 — 과학이 답하지 않는 방식</dc:title>
+    <dc:identifier id="bookid">urn:uuid:6b1e3b2e-0001-41cd-9fce-20251006</dc:identifier>
+    <dc:title>결론이... (과학편 1권)</dc:title>
     <dc:language>ko</dc:language>
-    <dc:creator>한얼 프로젝트</dc:creator>
-    <meta property="dcterms:modified">2025-08-16T00:00:00Z</meta>
+    <dc:creator>저자 일동 (편집: 예다움)</dc:creator>
+    <dc:date>2025-10-06</dc:date>
+    <meta property="dcterms:modified">2025-10-06T00:00:00Z</meta>
   </metadata>
-
   <manifest>
+    <item id="front" href="front.xhtml" media-type="application/xhtml+xml"/>
     <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
-    <item id="cover_page" href="cover.xhtml" media-type="application/xhtml+xml"/>
-    <item id="ch00" href="ch00.xhtml" media-type="application/xhtml+xml"/>
-    <item id="ch01" href="ch01.xhtml" media-type="application/xhtml+xml"/>
-    <item id="ch02" href="ch02.xhtml" media-type="application/xhtml+xml"/>
-    <item id="ch03" href="ch03.xhtml" media-type="application/xhtml+xml"/>
-    <item id="ch04" href="ch04.xhtml" media-type="application/xhtml+xml"/>
-    <item id="ch035" href="ch035.xhtml" media-type="application/xhtml+xml"/>
-    <item id="ch04b" href="ch04b.xhtml" media-type="application/xhtml+xml"/>
-    <item id="ch05" href="ch05.xhtml" media-type="application/xhtml+xml"/>
-    <item id="epilogue" href="epilogue.xhtml" media-type="application/xhtml+xml"/>
-    <item id="last" href="last.xhtml" media-type="application/xhtml+xml"/>
-    <item id="cover_image" href="images/cover.png" media-type="image/png" properties="cover-image"/>
+    <item id="part1" href="part-1.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap1" href="part1-chap1-성-선택-vs-자연-선택.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap2" href="part1-chap2-이기적-유전자-vs-이타적-협력.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap3" href="part1-chap3-기억-vs-사실.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap4" href="part1-chap4-자유의지-vs-결정론.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap5" href="part1-chap5-감정-vs-호르몬.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap6" href="part1-chap6-죽음-vs-변화.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap7" href="part1-chap7-맺음말.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap8" href="part1-chap8-막장.xhtml" media-type="application/xhtml+xml"/>
+    <item id="css" href="styles.css" media-type="text/css"/>
   </manifest>
-
   <spine>
-    <itemref idref="cover_page"/>
-    <itemref idref="ch00"/>
-    <itemref idref="ch01"/>
-    <itemref idref="ch02"/>
-    <itemref idref="ch03"/>
-    <itemref idref="ch04"/>
-    <itemref idref="ch035"/>
-    <itemref idref="ch04b"/>
-    <itemref idref="ch05"/>
-    <itemref idref="epilogue"/>
-    <itemref idref="last"/>
+    <itemref idref="front"/>
+    <itemref idref="part1"/>
+    <itemref idref="chap1"/>
+    <itemref idref="chap2"/>
+    <itemref idref="chap3"/>
+    <itemref idref="chap4"/>
+    <itemref idref="chap5"/>
+    <itemref idref="chap6"/>
+    <itemref idref="chap7"/>
+    <itemref idref="chap8"/>
   </spine>
 </package>
