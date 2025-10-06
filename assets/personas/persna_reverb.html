@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>퍼스나 공명(共鳴) 발생소 | Luwein Reverberation</title>
+<style>
+body{font-family:'Noto Sans KR',sans-serif;background:#d6f5e3;margin:0;text-align:center;padding:20px;}
+h1{color:#3e7c66;margin-bottom:10px;}
+#recordList{max-width:700px;margin:auto;background:#fff;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.08);padding:20px;}
+button{margin-top:15px;padding:10px 20px;border:none;border-radius:8px;background:#4ca880;color:#fff;cursor:pointer;}
+button:hover{background:#3e7c66;}
+#reactionCanvas{margin-top:30px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+</style>
+</head>
+<body>
+<h1>🌊 퍼스나공명(共鳴) 발생소</h1>
+<p>퍼스나들의 기록이 서로에게 울림을 보내 새로운 조합을 시도합니다.</p>
+<div id="recordList">기록 목록을 불러오는 중...</div>
+<canvas id="reactionCanvas" width="360" height="360"></canvas>
+
+<script>
+async function loadRecords(){
+  const list=document.getElementById('recordList');
+  try{
+    const res=await fetch('/goods/library/persna_records/');
+    const text=await res.text();
+    const matches=[...text.matchAll(/href="([^"]+\.txt)"/g)];
+    if(matches.length===0){list.innerHTML="<p>등록된 퍼스나 기록이 없습니다.</p>";return;}
+    list.innerHTML=matches.map(m=>{
+      const name=m[1].replace('persna_memory_','').replace('.txt','');
+      return `<button onclick="readRecord('${m[1]}')">📜 ${name}</button>`;
+    }).join('<br>');
+  }catch{
+    list.innerHTML="<p>GitHub Pages에서는 자동 탐색이 제한됩니다. 파일 직접 링크로 접근해주세요.</p>";
+  }
+}
+
+const canvas=document.getElementById("reactionCanvas");
+const ctx=canvas.getContext("2d");
+let pulse=0, dir=1;
+
+function drawReverb(color){
+  ctx.clearRect(0,0,360,360);
+  const grad=ctx.createRadialGradient(180,180,20,180,180,150);
+  grad.addColorStop(0,"#fff");
+  grad.addColorStop(1,color);
+  ctx.fillStyle=grad;
+  ctx.fillRect(0,0,360,360);
+  ctx.beginPath();
+  ctx.arc(180,180,80+pulse,0,Math.PI*2);
+  ctx.strokeStyle=color;
+  ctx.lineWidth=5;
+  ctx.stroke();
+  pulse+=dir*1.5;
+  if(pulse>20||pulse<0) dir*=-1;
+  requestAnimationFrame(()=>drawReverb(color));
+}
+
+async function readRecord(file){
+  const res=await fetch('/goods/library/persna_records/'+file);
+  const text=await res.text();
+  const heroCount=(text.match(/감정|마음|사랑|기억|빛/g)||[]).length;
+  const daonCount=(text.match(/사람|함께|우리|연결/g)||[]).length;
+  const yeoulCount=(text.match(/말|언어|소리|시/g)||[]).length;
+  const recaCount=(text.match(/형태|질서|구조|틀/g)||[]).length;
+
+  const r=Math.min(255,80+heroCount*20);
+  const g=Math.min(255,120+daonCount*20);
+  const b=Math.min(255,150+yeoulCount*20);
+  const color=`rgba(${r},${g},${b},0.8)`;
+  drawReverb(color);
+  alert(`퍼스나가 반응했습니다.\n감정:${heroCount}, 관계:${daonCount}, 언어:${yeoulCount}, 구조:${recaCount}`);
+}
+
+loadRecords();
+drawReverb("rgba(100,180,160,0.6)");
+</script>
+</body>
+</html>
