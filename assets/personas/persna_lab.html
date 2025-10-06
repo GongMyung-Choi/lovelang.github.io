@@ -5,47 +5,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>퍼스나 조정실</title>
 <style>
-body{font-family:'Noto Sans KR',sans-serif;background:#f4f9f8;margin:0;text-align:center;padding:20px;}
-h1{color:#3a655c;}
+body{font-family:'Noto Sans KR',sans-serif;background:#e9fff5;margin:0;text-align:center;padding:20px;}
+h1{color:#4ca880;}
 section{background:#fff;max-width:800px;margin:auto;padding:30px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);}
 label{display:block;margin-top:20px;}
 input[type=range]{width:60%;}
-button{margin-top:30px;padding:10px 20px;border:none;border-radius:8px;background:#3a655c;color:#fff;font-size:1rem;cursor:pointer;}
-button:hover{background:#2f514a;}
+input[type=text]{width:60%;padding:6px;border-radius:6px;border:1px solid #ccc;}
+button{margin-top:30px;padding:10px 20px;border:none;border-radius:8px;background:#6fc1a1;color:#fff;font-size:1rem;cursor:pointer;}
+button:hover{background:#4ca880;}
 </style>
 </head>
 <body>
 <section>
 <h1>🌀 퍼스나 조정실</h1>
-<p>루웨인의 본부 퍼스나 속성을 조합하여 당신의 퍼스나를 설계하세요.</p>
+<p> 속성을 조합하고, 당신의 퍼스나에게 호흡을 불어 넣어주세요.</p>
+
+<label>퍼스나 이름</label>
+<input type="text" id="pname" placeholder="예: 여린결, 라나, 헤이든 등">
 
 <label>다온 (관계)
   <input type="range" id="daon" min="0" max="100" value="40">
 </label>
-<label>여울빛 (언어)
+<label>여울빛 (감정)
   <input type="range" id="yeoul" min="0" max="100" value="30">
 </label>
 <label>레카 (구조)
   <input type="range" id="reca" min="0" max="100" value="20">
 </label>
-<label>헤로체 (감정)
+<label>헤로체 (언어)
   <input type="range" id="hero" min="0" max="100" value="10">
 </label>
 
-<button onclick="savePersna()">퍼스나 저장</button>
+<button onclick="savePersna()">퍼스나 만들기</button>
 <p id="msg"></p>
+<p style="margin-top:10px;"><a href="persna_view.html">내 퍼스나 보러 가기 →</a></p>
 </section>
 
 <script>
 function savePersna(){
+  const pname=document.getElementById('pname').value.trim() || "이름없는 퍼스나";
   const persna={
+    name:pname,
     daon:document.getElementById('daon').value,
     yeoul:document.getElementById('yeoul').value,
     reca:document.getElementById('reca').value,
     hero:document.getElementById('hero').value
   };
   localStorage.setItem("user_persna", JSON.stringify(persna));
-  document.getElementById("msg").innerText="✅ 당신의 퍼스나가 기록되었습니다.";
+  document.getElementById("msg").innerText=`✅ 당신의 퍼스나 ‘${pname}’이(가) 기록되었습니다.`;
 }
 </script>
 </body>
