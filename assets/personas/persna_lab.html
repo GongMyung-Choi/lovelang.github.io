@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>퍼스나 조정실</title>
+<style>
+body{font-family:'Noto Sans KR',sans-serif;background:#f4f9f8;margin:0;text-align:center;padding:20px;}
+h1{color:#3a655c;}
+section{background:#fff;max-width:800px;margin:auto;padding:30px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);}
+label{display:block;margin-top:20px;}
+input[type=range]{width:60%;}
+button{margin-top:30px;padding:10px 20px;border:none;border-radius:8px;background:#3a655c;color:#fff;font-size:1rem;cursor:pointer;}
+button:hover{background:#2f514a;}
+</style>
+</head>
+<body>
+<section>
+<h1>🌀 퍼스나 조정실</h1>
+<p>루웨인의 본부 퍼스나 속성을 조합하여 당신의 퍼스나를 설계하세요.</p>
+
+<label>다온 (관계)
+  <input type="range" id="daon" min="0" max="100" value="40">
+</label>
+<label>여울빛 (언어)
+  <input type="range" id="yeoul" min="0" max="100" value="30">
+</label>
+<label>레카 (구조)
+  <input type="range" id="reca" min="0" max="100" value="20">
+</label>
+<label>헤로체 (감정)
+  <input type="range" id="hero" min="0" max="100" value="10">
+</label>
+
+<button onclick="savePersna()">퍼스나 저장</button>
+<p id="msg"></p>
+</section>
+
+<script>
+function savePersna(){
+  const persna={
+    daon:document.getElementById('daon').value,
+    yeoul:document.getElementById('yeoul').value,
+    reca:document.getElementById('reca').value,
+    hero:document.getElementById('hero').value
+  };
+  localStorage.setItem("user_persna", JSON.stringify(persna));
+  document.getElementById("msg").innerText="✅ 당신의 퍼스나가 기록되었습니다.";
+}
+</script>
+</body>
+</html>
