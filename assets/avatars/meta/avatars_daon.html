@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>다온 아바타</title>
+  <style>
+    body{font-family:sans-serif;text-align:center;background:#f9f9f9;padding:30px;}
+    #avatar{position:relative;width:300px;margin:auto;}
+    #avatar img{position:absolute;left:0;top:0;width:300px;}
+    select{margin:10px;padding:5px;}
+  </style>
+</head>
+<body>
+  <h1>다온 아바타</h1>
+  <div id="avatar">
+    <img id="base">
+    <img id="hair">
+    <img id="outfit">
+    <img id="accessory">
+  </div>
+  <div>
+    <select id="hairSelect"></select>
+    <select id="outfitSelect"></select>
+    <select id="accSelect"></select>
+  </div>
+
+  <script>
+  async function init(){
+    const meta = await fetch("/assets/avatars/meta/daon.json").then(r=>r.json());
+    document.getElementById("base").src="/assets/avatars/"+meta.base;
+
+    for(const part of ["hair","outfit","accessory"]){
+      const sel=document.getElementById(part+"Select");
+      sel.innerHTML="";
+      meta.options[part].forEach(opt=>{
+        const o=document.createElement("option");
+        o.value=opt; o.textContent=opt.split("/").pop();
+        sel.appendChild(o);
+      });
+      sel.value=meta.default[part];
+      document.getElementById(part).src="/assets/avatars/"+sel.value;
+      sel.onchange=()=>document.getElementById(part).src="/assets/avatars/"+sel.value;
+    }
+  }
+  init();
+  </script>
+</body>
+</html>
