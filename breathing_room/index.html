@@ -18,8 +18,16 @@ header{background:var(--menu-bg);color:var(--header-color);
 nav ul{display:flex;flex-wrap:wrap;justify-content:center;list-style:none;
   margin:0;padding:0;background:var(--menu-bg);}
 nav li{margin:4px;}
-nav a{color:#fff;text-decoration:none;padding:8px 12px;border-radius:6px;display:block;}
+nav a{
+  color:#fff;text-decoration:none;padding:8px 12px;border-radius:6px;display:block;
+  transition:0.2s;
+}
 nav a:hover{background:var(--menu-hover);color:#2a9d8f;}
+nav a.disabled{
+  opacity:0.4;
+  pointer-events:none;
+  cursor:default;
+}
 iframe{width:100%;height:calc(100vh - 180px);border:none;}
 footer{text-align:center;padding:12px;font-size:.9rem;color:#666;}
 </style>
@@ -36,6 +44,7 @@ footer{text-align:center;padding:12px;font-size:.9rem;color:#666;}
     <li><a href="./Images/index.html" target="contentFrame">이미지스</a></li>
     <li><a href="./Recovery/index.html" target="contentFrame">리커버리</a></li>
     <li><a href="./Todays_Breathing/index.html" target="contentFrame">오늘의 숨결</a></li>
+    <li><a id="personaLink" href="/assets/personas/persna_index.html" target="_blank">퍼스나</a></li>
   </ul>
 </nav>
 
@@ -44,6 +53,22 @@ footer{text-align:center;padding:12px;font-size:.9rem;color:#666;}
 </main>
 
 <footer>루웨인 숨 틔움방 © 2025</footer>
+
+<script>
+// 사용자 상태 감지
+const userKey = localStorage.getItem("luwein_user");
+const personaLink = document.getElementById("personaLink");
+
+// 처음 사용자면 비활성화
+if(!userKey){
+  personaLink.classList.add("disabled");
+  personaLink.textContent = "퍼스나 (비활성)";
+  personaLink.title = "가입 또는 세션 생성 후 사용 가능합니다.";
+} else {
+  personaLink.classList.remove("disabled");
+  personaLink.title = "퍼스나 관리로 이동합니다.";
+}
+</script>
 
 </body>
 </html>
