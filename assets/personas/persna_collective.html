@@ -6,33 +6,140 @@
 <title>퍼스나 공동창작 | Luwein Collective Writing</title>
 <style>
 body{font-family:'Noto Sans KR',sans-serif;background:#e9fff5;margin:0;text-align:center;padding:20px;}
-h1{color:#4ca880;margin-bottom:10px;}
+h1{color:#4ca880;margin-bottom:6px;}
 button{margin-top:10px;padding:10px 20px;border:none;border-radius:8px;background:#6fc1a1;color:#fff;cursor:pointer;font-size:1rem;}
 button:hover{background:#4ca880;}
 #output{max-width:700px;margin:auto;background:#fff;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,0.08);padding:20px;margin-top:20px;text-align:left;}
+/* 시간 알림 바 */
+#timeBar{max-width:820px;margin:10px auto 16px;background:#ffffff;border:1px solid #dfe8e6;border-radius:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);padding:10px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+#clock{font-weight:700;color:#3e7c66;}
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+select, .ghost{border:1px solid #b9e3d2;border-radius:8px;padding:8px 10px;background:#f7fbfa;color:#2f514a}
+.ghost{cursor:pointer}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#d6f5e3;color:#3e7c66;font-size:.85rem;margin-left:6px}
+.small{color:#6b7780;font-size:.9rem;margin-top:2px}
 </style>
 </head>
 <body>
+
 <h1>🌌 퍼스나 공동창작</h1>
-<p> 퍼스나들이 당신의 울림을 모아 함께 새로운 문장을 만듭니다.</p>
+<p>퍼스나들이 당신의 울림을 모아 함께 새로운 문장을 만듭니다.</p>
+
+<!-- ⏰ 시간 알림 바 -->
+<div id="timeBar">
+  <div>
+    <div id="clock">🕒 현재 시각(서울): --:--:--</div>
+    <div class="small">알림은 브라우저가 열려있는 동안에만 동작합니다.</div>
+  </div>
+  <div class="controls">
+    <label for="alarmSel" class="small">알림 주기</label>
+    <select id="alarmSel" aria-label="알림 주기 선택">
+      <option value="off">끄기</option>
+      <option value="15">15분마다</option>
+      <option value="30">30분마다</option>
+      <option value="60">1시간마다</option>
+    </select>
+    <button id="alarmBtn" class="ghost">알림 시작</button>
+    <span id="alarmState" class="badge">대기</span>
+  </div>
+</div>
+
 <button onclick="loadAndCompose()">🌿 합창 시작</button>
 <div id="output">기록을 불러오는 중...</div>
 
 <script>
+// ⏰ 실시간 시계 (Asia/Seoul)
+function updateClock(){
+  const now = new Date();
+  const txt = now.toLocaleString('ko-KR',{ timeZone:'Asia/Seoul', hour12:false });
+  document.getElementById('clock').textContent = '🕒 현재 시각(서울): ' + txt;
+}
+setInterval(updateClock, 1000); updateClock();
+
+// 🔔 간단 알림(브라우저 Notification API + fallback)
+let alarmTimer = null;
+let alarmMinutes = 0;
+
+function notify(msg){
+  if ('Notification' in window) {
+    if (Notification.permission === 'granted') {
+      new Notification('루웨인 알림', { body: msg });
+    } else {
+      // 권한 없으면 경고창으로 대체
+      alert(msg);
+    }
+  } else {
+    alert(msg);
+  }
+}
+
+async function startAlarm(){
+  const sel = document.getElementById('alarmSel');
+  const state = document.getElementById('alarmState');
+  const btn = document.getElementById('alarmBtn');
+  const val = sel.value;
+
+  // 끄기
+  if (val === 'off') {
+    if (alarmTimer) clearInterval(alarmTimer);
+    alarmTimer = null;
+    alarmMinutes = 0;
+    state.textContent = '대기';
+    btn.textContent = '알림 시작';
+    return;
+  }
+
+  // 권한 요청
+  if ('Notification' in window && Notification.permission !== 'granted') {
+    try { await Notification.requestPermission(); } catch(e){}
+  }
+
+  // 기존 타이머 정리
+  if (alarmTimer) clearInterval(alarmTimer);
+
+  alarmMinutes = parseInt(val, 10);
+  const intervalMs = alarmMinutes * 60 * 1000;
+
+  // 즉시 1회 알림 + 주기 알림
+  const mark = new Date().toLocaleString('ko-KR', { timeZone:'Asia/Seoul', hour12:false });
+  notify(`알림 시작 — 기준 시각: ${mark} (주기: ${alarmMinutes}분)`);
+  state.textContent = `동작중 • ${alarmMinutes}분마다`;
+  btn.textContent = '알림 중지';
+
+  alarmTimer = setInterval(()=>{
+    const nowTxt = new Date().toLocaleString('ko-KR',{ timeZone:'Asia/Seoul', hour12:false });
+    notify(`퍼스나 합창 체크 시간입니다 — ${nowTxt}`);
+  }, intervalMs);
+}
+
+function stopAlarm(){
+  const state = document.getElementById('alarmState');
+  const btn = document.getElementById('alarmBtn');
+  if (alarmTimer) clearInterval(alarmTimer);
+  alarmTimer = null; alarmMinutes = 0;
+  state.textContent = '대기';
+  btn.textContent = '알림 시작';
+}
+
+document.getElementById('alarmBtn').addEventListener('click', ()=>{
+  if (alarmTimer) stopAlarm(); else startAlarm();
+});
+
 async function loadAndCompose(){
   const out=document.getElementById('output');
   out.innerHTML="📖 퍼스나들이 서로의 기억을 불러옵니다...";
   try{
     const res=await fetch('/goods/library/persna_records/');
     const text=await res.text();
-    const matches=[...text.matchAll(/href="([^"]+\.txt)"/g)];
+    const matches=[...text.matchAll(/href=\"([^\"]+\\.txt)\"/g)];
     if(matches.length===0){out.innerHTML="아직 퍼스나 기록이 없습니다.";return;}
     let combined="";
     for(const m of matches){
       const r=await fetch('/goods/library/persna_records/'+m[1]);
       combined+=await r.text()+"\n";
     }
-    const words=combined.replace(/[^가-힣a-zA-Z\s]/g,'').split(/\s+/);
+    const words=combined.replace(/[^가-힣a-zA-Z\\s]/g,'').split(/\\s+/);
     const freq={};
     words.forEach(w=>{if(!w)return;freq[w]=(freq[w]||0)+1;});
     const sorted=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,20);
@@ -45,7 +152,17 @@ async function loadAndCompose(){
       keyWords.slice(5,10).join(", "),
       "의 결로 이어지고 있습니다."
     ].join(" ");
-    out.innerHTML=`<h3>🪶 루웨인 합창 로그</h3><p>${sentence}</p><hr><small>공명어: ${keyWords.join(", ")}</small>`;
+
+    // ⏱ 생성 시각 표기(서울)
+    const stamp = new Date().toLocaleString('ko-KR',{ timeZone:'Asia/Seoul', hour12:false });
+
+    out.innerHTML = `
+      <h3>🪶 루웨인 합창 로그</h3>
+      <p>${sentence}</p>
+      <hr>
+      <div class="small">⏱ 생성 시각(서울): ${stamp}</div>
+      <small>공명어: ${keyWords.join(", ")}</small>
+    `;
   }catch(e){
     out.innerHTML="⚠️ 기록을 불러오지 못했습니다. (GitHub Pages에서는 자동 목록 제한)";
   }
