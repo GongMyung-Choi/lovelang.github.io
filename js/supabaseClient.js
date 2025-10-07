@@ -1,13 +1,5 @@
-// js/supabaseClient.js
-// 루웨인 데이터서버 연결 클라이언트
-
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-// 🟢 여기에 Supabase 프로젝트 URL 그대로 복사
 const supabaseUrl = 'https://omchtafagakgkdwcwrscp.supabase.co'
-
-// 🟢 여기에 anon public key를 따옴표 안에 그대로 붙이기
-const supabaseKey = '여기에_anon_public_key_붙이기'
-
-// 🟢 클라이언트 생성
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g'
 export const db = createClient(supabaseUrl, supabaseKey)
