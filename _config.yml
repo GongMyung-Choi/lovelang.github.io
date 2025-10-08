@@ -1,0 +1,9 @@
+# GitHub Pages 전역 설정 — admin 폴더 완전 차단
+exclude:
+  - admin/
+  - "*.key"
+  - "*.env"
+  - "*.db"
+  - "*.py"
+  - "supabaseClient.js"
+
