@@ -2,30 +2,38 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>루웨인 관리자</title>
+<title>루웨인 관리자 대시보드</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const supabase = supabase.createClient(
-  "https://YOUR-PROJECT.supabase.co",
-  "YOUR-ANON-KEY"
-);
+const SUPABASE_URL = "https://YOUR_PROJECT.supabase.co";
+const SUPABASE_KEY = "YOUR_ANON_KEY";
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-async function login() {
-  const email = document.getElementById('email').value;
-  const pass = document.getElementById('pass').value;
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
-  if (error) {
-    alert('❌ 로그인 실패: ' + error.message);
+async function checkUser() {
+  const { data, error } = await supabase.auth.getUser();
+  const info = document.getElementById("info");
+  if (data?.user) {
+    info.textContent = "관리자 로그인됨: " + data.user.email;
   } else {
-    alert('✅ 로그인 성공');
+    info.textContent = "로그인 정보 없음";
   }
 }
+
+async function viewTable() {
+  const { data, error } = await supabase.from("persna_records").select("*").limit(5);
+  const out = document.getElementById("data");
+  if (error) out.textContent = "⚠️ 오류: " + error.message;
+  else out.textContent = JSON.stringify(data, null, 2);
+}
+
+checkUser();
 </script>
 </head>
-<body>
-<h2>🪶 루웨인 관리자 로그인</h2>
-<input id="email" placeholder="이메일 입력"><br>
-<input id="pass" type="password" placeholder="비밀번호"><br>
-<button onclick="login()">로그인</button>
+<body style="font-family:'Noto Sans KR',sans-serif;padding:30px;">
+<h2>🪶 루웨인 관리자 대시보드</h2>
+<div id="info">로그인 확인 중...</div>
+<hr>
+<button onclick="viewTable()">persna_records 미리보기</button>
+<pre id="data" style="background:#f7fbfa;border-radius:8px;padding:10px;"></pre>
 </body>
 </html>
