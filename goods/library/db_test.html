@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>루웨인 DB 테스트</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/supabaseClient.js"></script>
+<script>
+async function testDB() {
+  const output = document.getElementById("result");
+  output.innerText = "⏳ DB 연결 중...";
+  try {
+    const { data, error } = await supabase.from("persna_records").select("*").limit(5);
+    if (error) throw error;
+    output.innerText = "✅ DB 연결 성공!\n\n" + JSON.stringify(data, null, 2);
+  } catch(e) {
+    output.innerText = "⚠️ DB 연결 실패:\n" + e.message;
+  }
+}
+</script>
+</head>
+<body style="font-family:'Noto Sans KR',sans-serif;padding:30px;">
+<h2>🧠 루웨인 데이터베이스 연결 테스트</h2>
+<p>persna_records 테이블 5개 항목 불러오기</p>
+<button onclick="testDB()">테스트 실행</button>
+<pre id="result" style="background:#f7fbfa;border-radius:8px;padding:10px;margin-top:20px;"></pre>
+</body>
+</html>
