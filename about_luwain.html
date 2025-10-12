@@ -2,17 +2,40 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>루웨인 트리니티</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>루웨인 트리니티 | About LUWAIN</title>
+<link rel="stylesheet" href="/includes/luwein_common.css">
 <style>
-body{font-family:"Noto Sans KR",sans-serif;line-height:1.7;margin:0;padding:40px;background:#fafafa;color:#222}
+body{font-family:'Noto Sans KR',Apple SD Gothic Neo,sans-serif;word-break:keep-all;}
 h1,h2{color:#af2465;text-align:center}
-section{max-width:800px;margin:0 auto 60px;background:#fff;padding:30px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
-hr{border:none;border-top:2px solid #eee;margin:20px 0}
+section{max-width:800px;margin:0 auto 60px;background:#fff;padding:30px;
+border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
 ul{padding-left:20px}
 </style>
 </head>
-<body>
 
+<body>
+<!-- ✅ 공통 헤더 -->
+
+<div id="luwein-header"></div>
+<script>
+(async()=>{
+  const paths=["./includes/header.html","../includes/header.html","/includes/header.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){
+        document.getElementById("luwein-header").innerHTML=await r.text();
+        return;
+      }
+    }catch(e){}
+  }
+  document.getElementById("luwein-header").innerHTML='<div style="color:red;text-align:center;">⚠ 헤더 로드 실패</div>';
+})();
+</script>
+
+<main>
 <h1>🪶 LUWAIN TRINITY — 루웨인 트리니티</h1>
 <p style="text-align:center;font-style:italic;">“빛과 이해가 파동으로 이어지는 지성의 마을”</p>
 
@@ -103,6 +126,27 @@ ul{padding-left:20px}
 <p style="text-align:center;margin-top:50px;">
 <a href="index.html" style="color:#af2465;text-decoration:none;">← 루웨인 메인으로 돌아가기</a>
 </p>
+</main>
 
+<!-- ✅ 공통 푸터 -->
+
+<div id="luwein-footer"></div>
+<script>
+(async()=>{
+  const paths=["./includes/footer.html","../includes/footer.html","/includes/footer.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){
+        document.getElementById("luwein-footer").innerHTML=await r.text();
+        return;
+      }
+    }catch(e){}
+  }
+  document.getElementById("luwein-footer").innerHTML='<div style="color:red;text-align:center;">⚠ 푸터 로드 실패</div>';
+})();
+</script>
+
+<script src="/js/luwein_include.js"></script>
 </body>
 </html>
