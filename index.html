@@ -23,99 +23,38 @@
   --page-padding:24px;
 }
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.5}
-header{background:#fff;color:var(--header-color);font-size:var(--title-size);font-weight:800;text-align:center;padding:18px 12px;position:sticky;top:0;z-index:1000;border-bottom:1px solid #ddd}
-header a{text-decoration:none;color:var(--header-color);}
-header a:hover{text-decoration:underline;}
-nav ul{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.4rem .6rem;background:var(--menu-bg-color);margin:0;padding:.3rem .6rem;list-style:none}
-nav ul li{position:relative;font-size:var(--menu-size)}
-nav ul li>a{color:var(--menu-text-color);text-decoration:none;padding:.4rem .5rem;display:block;transition:color .2s}
-nav ul li>a:hover{color:var(--menu-hover-text)}
-nav ul li:hover>ul{display:block}
-nav ul li ul{display:none;position:absolute;top:100%;left:0;min-width:220px;background:var(--menu-bg-color);padding:.6rem 0;margin:0;list-style:none;z-index:999}
-nav ul li ul li a{display:block;padding:.6rem 1rem;color:var(--menu-text-color);font-size:var(--submenu-size);white-space:nowrap}
-nav ul li ul li a:hover{color:var(--menu-hover-text)}
+body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.5;background:#fff;}
 main{padding:var(--page-padding);min-height:400px;text-align:center}
 .highlight{color:var(--header-color);font-weight:700;font-size:var(--intro-strong-size);line-height:1.2}
 .message-text{font-size:var(--intro-message-size);margin-top:2rem}
-.welcome-buttons{display:flex;justify-content:center;gap:4rem;margin-top:2.2rem;flex-wrap:wrap}
-.welcome-buttons button{background:#fff;border:2px solid var(--btn-border);color:var(--btn-text);padding:1rem 2rem;border-radius:8px;cursor:pointer;transition:all .2s;transform:scale(var(--button-size))}
+.welcome-buttons{display:flex;justify-content:center;gap:10px;margin-top:24px;flex-wrap:wrap}
+.welcome-buttons button{padding:10px 14px;border:1px solid var(--btn-border);background:#fff;border-radius:10px;font-size:calc(14px * var(--button-size));cursor:pointer;color:var(--btn-text);min-width:150px}
 .welcome-buttons button:hover{background:var(--btn-hover-bg);color:var(--btn-hover-text)}
-.footer{margin-top:56px;padding:24px 12px;border-top:1px solid #eee;color:#666;font-size:14px;text-align:center}
+
+.login-box {display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:24px;}
+.input-area {display:flex;flex-direction:column;gap:6px;}
+.input-area input {padding:10px 12px;border:1px solid #ccc;border-radius:8px;font-size:15px;width:180px;}
+.login-btn {height:78px;padding:0 18px;border:1px solid var(--btn-border);background:#fff;border-radius:8px;font-size:15px;color:var(--btn-text);cursor:pointer;}
+.login-btn:hover {background:var(--btn-hover-bg);color:var(--btn-hover-text);}
+
+footer{margin-top:56px;padding:24px 12px;border-top:1px solid #eee;color:#666;font-size:14px;text-align:center}
 </style>
 </head>
 <body>
 
-<header><a href="about_luwain.html">루웨인 트리니티</a></header>
-
-<nav>
-  <ul>
-    <li><a href="language_of_love/index.html">사랑의 언어</a>
-      <ul>
-        <li><a href="language_of_love/warmth_of_words.html">말의 온도</a></li>
-        <li><a href="language_of_love/emotion_diary.html">감성일기</a></li>
-        <li><a href="language_of_love/hurt_words.html">상처주는 말 VS 상처 받는 말</a></li>
-        <li><a href="language_of_love/love_practice.html">사랑도 연습이 필요하다</a></li>
-        <li><a href="language_of_love/love_try.html">사랑해 볼까?</a></li>
-        <li><a href="language_of_love/to_luwein.html">To 루웨인 트리니티</a></li>
-      </ul>
-    </li>
-
-    <li><a href="language_of_reverberation/index.html">울림의 언어</a>
-      <ul>
-        <li><a href="language_of_reverberation/voice.html">음성안내</a></li>
-        <li><a href="language_of_reverberation/lang_select.html">언어선택</a></li>
-        <li><a href="language_of_reverberation/playground.html">놀이터</a></li>
-        <li><a href="language_of_reverberation/practice.html">울림 연습</a></li>
-        <li><a href="language_of_reverberation/diary.html">울림 일지</a></li>
-        <li><a href="language_of_reverberation/core.html">울림의 언어</a></li>
-        <li><a href="language_of_reverberation/settings.html">설정</a></li>
-        <li><a href="language_of_reverberation/with_ai.html">인공지능과 함께</a></li>
-        <li><a href="language_of_reverberation/device.html">울림 장치/기기</a></li>
-        <li><a href="language_of_reverberation/ai_collab.html">AI협업</a></li>
-      </ul>
-    </li>
-
-    <li><a href="index.html">루웨인</a></li>
-
-    <li><a href="breathing_room/index.html">숨 틔움방</a>
-      <ul>
-        <li><a href="breathing_room/cards.html">숨 카드</a></li>
-        <li><a href="breathing_room/clips.html">숨 클립</a></li>
-        <li><a href="goods/library/index.html">루웨인 도서관</a></li>
-        <li><a href="scenario/index.html">시나리오</a></li>
-        <li><a href="sketchbook/index.html">낙서장</a></li>
-        <li><a href="chat/index.html">AI와 잡담하기</a></li>
-        <li><a href="etc/index.html">기타 항목</a></li>
-      </ul>
-    </li>
-
-    <li><a href="haneul/index.html">한얼</a>
-      <ul>
-        <li><a href="haneul/about.html">한얼이란</a></li>
-        <li><a href="haneul/peace.html">쉴만한(안식)</a></li>
-        <li><a href="haneul/play.html">즐길만한(놀이)</a></li>
-        <li><a href="haneul/health.html">건강한(헬스)</a></li>
-        <li><a href="haneul/ethics.html">선한(윤리)</a></li>
-        <li><a href="haneul/tools.html">스마트한(도구)</a></li>
-        <li><a href="haneul/relations.html">유연한(관계)</a></li>
-      </ul>
-    </li>
-
-    <li><a href="goods/index.html">맑은샘</a>
-      <ul>
-        <li><a href="goods/webtoon.html">웹툰</a></li>
-        <li><a href="scenario/index.html">시나리오</a></li>
-        <li><a href="animation/index.html">애니메이션</a></li>
-        <li><a href="goods/heartforce.html">한마음특공대</a></li>
-        <li><a href="goods/library/index.html">루웨인도서관</a></li>
-      </ul>
-    </li>
-
-    <li><a href="help_notices/index.html">루웨인 소식</a></li>
-    <li><a href="customer_support/index.html">고객센터</a></li>
-  </ul>
-</nav>
+<!-- ✅ 헤더 자동 삽입 -->
+<div id="luwein-header"></div>
+<script>
+(async()=>{
+  const paths=["./includes/header.html","../includes/header.html","/includes/header.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
 
 <main>
   <h1>
@@ -126,58 +65,46 @@ main{padding:var(--page-padding);min-height:400px;text-align:center}
     오직, 당신만을 위한 울림이고 싶습니다.<br />
     당신의 한 마디 말이 울림의 시작입니다.
   </p>
+
+  <!-- 🔹 회원가입 / 로그인 구역 -->
   <div class="welcome-buttons">
-    <button onclick="location.href='luwein_trinity/new_1.html'">처음이에요</button>
-    <button onclick="location.href='luwein_trinity/old_1.html'">이어 갈래요</button>
+    <button onclick="location.href='luwein_trinity/new_1.html'">처음이에요<br />(회원가입)</button>
+  </div>
+
+  <div class="login-box">
+    <div class="input-area">
+      <input type="text" id="userid" placeholder="아이디" />
+      <input type="password" id="userpw" placeholder="비밀번호" />
+    </div>
+    <button class="login-btn" onclick="login()">이어 갈래요</button>
   </div>
 </main>
 
-<footer class="footer">
-  © LUWEIN
-</footer>
-
 <script>
-async function checkLinks() {
-  const links = Array.from(document.querySelectorAll("a"));
-  const results = [];
-  for (const link of links) {
-    const url = link.href;
-    try {
-      const response = await fetch(url, { method: "HEAD", mode: "no-cors" });
-      const status = response.status || "ok";
-      results.push({ url, status });
-      console.log(`✅ ${url} (${status})`);
-    } catch (err) {
-      results.push({ url, status: "error" });
-      console.warn(`❌ ${url}`);
-    }
+function login(){
+  const id=document.getElementById('userid').value.trim();
+  const pw=document.getElementById('userpw').value.trim();
+  if(!id||!pw){
+    alert('아이디와 비밀번호를 입력해주세요.');
+    return;
   }
-  console.log("🔍 루웨인 링크 점검 완료");
-  console.table(results);
-  alert("루웨인 링크 점검 완료 — 결과는 콘솔(console)에 출력됨");
+  alert('로그인 시도: '+id);
 }
-
-// 루웨인 링크 점검 버튼 생성
- document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.createElement("button");
-  btn.innerText = "🔗 루웨인 링크 점검 실행";
-  btn.style.position = "fixed";
-  btn.style.bottom = "20px";
-  btn.style.right = "20px";
-  btn.style.zIndex = "9999";
-  btn.style.padding = "10px 15px";
-  btn.style.background = "#222";
-  btn.style.color = "#fff";
-  btn.style.border = "none";
-  btn.style.borderRadius = "8px";
-  btn.style.cursor = "pointer";
-  btn.onclick = checkLinks;
-  document.body.appendChild(btn);
-});
 </script>
 
-<div id="result">불러오는 중...</div>
-<script type="module" src="./js/app.js"></script>
+<!-- ✅ 푸터 자동 삽입 -->
+<div id="luwein-footer"></div>
+<script>
+(async()=>{
+  const paths=["./includes/footer.html","../includes/footer.html","/includes/footer.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
 
 </body>
 </html>
