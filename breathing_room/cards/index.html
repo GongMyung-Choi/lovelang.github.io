@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>감정카드 | 숨 틔움방</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body {
+  font-family:'Noto Sans KR',sans-serif;
+  background:#f8fbfa;
+  margin:0;padding:2rem;
+  color:#333;
+}
+h1{text-align:center;color:#af2465;}
+form{
+  max-width:600px;margin:0 auto 2rem;background:#fff;
+  padding:20px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+form input,form textarea,form button{
+  width:100%;padding:10px;margin:6px 0;font-size:15px;border:1px solid #ccc;border-radius:8px;
+}
+form button{background:#2a9d8f;color:#fff;cursor:pointer;}
+form button:hover{background:#237e74;}
+#cardList{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;}
+.card{
+  width:300px;background:#fff;border-radius:10px;box-shadow:0 3px 6px rgba(0,0,0,.1);
+  overflow:hidden;padding:15px;position:relative;
+}
+.card img{width:100%;height:180px;object-fit:cover;border-radius:8px;}
+.card .emotion{color:#af2465;font-weight:700;font-size:1.2rem;}
+.card .date{font-size:.8rem;color:#888;margin-bottom:8px;}
+.card .ai{background:#f3f3f3;padding:6px;border-radius:6px;font-size:.85rem;color:#555;}
+.card .actions{margin-top:10px;display:flex;justify-content:space-between;}
+.card button{
+  border:none;background:#ddd;padding:6px 10px;border-radius:6px;cursor:pointer;
+}
+.card button:hover{background:#bbb;}
+</style>
+</head>
+<body>
+<h1>🪶 감정카드</h1>
+
+<form id="emotionForm">
+  <input list="emotionList" id="emotion" placeholder="감정을 입력 또는 선택" required>
+  <datalist id="emotionList">
+    <option>기쁨</option><option>슬픔</option><option>분노</option>
+    <option>불안</option><option>평온</option><option>사랑</option>
+  </datalist>
+  <textarea id="content" rows="3" placeholder="오늘의 감정을 간단히 남겨주세요" required></textarea>
+  <input type="file" id="imageInput" accept="image/*">
+  <label><input type="checkbox" id="shareCheck"> 공유하기 (공감 앨범에 노출)</label><br>
+  <button type="submit">저장하기</button>
+</form>
+
+<div id="cardList"></div>
+
+<script>
+const SUPABASE_URL = "https://omchtafaqgkdwcrwscrp.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g";
+const supabase = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const list = document.getElementById("cardList");
+
+// 감정 분석 (간단 예시)
+function aiFeedback(emotion){
+  const map={
+    "기쁨":"당신의 밝은 에너지가 주변에도 전해지고 있어요 🌞",
+    "슬픔":"괜찮아요. 슬픔도 당신의 일부예요 🌧",
+    "분노":"깊게 숨 쉬세요. 감정은 당신을 지배하지 않아요 🔥",
+    "불안":"모든 게 변하듯, 이 순간도 지나가요 🌙",
+    "평온":"이 평온함이 오래 지속되길 🌿",
+    "사랑":"사랑은 울림의 시작이에요 💗"
+  };
+  return map[emotion]||"당신의 감정을 잘 느끼고 있네요.";
+}
+
+// 업로드 처리
+document.getElementById("emotionForm").addEventListener("submit",async(e)=>{
+  e.preventDefault();
+  const emotion=document.getElementById("emotion").value.trim();
+  const content=document.getElementById("content").value.trim();
+  const file=document.getElementById("imageInput").files[0];
+  const is_shared=document.getElementById("shareCheck").checked;
+  if(!emotion||!content)return alert("모든 필드를 입력하세요.");
+
+  let image_url=null;
+  if(file){
+    const filename=`${Date.now()}_${file.name}`;
+    await supabase.storage.from("emotion_images").upload(filename,file);
+    const { data } = supabase.storage.from("emotion_images").getPublicUrl(filename);
+    image_url=data.publicUrl;
+  }
+
+  const ai_feedback=aiFeedback(emotion);
+  const { error } = await supabase.from("emotion_cards").insert([{emotion,content,image_url,ai_feedback,is_shared}]);
+  if(error)return alert("저장 실패: "+error.message);
+  loadCards();
+  e.target.reset();
+});
+
+// 카드 로드
+async function loadCards(){
+  const { data,error }=await supabase.from("emotion_cards").select("*").order("id",{ascending:false});
+  if(error)return console.error(error);
+  list.innerHTML=data.map(c=>`
+    <div class="card">
+      ${c.image_url?`<img src="${c.image_url}">`:""}
+      <div class="emotion">${c.emotion}</div>
+      <div class="date">${new Date(c.created_at).toLocaleString()}</div>
+      <div>${c.content}</div>
+      <div class="ai">🤖 ${c.ai_feedback}</div>
+      <div class="actions">
+        ${c.is_shared?"<span style='color:#2a9d8f;'>🌍 공유됨</span>":""}
+        <button onclick="deleteCard(${c.id})">삭제</button>
+      </div>
+    </div>`).join("");
+}
+loadCards();
+
+// 삭제
+async function deleteCard(id){
+  if(!confirm("삭제하시겠습니까?"))return;
+  await supabase.from("emotion_cards").delete().eq("id",id);
+  loadCards();
+}
+</script>
+</body>
+</html>
