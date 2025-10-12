@@ -1,25 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
-<package version="3.0" xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" xml:lang="ko">
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="BookID">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <dc:identifier id="bookid">urn:uuid:11111111-2222-3333-4444-555555555555</dc:identifier>
-    <dc:title>숨 쉬는 언어, 살아 있는 말 (감응언어학)</dc:title>
+    <dc:identifier id="BookID">luwain.gamung.2025</dc:identifier>
+    <dc:title>감응언어학: 숨 쉬는 언어, 살아 있는 말</dc:title>
+    <dc:creator>최공명</dc:creator>
     <dc:language>ko</dc:language>
-    <dc:creator>저자 일동 (편집: 예다움)</dc:creator>
-    <dc:date>2025-10-06</dc:date>
-    <meta property="dcterms:modified">2025-10-06T00:00:00Z</meta>
+    <dc:date>2025-10-07</dc:date>
+    <meta property="dcterms:modified">2025-10-07T00:00:00Z</meta>
   </metadata>
+
   <manifest>
-    <item id="front" href="front.xhtml" media-type="application/xhtml+xml"/>
     <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
-    <item id="part1" href="part-1.xhtml" media-type="application/xhtml+xml"/>
-    <item id="part2" href="part-2.xhtml" media-type="application/xhtml+xml"/>
-    <item id="part3" href="part-3.xhtml" media-type="application/xhtml+xml"/>
-    <item id="css" href="styles.css" media-type="text/css"/>
+    <item id="style" href="styles.css" media-type="text/css"/>
+    <item id="front" href="front.xhtml" media-type="application/xhtml+xml"/>
+    <item id="p1" href="part1.xhtml" media-type="application/xhtml+xml"/>
+    <item id="p2" href="part2.xhtml" media-type="application/xhtml+xml"/>
+    <item id="p3" href="part3.xhtml" media-type="application/xhtml+xml"/>
+    <item id="p4" href="part4.xhtml" media-type="application/xhtml+xml"/>
+    <item id="p5" href="part5.xhtml" media-type="application/xhtml+xml"/>
+    <item id="p6" href="part6.xhtml" media-type="application/xhtml+xml"/>
+    <item id="p7" href="part7.xhtml" media-type="application/xhtml+xml"/>
+    <item id="after" href="afterword.xhtml" media-type="application/xhtml+xml"/>
+    <item id="epilogue" href="epilogue.xhtml" media-type="application/xhtml+xml"/>
   </manifest>
-  <spine>
+
+  <spine toc="nav">
     <itemref idref="front"/>
-    <itemref idref="part1"/>
-    <itemref idref="part2"/>
-    <itemref idref="part3"/>
+    <itemref idref="p1"/>
+    <itemref idref="p2"/>
+    <itemref idref="p3"/>
+    <itemref idref="p4"/>
+    <itemref idref="p5"/>
+    <itemref idref="p6"/>
+    <itemref idref="p7"/>
+    <itemref idref="after"/>
+    <itemref idref="epilogue"/>
   </spine>
 </package>
