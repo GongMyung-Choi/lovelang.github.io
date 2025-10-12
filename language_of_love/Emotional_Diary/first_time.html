@@ -1,50 +1,71 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>감성일기 | 처음</title>
-<style id="themeVars">/* 상단 스타일 (동일) */ 
-:root{--header-color:#af2465;--menu-bg-color:#6c5b7b;--menu-text-color:#ffffff;--menu-hover-text:#2a9d8f;--page-padding:24px}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
-header{background:#fff;color:#af2465;font-size:40px;font-weight:800;text-align:center;padding:18px 12px;position:sticky;top:0;border-bottom:1px solid #ddd}
-nav ul{display:flex;justify-content:center;flex-wrap:wrap;gap:.4rem .6rem;background:#6c5b7b;margin:0;padding:.3rem .6rem;list-style:none}
-nav ul li{position:relative;font-size:16px}nav ul li>a{color:#fff;text-decoration:none;padding:.4rem .5rem;display:block}
-nav ul li>a:hover{color:#2a9d8f}nav ul li:hover>ul{display:block}
-nav ul li ul{display:none;position:absolute;top:100%;left:0;min-width:220px;background:#6c5b7b;padding:.6rem 0}
-nav ul li ul li a{display:block;padding:.6rem 1rem;color:#fff;font-size:14px}
-main{padding:var(--page-padding)}.box{background:#fff;border:1px solid #e9e9ee;border-radius:14px;padding:16px;max-width:720px}
-input,button{font:inherit}input{width:100%;padding:10px;border:1px solid #e9e9ee;border-radius:10px}
-button{background:#2a9d8f;color:#fff;border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
+<style>
+body{
+  margin:0;
+  font-family:'Noto Sans KR',sans-serif;
+  background:#f9f9f9;
+  text-align:center;
+  padding:40px 20px;
+}
+h1{color:#af2465;}
+.box{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:14px;
+  padding:20px;
+  display:inline-block;
+  text-align:left;
+}
+input{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border:1px solid #ccc;
+  border-radius:10px;
+  font:inherit;
+}
+button{
+  margin-top:14px;
+  padding:10px 16px;
+  background:#2a9d8f;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+button:hover{background:#258778;}
+a{margin-left:10px;color:#888;text-decoration:none;}
 </style>
 </head>
 <body>
-<header>루웨인 트리니티</header>
-<nav>
-  <ul>
-    <li><a href="/language_of_love/index.html">사랑의 언어</a></li>
-    <li><a href="/index.html">루웨인 트리니티</a></li>
-  </ul>
-</nav>
-
-<main>
-  <h1>처음 오신 분</h1>
-  <div class="box">
-    <label for="name">닉네임</label>
-    <input id="name" placeholder="예: 공명" />
-    <div style="margin-top:10px;display:flex;gap:8px">
-      <button id="go">저장하고 시작</button>
-      <a href="./index.html">취소</a>
-    </div>
+<h1>처음 오신 분</h1>
+<div class="box">
+  <label for="name">닉네임</label>
+  <input id="name" placeholder="예: 공명">
+  <div>
+    <button id="go">저장하고 시작</button>
+    <a href="./index.html">취소</a>
   </div>
-</main>
+</div>
 
 <script>
 const KEY_USER="ed_user";
-function saveUser(name){localStorage.setItem(KEY_USER,JSON.stringify({name,created:new Date().toLocaleString()}));}
+function saveUser(name){
+  localStorage.setItem(KEY_USER, JSON.stringify({
+    name,
+    created:new Date().toLocaleString()
+  }));
+}
 document.getElementById('go').addEventListener('click',()=>{
   const name=document.getElementById('name').value.trim();
-  if(!name){alert('닉네임을 입력해주세요');return;}
-  saveUser(name); location.href='./returning_user.html';
+  if(!name){alert("닉네임을 입력해주세요.");return;}
+  saveUser(name);
+  location.href='./returning_user.html';
 });
 </script>
 </body>
