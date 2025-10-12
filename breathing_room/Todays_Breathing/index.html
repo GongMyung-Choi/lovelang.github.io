@@ -5,76 +5,118 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>오늘의 숨결 | Today's Breathing</title>
 <style>
+:root{
+  --sky1:#eaf6ff;
+  --sky2:#b8e3ff;
+  --font:'Noto Sans KR',sans-serif;
+}
 body{
-  margin:0;
-  font-family:'Noto Sans KR',sans-serif;
-  background:#e0f2ff;
-  color:#333;
-  text-align:center;
+  margin:0;font-family:var(--font);background:var(--sky1);color:#2e5575;
+  text-align:center;min-height:100vh;display:flex;flex-direction:column;
 }
 header{
-  background:#5aa6d8;
-  color:#fff;
-  padding:18px;
-  font-size:1.6rem;
-  font-weight:700;
+  background:linear-gradient(90deg,#6bb8ec,#5aa6d8);
+  color:#fff;padding:22px 0;font-size:1.6rem;font-weight:700;
+  letter-spacing:.5px;box-shadow:0 2px 6px rgba(0,0,0,.1);
 }
-main{
-  max-width:900px;
-  margin:0 auto;
-  padding:20px;
-}
+main{flex:1;padding:40px 0 20px;}
 img{
-  width:90%;
-  max-width:800px;
-  border-radius:16px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.2);
-  margin-top:20px;
+  max-width:90%;border-radius:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,.2);
+  transition:opacity 1s ease-in-out;
 }
-p{
-  font-size:1.1rem;
-  color:#444;
+.quote-box{
+  background:#ffffffcc;backdrop-filter:blur(4px);
+  margin:30px auto;max-width:800px;padding:20px 24px;
+  border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,.08);
 }
+.quote-text{font-size:1.2rem;line-height:1.6;font-style:italic;}
+.quote-author{margin-top:8px;color:#557c9a;font-size:.95rem;}
 footer{
-  text-align:center;
-  padding:16px;
-  color:#666;
-  font-size:.9rem;
+  background:#5aa6d8;color:#fff;padding:14px;font-size:.9rem;
+  letter-spacing:.3px;box-shadow:0 -2px 6px rgba(0,0,0,.1);
 }
+#counter{margin-top:18px;color:#555;font-size:.9rem;}
 </style>
 </head>
 <body>
+
 <header>🌤 오늘의 숨결 | Today's Breathing</header>
 
 <main>
-  <p>하루에 한 번, 위로의 숨결을 전합니다.</p>
-  <img id="dailyImage" src="" alt="오늘의 위로 이미지">
+  <img id="breathImage" src="" alt="오늘의 위로 이미지">
+  <div id="counter"></div>
+
+  <div class="quote-box">
+    <div id="quote" class="quote-text"></div>
+    <div id="author" class="quote-author"></div>
+  </div>
 </main>
 
-<footer>루웨인 숨 틔움방 · 오늘의 숨결 © 2025</footer>
+<footer>루웨인 숨 틔움방 © 2025 — “숨이 닿는 곳마다 희망이 움튼다.”</footer>
 
 <script>
-// 이미지 자동 순환 (매일 0시, 파일 추가 자동 인식)
-function loadDailyImage(){
-  const folder='./images/';
-  const total=100; // 기본 이미지 개수
-  const today=Math.floor(Date.now()/86400000);
-  const index=(today%total)+1;
-  const img=document.getElementById('dailyImage');
-  img.src=`${folder}${index}.jpg`;
+// ===================== 기본 설정 =====================
+const folder = "./images/";   // ← 이 폴더에 그림만 올리면 자동 인식
+let images = [];
+
+// ===== 문구 배열 (루웨인 자동 갱신용) =====
+const quotes = [
+  { text:"숨은 생명의 첫 울림이다.", author:"루웨인 어록" },
+  { text:"오늘도 한 번의 호흡이 누군가의 빛이 된다.", author:"Trinity Note" },
+  { text:"조용한 숨 속에도 우주는 흐른다.", author:"루웨인 명상집" },
+  { text:"멈춘 듯 보여도 숨은 끊임없이 이어진다.", author:"Luwein" },
+  { text:"빛이 멀리 가기 위해선 잠시 머물러야 한다.", author:"Luwein" },
+  { text:"당신의 오늘이 누군가의 내일을 밝힌다.", author:"Heartforce" },
+  { text:"쉬어감은 멈춤이 아니라, 다음 울림의 준비다.", author:"Reflection" },
+  { text:"모든 숨은 하나의 기도다.", author:"Luwein" }
+];
+
+// ===== 날짜 기반 고정 난수 =====
+function getSeed(){return Math.floor(Date.now()/86400000);}
+function seededRandom(seed,max){
+  const x=Math.sin(seed)*10000;
+  return Math.floor((x-Math.floor(x))*max);
 }
-function scheduleNextMidnight(){
-  const now=new Date();
-  const msUntilMidnight=new Date(
-    now.getFullYear(),now.getMonth(),now.getDate()+1,0,0,5
-  )-now;
-  setTimeout(()=>{
-    loadDailyImage();
-    scheduleNextMidnight();
-  },msUntilMidnight);
+
+// ===== 이미지 존재 확인 =====
+function checkImage(url){
+  return new Promise(r=>{
+    const img=new Image();
+    img.onload=()=>r(true);
+    img.onerror=()=>r(false);
+    img.src=url+"?v="+Date.now();
+  });
 }
-loadDailyImage();
-scheduleNextMidnight();
+
+// ===== 이미지 자동 탐색 + 오늘의 조합 표시 =====
+async function detectImages(){
+  let i=1;
+  while(true){
+    const url=`${folder}${i}.jpg`;
+    if(!(await checkImage(url)))break;
+    images.push(url); i++;
+  }
+  const counter=document.getElementById("counter");
+  if(!images.length){counter.textContent="⚠️ 표시할 이미지가 없습니다.";return;}
+  const seed=getSeed();
+  const imgIndex=seededRandom(seed,images.length);
+  const quoteIndex=seededRandom(seed+7,quotes.length);
+  show(imgIndex,quoteIndex);
+}
+
+// ===== 표시 함수 =====
+function show(i,q){
+  const img=document.getElementById("breathImage");
+  const quote=quotes[q];
+  img.src=images[i];
+  document.getElementById("counter").textContent=`오늘의 숨결 ${i+1}/${images.length}`;
+  document.getElementById("quote").textContent=`"${quote.text}"`;
+  document.getElementById("author").textContent=quote.author?`— ${quote.author}`:"";
+}
+
+// ===== 실행 =====
+detectImages();
 </script>
 
 </body>
