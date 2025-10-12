@@ -1,314 +1,147 @@
-<!DOCTYPE html><html lang="ko">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>감응남기기 · Resonance Log</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>울림 일지 | Resonance Log</title>
 <style>
 :root{
-  --bg:#ffffff; --fg:#111; --muted:#666; --line:#ececf1; --tile:#fff;
-  --accent:#2a9d8f; --accent2:#af2465; --r:12px; --fs:16px; --lh:1.7;
+  --accent:#6c5b7b;
+  --highlight:#2a9d8f;
+  --font:'Noto Sans KR',sans-serif;
 }
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;background:var(--bg);color:var(--fg);line-height:var(--lh);font-size:var(--fs)}
-a{color:inherit}
-.wrap{max-width:1100px;margin:0 auto;padding:18px}
-header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:4px 0 12px}
-h1{margin:0;font-size:1.9rem;color:var(--accent2)}
-.badge{border:1px solid var(--line);border-radius:999px;padding:.2rem .6rem;background:#fafafa;color:#444;font-size:.85rem}
-.toolbar{margin-left:auto;display:flex;flex-wrap:wrap;gap:8px}
-.toolbar label{border:1px solid var(--line);background:#fff;border-radius:10px;padding:.45rem .7rem;cursor:pointer}
-.toolbar input{margin-right:.4rem;transform:scale(1.1)}
-.grid{display:grid;grid-template-columns:360px 1fr;gap:16px}
-@media(max-width:980px){.grid{grid-template-columns:1fr}}
-.card{background:var(--tile);border:1px solid var(--line);border-radius:var(--r);padding:14px}
-.card h2{margin:.1rem 0 .5rem;font-size:1.1rem;color:var(--accent)}
-label small{color:var(--muted)}
-input[type="text"],input[type="date"],select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fff}
-textarea{min-height:140px;resize:vertical}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-button{border:2px solid var(--accent);background:#fff;color:var(--accent);padding:.55rem 1rem;border-radius:12px;cursor:pointer}
-button:hover{background:#e8fbf6}
-.btn2{border-color:var(--accent2);color:var(--accent2)}
-.ghost{border:1px solid var(--line);color:#333}
-.tools{display:flex;flex-wrap:wrap;gap:8px}
-hr.sep{border:none;border-top:1px dashed var(--line);margin:10px 0}
-.count{color:var(--muted);font-size:.9rem}
-.list{display:flex;flex-direction:column;gap:10px;max-height:60vh;overflow:auto}
-.item{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff}
-.item h3{margin:0 0 4px;font-size:1rem}
-.item .meta{color:var(--muted);font-size:.9rem;margin-bottom:6px}
-.item .tags{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
-.tag{border:1px solid var(--line);border-radius:999px;padding:.1rem .5rem;font-size:.8rem;background:#fafafa}
-.actions{display:flex;gap:6px;flex-wrap:wrap}
-.kbd{border:1px solid var(--line);background:#fafafa;border-radius:6px;padding:.05rem .35rem}
-.note{border:1px dashed var(--line);border-radius:10px;padding:8px 10px;background:#fff;color:#444;margin-bottom:10px}
-.meter{height:10px;background:#f3f3f5;border-radius:999px;overflow:hidden}
-.meter>div{height:100%;width:0;background:linear-gradient(90deg,#56cc9d,#2a9d8f)}
-:focus{outline:2px solid #005fcc;outline-offset:2px}
-.large{font-size:18px}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:var(--font);
+  background:#fff;
+  color:#333;
+  padding:40px 24px 60px;
+  line-height:1.8;
+  max-width:960px;
+  margin-inline:auto;
+}
+h1{color:var(--accent);font-size:2rem;margin-bottom:8px;}
+h2{color:var(--highlight);margin-top:28px;font-size:1.2rem;}
+p{margin:10px 0;}
+blockquote{
+  background:#f8f7fa;
+  border-left:4px solid var(--accent);
+  padding:12px 16px;
+  color:#555;
+  font-style:italic;
+  border-radius:8px;
+}
+textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #e9e9ee;
+  border-radius:10px;
+  font:inherit;
+  resize:vertical;
+}
+button{
+  background:var(--highlight);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:10px 16px;
+  font-size:1rem;
+  cursor:pointer;
+}
+button:hover{opacity:.9;}
+.log-list{display:grid;gap:10px;margin-top:12px;}
+.log-item{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:12px;
+}
+.meta{font-size:.85rem;color:#666;margin-bottom:6px;}
+footer{
+  margin-top:30px;
+  color:#888;
+  font-size:.9rem;
+  text-align:right;
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>감응남기기</h1>
-    <span class="badge">감정 · 생각 · 울림 기록</span>
-    <div class="toolbar" role="group" aria-label="보기">
-      <label><input id="toggleLarge" type="checkbox"> 큰 글자</label>
-    </div>
-  </header>
 
-  <div class="grid">
-    <!-- 입력 패널 -->
-    <section class="card" aria-labelledby="w1">
-      <h2 id="w1">기록 작성</h2>
-      <div class="row">
-        <label style="flex:1">
-          제목
-          <input id="title" type="text" placeholder="(선택) 오늘의 한 줄">
-        </label>
-      </div>
-      <div class="row">
-        <label>
-          날짜
-          <input id="date" type="date">
-        </label>
-        <label>
-          기분
-          <select id="mood">
-            <option>평온</option><option>기쁨</option><option>감사</option>
-            <option>긴장</option><option>서운</option><option>분노</option>
-            <option>피곤</option><option>불안</option>
-          </select>
-        </label>
-        <label>
-          상황
-          <select id="context">
-            <option>혼자</option><option>가족</option><option>직장/학업</option>
-            <option>친구</option><option>관계</option><option>기타</option>
-          </select>
-        </label>
-      </div>
-      <div class="row" style="align-items:flex-end">
-        <label style="flex:1">
-          감응 강도 <small>(0–100)</small>
-          <input id="strength" type="range" min="0" max="100" value="40">
-          <div class="meter"><div id="strengthBar"></div></div>
-        </label>
-        <div id="strengthOut" style="min-width:48px;text-align:right">40</div>
-      </div>
-      <label>내용
-        <textarea id="body" placeholder="오늘의 말/감정/몸의 느낌 · 떠오른 생각 · 울림"></textarea>
-      </label>
+<h1>울림 일지</h1>
+<p>
+하루의 울림을 기록하는 공간입니다.<br>
+루웨인의 모든 말·호흡·느낌은 이곳에서 하나로 모입니다.
+</p>
 
-      <hr class="sep">
+<blockquote>
+“기록은 울림의 반복이다.  
+같은 말을 다시 쓰는 순간,  
+그 말은 나를 다시 울린다.”  
+— 루웨인 언어연구 노트
+</blockquote>
 
-      <div class="tools">
-        <button id="save" class="btn2">저장</button>
-        <button id="new" class="ghost">새로쓰기</button>
-        <button id="exportOne" class="ghost">TXT로 내보내기</button>
-      </div>
-      <p class="note" style="margin-top:8px">
-        <strong>단축키:</strong> <span class="kbd">Ctrl/⌘ + S</span> 저장, <span class="kbd">Ctrl/⌘ + Enter</span> 새로쓰기
-      </p>
-    </section>
-
-    <!-- 목록/검색 -->
-    <section class="card" aria-labelledby="w2">
-      <h2 id="w2">내 기록</h2>
-      <div class="row">
-        <input id="q" type="text" placeholder="검색(제목·내용)">
-        <select id="filterMood">
-          <option value="">기분 전체</option>
-          <option>평온</option><option>기쁨</option><option>감사</option>
-          <option>긴장</option><option>서운</option><option>분노</option>
-          <option>피곤</option><option>불안</option>
-        </select>
-        <select id="filterCtx">
-          <option value="">상황 전체</option>
-          <option>혼자</option><option>가족</option><option>직장/학업</option>
-          <option>친구</option><option>관계</option><option>기타</option>
-        </select>
-        <select id="sort">
-          <option value="new">최신순</option>
-          <option value="old">오래된순</option>
-        </select>
-        <span class="count" id="count">0건</span>
-      </div>
-
-      <div class="row" style="margin-top:6px">
-        <button id="exportAll">JSON 내보내기</button>
-        <input id="importFile" type="file" accept="application/json" style="display:none">
-        <button id="importBtn" class="ghost">JSON 가져오기</button>
-        <button id="clearAll" class="ghost">모두 삭제</button>
-      </div>
-
-      <div id="list" class="list" aria-live="polite"></div>
-    </section>
-  </div>
+<h2>1. 오늘의 울림 남기기</h2>
+<textarea id="entry" rows="4" placeholder="오늘의 울림, 느낀 점, 혹은 한 문장..."></textarea>
+<div style="margin-top:10px;">
+  <button id="save">저장</button>
+  <button id="clear" style="background:#ccc;color:#333;margin-left:6px;">모두 삭제</button>
 </div>
 
+<h2>2. 나의 울림 기록</h2>
+<div class="log-list" id="list"></div>
+
+<footer>루웨인 언어연구소 · 울림 일지 © 2025</footer>
+
 <script>
-const KEY='resonance_logs_v1';
-const $=s=>document.querySelector(s);
-const nowDate=()=>{const d=new Date(); const z=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`;}
-const state={editingId:null};
+const KEY='reverb_exercise';
+const LIST_ID='list';
 
-// 초기값
-$('#date').value = nowDate();
-$('#strengthBar').style.width = $('#strength').value+'%';
-$('#strengthOut').textContent = $('#strength').value;
-$('#toggleLarge').addEventListener('change',e=>{document.body.classList.toggle('large', e.target.checked)});
-
-// 강도 표시
-$('#strength').addEventListener('input',e=>{
-  $('#strengthBar').style.width = e.target.value+'%';
-  $('#strengthOut').textContent = e.target.value;
-});
-
-// 저장소
-function load(){ try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(_){return[]} }
-function saveAll(arr){ localStorage.setItem(KEY, JSON.stringify(arr)) }
-
-// 렌더
+function now(){return new Date().toLocaleString();}
+function getLogs(){return JSON.parse(localStorage.getItem(KEY)||'[]');}
+function setLogs(a){localStorage.setItem(KEY,JSON.stringify(a));}
 function render(){
-  const list=$('#list'); list.innerHTML='';
-  const q=$('#q').value.trim().toLowerCase();
-  const fm=$('#filterMood').value; const fc=$('#filterCtx').value;
-  const sort=$('#sort').value;
-
-  let arr=load();
-  if(q) arr=arr.filter(it=>(it.title||'').toLowerCase().includes(q) || (it.body||'').toLowerCase().includes(q));
-  if(fm) arr=arr.filter(it=>it.mood===fm);
-  if(fc) arr=arr.filter(it=>it.context===fc);
-  arr.sort((a,b)=> sort==='new' ? b.time-a.time : a.time-b.time);
-
-  $('#count').textContent = arr.length+'건';
-
-  arr.forEach(it=>{
-    const div=document.createElement('div'); div.className='item';
-    const d=new Date(it.time);
-    div.innerHTML = `
-      <h3>${escapeHtml(it.title||'(제목 없음)')}</h3>
-      <div class="meta">${d.toLocaleString('ko-KR')} · 감응 ${it.strength} · <span class="tag">${it.mood}</span> <span class="tag">${it.context}</span></div>
-      <div class="body">${escapeHtml(it.body||'').replace(/\n/g,'<br>')}</div>
-      <div class="actions" style="margin-top:8px">
-        <button data-act="edit" data-id="${it.id}" class="btn2">편집</button>
-        <button data-act="del" data-id="${it.id}" class="ghost">삭제</button>
-        <button data-act="txt" data-id="${it.id}" class="ghost">TXT</button>
-      </div>`;
-    list.appendChild(div);
+  const box=document.getElementById(LIST_ID);
+  const data=getLogs();
+  box.innerHTML='';
+  if(!data.length){
+    box.innerHTML='<p style="color:#777">아직 울림 기록이 없습니다.</p>';
+    return;
+  }
+  data.forEach((d,i)=>{
+    const div=document.createElement('div');
+    div.className='log-item';
+    div.innerHTML=`<div class="meta">${d.at}</div><div>${(d.text||'').replace(/\n/g,'<br>')}</div>
+    <div style="margin-top:8px;"><button onclick="del(${i})" style="background:#ccc;color:#333;border:none;border-radius:6px;padding:4px 8px;font-size:.8rem;">삭제</button></div>`;
+    box.appendChild(div);
   });
 }
-function escapeHtml(s){return s.replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]))}
 
-// 이벤트: 목록 액션
-$('#list').addEventListener('click',e=>{
-  const b=e.target.closest('button'); if(!b) return;
-  const id=b.getAttribute('data-id'); const act=b.getAttribute('data-act');
-  if(act==='edit'){ edit(id); }
-  else if(act==='del'){ remove(id); }
-  else if(act==='txt'){ downloadTxt(id); }
-});
-
-// CRUD
-function formToObj(){
-  return {
-    id: state.editingId || ('id_'+Date.now()+Math.random().toString(36).slice(2,7)),
-    title: $('#title').value.trim(),
-    date: $('#date').value,
-    mood: $('#mood').value,
-    context: $('#context').value,
-    strength: +$('#strength').value,
-    body: $('#body').value.trim(),
-    time: state.editingId ? (load().find(x=>x.id===state.editingId)?.time||Date.now()) : Date.now()
-  }
-}
-function clearForm(){
-  state.editingId=null;
-  $('#title').value=''; $('#date').value=nowDate(); $('#mood').value='평온'; $('#context').value='혼자';
-  $('#strength').value=40; $('#strengthBar').style.width='40%'; $('#strengthOut').textContent='40';
-  $('#body').value='';
-}
-function createOrUpdate(){
-  const obj=formToObj();
-  let arr=load();
-  const i=arr.findIndex(x=>x.id===obj.id);
-  if(i>=0) arr[i]=obj; else arr.unshift(obj);
-  saveAll(arr);
+function save(){
+  const text=document.getElementById('entry').value.trim();
+  if(!text){alert('기록을 입력하세요.');return;}
+  const arr=getLogs();
+  arr.unshift({text,at:now()});
+  setLogs(arr);
+  document.getElementById('entry').value='';
   render();
-  state.editingId=null;
-}
-function edit(id){
-  const it=load().find(x=>x.id===id); if(!it) return;
-  state.editingId=id;
-  $('#title').value=it.title||''; $('#date').value=it.date||nowDate();
-  $('#mood').value=it.mood; $('#context').value=it.context;
-  $('#strength').value=it.strength; $('#strengthBar').style.width=it.strength+'%'; $('#strengthOut').textContent=it.strength;
-  $('#body').value=it.body||'';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function remove(id){
-  if(!confirm('정말 삭제할까요?')) return;
-  let arr=load().filter(x=>x.id!==id);
-  saveAll(arr); render();
 }
 
-// 내보내기/가져오기
-function download(filename, text){
-  const blob=new Blob([text], {type:'text/plain;charset=utf-8'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; a.click();
-  URL.revokeObjectURL(a.href);
+function del(i){
+  if(!confirm('이 기록을 삭제할까요?'))return;
+  const arr=getLogs(); arr.splice(i,1); setLogs(arr); render();
 }
-function downloadTxt(id){
-  const it=load().find(x=>x.id===id); if(!it) return;
-  const d=new Date(it.time).toLocaleString('ko-KR');
-  const txt=`[${d}] ${it.title||'(제목 없음)'}\n기분:${it.mood} / 상황:${it.context} / 감응:${it.strength}\n\n${it.body||''}\n`;
-  download('resonance_log.txt', txt);
+
+function clearAll(){
+  if(!confirm('모든 울림 기록을 삭제할까요?'))return;
+  localStorage.removeItem(KEY);
+  render();
 }
-$('#exportOne').addEventListener('click',()=>{
-  const it=formToObj();
-  const d=new Date().toISOString().slice(0,19).replace(/[:T]/g,'-');
-  const txt=`[임시 저장물(${d})] ${it.title||'(제목 없음)'}\n기분:${it.mood} / 상황:${it.context} / 감응:${it.strength}\n\n${it.body||''}\n`;
-  download('resonance_current.txt', txt);
-});
-$('#exportAll').addEventListener('click',()=>{
-  download('resonance_logs.json', JSON.stringify(load(), null, 2));
-});
-$('#importBtn').addEventListener('click',()=>$('#importFile').click());
-$('#importFile').addEventListener('change',e=>{
-  const f=e.target.files?.[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=()=>{ try{
-    const data=JSON.parse(r.result);
-    if(!Array.isArray(data)) throw 0;
-    const cur=load();
-    // 같은 id는 덮어쓰기
-    const map=new Map(cur.map(x=>[x.id,x]));
-    data.forEach(x=>map.set(x.id||('id_'+Date.now()), {...x, id: x.id || ('id_'+Date.now())}));
-    saveAll(Array.from(map.values())); render(); alert('가져오기 완료');
-  }catch(_){ alert('JSON 형식이 올바르지 않습니다.'); } };
-  r.readAsText(f, 'utf-8');
-});
 
-// 버튼/단축키
-$('#save').addEventListener('click', createOrUpdate);
-$('#new').addEventListener('click', clearForm);
-window.addEventListener('keydown',e=>{
-  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){ e.preventDefault(); createOrUpdate(); }
-  if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){ e.preventDefault(); clearForm(); }
-});
-
-// 검색/필터/정렬
-['q','filterMood','filterCtx','sort'].forEach(id=>$('#'+id).addEventListener('input',render));
-
-// 전체삭제
-$('#clearAll').addEventListener('click',()=>{
-  if(confirm('모든 기록을 삭제합니다. 복구할 수 없습니다.')){ localStorage.removeItem(KEY); render(); }
-});
-
-// 최초 렌더
-render();
+document.getElementById('save').addEventListener('click',save);
+document.getElementById('clear').addEventListener('click',clearAll);
+document.addEventListener('DOMContentLoaded',render);
 </script>
+
 </body>
 </html>
