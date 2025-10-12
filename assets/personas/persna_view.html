@@ -2,133 +2,74 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>퍼스나 시각화 | Persna Memory</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>내 퍼스나 보기</title>
 <style>
-body{font-family:'Noto Sans KR',sans-serif;background:#e9fff5;margin:0;text-align:center;padding:20px;}
-h1{color:#4ca880;margin-bottom:10px;}
-canvas{border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.12);border:2px solid #a8e6cf;}
-button{margin-top:20px;padding:10px 20px;border:none;border-radius:8px;background:#6fc1a1;color:#fff;cursor:pointer;font-size:1rem;}
-button:hover{background:#4ca880;}
-#memoryBox{margin:20px auto;max-width:500px;}
-textarea{width:90%;height:80px;border-radius:8px;border:1px solid #ccc;padding:10px;font-size:1rem;}
-#log{background:#fff;margin:auto;margin-top:15px;padding:10px;max-width:500px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);text-align:left;}
-.entry{padding:6px 0;border-bottom:1px dashed #ddd;}
-.entry:last-child{border-bottom:none;}
+body{font-family:'Noto Sans KR',sans-serif;margin:0;background:#f9f9f9;color:#333;text-align:center;padding:20px;}
+h1{color:#af2465;margin-bottom:10px;}
+#viewBox{
+  background:#fff;border:1px solid #eee;border-radius:14px;
+  max-width:700px;margin:0 auto;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+table{width:100%;border-collapse:collapse;margin-top:10px;}
+th,td{padding:10px;border-bottom:1px solid #eee;}
+th{background:#fdf2f6;color:#af2465;}
+button{margin:12px 6px;padding:10px 16px;border:none;border-radius:8px;background:#2a9d8f;color:#fff;cursor:pointer;}
+button:hover{filter:brightness(1.1);}
+.meta{color:#666;font-size:.9rem;margin-top:8px;}
 </style>
 </head>
 <body>
-<h1>🌿 나의 퍼스나</h1>
-<p> 퍼스나가 당신이 추억하기 원하는 기억과 기록을 남깁니다.</p>
-<canvas id="persnaCanvas" width="360" height="360"></canvas>
-<h2 id="pname" style="color:#3e7c66;"></h2>
-<button onclick="toggleBreath()">기억 잇기 / 멈추기</button>
+<h1>🪞 내 퍼스나 보기</h1>
+<div id="viewBox">
+  <p>로컬 또는 클라우드에 저장된 퍼스나 설정을 확인할 수 있습니다.</p>
+  <table>
+    <thead><tr><th>속성</th><th>값</th></tr></thead>
+    <tbody id="personaData"><tr><td colspan="2">아직 데이터가 없습니다.</td></tr></tbody>
+  </table>
+  <div class="meta" id="timestamp">—</div>
 
-<div id="memoryBox">
-  <textarea id="memoryInput" placeholder="퍼스나가 기록해야 할 말을 적어보세요..."></textarea><br>
-  <button onclick="saveMemory()">추억 저장</button>
-  <button onclick="exportMemory()">기억 내보내기</button>
+  <div style="margin-top:16px;">
+    <button id="loadLocal">로컬 불러오기</button>
+    <button id="loadCloud">☁️ 클라우드 불러오기</button>
+  </div>
 </div>
 
-<div id="log"></div>
+<script type="module">
+import { supabase } from '/assets/js/supabase.js';
 
-<script>
-const canvas=document.getElementById("persnaCanvas");
-const ctx=canvas.getContext("2d");
-let t=0, breathing=true;
-
-function drawPersna(){
-  const data=JSON.parse(localStorage.getItem("user_persna"))||{name:"이름없는 퍼스나",daon:40,yeoul:30,reca:20,hero:10};
-  document.getElementById("pname").innerText=data.name;
-
-  const r=Math.min(255,80+parseInt(data.hero)*1.5);
-  const g=Math.min(255,120+parseInt(data.daon));
-  const b=Math.min(255,150+parseInt(data.yeoul));
-
-  const breath=Math.sin(t/40)*10;
-  const pulse=Math.abs(Math.sin(t/20))*0.3;
-
-  ctx.clearRect(0,0,360,360);
-  const grad=ctx.createRadialGradient(180,180,20,180,180,160);
-  grad.addColorStop(0,"#fff");
-  grad.addColorStop(1,`rgba(${r},${g},${b},0.8)`);
-  ctx.fillStyle=grad;
-  ctx.fillRect(0,0,360,360);
-
-  ctx.beginPath();
-  const size=70+parseInt(data.reca)/2+breath;
-  ctx.arc(180,180,size,0,Math.PI*2);
-  ctx.fillStyle=`rgba(${r-30},${g-30},${b-30},0.9)`;
-  ctx.fill();
-
-  ctx.beginPath();
-  ctx.arc(180,180,size+8+Math.sin(t/10)*3,0,Math.PI*2);
-  ctx.strokeStyle=`rgba(${r},${g},${b},${0.5+pulse})`;
-  ctx.lineWidth=3;
-  ctx.stroke();
-
-  const emotion=Math.min(20,parseInt(data.hero)/5);
-  ctx.beginPath();
-  ctx.arc(150,160,8,0,Math.PI*2);
-  ctx.arc(210,160,8,0,Math.PI*2);
-  ctx.fillStyle="#fff";
-  ctx.fill();
-  ctx.fillStyle=`rgba(0,0,0,0.7)`;
-  ctx.beginPath();
-  ctx.arc(150,160,3+emotion/10,0,Math.PI*2);
-  ctx.arc(210,160,3+emotion/10,0,Math.PI*2);
-  ctx.fill();
-
-  ctx.beginPath();
-  const smile=emotion/10;
-  ctx.arc(180,190,25,Math.PI*0.1+smile,Math.PI-0.1-smile);
-  ctx.lineWidth=3;
-  ctx.strokeStyle=`rgba(0,0,0,0.6)`;
-  ctx.stroke();
-
-  t++;
-  if(breathing) requestAnimationFrame(drawPersna);
+// 테이블 표시 함수
+function renderTable(data){
+  const tbody=document.getElementById('personaData');
+  tbody.innerHTML='';
+  for(const [k,v] of Object.entries(data)){
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${k}</td><td>${v}</td>`;
+    tbody.appendChild(tr);
+  }
 }
 
-function toggleBreath(){
-  breathing=!breathing;
-  if(breathing) requestAnimationFrame(drawPersna);
-}
+// 로컬 불러오기
+document.getElementById('loadLocal').onclick=()=>{
+  const raw=localStorage.getItem('luwein_persona');
+  if(!raw){alert('로컬에 저장된 퍼스나가 없습니다.');return;}
+  const data=JSON.parse(raw);
+  renderTable(data);
+  document.getElementById('timestamp').textContent='📦 로컬 데이터 불러옴';
+};
 
-function saveMemory(){
-  const input=document.getElementById('memoryInput');
-  const text=input.value.trim();
-  if(!text){alert('내용을 입력하세요.');return;}
-  const memories=JSON.parse(localStorage.getItem("persna_memories")||"[]");
-  const date=new Date().toLocaleString();
-  memories.push({text, date});
-  localStorage.setItem("persna_memories", JSON.stringify(memories));
-  input.value='';
-  renderMemory();
-}
-
-function renderMemory(){
-  const log=document.getElementById('log');
-  const memories=JSON.parse(localStorage.getItem("persna_memories")||"[]");
-  log.innerHTML='<h3>🕊 퍼스나의 기억</h3>'+memories.map(m=>`<div class="entry">📜 ${m.text}<br><small>${m.date}</small></div>`).join('');
-}
-
-function exportMemory(){
-  const data=JSON.parse(localStorage.getItem("user_persna"))||{name:"이름없는 퍼스나"};
-  const memories=JSON.parse(localStorage.getItem("persna_memories")||"[]");
-  if(memories.length===0){alert('저장된 기억이 없습니다.');return;}
-  const lines=[`퍼스나 이름: ${data.name}`,"","[기억 목록]",""];
-  memories.forEach(m=>lines.push(`${m.date} - ${m.text}`));
-  const blob=new Blob([lines.join("\n")],{type:"text/plain;charset=utf-8"});
-  const a=document.createElement("a");
-  const dateStr=new Date().toISOString().split("T")[0].replace(/-/g,"");
-  a.href=URL.createObjectURL(blob);
-  a.download=`persna_memory_${dateStr}.txt`;
-  a.click();
-}
-
-drawPersna();
-renderMemory();
+// 클라우드 불러오기
+document.getElementById('loadCloud').onclick=async()=>{
+  const { data, error } = await supabase
+    .from('personas')
+    .select('content, updated_at')
+    .order('updated_at', { ascending:false })
+    .limit(1);
+  if(error||!data?.length){alert('불러오기 실패 또는 데이터 없음');return;}
+  const persona=JSON.parse(data[0].content);
+  renderTable(persona);
+  document.getElementById('timestamp').textContent='☁️ 클라우드 기준: '+new Date(data[0].updated_at).toLocaleString('ko-KR');
+};
 </script>
 </body>
 </html>
