@@ -1,78 +1,52 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>숨 틔움방 | Breathing Room</title>
-<style>
-:root{
-  --theme-color:#6cbba4;
-  --header-color:#ffffff;
-  --menu-bg:#3a655c;
-  --menu-hover:#d5f0e3;
-  --font-main:'Noto Sans KR',sans-serif;
-}
-body{margin:0;font-family:var(--font-main);background:#eaf6f0;color:#333;}
-header{background:var(--menu-bg);color:var(--header-color);
-  font-size:2rem;font-weight:700;text-align:center;padding:18px;}
-nav ul{display:flex;flex-wrap:wrap;justify-content:center;list-style:none;
-  margin:0;padding:0;background:var(--menu-bg);}
-nav li{margin:4px;}
-nav a{
-  color:#fff;text-decoration:none;padding:8px 12px;border-radius:6px;display:block;
-  transition:0.2s;
-}
-nav a:hover{background:var(--menu-hover);color:#2a9d8f;}
-nav a.disabled{
-  opacity:0.4;
-  pointer-events:none;
-  cursor:default;
-}
-iframe{width:100%;height:calc(100vh - 180px);border:none;}
-footer{text-align:center;padding:12px;font-size:.9rem;color:#666;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>숨틔움방 | 루웨인 트리니티</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
+    <h1>숨 틔움방</h1>
+    <nav>
+      <a href="new_1.html">오늘의 숨</a>
+      <a href="new_2.html">감정 클립</a>
+      <a href="new_3.html">이미지 카드</a>
+      <a href="new_4.html">회복 일지</a>
+      <a href="new_5.html">AI와의 대화</a>
+      <a href="new_6.html">낙서장</a>
+      <a href="old_1.html">지난 숨들</a>
+    </nav>
+  </header>
 
-<header>🌿 숨 틔움방 | Breathing Room</header>
-<nav>
-  <ul>
-    <li><a href="./Cards/index.html" target="contentFrame">감정카드</a></li>
-    <li><a href="./Chat/index.html" target="contentFrame">수다방</a></li>
-    <li><a href="./Clips/index.html" target="contentFrame">클립</a></li>
-    <li><a href="./Doodle_Board/index.html" target="contentFrame">낙서장</a></li>
-    <li><a href="./Images/index.html" target="contentFrame">이미지스</a></li>
-    <li><a href="./Recovery/index.html" target="contentFrame">리커버리</a></li>
-    <li><a href="./Todays_Breathing/index.html" target="contentFrame">오늘의 숨결</a></li>
-    <li><a id="personaLink" href="/assets/personas/persna_index.html" target="_blank">퍼스나(persna)</a></li>
-  </ul>
-</nav>
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>기록 메뉴</h2>
+      <ul>
+        <li><a href="new_1.html">오늘의 숨</a></li>
+        <li><a href="new_2.html">감정 클립</a></li>
+        <li><a href="new_3.html">이미지 카드</a></li>
+        <li><a href="new_4.html">회복 일지</a></li>
+        <li><a href="new_5.html">AI와의 대화</a></li>
+        <li><a href="new_6.html">낙서장</a></li>
+      </ul>
+    </aside>
 
-<main>
-  <iframe src="./Cards/index.html" name="contentFrame"></iframe>
-</main>
+    <main class="content">
+      <h2>환영합니다</h2>
+      <p>이곳은 숨을 고르고, 감정을 비우고, 다시 채우는 공간입니다.</p>
+      <p>왼쪽 메뉴에서 원하는 기록 방식을 선택해 주세요.</p>
+    </main>
 
-<footer>루웨인 숨 틔움방 © 2025</footer>
+    <section class="right-panel">
+      <h3>루웨인 노트</h3>
+      <p>당신의 하루가 루웨인의 울림으로 이어집니다.</p>
+    </section>
+  </div>
 
-<script>
-// 사용자 상태 감지
-const userKey = localStorage.getItem("luwein_user");
-const personaLink = document.getElementById("personaLink");
-
-// 처음 사용자면 비활성화
-if(!userKey){
-  personaLink.classList.add("disabled");
-  personaLink.textContent = "퍼스나 (비활성)";
-  personaLink.title = "가입 또는 세션 생성 후 사용 가능합니다.";
-} else {
-  personaLink.classList.remove("disabled");
-  personaLink.title = "퍼스나 관리로 이동합니다.";
-}
-
-<li><a href="/assets/personas/persna_reverb.html" target="_blank">퍼스나 반향 루프</a></li>
-
-<li><a href="/assets/personas/persna_collective.html" target="_blank">퍼스나 합창</a></li>
-
-</script>
+  <footer>
+    <p>© 2025 Luwain Trinity</p>
+  </footer>
 </body>
 </html>
