@@ -1,327 +1,178 @@
-<!DOCTYPE html><html lang="ko">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>울림의 언어 · 놀이터</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>울림 놀이터 | Resonance Playground</title>
 <style>
 :root{
-  --bg:#ffffff; --fg:#111111; --muted:#555; --line:#e6e6e9;
-  --accent:#2a9d8f; --accent-2:#af2465; --tile:#ffffff; --tile-hov:#f7f7fb;
-  --radius:16px; --gap:14px; --fs:1rem; --lh:1.7;
-  --focus:#005fcc;
+  --accent:#6c5b7b;
+  --highlight:#2a9d8f;
+  --bg:#ffffff;
+  --font:'Noto Sans KR',sans-serif;
 }
-*{box-sizing:border-box}
-html:focus-within{scroll-behavior:smooth}
-body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
-     background:var(--bg);color:var(--fg);line-height:var(--lh);font-size:var(--fs)}
-a{color:inherit}
-.wrap{max-width:1100px;margin:0 auto;padding:20px}
-.skip{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
-.skip:focus{left:16px;top:12px;width:auto;height:auto;background:#fff;border:2px solid var(--focus);
-           padding:.4rem .6rem;border-radius:10px;z-index:10000}
-
-/* 상단 */
-header{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:6px 0 12px}
-h1{margin:0;font-size:1.9rem}
-.badge{border:1px solid var(--line);border-radius:999px;padding:.2rem .6rem;background:#fafafa;color:#444;font-size:.85rem}
-.toolbar{margin-left:auto;display:flex;flex-wrap:wrap;gap:8px}
-.toolbar button,.toolbar label{border:1px solid var(--line);background:#fff;border-radius:10px;padding:.45rem .7rem;cursor:pointer}
-.toolbar input[type="checkbox"]{margin-right:.4rem;transform:scale(1.2)}
-
-/* 안내 */
-.note{border:1px dashed var(--line);border-radius:12px;padding:10px 12px;color:#444;background:#fff}
-
-/* 그리드 */
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap);margin-top:14px}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
-.card{background:var(--tile);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
-.card:focus-within{outline:2px solid var(--focus);outline-offset:2px}
-.card h2{margin:.1rem 0 .4rem;font-size:1.2rem;color:var(--accent-2)}
-.card p{margin:.2rem 0 .6rem;color:var(--muted)}
-.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.btn{border:2px solid var(--accent);background:#fff;color:var(--accent);padding:.6rem 1rem;border-radius:12px;cursor:pointer}
-.btn:hover{background:#e8fbf6}
-.btn.secondary{border-color:var(--accent-2);color:var(--accent-2)}
-.btn.ghost{border:1px solid var(--line);color:#333}
-.kbd{border:1px solid var(--line);background:#fafafa;border-radius:6px;padding:.05rem .35rem}
-
-/* 호흡 페이서 */
-.pacerWrap{display:flex;align-items:center;gap:14px}
-.pacer{width:120px;height:120px;border-radius:50%;border:6px solid var(--accent);display:flex;align-items:center;justify-content:center}
-.pacer span{font-weight:700}
-.progress{height:10px;background:#f3f3f5;border-radius:999px;overflow:hidden}
-.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#56cc9d)}
-@media (prefers-reduced-motion:no-preference){
-  .breath-anim{animation:breath 6s ease-in-out infinite}
-  @keyframes breath{
-    0%{transform:scale(0.9)}
-    50%{transform:scale(1.05)}
-    100%{transform:scale(0.9)}
-  }
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:var(--font);
+  background:var(--bg);
+  color:#333;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  text-align:center;
 }
-
-/* 반응 게임 */
-.bigbtn{display:block;width:100%;padding:26px;border-radius:14px;border:2px dashed var(--accent-2);text-align:center;font-size:1.2rem;cursor:pointer}
-.bigbtn.ready{background:#fff4f7}
-.bigbtn.go{background:#e8fbf6;border-color:var(--accent)}
-.stat{color:#444;margin-top:6px}
-
-/* 감정 보드 */
-.moods{display:flex;flex-wrap:wrap;gap:8px}
-.mood{font-size:1.6rem;line-height:1;border:1px solid var(--line);border-radius:999px;padding:.45rem .65rem;cursor:pointer;background:#fff}
-.mood[aria-pressed="true"]{outline:2px solid var(--accent);background:#e8fbf6}
-textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:12px;padding:10px}
-
-/* 낙서장 */
-canvas{width:100%;height:260px;border:1px solid var(--line);border-radius:12px;background:#fff;touch-action:none}
-
-/* 고대비 모드 / 큰글 */
-.high-contrast{--bg:#000;--fg:#fff;--muted:#d0d0d0;--line:#555;--tile:#111;--tile-hov:#151515;--focus:#ffd400}
-.large-text{--fs:1.15rem}
-
-/* 포커스 */
-:focus{outline:2px solid var(--focus);outline-offset:2px}
+header{
+  color:var(--accent);
+  font-weight:800;
+  font-size:1.6rem;
+  padding:18px;
+  border-bottom:2px solid #eee;
+}
+main{
+  flex:1;
+  max-width:900px;
+  margin:0 auto;
+  padding:30px 20px;
+}
+textarea{
+  width:100%;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:10px;
+  font-family:inherit;
+  font-size:1rem;
+  resize:none;
+}
+button{
+  background:var(--highlight);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:10px 16px;
+  font-size:1rem;
+  cursor:pointer;
+  margin-top:12px;
+}
+button:hover{opacity:.9;}
+#canvasBox{
+  margin-top:30px;
+  background:#fafafa;
+  border:1px solid #eee;
+  border-radius:14px;
+  height:200px;
+  position:relative;
+  overflow:hidden;
+}
+.wave{
+  position:absolute;
+  bottom:0;
+  width:60px;
+  background:var(--highlight);
+  border-radius:8px 8px 0 0;
+  opacity:.6;
+  animation:waveAnim 1s infinite ease-in-out;
+}
+@keyframes waveAnim{
+  0%,100%{transform:scaleY(.3);}
+  50%{transform:scaleY(1);}
+}
+footer{
+  padding:14px;
+  color:#888;
+  border-top:1px solid #eee;
+  font-size:.9rem;
+}
+.result{
+  margin-top:20px;
+  color:#444;
+  font-size:1.1rem;
+}
+select,input[type=range]{
+  margin:10px;
+  padding:6px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
 </style>
 </head>
 <body>
-<a href="#main" class="skip">본문으로 건너뛰기</a>
-<div class="wrap">
-  <header>
-    <h1>놀이터</h1>
-    <span class="badge" aria-hidden="true">쉬운 조작 · 큰 버튼 · 키보드 지원</span>
-    <div class="toolbar" role="group" aria-label="접근성 설정">
-      <label><input type="checkbox" id="hc"> 높은 대비</label>
-      <label><input type="checkbox" id="lg"> 큰 글자</label>
-      <label><input type="checkbox" id="rm"> 모션 줄이기</label>
-    </div>
-  </header>
 
-  <p class="note">
-    <strong>조작:</strong> 탭/화살표로 이동, <span class="kbd">Space</span>/<span class="kbd">Enter</span>로 실행.
-    저장은 이 브라우저에만 남습니다.
-  </p>
+<header>🎭 울림 놀이터 | Resonance Playground</header>
 
-  <main id="main" class="grid">
-    <!-- 1. 호흡 페이서 -->
-    <section class="card" aria-labelledby="c1">
-      <h2 id="c1">호흡 페이서</h2>
-      <p>4초 들숨 · 4초 멈춤 · 6초 날숨. 버튼을 눌러 함께 호흡합니다.</p>
-      <div class="pacerWrap">
-        <div id="pacer" class="pacer breath-anim" aria-live="polite"><span>대기</span></div>
-        <div style="flex:1">
-          <div class="row">
-            <button id="startBreath" class="btn">시작</button>
-            <button id="stopBreath" class="btn ghost">정지</button>
-          </div>
-          <div class="progress" style="margin-top:8px" aria-hidden="true"><div id="bar"></div></div>
-        </div>
-      </div>
-    </section>
+<main>
+  <h1>언어의 울림을 시각으로 표현해보세요</h1>
+  <p>문장을 입력하고 감정 톤, 속도, 강도를 조절해보세요.</p>
 
-    <!-- 2. 반응 게임 -->
-    <section class="card" aria-labelledby="c2">
-      <h2 id="c2">반응 게임</h2>
-      <p>“준비” 후 초록색으로 바뀌면 바로 눌러요. 평균 반응 속도를 확인합니다.</p>
-      <button id="reactBtn" class="bigbtn ready" aria-live="polite">준비 (누르지 마세요)</button>
-      <div class="row">
-        <button id="reactStart" class="btn secondary">시작</button>
-        <button id="reactReset" class="btn ghost">초기화</button>
-      </div>
-      <div class="stat" id="reactStat">기록 없음</div>
-    </section>
+  <textarea id="text" rows="3" placeholder="예: 오늘은 하늘빛이 참 포근하네요."></textarea>
 
-    <!-- 3. 감정 보드 -->
-    <section class="card" aria-labelledby="c3">
-      <h2 id="c3">감정 보드</h2>
-      <p>오늘 감정을 고르고 한 줄 남겨요.</p>
-      <div class="moods" role="group" aria-label="감정 선택">
-        <button class="mood" data-val="😊" aria-pressed="false">😊</button>
-        <button class="mood" data-val="😌" aria-pressed="false">😌</button>
-        <button class="mood" data-val="😢" aria-pressed="false">😢</button>
-        <button class="mood" data-val="😠" aria-pressed="false">😠</button>
-        <button class="mood" data-val="😴" aria-pressed="false">😴</button>
-        <button class="mood" data-val="🤗" aria-pressed="false">🤗</button>
-      </div>
-      <div class="row" style="margin-top:8px">
-        <textarea id="moodText" placeholder="한 줄 기록"></textarea>
-      </div>
-      <div class="row">
-        <button id="moodSave" class="btn">저장</button>
-        <button id="moodClear" class="btn ghost">지우기</button>
-      </div>
-      <div class="stat" id="moodStat">저장된 기록 없음</div>
-    </section>
+  <div>
+    <label>감정 톤</label>
+    <select id="tone">
+      <option value="calm">잔잔함</option>
+      <option value="bright">밝음</option>
+      <option value="strong">강렬함</option>
+      <option value="sad">슬픔</option>
+    </select>
 
-    <!-- 4. 낙서장 -->
-    <section class="card" aria-labelledby="c4">
-      <h2 id="c4">낙서장</h2>
-      <p>굵게 그려지는 간단한 캔버스. 마우스/터치 모두 가능.</p>
-      <canvas id="board" width="800" height="260" aria-label="낙서 캔버스"></canvas>
-      <div class="row" style="margin-top:8px">
-        <button id="pen" class="btn">펜</button>
-        <button id="eraser" class="btn secondary">지우개</button>
-        <button id="clearCanvas" class="btn ghost">전체 지우기</button>
-      </div>
-    </section>
-  </main>
-</div>
+    <label>속도</label>
+    <input type="range" id="speed" min="1" max="10" value="5">
+
+    <label>강도</label>
+    <input type="range" id="intensity" min="1" max="10" value="5">
+  </div>
+
+  <button id="simulate">울림 보기</button>
+
+  <div id="canvasBox"></div>
+  <div class="result" id="result"></div>
+</main>
+
+<footer>루웨인 언어연구소 · 울림의 언어 © 2025</footer>
 
 <script>
-/* 공통: 설정 저장/적용 */
-const $=s=>document.querySelector(s);
-const LS={g:'playground_settings', mood:'playground_mood', react:'playground_react'};
-const state = JSON.parse(localStorage.getItem(LS.g) || '{}');
-function applyA11y(){
-  document.body.classList.toggle('high-contrast', !!state.hc);
-  document.body.classList.toggle('large-text', !!state.lg);
-  if(state.rm){ document.documentElement.style.setProperty('scroll-behavior','auto'); }
-}
-function saveA11y(){ localStorage.setItem(LS.g, JSON.stringify(state)); }
-$('#hc').checked = !!state.hc; $('#lg').checked = !!state.lg; $('#rm').checked = !!state.rm;
-['hc','lg','rm'].forEach(id=>{
-  $('#'+id).addEventListener('change',e=>{ state[id]=e.target.checked; applyA11y(); saveA11y(); });
-});
-applyA11y();
+const canvas=document.getElementById('canvasBox');
+const result=document.getElementById('result');
 
-/* 1) 호흡 페이서 */
-let breathTimer=null, barTimer=null;
-function breathStep(el, txt, ms){ return new Promise(r=>{ el.textContent = txt; setTimeout(r, ms); }); }
-function setBar(p){ $('#bar').style.width = Math.max(0, Math.min(100,p)) + '%'; }
-async function runBreath(){
-  if(breathTimer){return;}
-  const S=$('#pacer').querySelector('span');
-  const reduced = $('#rm').checked || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced){ $('#pacer').classList.remove('breath-anim'); } else { $('#pacer').classList.add('breath-anim'); }
-  let running=true; breathTimer = true;
-  // 진행 바 부드럽게
-  let t0=Date.now(); clearInterval(barTimer);
-  barTimer = setInterval(()=>{ const dt=Date.now()-t0; const cyc=14000; setBar((dt%cyc)/cyc*100); }, 50);
-
-  while(running && breathTimer){
-    await breathStep(S,'들이마셔요 (4)', 1000);
-    await breathStep(S,'들이마셔요 (3)', 1000);
-    await breathStep(S,'들이마셔요 (2)', 1000);
-    await breathStep(S,'들이마셔요 (1)', 1000);
-    await breathStep(S,'멈춰요 (4)', 1000);
-    await breathStep(S,'멈춰요 (3)', 1000);
-    await breathStep(S,'멈춰요 (2)', 1000);
-    await breathStep(S,'멈춰요 (1)', 1000);
-    await breathStep(S,'내쉬어요 (6)', 1000);
-    await breathStep(S,'내쉬어요 (5)', 1000);
-    await breathStep(S,'내쉬어요 (4)', 1000);
-    await breathStep(S,'내쉬어요 (3)', 1000);
-    await breathStep(S,'내쉬어요 (2)', 1000);
-    await breathStep(S,'내쉬어요 (1)', 1000);
+function createWave(n,color,height,speed){
+  canvas.innerHTML='';
+  for(let i=0;i<n;i++){
+    const w=document.createElement('div');
+    w.className='wave';
+    w.style.left=`${i*70+10}px`;
+    w.style.height=`${height}px`;
+    w.style.background=color;
+    w.style.animationDuration=`${speed}s`;
+    canvas.appendChild(w);
   }
 }
-$('#startBreath').addEventListener('click', runBreath);
-$('#stopBreath').addEventListener('click', ()=>{ breathTimer=null; clearInterval(barTimer); $('#pacer').querySelector('span').textContent='대기'; setBar(0); });
 
-/* 2) 반응 게임 */
-const react = JSON.parse(localStorage.getItem(LS.react)||'{"times":[]}');
-function statReact(){
-  const a=react.times||[]; if(a.length===0){ $('#reactStat').textContent='기록 없음'; return; }
-  const avg = Math.round(a.reduce((x,y)=>x+y,0)/a.length);
-  $('#reactStat').textContent = `최근 ${a.length}회 평균: ${avg}ms`;
-}
-let waitT=null, allowTap=false;
-$('#reactStart').addEventListener('click', ()=>{
-  allowTap=false;
-  $('#reactBtn').className='bigbtn ready';
-  $('#reactBtn').textContent='준비 (누르지 마세요)';
-  clearTimeout(waitT);
-  const delay = 800 + Math.random()*2200;
-  waitT=setTimeout(()=>{
-    $('#reactBtn').className='bigbtn go';
-    $('#reactBtn').textContent='지금!';
-    $('#reactBtn').dataset.t0 = Date.now();
-    allowTap=true;
-  }, delay);
-});
-$('#reactBtn').addEventListener('click', ()=>{
-  if(!allowTap){ // 성급함
-    $('#reactBtn').textContent='성급했어요! 다시 시작';
-    clearTimeout(waitT); allowTap=false; return;
-  }
-  const t0 = +($('#reactBtn').dataset.t0||Date.now());
-  const dt = Date.now() - t0;
-  react.times = (react.times||[]); react.times.unshift(dt); react.times=react.times.slice(0,20);
-  localStorage.setItem(LS.react, JSON.stringify(react));
-  $('#reactBtn').textContent = `좋아요! ${dt}ms`;
-  allowTap=false; statReact();
-});
-$('#reactReset').addEventListener('click', ()=>{
-  react.times=[]; localStorage.setItem(LS.react, JSON.stringify(react));
-  $('#reactBtn').className='bigbtn ready'; $('#reactBtn').textContent='준비 (누르지 마세요)'; statReact();
-});
-statReact();
+document.getElementById('simulate').addEventListener('click',()=>{
+  const text=document.getElementById('text').value.trim();
+  const tone=document.getElementById('tone').value;
+  const speed=document.getElementById('speed').value;
+  const intensity=document.getElementById('intensity').value;
 
-/* 3) 감정 보드 */
-const moodSaved = JSON.parse(localStorage.getItem(LS.mood)||'{}');
-function renderMoodStat(){
-  if(moodSaved.emoji || moodSaved.text){
-    $('#moodStat').textContent = `오늘: ${moodSaved.emoji||'🙂'} · "${(moodSaved.text||'').slice(0,40)}"`;
-  }else{
-    $('#moodStat').textContent = '저장된 기록 없음';
-  }
-}
-document.querySelectorAll('.mood').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    const v=b.dataset.val;
-    document.querySelectorAll('.mood').forEach(x=>x.setAttribute('aria-pressed','false'));
-    b.setAttribute('aria-pressed','true');
-    moodSaved.emoji=v; renderMoodStat();
-  });
-});
-$('#moodSave').addEventListener('click', ()=>{
-  moodSaved.text = $('#moodText').value.trim();
-  localStorage.setItem(LS.mood, JSON.stringify(moodSaved));
-  renderMoodStat();
-});
-$('#moodClear').addEventListener('click', ()=>{
-  localStorage.removeItem(LS.mood);
-  document.querySelectorAll('.mood').forEach(x=>x.setAttribute('aria-pressed','false'));
-  $('#moodText').value=''; renderMoodStat();
-});
-renderMoodStat();
+  if(!text){alert('문장을 입력해주세요.');return;}
 
-/* 4) 낙서장 (마우스/터치/키보드 최소 조작) */
-const cvs = document.getElementById('board');
-const ctx = cvs.getContext('2d');
-let drawing=false, erasing=false, last=null;
-function pos(e){
-  if(e.touches && e.touches[0]){
-    const r=cvs.getBoundingClientRect(); return {x:e.touches[0].clientX-r.left, y:e.touches[0].clientY-r.top};
-  }else{
-    const r=cvs.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top};
-  }
-}
-function draw(p){
-  ctx.lineCap='round'; ctx.lineJoin='round';
-  ctx.strokeStyle = erasing ? '#ffffff' : '#111111';
-  ctx.lineWidth = erasing ? 26 : 10;
-  if(!last){ last=p; }
-  ctx.beginPath(); ctx.moveTo(last.x,last.y); ctx.lineTo(p.x,p.y); ctx.stroke();
-  last=p;
-}
-function stopDraw(){ drawing=false; last=null; }
-cvs.addEventListener('mousedown',e=>{drawing=true; last=pos(e)});
-cvs.addEventListener('mousemove',e=>{ if(drawing) draw(pos(e)); });
-window.addEventListener('mouseup',stopDraw);
-cvs.addEventListener('touchstart',e=>{drawing=true; last=pos(e); e.preventDefault();},{passive:false});
-cvs.addEventListener('touchmove',e=>{ if(drawing) draw(pos(e)); e.preventDefault();},{passive:false});
-cvs.addEventListener('touchend',()=>{stopDraw()});
-$('#pen').addEventListener('click',()=>{erasing=false});
-$('#eraser').addEventListener('click',()=>{erasing=true});
-$('#clearCanvas').addEventListener('click',()=>{ctx.clearRect(0,0,cvs.width,cvs.height)});
+  let color='#2a9d8f';
+  let height=80;
+  let toneDesc='';
 
-/* 키보드 힌트: Space로 호흡 시작/정지, R로 반응게임 시작 */
-window.addEventListener('keydown',e=>{
-  if(e.target.tagName==='TEXTAREA') return;
-  if(e.code==='Space'){ e.preventDefault();
-    if(breathTimer){ $('#stopBreath').click(); } else { $('#startBreath').click(); }
+  switch(tone){
+    case 'calm': color='#7dc7b5'; height=70; toneDesc='잔잔하고 부드럽게'; break;
+    case 'bright': color='#ffb6c1'; height=100; toneDesc='밝고 생기 있게'; break;
+    case 'strong': color='#af2465'; height=130; toneDesc='강렬하고 확실하게'; break;
+    case 'sad': color='#6c5b7b'; height=60; toneDesc='조용하고 서늘하게'; break;
   }
-  if(e.key.toLowerCase()==='r'){ $('#reactStart').click(); }
+
+  const n=Math.floor(intensity/2)+5;
+  const spd=1.2-(speed/20);
+  createWave(n,color,height,spd);
+
+  result.textContent=`"${text}" — ${toneDesc} (${speed}속, 강도 ${intensity})`;
 });
 </script>
-</body></html>
+
+</body>
+</html>
