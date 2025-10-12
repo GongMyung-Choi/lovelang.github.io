@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>공유 갤러리 | 숨 틔움방</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{
+  font-family:'Noto Sans KR',sans-serif;
+  background:#fafafa;margin:0;padding:2rem;text-align:center;color:#333;
+}
+h1{color:#2a9d8f;margin-bottom:1rem;}
+#gallery{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;
+}
+.card{
+  width:280px;background:#fff;border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  padding:10px;text-align:left;position:relative;
+}
+.card img{width:100%;height:180px;object-fit:cover;border-radius:8px;}
+.card .emotion{color:#af2465;font-weight:bold;margin-top:5px;}
+.card .content{margin:5px 0;}
+.like{color:#999;cursor:pointer;}
+.like.active{color:#e86;}
+</style>
+</head>
+<body>
+<h1>🌍 공유 감정카드 갤러리</h1>
+<p>다른 루웨인 사용자들의 울림을 함께 느껴보세요.</p>
+
+<div id="gallery"></div>
+
+<script>
+const SUPABASE_URL="https://omchtafaqgkdwcrwscrp.supabase.co";
+const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g";
+const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const gallery=document.getElementById("gallery");
+
+async function loadShared(){
+  const {data,error}=await supabase.from("emotion_cards").select("*").eq("is_shared",true).order("id",{ascending:false});
+  if(error)return console.error(error);
+  gallery.innerHTML=data.map(c=>`
+    <div class="card" id="card-${c.id}">
+      ${c.image_url?`<img src="${c.image_url}">`:""}
+      <div class="emotion">${c.emotion}</div>
+      <div class="content">${c.content}</div>
+      <div class="like" onclick="toggleLike(${c.id},this)">💗 공감하기</div>
+      <div style="font-size:.8rem;color:#777;margin-top:4px;">${new Date(c.created_at).toLocaleString()}</div>
+    </div>`).join("");
+}
+loadShared();
+
+// 실시간 반응
+supabase.channel("shared_sync")
+  .on("postgres_changes",{event:"*",schema:"public",table:"emotion_cards"},payload=>{
+    if(payload.eventType==="DELETE"||payload.eventType==="UPDATE")loadShared();
+  }).subscribe();
+
+// 공감 버튼 (로컬 반응)
+function toggleLike(id,el){
+  el.classList.toggle("active");
+}
+</script>
+</body>
+</html>
