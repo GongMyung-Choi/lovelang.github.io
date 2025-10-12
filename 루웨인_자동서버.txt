@@ -1,0 +1,55 @@
+@echo off
+title 🪶 LUWEIN SYSTEM - 자동 서버 실행
+color 0a
+echo ================================================
+echo        LUWEIN SYSTEM - 로컬 서버 자동 실행
+echo ================================================
+echo.
+
+:: 관리자 권한 확인
+net session >nul 2>&1
+if %errorLevel% neq 0 (
+  echo ⚠️ 관리자 권한으로 실행해야 합니다.
+  echo 마우스 오른쪽 클릭 후 "관리자 권한으로 실행" 선택하세요.
+  pause
+  exit
+)
+
+:: 경로 설정 (루웨인 웹 루트)
+set SITE=E:\GitHub\lovelang.github.io
+
+:: 서버 포트 지정
+set PORT=8080
+
+:: Python 방화벽 허용 (자동)
+echo 🔓 Python 방화벽 허용 중...
+netsh advfirewall firewall add rule name="Luwein Local Server" dir=in action=allow program="%ProgramFiles%\Python311\python.exe" enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="Luwein Local Server" dir=in action=allow program="%ProgramFiles(x86)%\Python311\python.exe" enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="Luwein Local Server" dir=in action=allow protocol=TCP localport=%PORT% >nul 2>&1
+
+:: 서버 실행 위치로 이동
+cd /d "%SITE%"
+if %errorlevel% neq 0 (
+  echo ❌ 폴더를 찾을 수 없습니다: %SITE%
+  echo 경로를 확인하고 다시 시도하세요.
+  pause
+  exit
+)
+
+:: Python 서버 실행
+echo 🚀 서버 실행 중... (포트 %PORT%)
+start "" python -m http.server %PORT%
+timeout /t 3 >nul
+
+:: 브라우저 자동 실행
+echo 🌐 브라우저 열기: http://127.0.0.1:%PORT%
+start "" http://127.0.0.1:%PORT%
+
+echo.
+echo ================================================
+echo ✅ 루웨인 로컬 서버가 실행되었습니다.
+echo    주소: http://127.0.0.1:%PORT%
+echo ================================================
+echo.
+pause
+exit
