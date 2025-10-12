@@ -1,32 +1,60 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>사랑, 연습해볼까?</title>
-<style id="themeVars">/* 상단 + 간단 폼 */ 
-:root{--header-color:#af2465;--menu-bg-color:#6c5b7b;--menu-text-color:#ffffff;--menu-hover-text:#2a9d8f;--page-padding:24px}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
-header{background:#fff;color:#af2465;font-size:40px;font-weight:800;text-align:center;padding:18px 12px;position:sticky;top:0;border-bottom:1px solid #ddd}
-nav ul{display:flex;justify-content:center;flex-wrap:wrap;gap:.4rem .6rem;background:#6c5b7b;margin:0;padding:.3rem .6rem;list-style:none}
-nav ul li{position:relative;font-size:16px}nav ul li>a{color:#fff;text-decoration:none;padding:.4rem .5rem;display:block}
-main{padding:var(--page-padding)} .box{background:#fff;border:1px solid #e9e9ee;border-radius:14px;padding:16px;max-width:900px}
-input,textarea,button{font:inherit}button{background:#2a9d8f;color:#fff;border:none;border-radius:10px;padding:10px 14px}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>💞 사랑, 연습해볼까? | Shall We Try Love</title>
+<style>
+body{
+  margin:0;
+  font-family:'Noto Sans KR',sans-serif;
+  background:#fffdfd;
+  color:#333;
+  text-align:center;
+  padding:40px 20px;
+}
+h1{color:#af2465;}
+.box{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:14px;
+  padding:20px;
+  max-width:720px;
+  margin:20px auto;
+  text-align:left;
+}
+textarea,input[type=range],button{font:inherit;}
+textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:10px;
+}
+input[type=range]{width:100%;margin-top:10px;}
+button{
+  background:#2a9d8f;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:10px 14px;
+  cursor:pointer;
+  margin-top:10px;
+}
+button:hover{background:#258778;}
+#out{margin-top:12px;color:#555;}
 </style>
 </head>
 <body>
-<header>루웨인 트리니티</header>
-<nav><ul><li><a href="/language_of_love/index.html">사랑의 언어</a></li><li><a href="/index.html">루웨인 트리니티</a></li></ul></nav>
-<main>
-  <h1>사랑 대화 연습</h1>
-  <div class="box">
-    <label>문장</label>
-    <textarea id="t" rows="4" placeholder="전하고 싶은 말을 적어보세요" style="width:100%;padding:10px;border:1px solid #e9e9ee;border-radius:10px"></textarea>
-    <label style="margin-top:8px;display:block">온도 (부드러움 ↔ 직설)</label>
-    <input type="range" id="temp" min="0" max="100" value="50" />
-    <div style="margin-top:10px"><button id="run">문장 만들기</button></div>
-    <p id="out" style="margin-top:12px;color:#555"></p>
-  </div>
-</main>
+<h1>💞 사랑, 연습해볼까?</h1>
+<div class="box">
+  <label>문장</label>
+  <textarea id="t" rows="4" placeholder="전하고 싶은 말을 적어보세요"></textarea>
+  <label style="margin-top:10px;">온도 (부드러움 ↔ 직설)</label>
+  <input type="range" id="temp" min="0" max="100" value="50">
+  <button id="run">문장 만들기</button>
+  <p id="out"></p>
+</div>
+
 <script>
 document.getElementById('run').addEventListener('click',()=>{
   const t=(document.getElementById('t').value||'').trim();
