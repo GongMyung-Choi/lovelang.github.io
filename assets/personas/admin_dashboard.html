@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>🛠 관리자 대시보드 | 루웨인</title>
+<style>
+:root{--accent:#af2465;}
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#fdfdfd;color:#222;}
+header{background:var(--accent);color:#fff;text-align:center;padding:18px;font-size:1.4rem;}
+nav{display:flex;justify-content:center;gap:10px;background:#fff;padding:10px;border-bottom:1px solid #eee;}
+nav button{padding:8px 14px;border:1px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);cursor:pointer;}
+nav button.active{background:var(--accent);color:#fff;}
+table{width:100%;border-collapse:collapse;margin-top:14px;}
+th,td{border-bottom:1px solid #eee;padding:8px;text-align:left;}
+th{background:#fafafa;}
+.section{display:none;padding:20px;}
+.section.active{display:block;}
+footer{text-align:center;padding:16px;color:#666;font-size:.85rem;}
+</style>
+</head>
+<body>
+<header>🛠 루웨인 관리자 대시보드</header>
+
+<nav>
+  <button data-tab="helper" class="active">💌 위로 카드</button>
+  <button data-tab="creator">🎨 작품함</button>
+  <button data-tab="research">🔬 연구 로그</button>
+</nav>
+
+<main>
+  <div id="helper" class="section active"><p>불러오는 중...</p></div>
+  <div id="creator" class="section"><p>불러오는 중...</p></div>
+  <div id="research" class="section"><p>불러오는 중...</p></div>
+</main>
+
+<footer>루웨인 관리 모드 © 2025</footer>
+
+<script type="module">
+import { supabase } from "/assets/js/supabase.js";
+
+const tabButtons = document.querySelectorAll("nav button");
+tabButtons.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    tabButtons.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+    document.getElementById(btn.dataset.tab).classList.add("active");
+  });
+});
+
+async function loadDashboard(){
+  // helper
+  const helperBox=document.getElementById("helper");
+  let { data, error } = await supabase.from("helper_cards").select("*").order("created_at",{ascending:false});
+  if(error) helperBox.textContent="오류:"+error.message;
+  else helperBox.innerHTML=`<table><tr><th>사용자</th><th>메시지</th><th>시간</th></tr>`+
+    data.map(r=>`<tr><td>${r.user_name}</td><td>${r.message}</td><td>${new Date(r.created_at).toLocaleString()}</td></tr>`).join("")+"</table>";
+
+  // creator
+  const creatorBox=document.getElementById("creator");
+  ({data,error}=await supabase.from("creator_works").select("*").order("created_at",{ascending:false}));
+  if(error) creatorBox.textContent="오류:"+error.message;
+  else creatorBox.innerHTML=`<table><tr><th>사용자</th><th>내용</th><th>시간</th></tr>`+
+    data.map(r=>`<tr><td>${r.user_name}</td><td>${r.content}</td><td>${new Date(r.created_at).toLocaleString()}</td></tr>`).join("")+"</table>";
+
+  // research
+  const researchBox=document.getElementById("research");
+  ({data,error}=await supabase.from("research_logs").select("*").order("created_at",{ascending:false}));
+  if(error) researchBox.textContent="오류:"+error.message;
+  else researchBox.innerHTML=`<table><tr><th>사용자</th><th>결과</th><th>시간</th></tr>`+
+    data.map(r=>`<tr><td>${r.user_name}</td><td>${r.result}</td><td>${new Date(r.created_at).toLocaleString()}</td></tr>`).join("")+"</table>";
+}
+loadDashboard();
+</script>
+</body>
+</html>
