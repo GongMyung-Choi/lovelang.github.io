@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>🎨 작품 보관함 | 루웨인</title>
+<style>
+:root{--accent:#af2465;}
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#fafafa;color:#333;}
+header{background:var(--accent);color:#fff;text-align:center;padding:18px;font-size:1.4rem;}
+.work{background:#fff;border-radius:12px;padding:16px;margin:12px auto;max-width:720px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+.date{color:#888;font-size:.9rem;margin-bottom:6px;}
+footer{text-align:center;padding:16px;color:#666;font-size:.85rem;}
+button{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:8px 14px;cursor:pointer;}
+</style>
+</head>
+<body>
+<header>🎨 내 작품함</header>
+<main id="vault" style="padding:20px;text-align:center">불러오는 중...</main>
+<footer>루웨인 퍼스나 시스템 © 2025</footer>
+
+<script type="module">
+import { supabase } from "/assets/js/supabase.js";
+
+const user = JSON.parse(localStorage.getItem("ed_user") || '{"name":"익명"}');
+const box = document.getElementById("vault");
+
+async function loadWorks(){
+  const { data, error } = await supabase
+    .from("creator_works")
+    .select("*")
+    .eq("user_name", user.name)
+    .order("created_at", { ascending:false });
+
+  if(error){ box.textContent = "❌ 불러오기 오류: "+error.message; return; }
+  if(!data.length){ box.textContent = "아직 저장된 작품이 없습니다."; return; }
+
+  box.innerHTML = "";
+  data.forEach(w=>{
+    const div=document.createElement("div");
+    div.className="work";
+    div.innerHTML=`
+      <div class="date">${new Date(w.created_at).toLocaleString()}</div>
+      <div>${w.content}</div>
+    `;
+    box.appendChild(div);
+  });
+}
+loadWorks();
+</script>
+</body>
+</html>
