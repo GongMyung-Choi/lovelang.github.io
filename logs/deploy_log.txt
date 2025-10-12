@@ -1,0 +1,73 @@
+ 
+=============================== 
+[?滌瀾] 2025-10-12 19:26:08.53 
+fatal: Unable to create 'E:/GitHub/lovelang.github.io/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+Everything up-to-date
+??GitHub ?呺???标车 
+??Supabase 氚膘梾 ?ろ尐 
+[膦呺] 2025-10-12 19:26:20.29 
+=============================== 
+ 
+=============================== 
+[?滌瀾] 2025-10-12 19:29:02.69 
+fatal: Unable to create 'E:/GitHub/lovelang.github.io/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+fatal: Unable to create 'E:/GitHub/lovelang.github.io/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+Everything up-to-date
+??GitHub ?呺???标车 
+??Supabase 氚膘梾 ?ろ尐 
+ 
+=============================== 
+[?滌瀾] 2025-10-12 20:26:32.70 
+fatal: Unable to create 'E:/GitHub/lovelang.github.io/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+fatal: Unable to create 'E:/GitHub/lovelang.github.io/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+Everything up-to-date
+??GitHub ?呺???标车 
+ 
+=============================== 
+[?滌瀾] 2025-10-12 20:26:40.79 
+fatal: Unable to create 'E:/GitHub/lovelang.github.io/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+fatal: Unable to create 'E:/GitHub/lovelang.github.io/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+Everything up-to-date
+??GitHub ?呺???标车 
