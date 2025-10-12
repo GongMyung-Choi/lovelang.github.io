@@ -1,343 +1,166 @@
-<!DOCTYPE html><html lang="ko">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>울림체조 · Resonance Exercise</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>울림 체조 | Resonance Exercise</title>
 <style>
 :root{
-  --bg:#ffffff; --fg:#111111; --muted:#555; --line:#e6e6e9;
-  --accent:#2a9d8f; --accent2:#af2465; --tile:#fff; --focus:#005fcc;
-  --r:14px; --gap:14px; --fs:1rem; --lh:1.7;
+  --accent:#6c5b7b;
+  --highlight:#2a9d8f;
+  --font:'Noto Sans KR',sans-serif;
 }
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
-     background:var(--bg);color:var(--fg);line-height:var(--lh);font-size:var(--fs)}
-a{color:inherit}
-.wrap{max-width:1100px;margin:0 auto;padding:20px}
-header{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:6px 0 12px}
-h1{margin:0;font-size:1.9rem;color:var(--accent2)}
-.badge{border:1px solid var(--line);border-radius:999px;padding:.2rem .6rem;background:#fafafa;color:#444;font-size:.85rem}
-.toolbar{margin-left:auto;display:flex;flex-wrap:wrap;gap:8px}
-.toolbar label{border:1px solid var(--line);background:#fff;border-radius:10px;padding:.45rem .7rem;cursor:pointer}
-.toolbar input{margin-right:.4rem;transform:scale(1.1)}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap)}
-@media(max-width:980px){.grid{grid-template-columns:1fr}}
-.card{background:var(--tile);border:1px solid var(--line);border-radius:var(--r);padding:14px}
-.card:focus-within{outline:2px solid var(--focus);outline-offset:2px}
-.card h2{margin:.1rem 0 .5rem;font-size:1.2rem;color:var(--accent)}
-.card p{margin:.2rem 0 .6rem;color:var(--muted)}
-.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-button,.btn{border:2px solid var(--accent);background:#fff;color:var(--accent);padding:.55rem 1rem;border-radius:12px;cursor:pointer}
-button:hover{background:#e8fbf6}
-.secondary{border-color:var(--accent2);color:var(--accent2)}
-.ghost{border:1px solid var(--line);color:#333}
-input[type="range"]{width:240px}
-select, input[type="number"]{padding:.45rem .6rem;border:1px solid var(--line);border-radius:10px}
-hr.sep{border:none;border-top:1px dashed var(--line);margin:10px 0}
-.note{border:1px dashed var(--line);border-radius:12px;padding:10px 12px;color:#444;background:#fff}
-.meter{height:14px;background:#f3f3f5;border-radius:999px;overflow:hidden}
-.meter>div{height:100%;width:0;background:linear-gradient(90deg,#56cc9d,#2a9d8f)}
-.ind{display:inline-block;min-width:52px;text-align:right;color:#444}
-.kbd{border:1px solid var(--line);background:#fafafa;border-radius:6px;padding:.05rem .35rem}
-:focus{outline:2px solid var(--focus);outline-offset:2px}
-
-/* 고대비/큰글 */
-.hc{--bg:#000;--fg:#fff;--muted:#d0d0d0;--line:#555;--tile:#111;--focus:#ffd400}
-.lg{--fs:1.12rem}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:var(--font);
+  background:#fff;
+  color:#333;
+  padding:40px 24px 60px;
+  line-height:1.8;
+  max-width:960px;
+  margin-inline:auto;
+}
+h1{color:var(--accent);font-size:2rem;margin-bottom:8px;}
+h2{color:var(--highlight);margin-top:26px;font-size:1.2rem;}
+p{margin:10px 0;}
+blockquote{
+  background:#f8f7fa;
+  border-left:4px solid var(--accent);
+  padding:12px 16px;
+  color:#555;
+  font-style:italic;
+  border-radius:8px;
+}
+.exercise-box{
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:16px;
+  background:#fafafa;
+  margin:14px 0;
+}
+button{
+  background:var(--highlight);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:10px 16px;
+  font-size:1rem;
+  cursor:pointer;
+}
+button:hover{opacity:.9;}
+.progress{
+  width:100%;
+  height:8px;
+  background:#e0e0e0;
+  border-radius:6px;
+  overflow:hidden;
+  margin-top:10px;
+}
+.bar{
+  width:0%;
+  height:100%;
+  background:var(--highlight);
+  transition:width .2s;
+}
+footer{
+  margin-top:30px;
+  color:#888;
+  font-size:.9rem;
+  text-align:right;
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>울림체조</h1>
-    <span class="badge">호흡 · 허밍 · 박자 · 발화</span>
-    <div class="toolbar" role="group" aria-label="접근성">
-      <label><input id="toggleHC" type="checkbox"> 높은 대비</label>
-      <label><input id="toggleLG" type="checkbox"> 큰 글자</label>
-      <label><input id="toggleRM" type="checkbox"> 모션 줄이기</label>
-    </div>
-  </header>
 
-  <p class="note">
-    <strong>조작:</strong> 탭/화살표 이동, <span class="kbd">Space</span> 호흡 시작/정지, <span class="kbd">M</span> 메트로놈 시작/정지.  
-    저장은 이 브라우저에만 남습니다.
-  </p>
+<h1>울림 체조</h1>
+<p>
+울림의 언어를 몸으로 익히는 짧은 루틴입니다.<br>
+매일 3분, 간단한 발성 훈련으로 말의 근육을 깨워 보세요.
+</p>
 
-  <main class="grid">
-    <!-- 1. 자세·호흡 -->
-    <section class="card" aria-labelledby="c1">
-      <h2 id="c1">① 자세·호흡 페이서</h2>
-      <p>4초 들숨 → 4초 멈춤 → 6초 날숨. 횟수 목표를 채워보세요.</p>
-      <div class="row">
-        <label>목표(회): <input id="breathTarget" type="number" min="1" max="50" value="6"></label>
-        <span>진행: <strong id="breathCount">0</strong>/<span id="breathGoal">6</span></span>
-      </div>
-      <div class="row">
-        <button id="breathStart">호흡 시작</button>
-        <button id="breathStop" class="ghost">정지</button>
-        <span id="breathPhase" class="ind">대기</span>
-      </div>
-      <div class="meter" style="margin-top:6px"><div id="breathBar"></div></div>
-      <hr class="sep">
-      <details>
-        <summary>자세 가이드</summary>
-        <ul>
-          <li>쇄골 ↓, 어깨 힘 빼고 턱 살짝 당기기</li>
-          <li>배에 손 올리고, 복식호흡으로 조용히</li>
-          <li>날숨 끝에 ‘흐–’ 소리로 길게</li>
-        </ul>
-      </details>
-    </section>
+<blockquote>
+“언어는 호흡의 리듬 위에 서 있다.”  
+— 루웨인 발성 교본
+</blockquote>
 
-    <!-- 2. 허밍(피치 가이드) -->
-    <section class="card" aria-labelledby="c2">
-      <h2 id="c2">② 허밍(피치 가이드)</h2>
-      <p>기본 음을 듣고 “음—”으로 따라합니다. 남/여/커스텀 선택.</p>
-      <div class="row">
-        <label>프리셋:
-          <select id="pitchPreset">
-            <option value="male">남성(기본 A3=220Hz)</option>
-            <option value="female">여성(기본 A4=440Hz)</option>
-            <option value="custom">커스텀</option>
-          </select>
-        </label>
-        <label>주파수: <input id="freq" type="number" min="80" max="1000" value="220"> Hz</label>
-        <button id="tonePlay" class="secondary">기본음 재생</button>
-        <button id="toneStop" class="ghost">정지</button>
-      </div>
-      <div class="row">
-        <label>길이: <input id="toneLen" type="range" min="0.5" max="5" step="0.5" value="2"></label>
-        <span id="toneLenOut" class="ind">2.0s</span>
-      </div>
-      <div class="meter" style="margin-top:6px"><div id="micLevel"></div></div>
-      <small style="color:#666">마이크 허용 시, 허밍 크기(입력 레벨) 표시</small>
-    </section>
-
-    <!-- 3. 박자(메트로놈) -->
-    <section class="card" aria-labelledby="c3">
-      <h2 id="c3">③ 박자(메트로놈)</h2>
-      <p>박자에 맞춰 복식호흡/허밍/발화를 연습합니다.</p>
-      <div class="row">
-        <label>BPM: <input id="bpm" type="number" min="30" max="200" value="60"></label>
-        <label>강박마다 강조: 
-          <select id="beats">
-            <option value="2">2</option><option value="3">3</option>
-            <option value="4" selected>4</option><option value="6">6</option><option value="8">8</option>
-          </select>
-        </label>
-        <button id="metroStart" class="secondary">메트로놈 시작</button>
-        <button id="metroStop" class="ghost">정지</button>
-      </div>
-      <div class="row">
-        <span>현재: <span id="beatNow">—</span></span>
-        <div class="meter" style="flex:1"><div id="beatBar"></div></div>
-      </div>
-    </section>
-
-    <!-- 4. 발화(문장·TTS) -->
-    <section class="card" aria-labelledby="c4">
-      <h2 id="c4">④ 발화(문장·리듬)</h2>
-      <p>따뜻한 문장을 고르고, 박자에 맞춰 읽어보세요. (TTS 옵션)</p>
-      <div class="row">
-        <select id="phraseSel">
-          <option>오늘도 수고했어요, 천천히 해도 좋아요.</option>
-          <option>당신 덕분에 한 걸음 나아갔어요. 고마워요.</option>
-          <option>잠깐 쉬어도 괜찮아요. 나는 여기 있어요.</option>
-          <option>함께 할게요. 필요하면 알려줘요.</option>
-        </select>
-        <button id="speak" class="secondary">TTS 읽기</button>
-      </div>
-      <div class="row">
-        <button id="record" class="btn">녹음 시작</button>
-        <button id="stopRec" class="ghost" disabled>정지</button>
-        <a id="downloadLink" class="btn ghost" style="display:none">다운로드</a>
-      </div>
-      <audio id="playback" controls style="width:100%;margin-top:6px;display:none"></audio>
-    </section>
-  </main>
+<h2>1. 입술 울림 풀기</h2>
+<div class="exercise-box">
+  <p>입술을 가볍게 닫고 <b>“브르르르”</b> 하며 떨려 보세요.  
+  긴장을 푸는 동시에 울림이 얼굴 전체로 확산됩니다.</p>
+  <button onclick="startTimer(10,this)">⏱️ 10초간 연습</button>
+  <div class="progress"><div class="bar"></div></div>
 </div>
 
+<h2>2. 모음 발성</h2>
+<div class="exercise-box">
+  <p>‘아–에–이–오–우–’ 순서로 발성하며  
+  울림이 입천장, 코, 가슴으로 어떻게 이동하는지 느껴보세요.</p>
+  <button onclick="startTimer(15,this)">🎤 15초간 연습</button>
+  <div class="progress"><div class="bar"></div></div>
+</div>
+
+<h2>3. 리듬 호흡</h2>
+<div class="exercise-box">
+  <p>4초 들이마시고, 4초 멈추고, 4초 내쉬기.  
+  아래의 원이 커졌다 작아지며 리듬을 안내합니다.</p>
+  <canvas id="breathCircle" width="180" height="180"></canvas>
+</div>
+
+<h2>4. 나의 울림 기록</h2>
+<p>
+매일의 발성 루틴이 끝나면 느낀 점을 메모하세요.<br>
+이 기록은 울림 일지(Resonance_Log)와 연동됩니다.
+</p>
+<textarea id="memo" rows="4" placeholder="오늘의 울림 느낌을 적어보세요." style="width:100%;padding:10px;border:1px solid #e9e9ee;border-radius:10px"></textarea>
+<div style="margin-top:10px;">
+  <button onclick="saveMemo()">저장</button>
+  <p id="saveStatus" style="color:#666;margin-top:6px;">기록 전</p>
+</div>
+
+<footer>루웨인 언어연구소 · 울림 체조 © 2025</footer>
+
 <script>
-/* ===== 공통 저장/접근성 ===== */
-const $=s=>document.querySelector(s);
-const LS='res_ex_settings_v1';
-const st = JSON.parse(localStorage.getItem(LS)||'{}');
-function save(){ localStorage.setItem(LS, JSON.stringify(st)); }
-function applyA11y(){
-  document.body.classList.toggle('hc', !!st.hc);
-  document.body.classList.toggle('lg', !!st.lg);
+function startTimer(sec,btn){
+  const box=btn.parentElement;
+  const bar=box.querySelector('.bar');
+  btn.disabled=true; bar.style.width='0%';
+  let t=0;
+  const timer=setInterval(()=>{
+    t+=0.2; bar.style.width=(t/sec*100)+'%';
+    if(t>=sec){clearInterval(timer); btn.disabled=false; bar.style.width='100%';}
+  },200);
 }
-$('#toggleHC').checked=!!st.hc; $('#toggleLG').checked=!!st.lg; $('#toggleRM').checked=!!st.rm;
-['toggleHC','toggleLG','toggleRM'].forEach(id=>{
-  $('#'+id).addEventListener('change',e=>{ st[id.slice(6).toLowerCase()] = e.target.checked; applyA11y(); save(); });
-});
-applyA11y();
 
-/* ===== ① 호흡 페이서 ===== */
-const breathPhase=$('#breathPhase');
-const breathBar=$('#breathBar');
-const breathCount=$('#breathCount');
-const breathGoal=$('#breathGoal');
-$('#breathTarget').value = st.breathTarget || 6;
-breathGoal.textContent = $('#breathTarget').value;
-$('#breathTarget').addEventListener('input',e=>{ st.breathTarget=+e.target.value; breathGoal.textContent=e.target.value; save(); });
-
-let breathRun=false, breathTimer=null, barTimer=null, cycleCount=0;
-function setBar(p){ breathBar.style.width=Math.max(0,Math.min(100,p))+'%'; }
-function setPhase(txt){ breathPhase.textContent=txt; }
-function stopBreath(){ breathRun=false; clearInterval(barTimer); clearTimeout(breathTimer);
-  setPhase('대기'); setBar(0);
-}
-async function runBreath(){
-  if(breathRun) return; breathRun=true;
-  const reduced = $('#toggleRM').checked || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let t0=Date.now();
-  clearInterval(barTimer);
-  barTimer=setInterval(()=>{ const cyc=14000; setBar(((Date.now()-t0)%cyc)/cyc*100); }, reduced?200:50);
-  cycleCount=0; breathCount.textContent='0';
-  const step = (txt, ms)=>new Promise(r=>{ setPhase(txt); breathTimer=setTimeout(r, ms); });
-
-  while(breathRun){
-    await step('들이마셔요 (4)',1000); await step('들이마셔요 (3)',1000);
-    await step('들이마셔요 (2)',1000); await step('들이마셔요 (1)',1000);
-    await step('멈춰요 (4)',1000); await step('멈춰요 (3)',1000);
-    await step('멈춰요 (2)',1000); await step('멈춰요 (1)',1000);
-    await step('내쉬어요 (6)',1000); await step('내쉬어요 (5)',1000);
-    await step('내쉬어요 (4)',1000); await step('내쉬어요 (3)',1000);
-    await step('내쉬어요 (2)',1000); await step('내쉬어요 (1)',1000);
-    cycleCount++; breathCount.textContent = cycleCount;
-    if(st.breathTarget && cycleCount>=st.breathTarget){ stopBreath(); break; }
+// 호흡 원 시각화
+const canvas=document.getElementById('breathCircle');
+if(canvas){
+  const ctx=canvas.getContext('2d');
+  let frame=0;
+  function draw(){
+    frame+=0.02;
+    const r=60+Math.sin(frame)*20;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.beginPath();
+    ctx.arc(90,90,r,0,Math.PI*2);
+    ctx.fillStyle='rgba(42,157,143,0.15)';
+    ctx.fill();
+    requestAnimationFrame(draw);
   }
+  draw();
 }
-$('#breathStart').addEventListener('click', runBreath);
-$('#breathStop').addEventListener('click', stopBreath);
 
-/* 스페이스로 호흡 토글 */
-window.addEventListener('keydown',e=>{
-  if(e.target.tagName==='INPUT' || e.target.tagName==='TEXTAREA') return;
-  if(e.code==='Space'){ e.preventDefault(); breathRun?stopBreath():runBreath(); }
-});
-
-/* ===== ② 허밍(피치 가이드) + 마이크 레벨 ===== */
-let ac=null, osc=null, gain=null;
-function audioCtx(){ if(!ac) ac=new (window.AudioContext||window.webkitAudioContext)(); return ac; }
-function playTone(freq, dur){
-  const A=audioCtx(); stopTone();
-  osc=A.createOscillator(); gain=A.createGain();
-  osc.type='sine'; osc.frequency.value=freq; gain.gain.value=0.2;
-  osc.connect(gain).connect(A.destination); osc.start();
-  if(dur>0){ setTimeout(()=>stopTone(), dur*1000); }
+// 메모 저장
+function saveMemo(){
+  const text=document.getElementById('memo').value.trim();
+  if(!text){alert('메모를 입력하세요.');return;}
+  const list=JSON.parse(localStorage.getItem('reverb_exercise')||'[]');
+  list.unshift({text,at:new Date().toLocaleString()});
+  localStorage.setItem('reverb_exercise',JSON.stringify(list));
+  document.getElementById('saveStatus').textContent='저장됨 ('+new Date().toLocaleTimeString()+')';
+  document.getElementById('memo').value='';
 }
-function stopTone(){ if(osc){ try{osc.stop()}catch{}; osc.disconnect(); gain.disconnect(); osc=null; gain=null; }
-
-$('#pitchPreset').value = st.pitchPreset || 'male';
-$('#freq').value = st.freq || ($('#pitchPreset').value==='female'?440:220);
-$('#toneLen').value = st.toneLen || 2; $('#toneLenOut').textContent = (+$('#toneLen').value).toFixed(1)+'s';
-
-$('#pitchPreset').addEventListener('change',e=>{
-  const v=e.target.value; st.pitchPreset=v;
-  if(v==='male') $('#freq').value=220;
-  else if(v==='female') $('#freq').value=440;
-  save();
-});
-['freq','toneLen'].forEach(id=>{
-  $('#'+id).addEventListener('input',e=>{
-    st[id]= (id==='toneLen') ? +e.target.value : +e.target.value;
-    if(id==='toneLen') $('#toneLenOut').textContent=(+e.target.value).toFixed(1)+'s';
-    save();
-  });
-});
-$('#tonePlay').addEventListener('click',()=> playTone(+$('#freq').value, +$('#toneLen').value));
-$('#toneStop').addEventListener('click', stopTone);
-
-/* 마이크 레벨 미터 */
-let micStream=null, analyser=null, micRAF=null;
-async function initMic(){
-  try{
-    micStream = await navigator.mediaDevices.getUserMedia({audio:true});
-    const A=audioCtx(); const src=A.createMediaStreamSource(micStream);
-    analyser=A.createAnalyser(); analyser.fftSize=512;
-    src.connect(analyser);
-    const buf=new Uint8Array(analyser.fftSize);
-    const loop=()=>{
-      analyser.getByteTimeDomainData(buf);
-      // 0~255 → 진폭 추정
-      let max=0, min=255;
-      for(let i=0;i<buf.length;i++){ const v=buf[i]; if(v>max)max=v; if(v<min)min=v; }
-      const amp=(max-min)/255; // 0~1
-      $('#micLevel').style.width=Math.min(100, Math.round(amp*180))+'%';
-      micRAF=requestAnimationFrame(loop);
-    };
-    loop();
-  }catch(err){
-    console.warn('Mic denied', err);
-  }
-}
-initMic();
-
-/* ===== ③ 메트로놈 ===== */
-let metroTimer=null, beatIdx=0;
-function tick(){
-  const beats=+$('#beats').value;
-  beatIdx=(beatIdx%beats)+1;
-  $('#beatNow').textContent=beatIdx + ' / ' + beats;
-  // 클릭 소리
-  const A=audioCtx(), o=A.createOscillator(), g=A.createGain();
-  o.type='square';
-  o.frequency.value = (beatIdx===1? 1200:800);
-  g.gain.value=0.15; o.connect(g).connect(A.destination);
-  o.start(); setTimeout(()=>{try{o.stop()}catch{}}, 60);
-  // 진행바
-  const pct= (beatIdx/beats)*100; $('#beatBar').style.width=pct+'%';
-}
-function startMetro(){
-  if(metroTimer) return;
-  const bpm=+$('#bpm').value; const interval=60000/bpm;
-  tick(); metroTimer=setInterval(tick, interval);
-}
-function stopMetro(){ clearInterval(metroTimer); metroTimer=null; $('#beatNow').textContent='—'; $('#beatBar').style.width='0%'; }
-
-$('#bpm').value = st.bpm || 60; $('#beats').value = st.beats || 4;
-['bpm','beats'].forEach(id=>$('#'+id).addEventListener('input',e=>{ st[id]=+e.target.value; save(); if(metroTimer){ stopMetro(); startMetro(); }}));
-$('#metroStart').addEventListener('click', startMetro);
-$('#metroStop').addEventListener('click', stopMetro);
-
-/* 키: M 으로 메트로놈 토글 */
-window.addEventListener('keydown',e=>{
-  if(e.target.tagName==='INPUT' || e.target.tagName==='TEXTAREA') return;
-  if(e.key.toLowerCase()==='m'){ metroTimer?stopMetro():startMetro(); }
-});
-
-/* ===== ④ 발화: TTS + 녹음 ===== */
-$('#speak').addEventListener('click', ()=>{
-  const txt=$('#phraseSel').value;
-  if('speechSynthesis' in window){
-    const u=new SpeechSynthesisUtterance(txt);
-    u.lang='ko-KR'; u.rate=1; u.pitch=1; speechSynthesis.speak(u);
-  }else{ alert('이 브라우저는 TTS를 지원하지 않습니다.'); }
-});
-
-/* 간단 녹음(브라우저 저장/다운로드) */
-let rec=null, chunks=[];
-$('#record').addEventListener('click', async ()=>{
-  try{
-    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
-    rec = new MediaRecorder(stream);
-    chunks=[]; rec.ondataavailable = e=>{ if(e.data.size>0) chunks.push(e.data); };
-    rec.onstop = ()=>{
-      const blob=new Blob(chunks,{type:'audio/webm'});
-      const url=URL.createObjectURL(blob);
-      const a=$('#downloadLink');
-      a.href=url; a.download='resonance_recording.webm';
-      a.style.display='inline-block';
-      const audio=$('#playback'); audio.src=url; audio.style.display='block';
-      $('#stopRec').disabled=true; $('#record').disabled=false;
-    };
-    rec.start(); $('#stopRec').disabled=false; $('#record').disabled=true;
-  }catch(e){ alert('마이크 권한이 필요합니다.'); }
-});
-$('#stopRec').addEventListener('click', ()=>{ if(rec && rec.state!=='inactive'){ rec.stop(); } });
-
 </script>
+
 </body>
 </html>
