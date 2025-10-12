@@ -1,119 +1,42 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>사랑의 언어 | 루웨인</title>
-<!-- 상단 스타일 (메인과 동일) -->
-<style id="themeVars">/* ↑ 위 공통 스타일 그대로 붙음 */ 
-:root{--header-color:#af2465;--menu-bg-color:#6c5b7b;--menu-text-color:#ffffff;--menu-hover-text:#2a9d8f;--btn-border:#2a9d8f;--btn-text:#2a9d8f;--btn-hover-bg:#2a9d8f;--btn-hover-text:#ffffff;--menu-size:16px;--submenu-size:14px;--title-size:40px;--intro-strong-size:42px;--intro-message-size:18px;--button-size:1.0;--page-padding:24px;}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.5}
-header{background:#fff;color:var(--header-color);font-size:var(--title-size);font-weight:800;text-align:center;padding:18px 12px;position:sticky;top:0;z-index:1000;border-bottom:1px solid #ddd}
-nav ul{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.4rem .6rem;background:var(--menu-bg-color);margin:0;padding:.3rem .6rem;list-style:none}
-nav ul li{position:relative;font-size:var(--menu-size)}nav ul li>a{color:var(--menu-text-color);text-decoration:none;padding:.4rem .5rem;display:block;transition:color .2s}
-nav ul li>a:hover{color:var(--menu-hover-text)}nav ul li:hover>ul{display:block}
-nav ul li ul{display:none;position:absolute;top:100%;left:0;min-width:220px;background:var(--menu-bg-color);padding:.6rem 0;margin:0;list-style:none;z-index:999}
-nav ul li ul li a{display:block;padding:.6rem 1rem;color:var(--menu-text-color);font-size:var(--submenu-size);white-space:nowrap}
-nav ul li ul li a:hover{color:var(--menu-hover-text)}
-main{padding:var(--page-padding);min-height:400px}
-.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
-.card{border:1px solid #e9e9ee;border-radius:14px;padding:14px;background:#fff;text-align:left}
-.card h3{margin:0 0 6px} .card p{margin:0 0 10px;color:#555}
-.card a.go{display:inline-block;padding:6px 10px;border-radius:8px;background:#2a9d8f;color:#fff;text-decoration:none}
-.card a.go:hover{filter:brightness(1.06)}
-</style>
+<meta charset="UTF-8">
+<title>사랑의 언어 | 루웨인 트리니티</title>
+<link rel="stylesheet" href="../assets/css/love.css">
 </head>
 <body>
-
-<!-- 메인 상단 복제(루트 링크로 보정) -->
-<header>루웨인 트리니티</header>
-<nav>
-  <ul>
-    <li><a href="/language_of_love/index.html">사랑의 언어</a>
-      <ul>
-        <li><a href="/language_of_love/The_Warmth_of_Words/index.html">말의 온도</a></li>
-        <li><a href="/language_of_love/Emotional_Diary/index.html">감성일기</a></li>
-        <li><a href="/language_of_love/Resonant_Linguistics/index.xhtml">공명언어학</a></li>
-        <li><a href="/language_of_love/Shall_We_Try_Love/index.html">사랑, 연습해볼까?</a></li>
-        <li><a href="/language_of_love/To_Luwein_Trinity/index.html">To 루웨인 트리니티</a></li>
-      </ul>
-    </li>
-    <li><a href="/language_of_reverberation/index.html">울림의 언어</a>
-      <ul>
-        <li><a href="/language_of_reverberation/voice.html">음성안내</a></li>
-        <li><a href="/language_of_reverberation/lang_select.html">언어선택</a></li>
-        <li><a href="/language_of_reverberation/playground.html">놀이터</a></li>
-        <li><a href="/language_of_reverberation/practice.html">울림 연습</a></li>
-        <li><a href="/language_of_reverberation/diary.html">울림 일지</a></li>
-        <li><a href="/language_of_reverberation/core.html">울림의 언어</a></li>
-        <li><a href="/language_of_reverberation/settings.html">설정</a></li>
-        <li><a href="/language_of_reverberation/with_ai.html">인공지능과 함께</a></li>
-        <li><a href="/language_of_reverberation/device.html">울림 장치/기기</a></li>
-        <li><a href="/language_of_reverberation/ai_collab.html">AI협업</a></li>
-      </ul>
-    </li>
-    <li><a href="/index.html">루웨인 트리니티</a></li>
-    <li><a href="/breathing_room/index.html">숨 틔움방</a>
-      <ul>
-        <li><a href="/breathing_room/cards.html">숨 카드</a></li>
-        <li><a href="/breathing_room/clips.html">숨 클립</a></li>
-        <li><a href="/goods/library/index.html">루웨인 도서관</a></li>
-        <li><a href="/scenario/index.html">시나리오</a></li>
-        <li><a href="/sketchbook/index.html">낙서장</a></li>
-        <li><a href="/chat/index.html">AI와 잡담하기</a></li>
-        <li><a href="/etc/index.html">기타 항목</a></li>
-      </ul>
-    </li>
-    <li><a href="/haneul/index.html">한얼</a>
-      <ul>
-        <li><a href="/haneul/about.html">한얼이란</a></li>
-        <li><a href="/haneul/peace.html">쉴만한(안식)</a></li>
-        <li><a href="/haneul/play.html">즐길만한(놀이)</a></li>
-        <li><a href="/haneul/health.html">건강한(헬스)</a></li>
-        <li><a href="/haneul/ethics.html">선한(윤리)</a></li>
-        <li><a href="/haneul/tools.html">스마트한(도구)</a></li>
-        <li><a href="/haneul/relations.html">유연한(관계)</a></li>
-      </ul>
-    </li>
-    <li><a href="/goods/index.html">맑은샘</a>
-      <ul>
-        <li><a href="/goods/webtoon.html">웹툰</a></li>
-        <li><a href="/scenario/index.html">시나리오</a></li>
-        <li><a href="/animation/index.html">애니메이션</a></li>
-        <li><a href="/goods/heartforce.html">한마음특공대</a></li>
-        <li><a href="/goods/library/index.html">루웨인도서관</a></li>
-      </ul>
-    </li>
-    <li><a href="/help_notices/index.html">도움말 및 공지</a></li>
-    <li><a href="/customer_support/index.html">고객센터</a></li>
-  </ul>
-</nav>
+<header>
+  <h1>사랑의 언어</h1>
+  <nav>
+    <a href="../language_of_reverberation/index.html">울림의 언어</a>
+    <a href="../haneul/index.html">한얼 프로젝트</a>
+    <a href="../admin/breathing_room/index.html">숨틔움방</a>
+  </nav>
+</header>
 
 <main>
-  <h1>사랑의 언어 (Love Language)</h1>
-  <p>감정·언어의 교차점에서 울림을 탐색하는 하위 허브.</p>
+  <section class="intro">
+    <h2>사랑을 말하는 방법</h2>
+    <p>이곳은 관계의 온도, 언어의 감각, 그리고 마음의 표현을 탐구하는 공간입니다.</p>
+  </section>
 
-  <section class="grid">
-    <div class="card">
-      <h3>💬 감응 언어학</h3><p> 챕터형 전자책</p>
-      <a class="go" href="./Resonant_Linguistics/index.xhtml">열기</a>
+  <section class="cards">
+    <div class="card pink">
+      <h3>감성 일기</h3>
+      <p>오늘의 마음을 기록하세요.</p>
     </div>
-    <div class="card">
-      <h3>🔥 말의 온도</h3><p>문장 온도 측정/제안</p>
-      <a class="go" href="./The_Warmth_of_Words/index.html">열기</a>
+    <div class="card rose">
+      <h3>울림 카드</h3>
+      <p>감응을 나누는 따뜻한 문장들.</p>
     </div>
-    <div class="card">
-      <h3>💞 사랑, 연습해볼까?</h3><p>대화형 실습</p>
-      <a class="go" href="./Shall_We_Try_Love/index.html">열기</a>
-    </div>
-    <div class="card">
-      <h3>💌 트리니티에게</h3><p>편지/보관</p>
-      <a class="go" href="./To_Luwein_Trinity/index.html">열기</a>
-    </div>
-    <div class="card">
-      <h3>🪞 감성일기</h3><p>처음/재방문 자동 분기</p>
-      <a class="go" href="./Emotional_Diary/index.html">열기</a>
+    <div class="card coral">
+      <h3>투 루웨인 트리니티</h3>
+      <p>루웨인에게 보내는 편지, 감정의 공유.</p>
     </div>
   </section>
 </main>
+
+<footer>© 2025 Luwain Trinity</footer>
 </body>
 </html>
