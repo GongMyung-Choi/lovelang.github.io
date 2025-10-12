@@ -1,0 +1,10 @@
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#fffbe7;color:#332b00}
+header{background:#ffe77a;padding:16px;text-align:center;color:#403200}
+nav a{margin:0 10px;color:#403200;text-decoration:none;font-weight:600}
+main{padding:40px;text-align:center}
+.cards{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:32px}
+.card{width:260px;border-radius:12px;padding:20px;color:#403200;font-weight:500}
+.card.yellow{background:#ffe77a}
+.card.gold{background:#ffd54f}
+.card.lemon{background:#fff176}
+footer{text-align:center;padding:12px;background:#fff8d6;color:#403200;margin-top:40px}
