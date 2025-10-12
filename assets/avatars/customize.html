@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🎭 아바타 커스터마이즈 | 루웨인</title>
+<style>
+:root{--accent:#af2465;}
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#fafafa;color:#333;text-align:center;}
+header{background:var(--accent);color:#fff;padding:18px;font-size:1.4rem;}
+main{max-width:900px;margin:20px auto;padding:20px;}
+.avatar-preview{position:relative;display:inline-block;margin:20px;}
+.avatar-preview img{width:220px;border-radius:14px;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+.controls{display:grid;gap:16px;max-width:480px;margin:0 auto;text-align:left;}
+label{font-weight:600;}
+select,input[type=color]{width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;}
+button{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 16px;cursor:pointer;margin-top:20px;}
+</style>
+</head>
+<body>
+<header>🎭 아바타 커스터마이즈</header>
+
+<main>
+  <div class="avatar-preview">
+    <img id="avatarBase" src="/avatar/images/helper.png" alt="avatar preview">
+  </div>
+
+  <div class="controls">
+    <label>헤어 스타일</label>
+    <select id="hair">
+      <option value="default">기본</option>
+      <option value="short">단발</option>
+      <option value="long">장발</option>
+      <option value="bun">묶은 머리</option>
+    </select>
+
+    <label>헤어 색상</label>
+    <input type="color" id="hairColor" value="#3b2f2f">
+
+    <label>의상 스타일</label>
+    <select id="outfit">
+      <option value="classic">기본</option>
+      <option value="modern">모던</option>
+      <option value="casual">캐주얼</option>
+      <option value="formal">포멀</option>
+    </select>
+
+    <label>배경 색상</label>
+    <input type="color" id="bgColor" value="#ffffff">
+
+    <button id="save">저장하기</button>
+  </div>
+</main>
+
+<footer style="padding:20px;color:#666;font-size:.85rem;">루웨인 아바타 커스터마이즈 © 2025</footer>
+
+<script type="module">
+import { supabase } from "/assets/js/supabase.js";
+
+const user = JSON.parse(localStorage.getItem("ed_user") || '{"name":"익명"}');
+const role = localStorage.getItem("persona_role") || "helper";
+
+const profile = {
+  user_name: user.name,
+  role,
+  hair: "default",
+  hair_color: "#3b2f2f",
+  outfit: "classic",
+  bg_color: "#ffffff",
+};
+
+// 기존 설정 불러오기
+(async ()=>{
+  const { data } = await supabase.from("persona_profiles").select("*").eq("user_name", user.name).eq("role", role).single();
+  if(data){
+    Object.assign(profile, data);
+    document.getElementById("hair").value = data.hair;
+    document.getElementById("hairColor").value = data.hair_color;
+    document.getElementById("outfit").value = data.outfit;
+    document.getElementById("bgColor").value = data.bg_color;
+    document.body.style.background = data.bg_color;
+  }
+})();
+
+function updatePreview(){
+  document.body.style.background = document.getElementById("bgColor").value;
+}
+
+document.querySelectorAll("select,input[type=color]").forEach(el=>{
+  el.addEventListener("input",updatePreview);
+});
+
+document.getElementById("save").addEventListener("click", async ()=>{
+  profile.hair = document.getElementById("hair").value;
+  profile.hair_color = document.getElementById("hairColor").value;
+  profile.outfit = document.getElementById("outfit").value;
+  profile.bg_color = document.getElementById("bgColor").value;
+
+  // Supabase 저장 (UPSERT)
+  const { error } = await supabase.from("persona_profiles").upsert(profile);
+  if(error) alert("❌ 저장 실패: "+error.message);
+  else {
+    localStorage.setItem("persona_custom", JSON.stringify(profile));
+    alert("✅ 아바타가 저장되었습니다!");
+    location.href = "/persona/vault.html";
+  }
+});
+</script>
+</body>
+</html>
