@@ -2,58 +2,87 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>퍼스나 조정실</title>
 <style>
-body{font-family:'Noto Sans KR',sans-serif;background:#e9fff5;margin:0;text-align:center;padding:20px;}
-h1{color:#4ca880;}
-section{background:#fff;max-width:800px;margin:auto;padding:30px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);}
-label{display:block;margin-top:20px;}
-input[type=range]{width:60%;}
-input[type=text]{width:60%;padding:6px;border-radius:6px;border:1px solid #ccc;}
-button{margin-top:30px;padding:10px 20px;border:none;border-radius:8px;background:#6fc1a1;color:#fff;font-size:1rem;cursor:pointer;}
-button:hover{background:#4ca880;}
+body{font-family:'Noto Sans KR',sans-serif;margin:0;background:#fff;color:#333;text-align:center;padding:20px;}
+h1{color:#af2465;margin-bottom:10px;}
+label{display:block;margin-top:20px;font-weight:bold;}
+input[type=range]{width:80%;margin-top:8px;}
+button{margin:12px 6px;padding:10px 16px;border:none;border-radius:8px;background:#2a9d8f;color:#fff;cursor:pointer;}
+button:hover{filter:brightness(1.1);}
 </style>
 </head>
 <body>
-<section>
-<h1>🌀 퍼스나 조정실</h1>
-<p> 속성을 조합하고, 당신의 퍼스나에게 호흡을 불어 넣어주세요.</p>
+<h1>🎛 퍼스나 조정실</h1>
+<p>각 속성을 조절하고 저장하세요.</p>
 
-<label>퍼스나 이름</label>
-<input type="text" id="pname" placeholder="예: 여린결, 라나, 헤이든 등">
+<div>
+  <label>공감도</label><input id="empathy" type="range" min="0" max="100" value="50">
+  <label>논리성</label><input id="logic" type="range" min="0" max="100" value="50">
+  <label>감성</label><input id="emotion" type="range" min="0" max="100" value="50">
+  <label>창의성</label><input id="creativity" type="range" min="0" max="100" value="50">
+</div>
 
-<label>다온 (관계)
-  <input type="range" id="daon" min="0" max="100" value="40">
-</label>
-<label>여울빛 (감정)
-  <input type="range" id="yeoul" min="0" max="100" value="30">
-</label>
-<label>레카 (구조)
-  <input type="range" id="reca" min="0" max="100" value="20">
-</label>
-<label>헤로체 (언어)
-  <input type="range" id="hero" min="0" max="100" value="10">
-</label>
+<div>
+  <button id="saveLocal">로컬 저장</button>
+  <button id="loadLocal">로컬 불러오기</button>
+  <button id="uploadCloud">☁️ 클라우드 저장</button>
+  <button id="downloadCloud">☁️ 클라우드 불러오기</button>
+</div>
 
-<button onclick="savePersna()">퍼스나 만들기</button>
-<p id="msg"></p>
-<p style="margin-top:10px;"><a href="persna_view.html">내 퍼스나 보러 가기 →</a></p>
-</section>
+<script type="module">
+import { supabase } from '/assets/js/supabase.js';
 
-<script>
-function savePersna(){
-  const pname=document.getElementById('pname').value.trim() || "이름없는 퍼스나";
-  const persna={
-    name:pname,
-    daon:document.getElementById('daon').value,
-    yeoul:document.getElementById('yeoul').value,
-    reca:document.getElementById('reca').value,
-    hero:document.getElementById('hero').value
+// 기본 로컬 함수
+function getData(){
+  return {
+    empathy:+document.getElementById('empathy').value,
+    logic:+document.getElementById('logic').value,
+    emotion:+document.getElementById('emotion').value,
+    creativity:+document.getElementById('creativity').value
   };
-  localStorage.setItem("user_persna", JSON.stringify(persna));
-  document.getElementById("msg").innerText=`✅ 당신의 퍼스나 ‘${pname}’이(가) 기록되었습니다.`;
 }
+function setData(d){
+  document.getElementById('empathy').value=d.empathy;
+  document.getElementById('logic').value=d.logic;
+  document.getElementById('emotion').value=d.emotion;
+  document.getElementById('creativity').value=d.creativity;
+}
+
+document.getElementById('saveLocal').onclick=()=>{
+  localStorage.setItem('luwein_persona',JSON.stringify(getData()));
+  alert('로컬에 저장됨.');
+};
+
+document.getElementById('loadLocal').onclick=()=>{
+  const data=localStorage.getItem('luwein_persona');
+  if(!data)return alert('로컬에 저장된 설정이 없습니다.');
+  setData(JSON.parse(data));
+  alert('로컬 설정 불러옴.');
+};
+
+// Supabase 업로드
+document.getElementById('uploadCloud').onclick=async()=>{
+  const personaData=JSON.stringify(getData());
+  const { data, error } = await supabase
+    .from('personas')
+    .insert([{ content: personaData, updated_at: new Date().toISOString() }]);
+  if(error) alert('업로드 실패: ' + error.message);
+  else alert('☁️ 클라우드 저장 완료');
+};
+
+// Supabase 다운로드 (가장 최근 항목)
+document.getElementById('downloadCloud').onclick=async()=>{
+  const { data, error } = await supabase
+    .from('personas')
+    .select('content')
+    .order('updated_at', { ascending: false })
+    .limit(1);
+  if(error || !data?.length) return alert('불러오기 실패');
+  setData(JSON.parse(data[0].content));
+  alert('☁️ 클라우드에서 불러옴');
+};
 </script>
 </body>
 </html>
