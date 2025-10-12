@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🌀 페르소나 관리 | 루웨인</title>
+<style>
+:root{--accent:#af2465;}
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#fff4f8;color:#333;}
+header{background:var(--accent);color:#fff;text-align:center;padding:18px;font-size:1.4rem;}
+main{max-width:900px;margin:20px auto;padding:20px;}
+.grid{display:grid;gap:16px;}
+.card{background:#fff;border:1px solid #f1cadb;border-radius:12px;padding:14px;box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+h2{color:var(--accent);margin:0 0 6px;}
+button{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 12px;cursor:pointer;margin-right:6px;}
+button.delete{background:#999;}
+button:disabled{opacity:0.6;cursor:not-allowed;}
+#newForm{margin-top:20px;padding:16px;background:#fff;border-radius:12px;border:1px solid #eee;}
+input,select{padding:8px;border:1px solid #ccc;border-radius:6px;width:100%;}
+</style>
+</head>
+<body>
+<header>🌀 페르소나 관리</header>
+
+<main>
+  <h2>나의 페르소나 목록</h2>
+  <div id="personaList" class="grid"></div>
+
+  <section id="newForm">
+    <h3>새 페르소나 생성</h3>
+    <label>이름</label>
+    <input id="pname" placeholder="예: 다온2, 여울빛-연구형">
+    <label>역할</label>
+    <select id="prole">
+      <option value="helper">도우미형</option>
+      <option value="creator">창작형</option>
+      <option value="researcher">연구형</option>
+    </select>
+    <button id="create">생성</button>
+  </section>
+</main>
+
+<footer style="text-align:center;padding:20px;color:#666;font-size:.85rem;">
+  루웨인 트리니티 · 페르소나 관리 © 2025
+</footer>
+
+<script type="module">
+import { supabase } from "/assets/js/supabase.js";
+
+const user = JSON.parse(localStorage.getItem("ed_user") || '{"name":"익명"}');
+const listBox = document.getElementById("personaList");
+
+async function loadPersonas(){
+  const { data, error } = await supabase
+    .from("persona_profiles")
+    .select("*")
+    .eq("user_name", user.name)
+    .order("id", { ascending: true });
+
+  listBox.innerHTML = "";
+  if(error){ listBox.innerHTML = `<p>❌ 불러오기 실패: ${error.message}</p>`; return; }
+  if(!data || !data.length){ listBox.innerHTML = "<p>아직 페르소나가 없습니다.</p>"; return; }
+
+  data.forEach(p=>{
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `
+      <h2>${p.role} — ${p.user_name}</h2>
+      <p>헤어: ${p.hair}, 의상: ${p.outfit}</p>
+      <p>배경: <span style="color:${p.bg_color}">${p.bg_color}</span></p>
+      <div>
+        <button onclick="activatePersona('${p.role}','${p.user_name}')">활성화</button>
+        <button class="delete" onclick="deletePersona(${p.id})">삭제</button>
+        <button onclick="duplicatePersona(${p.id})">복제</button>
+      </div>
+    `;
+    listBox.appendChild(div);
+  });
+}
+
+// ✅ 활성화
+window.activatePersona = (role,name)=>{
+  localStorage.setItem("active_persona", JSON.stringify({role,name}));
+  alert(`✅ ${name} (${role}) 페르소나가 활성화되었습니다.`);
+  location.href="/persona/vault.html";
+};
+
+// ❌ 삭제
+window.deletePersona = async (id)=>{
+  if(!confirm("정말 삭제할까요?")) return;
+  const { error } = await supabase.from("persona_profiles").delete().eq("id",id);
+  if(error) alert(error.message);
+  else loadPersonas();
+};
+
+// 🪞 복제
+window.duplicatePersona = async (id)=>{
+  const { data } = await supabase.from("persona_profiles").select("*").eq("id",id).single();
+  if(!data) return;
+  delete data.id;
+  data.user_name = data.user_name + "_copy";
+  const { error } = await supabase.from("persona_profiles").insert(data);
+  if(error) alert(error.message);
+  else loadPersonas();
+};
+
+// ➕ 새 페르소나 생성
+document.getElementById("create").addEventListener("click", async ()=>{
+  const pname = document.getElementById("pname").value.trim();
+  const prole = document.getElementById("prole").value;
+  if(!pname){alert("이름을 입력하세요.");return;}
+  const base = {
+    user_name: pname,
+    role: prole,
+    hair: "default",
+    hair_color: "#3b2f2f",
+    outfit: "classic",
+    bg_color: "#ffffff"
+  };
+  const { error } = await supabase.from("persona_profiles").insert(base);
+  if(error) alert(error.message);
+  else loadPersonas();
+});
+
+loadPersonas();
+</script>
+</body>
+</html>
