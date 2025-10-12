@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>루웨인 갤러리 | Luwein Official Exhibition</title>
+<style>
+body {
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #f8faf9;
+  color: #333;
+  text-align: center;
+}
+header {
+  background: #af2465;
+  color: #fff;
+  padding: 22px 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+main {
+  padding: 40px 0;
+}
+img {
+  max-width: 92%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  transition: opacity 1s ease-in-out;
+}
+footer {
+  background: #af2465;
+  color: #fff;
+  padding: 14px;
+  font-size: 0.9rem;
+  margin-top: 50px;
+  letter-spacing: 0.5px;
+}
+#counter {
+  margin-top: 18px;
+  color: #888;
+  font-size: 0.9rem;
+}
+</style>
+</head>
+<body>
+
+<header>🪶 루웨인 공식 전시관 | LUWEIN GALLERY</header>
+<main>
+  <img id="luweinImage" src="" alt="루웨인 공식 이미지 전시">
+  <div id="counter">이미지 로드 중...</div>
+</main>
+<footer>
+  루웨인 트리니티 공식 갤러리 © 2025 — “빛의 결이 흐르고, 울림이 자란다.”
+</footer>
+
+<script>
+// ===== 설정 =====
+const folder = "./images/";      // 이미지 폴더 경로
+const changeInterval = 24 * 60 * 60 * 1000; // 하루(24시간)
+let images = [];
+let current = 0;
+
+// ===== 이미지 자동 탐색 =====
+async function detectImages(){
+  let index = 1;
+  images = [];
+  while(true){
+    const url = `${folder}${index}.jpg`;
+    const exists = await checkImage(url);
+    if(!exists) break;
+    images.push(url);
+    index++;
+  }
+
+  const counter = document.getElementById("counter");
+  if(images.length === 0){
+    counter.textContent = "⚠️ 표시할 이미지가 없습니다.";
+    return;
+  }
+  counter.textContent = `총 ${images.length}장의 작품`;
+  showImage();
+}
+
+// ===== 이미지 존재 확인 =====
+function checkImage(url){
+  return new Promise(resolve=>{
+    const img = new Image();
+    img.onload = ()=>resolve(true);
+    img.onerror = ()=>resolve(false);
+    img.src = url + "?v=" + Date.now(); // 캐시 방지
+  });
+}
+
+// ===== 이미지 순환 표시 =====
+function showImage(){
+  const img = document.getElementById("luweinImage");
+  img.style.opacity = 0;
+  setTimeout(()=>{
+    img.src = images[current];
+    img.style.opacity = 1;
+    document.getElementById("counter").textContent = 
+      `${current+1} / ${images.length}`;
+    current = (current + 1) % images.length;
+  }, 300);
+  setTimeout(showImage, changeInterval);
+}
+
+// ===== 실행 =====
+detectImages();
+</script>
+
+</body>
+</html>
