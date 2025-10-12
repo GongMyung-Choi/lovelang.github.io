@@ -1,0 +1,10 @@
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#fff8f9;color:#3b1c1c}
+header{background:#ffb6c1;padding:16px;text-align:center;color:#fff}
+nav a{margin:0 10px;color:#fff;text-decoration:none;font-weight:600}
+main{padding:40px;text-align:center}
+.cards{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:32px}
+.card{width:260px;border-radius:12px;padding:20px;color:#fff}
+.card.pink{background:#ffb6c1}
+.card.rose{background:#ff7f9f}
+.card.coral{background:#ff9999}
+footer{text-align:center;padding:12px;background:#ffe4ec;color:#333;margin-top:40px}
