@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #0d1117;
+  color: #e6edf3;
+}
+
+header {
+  background: rgba(20,25,33,0.9);
+  padding: 16px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header h1 {
+  margin: 0;
+  color: #58a6ff;
+  font-size: 1.8rem;
+}
+
+nav a {
+  color: #9ecbff;
+  margin: 0 8px;
+  text-decoration: none;
+}
+nav a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr 240px;
+  gap: 20px;
+  padding: 20px;
+}
+
+.sidebar, .content, .right-panel {
+  padding: 16px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.03);
+}
+
+.sidebar {
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+.right-panel {
+  border-left: 1px solid rgba(255,255,255,0.1);
+}
+
+footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 24px;
+}
