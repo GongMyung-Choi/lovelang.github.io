@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>📚 내 보관함 | 루웨인</title>
+<style>
+:root{--accent:#af2465;}
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#fafafa;color:#333;}
+header{background:var(--accent);color:#fff;text-align:center;padding:18px;font-size:1.4rem;}
+nav{display:flex;justify-content:center;gap:10px;background:#fff;padding:10px;border-bottom:1px solid #eee;}
+nav button{padding:8px 14px;border:1px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);cursor:pointer;}
+nav button.active{background:var(--accent);color:#fff;}
+.section{display:none;padding:20px;}
+.section.active{display:block;}
+.card{background:#fff;border-radius:12px;padding:16px;margin:12px auto;max-width:700px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+.date{color:#888;font-size:.9rem;margin-bottom:6px;}
+footer{text-align:center;padding:16px;color:#666;font-size:.85rem;}
+</style>
+</head>
+<body>
+<header>📚 내 보관함</header>
+
+<nav>
+  <button data-tab="helper" class="active">💌 위로 카드</button>
+  <button data-tab="creator">🎨 작품함</button>
+  <button data-tab="research">🔬 연구 로그</button>
+</nav>
+
+<main>
+  <div id="helper" class="section active">불러오는 중...</div>
+  <div id="creator" class="section">불러오는 중...</div>
+  <div id="research" class="section">불러오는 중...</div>
+</main>
+
+<footer>루웨인 퍼스나 시스템 © 2025</footer>
+
+<script type="module">
+<script type="module">
+import { loadPersonaHeader } from "/assets/js/persona_ui.js";
+loadPersonaHeader();
+</script>
+
+import { supabase } from "/assets/js/supabase.js";
+
+
+const user = JSON.parse(localStorage.getItem("ed_user") || '{"name":"익명"}');
+const tabButtons = document.querySelectorAll("nav button");
+tabButtons.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    tabButtons.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+    document.getElementById(btn.dataset.tab).classList.add("active");
+  });
+});
+
+async function loadVault(){
+  const helper = document.getElementById("helper");
+  const creator = document.getElementById("creator");
+  const research = document.getElementById("research");
+
+  // Helper
+  let { data, error } = await supabase.from("helper_cards").select("*").eq("user_name", user.name).order("created_at",{ascending:false});
+  if(error) helper.textContent="오류:"+error.message;
+  else helper.innerHTML = data.length ? data.map(c=>`<div class="card"><div class="date">${new Date(c.created_at).toLocaleString()}</div>${c.message}</div>`).join("") : "아직 카드가 없습니다.";
+
+  // Creator
+  ({ data, error } = await supabase.from("creator_works").select("*").eq("user_name", user.name).order("created_at",{ascending:false}));
+  if(error) creator.textContent="오류:"+error.message;
+  else creator.innerHTML = data.length ? data.map(c=>`<div class="card"><div class="date">${new Date(c.created_at).toLocaleString()}</div>${c.content}</div>`).join("") : "저장된 작품이 없습니다.";
+
+  // Research
+  ({ data, error } = await supabase.from("research_logs").select("*").eq("user_name", user.name).order("created_at",{ascending:false}));
+  if(error) research.textContent="오류:"+error.message;
+  else research.innerHTML = data.length ? data.map(c=>`<div class="card"><div class="date">${new Date(c.created_at).toLocaleString()}</div>${c.result}</div>`).join("") : "로그가 없습니다.";
+}
+loadVault();
+</script>
+</body>
+</html>
