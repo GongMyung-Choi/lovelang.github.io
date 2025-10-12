@@ -1,0 +1,74 @@
+@echo off
+title LUWEIN SYSTEM - 최적화(안전판 v2)
+color 0a
+
+:: 관리자 권한 체크
+net session >nul 2>&1 || (echo 관리자 권한으로 다시 실행하세요.& pause & exit /b)
+
+echo [0] 한글(Hwp) 접근 거부 선(先)복구 중...
+
+:: 한글/관련 프로세스 종료
+taskkill /im hwp*.exe /f 2>nul
+
+:: 경로 변수
+set "HNC_ROAM=%APPDATA%\Hnc\User\Common\H110"
+set "HNC_LOC=%LOCALAPPDATA%\Hnc"
+
+:: 폴더 생성 및 권한 초기화(부모 권한 상속 + 사용자 Full)
+if not exist "%HNC_ROAM%" mkdir "%HNC_ROAM%" 2>nul
+icacls "%HNC_ROAM%" /reset /T /C >nul
+icacls "%HNC_ROAM%" /inheritance:e >nul
+icacls "%HNC_ROAM%" /grant "%USERNAME%":(OI)(CI)F /T /C >nul
+
+if exist "%HNC_ROAM%\recentInfo.xml" del /f /q "%HNC_ROAM%\recentInfo.xml" 2>nul
+
+:: TEMP 폴더는 '삭제' 금지. 내용만 정리 + 권한 정상화
+echo [0-1] TEMP 내용 정리 및 권한 복원...
+del /f /s /q "%TEMP%\*" 2>nul
+for /d %%X in ("%TEMP%\*") do rd /s /q "%%X" 2>nul
+icacls "%TEMP%" /reset /T /C >nul
+icacls "%TEMP%" /inheritance:e >nul
+icacls "%TEMP%" /grant "%USERNAME%":(OI)(CI)F /T /C >nul
+
+:: Defender의 제어된 폴더 액세스(CFA) 사용 중이면 Hwp.exe 허용 추가
+echo [0-2] Windows 보안(CFA) 예외 등록 시도...
+powershell -NoProfile -Command ^
+"Try{ $mp=Get-MpPreference; if($mp.EnableControlledFolderAccess -eq 1){$bases=@('C:\Program Files (x86)\HNC','C:\Program Files\HNC'); foreach($b in $bases){ if(Test-Path $b){ Get-ChildItem -Path $b -Filter Hwp.exe -Recurse -ErrorAction SilentlyContinue | ForEach-Object{ try{ Add-MpPreference -ControlledFolderAccessAllowedApplications $_.FullName }catch{} } } } Write-Host 'CFA 예외 등록 완료' } }Catch{}" >nul 2>&1
+
+echo.
+echo [1] 절전모드 해제(원하면 되돌리기 스크립트로 복구 가능)
+powercfg -h off
+
+echo [2] 가상메모리 안전설정(자동 관리로 복구)
+wmic computersystem where name="%computername%" set AutomaticManagedPagefile=True >nul 2>&1
+wmic pagefileset where name="C:\\pagefile.sys" delete >nul 2>&1
+
+echo [3] 임시/윈도우 임시 정리(폴더 자체는 유지)
+del /f /s /q "C:\Windows\Temp\*" >nul 2>&1
+for /d %%X in ("C:\Windows\Temp\*") do rd /s /q "%%X" 2>nul
+
+echo [4] Windows 업데이트 캐시 정리
+net stop wuauserv >nul 2>&1
+net stop bits >nul 2>&1
+rd /s /q "C:\Windows\SoftwareDistribution\Download" 2>nul
+net start wuauserv >nul 2>&1
+net start bits >nul 2>&1
+
+echo [5] 구성요소 저장소 정리(시간 소요)
+dism /online /cleanup-image /startcomponentcleanup >nul
+
+:: 시스템 복원/섀도우 삭제는 위험도가 크니 주석 처리(필요시 되돌리기 불가)
+:: vssadmin delete shadows /all /quiet
+
+echo.
+echo ================= 결과 =================
+echo - Hwp 경로 권한/파일 초기화 완료
+echo - TEMP 폴더 권한 정상화
+echo - CFA(제어된 폴더 액세스) 사용 시 Hwp 예외 등록 시도
+echo - 하이버네이션 해제, 페이지파일 자동
+echo - 각종 캐시/임시 정리 완료
+echo =======================================
+echo.
+echo 이제 한글(Hwp)을 실행해 보세요.
+pause
+exit /b
