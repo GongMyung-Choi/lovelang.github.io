@@ -1,60 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>감성일기 | 게이트</title>
-<style id="themeVars">/* 메인 상단 스타일 */ 
-:root{--header-color:#af2465;--menu-bg-color:#6c5b7b;--menu-text-color:#ffffff;--menu-hover-text:#2a9d8f;--page-padding:24px}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
-header{background:#fff;color:#af2465;font-size:40px;font-weight:800;text-align:center;padding:18px 12px;position:sticky;top:0;z-index:1000;border-bottom:1px solid #ddd}
-nav ul{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.4rem .6rem;background:#6c5b7b;margin:0;padding:.3rem .6rem;list-style:none}
-nav ul li{position:relative;font-size:16px}nav ul li>a{color:#fff;text-decoration:none;padding:.4rem .5rem;display:block}
-nav ul li>a:hover{color:#2a9d8f}nav ul li:hover>ul{display:block}
-nav ul li ul{display:none;position:absolute;top:100%;left:0;min-width:220px;background:#6c5b7b;padding:.6rem 0;margin:0;list-style:none;z-index:999}
-nav ul li ul li a{display:block;padding:.6rem 1rem;color:#fff;font-size:14px;white-space:nowrap}
-nav ul li ul li a:hover{color:#2a9d8f}main{padding:var(--page-padding);min-height:400px}
-.box{background:#fff;border:1px solid #e9e9ee;border-radius:14px;padding:16px;max-width:720px}
-button,a.button{background:#2a9d8f;color:#fff;border:none;border-radius:10px;padding:10px 14px;text-decoration:none;display:inline-block}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>감성일기 | Emotional Diary</title>
+<style>
+body{
+  margin:0;
+  font-family:'Noto Sans KR',sans-serif;
+  background:#fffdfd;
+  color:#333;
+  text-align:center;
+  padding:40px 20px;
+}
+h1{color:#af2465;font-size:2rem;margin-bottom:10px;}
+p{color:#555;margin-bottom:20px;}
+a.button{
+  display:inline-block;
+  padding:10px 16px;
+  border-radius:10px;
+  background:#2a9d8f;
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+}
+a.button:hover{background:#258778;}
 </style>
 </head>
 <body>
-<!-- 상단(메인과 동일) -->
-<header>루웨인 트리니티</header>
-<nav>
-  <ul>
-    <li><a href="/language_of_love/index.html">사랑의 언어</a>
-      <ul>
-        <li><a href="/language_of_love/The_Warmth_of_Words/index.html">말의 온도</a></li>
-        <li><a href="/language_of_love/Emotional_Diary/index.html">감성일기</a></li>
-        <li><a href="/language_of_love/Resonant_Linguistics/index.xhtml">공명언어학</a></li>
-        <li><a href="/language_of_love/Shall_We_Try_Love/index.html">사랑, 연습해볼까?</a></li>
-        <li><a href="/language_of_love/To_Luwein_Trinity/index.html">To 루웨인 트리니티</a></li>
-      </ul>
-    </li>
-    <li><a href="/language_of_reverberation/index.html">울림의 언어</a></li>
-    <li><a href="/index.html">루웨인 트리니티</a></li>
-    <li><a href="/breathing_room/index.html">숨 틔움방</a></li>
-    <li><a href="/goods/index.html">맑은샘</a></li>
-    <li><a href="/help_notices/index.html">도움말 및 공지</a></li>
-    <li><a href="/customer_support/index.html">고객센터</a></li>
-  </ul>
-</nav>
-
-<main>
   <h1>감성일기</h1>
-  <div class="box" id="goBox">처음 방문인지 확인 중…</div>
-</main>
-
-<script>
-const KEY_USER="ed_user";function isFirstTime(){return !localStorage.getItem(KEY_USER)}
-document.addEventListener('DOMContentLoaded',()=>{
-  const box=document.getElementById('goBox');
-  if(isFirstTime()){
-    box.innerHTML=`<p>처음 오셨네요. 시작 페이지로 이동합니다.</p><a class="button" href="./first_time.html">시작하기</a>`;
-  }else{
-    box.innerHTML=`<p>다시 오셨군요! 바로 일기장으로 갑니다.</p><a class="button" href="./returning_user.html">열기</a>`;
-  }
-});
-</script>
+  <p>당신의 하루를 감정의 언어로 기록하세요.</p>
+  <a class="button" href="./first_time.html" target="_parent">시작하기</a>
 </body>
 </html>
