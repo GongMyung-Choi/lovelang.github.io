@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>내 낙서 갤러리 | 루웨인 숨 틔움방</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{font-family:'Noto Sans KR',sans-serif;background:#f7faf9;color:#333;text-align:center;margin:0;padding:2rem;}
+h1{color:#6cbba4;}
+.grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;}
+.card{width:250px;background:#fff;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.1);overflow:hidden;}
+.card img{width:100%;height:180px;object-fit:cover;}
+.actions{display:flex;justify-content:space-around;padding:8px;}
+button{border:none;padding:5px 10px;border-radius:6px;cursor:pointer;}
+.share{background:#6cbba4;color:#fff;}
+.del{background:#ccc;}
+</style>
+</head>
+<body>
+<h1>내 낙서 갤러리</h1>
+<div class="grid" id="gallery"></div>
+<p style="margin-top:20px;">
+  <a href="../gallery/shared_gallery.html" target="_blank">🌍 공유 갤러리 보기</a>
+</p>
+
+<script>
+const SUPABASE_URL="https://omchtafaqgkdwcrwscrp.supabase.co";
+const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g";
+const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const grid=document.getElementById("gallery");
+
+async function loadGallery(){
+  const {data,error}=await supabase.from("doodle_records").select("*").order("id",{ascending:false});
+  if(error)return console.error(error);
+  grid.innerHTML=data.map(d=>`
+    <div class="card">
+      <img src="${d.image_url}" alt="doodle">
+      <div class="actions">
+        <button class="share" onclick="toggleShare(${d.id},${!d.is_shared})">
+          ${d.is_shared?"공유중":"공유"}
+        </button>
+        <button class="del" onclick="deleteDoodle(${d.id})">삭제</button>
+      </div>
+    </div>`).join("");
+}
+loadGallery();
+
+async function toggleShare(id,state){
+  await supabase.from("doodle_records").update({is_shared:state}).eq("id",id);
+  loadGallery();
+}
+async function deleteDoodle(id){
+  if(!confirm("삭제하시겠습니까?"))return;
+  await supabase.from("doodle_records").delete().eq("id",id);
+  loadGallery();
+}
+</script>
+</body>
+</html>
