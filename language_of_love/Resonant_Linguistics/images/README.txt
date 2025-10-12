@@ -1,1 +1,0 @@
-이 폴더에 cover.png 를 넣으면 index.xhtml 표지에 표시됩니다.
