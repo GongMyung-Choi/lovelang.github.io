@@ -1,102 +1,42 @@
-<!DOCTYPE html><html lang="ko"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>울림의 언어</title>
-<style>
-  :root{
-    /* 색/크기 한 번에 조정 */
-    --accent:#af2465; --muted:#666; --line:#ececf1;
-    --tile-bg:#ffffff; --tile-hover:#f9f7fb;
-    --maxw:1100px; --radius:14px;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.7;color:#111;background:#fff}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:24px}
-  h1{margin:0 0 6px;font-size:2rem}
-  .sub{color:var(--muted);margin:0 0 16px}
-  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-  @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:520px){.grid{grid-template-columns:1fr}}
-  .tile{
-    display:block;text-decoration:none;color:inherit;background:var(--tile-bg);
-    border:1px solid var(--line);border-radius:var(--radius);padding:16px;min-height:120px;
-    transition:.15s transform,.15s background;
-  }
-  .tile:hover,.tile:focus{background:var(--tile-hover);transform:translateY(-2px);outline:none}
-  .tile h2{margin:0 0 8px;font-size:1.15rem;color:var(--accent)}
-  .tile p{margin:0;color:#444}
-  .topbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
-  .crumb{color:var(--muted);text-decoration:none;border:1px solid var(--line);padding:.35rem .65rem;border-radius:999px}
-  .crumb:hover{background:#fafafa}
-  .callout{border:1px dashed var(--line);border-radius:12px;padding:10px 12px;color:#444;background:#fff;margin:10px 0 18px}
-</style>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>울림의 언어 | 루웨인 트리니티</title>
+<link rel="stylesheet" href="../assets/css/reverb.css">
 </head>
 <body>
-<div class="wrap">
-
-  <div class="topbar">
-    <a class="crumb" href="/index.html">← 메인으로</a>
-    <a class="crumb" href="/language_of_love/index.html">사랑의 언어</a>
-    <span class="crumb" aria-current="page">울림의 언어</span>
-  </div>
-
+<header>
   <h1>울림의 언어</h1>
-  <p class="sub">목소리·문장·태도의 조율. 아래에서 바로 선택해 들어가세요.</p>
+  <nav>
+    <a href="../language_of_love/index.html">사랑의 언어</a>
+    <a href="../haneul/index.html">한얼 프로젝트</a>
+    <a href="../admin/breathing_room/index.html">숨틔움방</a>
+  </nav>
+</header>
 
-  <div class="callout">
-    🔧 링크는 임시 경로야. 배포 폴더 구조에 맞춰 <b>href</b>만 바꿔 끼우면 바로 연결돼.
-  </div>
-
-  <section class="grid">
-
-    <!-- 1. 울림의 언어는 (소개/가이드) -->
-    <a class="tile" href="./About/index.html">
-      <h2>울림의 언어는</h2>
-      <p>개념·철학·예시. 처음이라면 여기부터.</p>
-    </a>
-
-    <!-- 2. 음성안내 -->
-    <a class="tile" href="./Voice_Guide/index.html">
-      <h2>음성안내</h2>
-      <p>호흡·속도·톤 가이드. 짧은 음성 튜토리얼.</p>
-    </a>
-
-    <!-- 3. 언어선택 -->
-    <a class="tile" href="./Language_Select/index.html">
-      <h2>언어선택</h2>
-      <p>한국어/영어/혼합 등 인터페이스 언어 설정.</p>
-    </a>
-
-    <!-- 4. 기본설정 -->
-    <a class="tile" href="./Settings/index.html">
-      <h2>기본설정</h2>
-      <p>폰트/크기/대비/알림. 나에게 맞게 튜닝.</p>
-    </a>
-
-    <!-- 5. 울림체조 -->
-    <a class="tile" href="./Resonance_Moves/index.html">
-      <h2>울림체조</h2>
-      <p>짧은 루틴으로 말근육 예열. 1~3분 프로그램.</p>
-    </a>
-
-    <!-- 6. 감응남기기 -->
-    <a class="tile" href="./Leave_Resonance/index.html">
-      <h2>감응남기기</h2>
-      <p>오늘의 울림 기록. 텍스트/음성 메모.</p>
-    </a>
-
-    <!-- 7. 놀이터 -->
-    <a class="tile" href="./Playground/index.html">
-      <h2>놀이터</h2>
-      <p>실험형 기능·샘플. 가볍게 테스트.</p>
-    </a>
-
-    <!-- 8. AI 협업 -->
-    <a class="tile" href="./AI_Collab/index.html">
-      <h2>AI 협업</h2>
-      <p>상황별 프롬프트·역할극. 1:1 호흡 맞추기.</p>
-    </a>
-
+<main>
+  <section class="intro">
+    <h2>울림의 흐름</h2>
+    <p>이곳은 감응의 진동, 언어의 순환, 그리고 공명의 실험실입니다.</p>
   </section>
 
-</div>
-</body></html>
+  <section class="cards">
+    <div class="card sky">
+      <h3>울림 체조</h3>
+      <p>감각과 신체를 깨우는 루틴.</p>
+    </div>
+    <div class="card aqua">
+      <h3>감응 남기기</h3>
+      <p>당신의 울림을 기록하고 나누세요.</p>
+    </div>
+    <div class="card mint">
+      <h3>감응 실험</h3>
+      <p>언어, 리듬, 관계의 새로운 구조.</p>
+    </div>
+  </section>
+</main>
+
+<footer>© 2025 Luwain Trinity</footer>
+</body>
+</html>
