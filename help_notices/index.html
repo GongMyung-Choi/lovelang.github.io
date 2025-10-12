@@ -1,96 +1,83 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>도움말 및 공지</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root{
-      --accent:#af2465;
-      --teal:#2a9d8f;
-      --ink:#222;
-      --muted:#6c5b7b;
-      --bg:#f9fafa;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--ink)}
-    header{padding:1.25rem 1rem;border-bottom:2px solid var(--muted);background:#fff}
-    h1{margin:0;color:var(--accent);font-size:1.8rem}
-    main{max-width:960px;margin:0 auto;padding:1.25rem}
-    .search{display:flex;gap:.5rem;margin:1rem 0}
-    .search input{flex:1;padding:.7rem;border:1px solid #ddd;border-radius:.6rem}
-    .search button{padding:.7rem 1rem;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:.6rem;cursor:pointer}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-    section{background:#fff;border:1px solid #eee;border-radius:12px;padding:1rem}
-    h2{margin:.2rem 0 1rem 0;font-size:1.1rem;color:var(--muted)}
-    ul{margin:.2rem 0;padding-left:1rem}
-    a{color:var(--teal);text-decoration:none}
-    a:hover{text-decoration:underline}
-    details{border:1px solid #eee;border-radius:10px;padding:.6rem;margin:.5rem 0;background:#fff}
-    summary{cursor:pointer;color:#444;font-weight:600}
-    @media (max-width:800px){.grid{grid-template-columns:1fr}}
-  </style>
-  <script>
-    // 자동 정렬 및 최신순 갱신 스크립트
-    document.addEventListener('DOMContentLoaded',()=>{
-      const list=document.querySelector('#notice-list');
-      const items=[...list.querySelectorAll('li')];
-      items.sort((a,b)=>{
-        const da=new Date(a.querySelector('small').textContent.trim());
-        const db=new Date(b.querySelector('small').textContent.trim());
-        return db-da; // 최신순 정렬
-      });
-      list.innerHTML='';
-      items.forEach(li=>list.appendChild(li));
-    });
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>도움말 및 공지 | 루웨인 소식</title>
+<style>
+:root{
+  --accent:#af2465;--teal:#2a9d8f;--ink:#222;--muted:#6c5b7b;--bg:#f9fafa;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)}
+main{max-width:960px;margin:0 auto;padding:1.25rem}
+.search{display:flex;gap:.5rem;margin:1rem 0}
+.search input{flex:1;padding:.7rem;border:1px solid #ddd;border-radius:.6rem}
+.search button{padding:.7rem 1rem;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:.6rem;cursor:pointer}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+section{background:#fff;border:1px solid #eee;border-radius:12px;padding:1rem}
+h2{margin:.2rem 0 1rem 0;font-size:1.1rem;color:var(--muted)}
+ul{margin:.2rem 0;padding-left:1rem}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+details{border:1px solid #eee;border-radius:10px;padding:.6rem;margin:.5rem 0;background:#fff}
+summary{cursor:pointer;color:#444;font-weight:600}
+@media (max-width:800px){.grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <header><h1>도움말 및 공지</h1></header>
-  <main>
-    <div class="search">
-      <input type="search" placeholder="키워드로 도움말/공지 검색" />
-      <button>검색</button>
-    </div>
 
-    <div class="grid">
-      <section>
-        <h2>📢 최신 공지</h2>
-        <ul id="notice-list">
-          <li><a href="docs/루웨인_트리니티.docx">《루웨인 트리니티》 정식판 공개</a> <small>2025-10-06</small></li>
-          <li><a href="docs/루웨인_트리니티_250709_155134.txt">트리니티 UX·브랜드 가이드</a> <small>2025-10-06</small></li>
-          <li><a href="docs/루웨인_빌리지.docx">《루웨인 빌리지 — 가능태의 유토피아》 발간</a> <small>2025-10-06</small></li>
-          <li><a href="docs/운영규칙_v2.0.docx">루웨인 운영 규칙 v2.0 확정</a> <small>2025-10-06</small></li>
-          <li><a href="docs/트리쿼트라.jfif">트리니티 상징 이미지 (Triquetra)</a> <small>2025-10-06</small></li>
-        </ul>
-      </section>
+<!-- ✅ 헤더 -->
+<div id="luwein-header"></div>
+<script>
+(async()=>{
+  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
 
-      <section>
-        <h2>🗂️ 카테고리</h2>
-        <ul>
-          <li><a href="#">계정/로그인</a></li>
-          <li><a href="#">콘텐츠 업로드</a></li>
-          <li><a href="#">권한/접근</a></li>
-          <li><a href="#">결제/후원</a></li>
-        </ul>
-      </section>
+<main>
+  <div class="search">
+    <input type="search" placeholder="키워드로 도움말/공지 검색">
+    <button>검색</button>
+  </div>
 
-      <section>
-        <h2>❓ 빠른 도움말(FAQ)</h2>
-        <details><summary>비밀번호를 잊어버렸어요</summary><div>설명 자리(추후 내용 교체)</div></details>
-        <details><summary>업로드가 실패합니다</summary><div>설명 자리(추후 내용 교체)</div></details>
-        <details><summary>권한 요청은 어떻게 하나요?</summary><div>설명 자리(추후 내용 교체)</div></details>
-      </section>
+  <div class="grid">
+    <section>
+      <h2>📢 최신 공지</h2>
+      <ul>
+        <li><a href="docs/루웨인_트리니티.docx">《루웨인 트리니티》 정식판 공개</a></li>
+        <li><a href="docs/루웨인_빌리지.docx">《루웨인 빌리지》 발간</a></li>
+        <li><a href="docs/운영규칙_v2.0.docx">운영 규칙 v2.0 확정</a></li>
+      </ul>
+    </section>
 
-      <section>
-        <h2>📎 참조 링크</h2>
-        <ul>
-          <li><a href="../customer_support/">고객센터</a></li>
-          <li><a href="#">서비스 상태 페이지</a></li>
-          <li><a href="#">정책/약관 모음</a></li>
-        </ul>
-      </section>
-    </div>
-  </main>
+    <section>
+      <h2>❓ FAQ</h2>
+      <details><summary>비밀번호를 잊어버렸어요</summary><div>설명 자리(추후 교체)</div></details>
+      <details><summary>업로드가 실패합니다</summary><div>설명 자리(추후 교체)</div></details>
+      <details><summary>권한 요청은 어떻게 하나요?</summary><div>설명 자리(추후 교체)</div></details>
+    </section>
+  </div>
+</main>
+
+<!-- ✅ 푸터 -->
+<div id="luwein-footer"></div>
+<script>
+(async()=>{
+  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
 </body>
 </html>
