@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🪞 아바타 선택 | 루웨인</title>
+<style>
+:root{--accent:#af2465;}
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#fafafa;color:#333;text-align:center;}
+header{background:var(--accent);color:#fff;padding:18px;font-size:1.4rem;font-weight:700;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:900px;margin:40px auto;padding:0 20px;}
+.avatar{background:#fff;border:2px solid #eee;border-radius:14px;padding:16px;transition:.2s;cursor:pointer;}
+.avatar:hover{border-color:var(--accent);transform:translateY(-4px);}
+.avatar img{width:100%;border-radius:10px;}
+footer{padding:20px;color:#666;font-size:.9rem;}
+button{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 18px;cursor:pointer;margin-top:20px;}
+</style>
+</head>
+<body>
+<header>🪞 나의 아바타 선택</header>
+
+<main>
+  <p>역할을 선택하면 루웨인이 당신의 모드에 맞게 환경을 조정합니다.</p>
+  <div class="grid">
+    <div class="avatar" data-role="helper">
+      <img src="/avatar/images/helper.png" alt="도우미">
+      <h3>💌 도우미</h3>
+      <p>따뜻한 말과 위로의 언어를 전하는 존재</p>
+    </div>
+    <div class="avatar" data-role="creator">
+      <img src="/avatar/images/creator.png" alt="창작자">
+      <h3>🎨 창작자</h3>
+      <p>언어·이미지·소리로 새로운 세계를 짓는 존재</p>
+    </div>
+    <div class="avatar" data-role="research">
+      <img src="/avatar/images/researcher.png" alt="연구자">
+      <h3>🔬 연구자</h3>
+      <p>감응과 울림의 구조를 탐구하는 존재</p>
+    </div>
+  </div>
+
+  <button id="start">선택 완료</button>
+</main>
+
+<footer>루웨인 퍼스나 시스템 © 2025</footer>
+
+<script>
+let selected=null;
+document.querySelectorAll('.avatar').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.querySelectorAll('.avatar').forEach(x=>x.style.borderColor='#eee');
+    a.style.borderColor='#af2465';
+    selected=a.dataset.role;
+  });
+});
+document.getElementById('start').addEventListener('click',()=>{
+  if(!selected){alert('아바타를 선택해주세요');return;}
+  localStorage.setItem('persona_role',selected);
+  alert('✅ '+selected+' 모드로 설정되었습니다.');
+  if(selected==='helper') location.href='/persona/helper_vault.html';
+  if(selected==='creator') location.href='/persona/creator_vault.html';
+  if(selected==='research') location.href='/persona/research_vault.html';
+});
+</script>
+</body>
+</html>
