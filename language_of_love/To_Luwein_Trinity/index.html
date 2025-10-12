@@ -1,63 +1,127 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>트리니티에게</title>
-<style id="themeVars">:root{--header-color:#af2465;--menu-bg-color:#6c5b7b;--menu-text-color:#ffffff;--menu-hover-text:#2a9d8f;--page-padding:24px}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
-header{background:#fff;color:#af2465;font-size:40px;font-weight:800;text-align:center;padding:18px 12px;position:sticky;top:0;border-bottom:1px solid #ddd}
-nav ul{display:flex;justify-content:center;flex-wrap:wrap;gap:.4rem .6rem;background:#6c5b7b;margin:0;padding:.3rem .6rem;list-style:none}
-nav ul li>a{color:#fff;text-decoration:none;padding:.4rem .5rem;display:block}
-main{padding:var(--page-padding)} .box{background:#fff;border:1px solid #e9e9ee;border-radius:14px;padding:16px;max-width:900px}
-input,textarea,button{font:inherit}button{background:#2a9d8f;color:#fff;border:none;border-radius:10px;padding:10px 14px}
-.list{display:grid;gap:10px}.item{background:#fff;border:1px solid #e9e9ee;border-radius:12px;padding:12px}
-.meta{font-size:.85rem;color:#666;margin-bottom:6px}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>트리니티에게 | To Luwein Trinity</title>
+<style>
+:root{
+  --header-color:#af2465;
+  --menu-bg-color:#6c5b7b;
+  --menu-text-color:#ffffff;
+  --menu-hover-text:#2a9d8f;
+  --page-padding:24px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
+header{background:#fff;color:#af2465;font-size:40px;font-weight:800;text-align:center;padding:18px 12px;border-bottom:1px solid #ddd}
+main{padding:var(--page-padding)}
+.box{background:#fff;border:1px solid #e9e9ee;border-radius:14px;padding:16px;max-width:900px;margin:auto}
+input,textarea,button{font:inherit}
+input,textarea{width:100%;padding:10px;border:1px solid #e9e9ee;border-radius:10px}
+button{background:#2a9d8f;color:#fff;border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
+.list{display:grid;gap:10px;margin-top:16px}
+.item{background:#fff;border:1px solid #e9e9ee;border-radius:12px;padding:12px}
+.meta{font-size:.85rem;color:#666;margin-bottom:6px;text-align:left}
 </style>
 </head>
+
 <body>
 <header>루웨인 트리니티</header>
-<nav><ul><li><a href="/language_of_love/index.html">사랑의 언어</a></li><li><a href="/index.html">루웨인 트리니티</a></li></ul></nav>
-
 <main>
-  <h1>트리니티에게</h1>
+  <h1 id="hello">트리니티에게</h1>
+
   <div class="box">
     <label>제목</label>
-    <input id="title" placeholder="예: 오늘의 감사" style="width:100%;padding:10px;border:1px solid #e9e9ee;border-radius:10px" />
+    <input id="title" placeholder="예: 오늘의 감사" />
     <label style="margin-top:8px;display:block">내용</label>
-    <textarea id="body" rows="5" placeholder="편지를 적어보세요." style="width:100%;padding:10px;border:1px solid #e9e9ee;border-radius:10px"></textarea>
-    <div style="margin-top:10px"><button id="save">임시 보관</button></div>
+    <textarea id="body" rows="5" placeholder="편지를 적어보세요."></textarea>
+
+    <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+      <button id="save">보내기</button>
+      <button id="reload">새로고침</button>
+    </div>
   </div>
 
-  <section style="margin-top:16px">
-    <h2>보관함</h2>
+  <section>
+    <h2 style="margin-top:24px;">보관함</h2>
     <div class="list" id="list"></div>
   </section>
 </main>
 
-<script>
-const KEY='trinity_letters';
-const now=()=>new Date().toLocaleString();
-const load=()=>JSON.parse(localStorage.getItem(KEY)||'[]');
-const store=a=>localStorage.setItem(KEY,JSON.stringify(a));
-function render(){
-  const box=document.getElementById('list'); box.innerHTML='';
-  const arr=load(); if(!arr.length){ box.innerHTML='<p style="color:#666">아직 편지가 없습니다.</p>'; return; }
-  arr.forEach((it,i)=>{
-    const div=document.createElement('div'); div.className='item';
-    div.innerHTML=`<div class="meta">${it.at}</div><strong>${it.title||'(제목 없음)'}</strong><div>${(it.body||'').replace(/\n/g,'<br>')}</div>
-    <div style="margin-top:8px;display:flex;gap:8px"><button onclick="del(${i})">삭제</button></div>`;
-    box.appendChild(div);
-  });
-}
-function del(i){const arr=load();arr.splice(i,1);store(arr);render();}
-document.getElementById('save').addEventListener('click',()=>{
-  const title=(document.getElementById('title').value||'').trim();
-  const body=(document.getElementById('body').value||'').trim();
-  if(!title && !body){alert('제목 또는 내용을 입력해주세요.');return;}
-  const arr=load();arr.unshift({title,body,at:now()});store(arr);
-  document.getElementById('title').value='';document.getElementById('body').value='';render();
-});
-render();
+<script type="module">
+  import { supabase } from "/assets/js/supabase.js";
+
+  const user = JSON.parse(localStorage.getItem("ed_user") || '{"name":"익명"}');
+  document.getElementById("hello").textContent = `${user.name}의 편지함`;
+
+  const titleInput = document.getElementById("title");
+  const bodyInput = document.getElementById("body");
+  const listBox = document.getElementById("list");
+
+  // 🔹 편지 불러오기
+  async function loadLetters() {
+    const { data, error } = await supabase
+      .from("trinity_letters")
+      .select("*")
+      .eq("user_name", user.name)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      listBox.innerHTML = `<p style="color:red">⚠️ 불러오기 실패</p>`;
+      return;
+    }
+
+    if (!data.length) {
+      listBox.innerHTML = `<p style="color:#666">아직 편지가 없습니다.</p>`;
+      return;
+    }
+
+    listBox.innerHTML = "";
+    data.forEach((it) => {
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        <div class="meta">${new Date(it.created_at).toLocaleString()}</div>
+        <strong>${it.title || "(제목 없음)"}</strong>
+        <div>${(it.body || "").replace(/\n/g, "<br>")}</div>
+      `;
+      listBox.appendChild(div);
+    });
+  }
+
+  // 🔹 편지 저장
+  async function saveLetter() {
+    const title = titleInput.value.trim();
+    const body = bodyInput.value.trim();
+    if (!title && !body) {
+      alert("제목 또는 내용을 입력해주세요.");
+      return;
+    }
+
+    const { error } = await supabase.from("trinity_letters").insert([
+      {
+        user_name: user.name,
+        title,
+        body,
+      },
+    ]);
+
+    if (error) {
+      alert("저장 실패: " + error.message);
+      return;
+    }
+
+    titleInput.value = "";
+    bodyInput.value = "";
+    await loadLetters();
+  }
+
+  document.getElementById("save").addEventListener("click", saveLetter);
+  document.getElementById("reload").addEventListener("click", loadLetters);
+
+  loadLetters();
 </script>
 </body>
 </html>
