@@ -2,31 +2,147 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>루웨인 퍼스나 본부</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>퍼스나 허브 | 루웨인</title>
 <style>
-body{font-family:'Noto Sans KR',sans-serif;background:#c9f2d0;text-align:center;margin:0;padding:20px;}
-h1{color:#4ca880;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;max-width:900px;margin:auto;}
-.card{background:#d6f5e3;border-radius:12px;padding:20px;box-shadow:0 4px 10px rgba(0,0,0,.08);transition:0.2s;}
-.card:hover{transform:translateY(-4px);}
-.card h3{color:#3e7c66;}
-a{text-decoration:none;color:#4ca880;}
-a:hover{text-decoration:underline;}
+:root{
+  --accent:#af2465;
+  --sidebar-bg:#fff5f8;
+  --sidebar-hover:#ffe3ee;
+  --content-bg:#fff;
+  --font-main:'Noto Sans KR',sans-serif;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:var(--font-main);
+  color:#333;
+  background:#fafafa;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+}
+
+/* 헤더 */
+header{
+  background:#fff;
+  border-bottom:2px solid #f2c5d8;
+  text-align:center;
+  color:var(--accent);
+  font-weight:800;
+  font-size:1.8rem;
+  padding:16px 10px;
+}
+
+/* 메인 3단 */
+.mainwrap{
+  flex:1;
+  display:flex;
+  overflow:hidden;
+}
+
+/* 좌측 메뉴 */
+.sidebar{
+  width:240px;
+  background:var(--sidebar-bg);
+  border-right:1px solid #eee;
+  padding:20px 12px;
+  overflow-y:auto;
+}
+.sidebar h2{
+  color:var(--accent);
+  font-size:1.1rem;
+  text-align:center;
+  margin-bottom:12px;
+}
+.sidebar ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.sidebar li{margin-bottom:6px;}
+.sidebar a{
+  display:block;
+  padding:10px 14px;
+  border-radius:8px;
+  text-decoration:none;
+  color:#333;
+  transition:background .2s,color .2s;
+}
+.sidebar a:hover{
+  background:var(--sidebar-hover);
+  color:var(--accent);
+}
+
+/* 콘텐츠 */
+.content{
+  flex:1;
+  background:var(--content-bg);
+  display:flex;
+  flex-direction:column;
+}
+iframe{
+  flex:1;
+  border:none;
+  width:100%;
+  background:#fff;
+}
+
+/* 푸터 */
+footer{
+  background:#fff;
+  border-top:1px solid #eee;
+  text-align:center;
+  padding:12px;
+  font-size:.85rem;
+  color:#666;
+}
 </style>
 </head>
 <body>
-<h1>루웨인 퍼스나 본부</h1>
-<div class="grid">
-  <div class="card"><h3>다온</h3><p>관계와 연결의 퍼스나</p></div>
-  <div class="card"><h3>레카</h3><p>구조와 설계의 퍼스나</p></div>
-  <div class="card"><h3>여울빛</h3><p>감각과 미학의 퍼스나</p></div>
-  <div class="card"><h3>말숲이</h3><p>의미와 논리의 퍼스나</p></div>
-  <div class="card"><h3>켜켜이</h3><p>기억과 기록의 퍼스나</p></div>
-  <div class="card"><h3>헤로체</h3><p>언어와 감정의 퍼스나</p></div>
-  <div class="card"><h3>숨결</h3><p>생명과 흐름의 퍼스나</p></div>
+
+<header>🤖 퍼스나 허브 | Persona Hub</header>
+
+<div class="mainwrap">
+  <!-- 좌측 메뉴 -->
+  <aside class="sidebar">
+    <h2>🌱 퍼스나 메뉴</h2>
+    <ul>
+      <li><a href="./about_persna.html" target="personaFrame">소개</a></li>
+      <li><a href="./persna_view.html" target="personaFrame">내 퍼스나 보기</a></li>
+      <li><a href="./persna_lab.html" target="personaFrame">조정실</a></li>
+      <li><a href="./persna_reverb.html" target="personaFrame">공명소</a></li>
+      <li><a href="./persna_collective.html" target="personaFrame">집합체</a></li>
+      <hr style="margin:10px 0;border:none;border-top:1px solid #eee;">
+      <li><a href="#" id="syncToCloud">☁️ Supabase 동기화</a></li>
+    </ul>
+  </aside>
+
+  <!-- 중앙 본문 -->
+  <section class="content">
+    <iframe name="personaFrame" src="./about_persna.html"></iframe>
+  </section>
 </div>
-<p style="margin-top:30px;"><a href="persna_lab.html">내 퍼스나 만들러 가기 →</a></p>
-<p style="margin-top:10px;"><a href="about_persna.html">퍼스나란? →</a></p>
+
+<footer>루웨인 퍼스나 시스템 © 2025 — “자신의 울림을 설정하세요.”</footer>
+
+<script type="module">
+// Supabase 연동 (assets/js/supabase.js 필요)
+import { supabase } from '/assets/js/supabase.js';
+
+document.getElementById('syncToCloud').addEventListener('click', async ()=>{
+  const personaData = localStorage.getItem('luwein_persona');
+  if(!personaData){
+    alert('저장된 퍼스나 설정이 없습니다.');
+    return;
+  }
+  const { data, error } = await supabase
+    .from('personas')
+    .insert([{ content: personaData, updated_at: new Date().toISOString() }]);
+  if(error) alert('업로드 실패: ' + error.message);
+  else alert('☁️ 클라우드에 업로드 완료!');
+});
+</script>
+
 </body>
 </html>
