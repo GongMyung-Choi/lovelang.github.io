@@ -1,89 +1,110 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>고객센터</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root{
-      --accent:#af2465;
-      --teal:#2a9d8f;
-      --ink:#222;
-      --muted:#6c5b7b;
-      --bg:#f9fafa;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--ink)}
-    header{padding:1.25rem 1rem;border-bottom:2px solid var(--muted);background:#fff}
-    h1{margin:0;color:var(--accent);font-size:1.8rem}
-    main{max-width:960px;margin:0 auto;padding:1.25rem}
-    .grid{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
-    section{background:#fff;border:1px solid #eee;border-radius:12px;padding:1rem}
-    h2{margin:.2rem 0 1rem;color:var(--muted);font-size:1.1rem}
-    label{display:block;margin:.5rem 0 .25rem}
-    input, textarea, select{width:100%;padding:.75rem;border:1px solid #ddd;border-radius:.6rem}
-    button{padding:.8rem 1rem;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:.6rem;cursor:pointer}
-    button:hover{background:var(--teal);color:#fff}
-    ul{margin:.3rem 0;padding-left:1rem}
-    a{color:var(--teal);text-decoration:none}
-    a:hover{text-decoration:underline}
-    .meta{font-size:.9rem;color:#666}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>고객센터 | Luwein Support</title>
+<style>
+:root{
+  --accent:#af2465;--teal:#2a9d8f;--muted:#6c5b7b;--bg:#f9fafa;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:var(--bg);}
+main{max-width:960px;margin:0 auto;padding:1.25rem;}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
+section{background:#fff;border:1px solid #eee;border-radius:12px;padding:1rem;}
+h2{margin:.2rem 0 1rem;color:var(--muted);font-size:1.1rem}
+label{display:block;margin:.5rem 0 .25rem}
+input, textarea, select{width:100%;padding:.75rem;border:1px solid #ddd;border-radius:.6rem}
+button{padding:.8rem 1rem;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:.6rem;cursor:pointer}
+button:hover{background:var(--teal);color:#fff}
+ul{margin:.3rem 0;padding-left:1rem}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+.meta{font-size:.9rem;color:#666}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <header><h1>고객센터</h1></header>
-  <main>
-    <div class="grid">
-      <section>
-        <h2>📝 문의 접수 (폼 틀)</h2>
-        <!-- 백엔드 연결 전까지는 형식만. action/method 추후 연결 -->
-        <form>
-          <label>분류</label>
-          <select>
-            <option>일반 문의</option>
-            <option>버그/오류 신고</option>
-            <option>계정/권한</option>
-            <option>결제/후원</option>
-          </select>
 
-          <label>제목</label>
-          <input type="text" placeholder="제목을 입력하세요" />
+<!-- ✅ 헤더 -->
+<div id="luwein-header"></div>
+<script>
+(async()=>{
+  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
 
-          <label>내용</label>
-          <textarea rows="6" placeholder="문의 내용을 자세히 적어주세요"></textarea>
+<main>
+  <div class="grid">
+    <section>
+      <h2>📝 문의 접수 (폼 틀)</h2>
+      <form>
+        <label>분류</label>
+        <select>
+          <option>일반 문의</option>
+          <option>버그/오류 신고</option>
+          <option>계정/권한</option>
+          <option>결제/후원</option>
+        </select>
 
-          <label>답변 받을 이메일</label>
-          <input type="email" placeholder="you@example.com" />
+        <label>제목</label>
+        <input type="text" placeholder="제목을 입력하세요">
 
-          <div style="margin-top:.8rem;display:flex;gap:.6rem;align-items:center">
-            <button type="submit">접수하기(형식)</button>
-            <span class="meta">※ 현재는 동작 테스트용 틀입니다.</span>
-          </div>
-        </form>
-      </section>
+        <label>내용</label>
+        <textarea rows="6" placeholder="문의 내용을 자세히 적어주세요"></textarea>
 
-      <section>
-        <h2>📌 바로가기</h2>
-        <ul>
-          <li><a href="../help_notices/">도움말 및 공지</a></li>
-          <li><a href="#">서비스 상태 페이지</a></li>
-          <li><a href="#">정책/약관</a></li>
-        </ul>
+        <label>답변 받을 이메일</label>
+        <input type="email" placeholder="you@example.com">
 
-        <h2>☎ 연락처 (표기 자리)</h2>
-        <ul>
-          <li>이메일: support@lovelang.github.io</li>
-          <li>운영 시간: 평일 10:00–18:00 (KST)</li>
-        </ul>
+        <div style="margin-top:.8rem;display:flex;gap:.6rem;align-items:center">
+          <button type="submit">접수하기(형식)</button>
+          <span class="meta">※ 현재는 동작 테스트용 틀입니다.</span>
+        </div>
+      </form>
+    </section>
 
-        <h2>🗂 최근 공지</h2>
-        <ul>
-          <li><a href="../help_notices/">정기 점검 안내 (8/10)</a></li>
-          <li><a href="../help_notices/">신규 기능 베타</a></li>
-        </ul>
-      </section>
-    </div>
-  </main>
+    <section>
+      <h2>📌 바로가기</h2>
+      <ul>
+        <li><a href="../help_notices/">도움말 및 공지</a></li>
+        <li><a href="#">서비스 상태 페이지</a></li>
+        <li><a href="#">정책/약관</a></li>
+      </ul>
+
+      <h2>☎ 연락처</h2>
+      <ul>
+        <li>이메일: besoullight@gmail.com</li>
+        <li>운영 시간: 평일 10:00–18:00 (KST)</li>
+      </ul>
+
+      <h2>🗂 최근 공지</h2>
+      <ul>
+        <li><a href="../help_notices/">정기 점검 안내 (8/10)</a></li>
+        <li><a href="../help_notices/">신규 기능 베타</a></li>
+      </ul>
+    </section>
+  </div>
+</main>
+
+<!-- ✅ 푸터 -->
+<div id="luwein-footer"></div>
+<script>
+(async()=>{
+  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
 </body>
 </html>
