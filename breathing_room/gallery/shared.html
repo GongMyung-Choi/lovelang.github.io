@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🌍 공유 갤러리 | Shared Gallery</title>
+<style>
+body{
+  margin:0;font-family:'Noto Sans KR',sans-serif;background:#fafafa;color:#333;text-align:center;
+}
+header{
+  background:#6c5b7b;color:#fff;padding:18px;font-size:1.6rem;font-weight:700;
+}
+main{padding:20px;}
+.gallery{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
+  max-width:1000px;
+  margin-inline:auto;
+}
+.item{
+  background:#fff;border:1px solid #ddd;border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  padding:10px;
+  transition:transform .15s;
+}
+.item:hover{transform:translateY(-3px);}
+.item img{width:100%;border-radius:10px;}
+.caption{margin-top:6px;font-size:.9rem;color:#555;}
+.meta{font-size:.8rem;color:#888;}
+button.share{
+  margin-top:14px;padding:8px 14px;border:none;border-radius:8px;
+  background:#2a9d8f;color:#fff;cursor:pointer;
+}
+button.share:hover{background:#238776;}
+</style>
+</head>
+
+<body>
+<header>🌍 공유 갤러리 | Shared Gallery</header>
+
+<main>
+  <h2>모두의 낙서와 감응이 모이는 공간</h2>
+  <p>자신의 낙서를 세상과 나누고 싶다면 아래 버튼으로 공유하세요.</p>
+
+  <button id="share" class="share">🪶 내 낙서 공유하기</button>
+
+  <section class="gallery" id="gallery"></section>
+</main>
+
+<script type="module">
+import { supabase } from "/assets/js/supabase.js";
+
+const user = JSON.parse(localStorage.getItem("ed_user") || '{"name":"익명"}');
+const box = document.getElementById("gallery");
+
+// 🔹 공유 목록 불러오기
+async function loadShared() {
+  const { data, error } = await supabase
+    .from("gallery_shared")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error || !data.length) {
+    box.innerHTML = `<p style="grid-column:1/-1;color:#666">아직 공유된 작품이 없습니다.</p>`;
+    return;
+  }
+
+  box.innerHTML = "";
+  data.forEach((it) => {
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `
+      <img src="${it.file_url}" alt="shared">
+      <div class="caption">${it.caption || "(제목 없음)"}</div>
+      <div class="meta">${it.user_name} · ${new Date(it.created_at).toLocaleDateString()}</div>
+    `;
+    box.appendChild(div);
+  });
+}
+
+// 🔹 내 낙서 중 하나를 공유
+async function shareLatest() {
+  const { data: personal, error: personalErr } = await supabase
+    .from("gallery_personal")
+    .select("*")
+    .eq("user_name", user.name)
+    .order("created_at", { ascending: false })
+    .limit(1);
+
+  if (personalErr || !personal.length) {
+    alert("공유할 낙서가 없습니다. 먼저 낙서장에서 그림을 저장해주세요.");
+    return;
+  }
+
+  const latest = personal[0];
+  const caption = prompt("공유될 작품의 간단한 설명을 입력해주세요:", latest.title || "");
+
+  const { error: insertErr } = await supabase.from("gallery_shared").insert([
+    {
+      user_name: user.name,
+      caption: caption || "공유된 낙서",
+      file_url: latest.file_url,
+    },
+  ]);
+
+  if (insertErr) {
+    alert("공유 실패: " + insertErr.message);
+    return;
+  }
+
+  alert("✅ 성공적으로 공유되었습니다!");
+  loadShared();
+}
+
+document.getElementById("share").addEventListener("click", shareLatest);
+
+loadShared();
+</script>
+</body>
+</html>
