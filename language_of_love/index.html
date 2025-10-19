@@ -1,42 +1,126 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>사랑의 언어 | 루웨인 트리니티</title>
-<link rel="stylesheet" href="../assets/css/love.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>💖 사랑의 언어 | Love Language</title>
+<style>
+:root{
+  --header-color:#af2465;
+  --sidebar-bg:#fff4f8;
+  --sidebar-hover:#ffe0ec;
+  --accent:#af2465;
+  --font-main:'Noto Sans KR',sans-serif;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:var(--font-main);
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  background:#fdfafa;
+  color:#333;
+}
+
+/* 헤더 */
+header{
+  background:#fff;
+  color:var(--header-color);
+  text-align:center;
+  padding:18px 10px;
+  font-weight:800;
+  font-size:1.8rem;
+  border-bottom:2px solid #f2c5d8;
+}
+
+/* 전체 레이아웃 */
+.mainwrap{
+  flex:1;
+  display:flex;
+  overflow:hidden;
+}
+
+/* 좌측 메뉴 */
+.sidebar{
+  width:240px;
+  background:var(--sidebar-bg);
+  border-right:1px solid #eee;
+  padding:20px 10px;
+  overflow-y:auto;
+}
+.sidebar h2{
+  text-align:center;
+  color:var(--accent);
+  font-size:1.1rem;
+  margin-bottom:12px;
+}
+.sidebar ul{list-style:none;padding:0;margin:0;}
+.sidebar li{margin-bottom:6px;}
+.sidebar a{
+  display:block;
+  padding:10px 14px;
+  border-radius:8px;
+  color:#333;
+  text-decoration:none;
+  transition:background .2s;
+}
+.sidebar a:hover{
+  background:var(--sidebar-hover);
+  color:var(--accent);
+}
+
+/* 중앙 내용 */
+.content{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+iframe{
+  flex:1;
+  border:none;
+  width:100%;
+  background:#fff;
+}
+
+/* 푸터 */
+footer{
+  background:#fff;
+  text-align:center;
+  padding:12px;
+  font-size:.85rem;
+  border-top:1px solid #eee;
+  color:#666;
+}
+</style>
 </head>
 <body>
-<header>
-  <h1>사랑의 언어</h1>
-  <nav>
-    <a href="../language_of_reverberation/index.html">울림의 언어</a>
-    <a href="../haneul/index.html">한얼 프로젝트</a>
-    <a href="../admin/breathing_room/index.html">숨틔움방</a>
-  </nav>
-</header>
 
-<main>
-  <section class="intro">
-    <h2>사랑을 말하는 방법</h2>
-    <p>이곳은 관계의 온도, 언어의 감각, 그리고 마음의 표현을 탐구하는 공간입니다.</p>
+<!-- 헤더 -->
+<header>💖 사랑의 언어 | Love Language</header>
+
+<div class="mainwrap">
+  <!-- 좌측 메뉴 -->
+  <aside class="sidebar">
+    <h2>📚 사랑의 언어</h2>
+    <ul>
+      <li><a href="./Emotional_Diary/index.html" target="loveFrame">감성일기</a></li>
+      <li><a href="./The_Warmth_of_Words/index.html" target="loveFrame">말의 온도</a></li>
+      <li><a href="./Resonant_Linguistics/index.html" target="loveFrame">감응 언어학</a></li>
+      <li><a href="./Shall_We_Try_Love/index.html" target="loveFrame">사랑, 연습해볼까?</a></li>
+      <li><a href="./To_Luwein_Trinity/index.html" target="loveFrame">To 루웨인 트리니티</a></li>
+    </ul>
+  </aside>
+
+  <!-- 중앙 콘텐츠 -->
+  <section class="content">
+    <!-- 기본 표시: 감성일기 -->
+    <iframe name="loveFrame" src="./Emotional_Diary/index.html"></iframe>
   </section>
+</div>
 
-  <section class="cards">
-    <div class="card pink">
-      <h3>감성 일기</h3>
-      <p>오늘의 마음을 기록하세요.</p>
-    </div>
-    <div class="card rose">
-      <h3>울림 카드</h3>
-      <p>감응을 나누는 따뜻한 문장들.</p>
-    </div>
-    <div class="card coral">
-      <h3>투 루웨인 트리니티</h3>
-      <p>루웨인에게 보내는 편지, 감정의 공유.</p>
-    </div>
-  </section>
-</main>
+<!-- 푸터 -->
+<footer>루웨인 · 사랑의 언어 © 2025</footer>
 
-<footer>© 2025 Luwain Trinity</footer>
 </body>
 </html>
