@@ -1,74 +1,40 @@
 body {
+  font-family: "Pretendard", sans-serif;
+  background: #fffdfc;
+  color: #222;
   margin: 0;
   padding: 0;
-  font-family: 'Noto Sans KR', sans-serif;
-  background-color: #fefcfb;
-  color: #2a9d8f;
+  text-align: center;
 }
 
-.container {
-  max-width: 700px;
-  margin: 3rem auto;
-  padding: 2rem;
-  background: #ffffff;
-  box-shadow: 0 0 12px rgba(0,0,0,0.05);
-  border-radius: 12px;
+main {
+  padding: 40px 20px;
 }
 
 h1 {
-  font-size: 2rem;
-  color: #af2465;
-  margin-bottom: 0.5rem;
-}
-
-p {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
+  color: #e47b7b;
+  margin-bottom: 1em;
 }
 
 textarea {
-  width: 100%;
-  padding: 1rem;
-  font-size: 1rem;
-  border: 2px solid #af2465;
+  width: 80%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  resize: vertical;
-  margin-bottom: 1rem;
 }
 
 button {
-  background-color: #af2465;
-  color: white;
-  font-size: 1rem;
-  padding: 0.7rem 1.5rem;
+  margin-top: 10px;
+  padding: 10px 20px;
   border: none;
+  background: #e47b7b;
+  color: #fff;
+  font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #942051;
-}
-
-.entry-list {
-  margin-top: 2rem;
-}
-
-.entry-list h2 {
-  color: #6c5b7b;
-}
-
-.entry-list ul {
-  list-style-type: disc;
-  padding-left: 1.2rem;
-}
-
-.entry-list li {
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
-}
-
-.hidden {
-  display: none;
+  background: #d96a6a;
 }
