@@ -1,118 +1,30 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>감성일기 | 내 일기장</title>
-<style>
-:root{
-  --header-color:#af2465; --menu-bg-color:#6c5b7b; --menu-text-color:#ffffff;
-  --menu-hover-text:#2a9d8f; --page-padding:24px;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
-header{background:#fff;color:#af2465;font-size:40px;font-weight:800;text-align:center;padding:18px 12px;border-bottom:1px solid #ddd}
-main{padding:var(--page-padding)}
-.box{background:#fff;border:1px solid #e9e9ee;border-radius:14px;padding:16px;max-width:820px;margin:auto}
-input,textarea,button{font:inherit}
-input,textarea{width:100%;padding:10px;border:1px solid #e9e9ee;border-radius:10px}
-button{background:#2a9d8f;color:#fff;border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
-.list{display:grid;gap:10px}.item{background:#fff;border:1px solid #e9e9ee;border-radius:12px;padding:12px}
-.meta{color:#666;font-size:.85rem;margin-bottom:6px;text-align:left}
-</style>
+  <meta charset="UTF-8" />
+  <title>이어쓰기 | 감성일기</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
 </head>
-
 <body>
-<header>루웨인 트리니티</header>
-<main>
-  <h1 id="hello">내 일기장</h1>
-  <div class="box" style="margin-bottom:14px">
-    <label for="mood">오늘 기분</label>
-    <input id="mood" placeholder="예: 차분함" />
-    <label for="text" style="margin-top:10px;display:block">짧은 메모</label>
-    <textarea id="text" rows="4" placeholder="간단히 적어보세요"></textarea>
-    <div style="margin-top:10px;display:flex;gap:8px">
-      <button id="save">저장</button>
-      <button id="reload">새로고침</button>
-    </div>
-  </div>
+  <div id="luwein-header"></div>
 
-  <section>
-    <h2>지난 기록</h2>
-    <div class="list" id="list"></div>
-  </section>
-</main>
+  <main>
+    <h1>이전 감성일기 이어쓰기</h1>
+    <p>최근 일기 목록을 불러옵니다...</p>
+    <div id="diary-list"></div>
+  </main>
 
-<script type="module">
-  import { supabase } from "/assets/js/supabase.js";
+  <div id="luwein-footer"></div>
 
-  const user = JSON.parse(localStorage.getItem("ed_user") || '{"name":"익명"}');
-  document.getElementById("hello").textContent = `${user.name}의 일기장`;
+  <script>
+    fetch("../../includes/header.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("luwein-header").innerHTML = html);
 
-  const moodInput = document.getElementById("mood");
-  const textInput = document.getElementById("text");
-  const listBox = document.getElementById("list");
-
-  async function loadEntries() {
-    const { data, error } = await supabase
-      .from("emotional_diary")
-      .select("*")
-      .eq("user_name", user.name)
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error(error);
-      listBox.innerHTML = `<p style="color:red">⚠️ 불러오기 실패</p>`;
-      return;
-    }
-
-    if (!data.length) {
-      listBox.innerHTML = `<p style="color:#666">아직 기록이 없습니다.</p>`;
-      return;
-    }
-
-    listBox.innerHTML = "";
-    data.forEach((it) => {
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `
-        <div class="meta">${new Date(it.created_at).toLocaleString()} · ${it.mood || "기분 비공개"}</div>
-        <div>${(it.text || "").replace(/\n/g, "<br>")}</div>
-      `;
-      listBox.appendChild(div);
-    });
-  }
-
-  async function saveEntry() {
-    const mood = moodInput.value.trim();
-    const text = textInput.value.trim();
-    if (!mood && !text) {
-      alert("기분 또는 메모 중 하나는 입력해주세요.");
-      return;
-    }
-
-    const { error } = await supabase.from("emotional_diary").insert([
-      {
-        user_name: user.name,
-        mood,
-        text,
-      },
-    ]);
-
-    if (error) {
-      alert("저장 실패: " + error.message);
-      return;
-    }
-
-    moodInput.value = "";
-    textInput.value = "";
-    await loadEntries();
-  }
-
-  document.getElementById("save").addEventListener("click", saveEntry);
-  document.getElementById("reload").addEventListener("click", loadEntries);
-
-  loadEntries();
-</script>
+    fetch("../../includes/footer.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("luwein-footer").innerHTML = html);
+  </script>
 </body>
 </html>
