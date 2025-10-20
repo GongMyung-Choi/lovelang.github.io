@@ -1,0 +1,16 @@
+# 루웨인 내부 전용
+/private/
+
+# 개인 환경 파일 / 키 / 로그
+.env
+*.log
+*.bak
+*.tmp
+*.key
+*.json
+
+# 백업 및 자동 생성 파일
+/backup/
+/temp/
+/node_modules/
+/.vscode/
