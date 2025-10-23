@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head><meta charset="utf-8"><title>숨틔움방 | 감정 입력</title></head>
-<body style="font-family:sans-serif;text-align:center;">
+<body style="font-family:sans-serif;text-align:center;padding:40px;">
 <h2>🌿 숨틔움방</h2>
 <form onsubmit="event.preventDefault();saveFeeling();">
-  <input id="emotion" placeholder="지금 내 감정"><br>
-  <input id="message" placeholder="하고 싶은 말"><br>
-  <button>저장하기</button>
+  <input id="emotion" placeholder="지금 내 감정은..." required><br>
+  <input id="message" placeholder="하고 싶은 말..." required><br>
+  <button>저장하고 다음으로</button>
 </form>
 <script type="module">
 import { supabase } from '../auth/auth.js';
 const user = JSON.parse(localStorage.getItem('luwein_user'));
-if(!user) location.href='../auth/login.html';
+if (!user) location.href='../auth/login.html';
+
 async function saveFeeling(){
-  const emotion=document.getElementById('emotion').value;
-  const message=document.getElementById('message').value;
-  await supabase.from('feel_logs').insert([{user_id:user.user.id,emotion,message,created_at:new Date().toISOString()}]);
+  const emotion = document.getElementById('emotion').value;
+  const message = document.getElementById('message').value;
+  await supabase.from('feel_logs').insert([
+    { user_id: user.user.id, emotion, message, created_at: new Date().toISOString() }
+  ]);
   location.href='old_1.html';
 }
 </script>
