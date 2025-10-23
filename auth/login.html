@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>로그인 | 루웨인</title></head>
+<body style="text-align:center;font-family:sans-serif;">
+<h2>루웨인 로그인</h2>
+<form onsubmit="event.preventDefault();signIn(email.value,pwd.value)">
+  <input id="email" placeholder="이메일"><br>
+  <input id="pwd" type="password" placeholder="비밀번호"><br>
+  <button>로그인</button>
+</form>
+<script type="module">
+import { signIn } from './auth.js';
+</script>
+</body>
+</html>
