@@ -1,24 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>지난 숨들 | 숨틔움방</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header><h1>지난 숨들</h1></header>
-  <div class="layout">
-    <aside class="sidebar">
-      <a href="index.html">← 메인으로 돌아가기</a>
-    </aside>
-    <main class="content">
-      <h2>기록 보관함</h2>
-      <ul>
-        <li>2025-10-10 — “기억과 감응의 첫날”</li>
-        <li>2025-10-09 — “호흡이 길어지던 밤”</li>
-        <li>2025-10-08 — “다시 쓰는 루웨인의 하루”</li>
-      </ul>
-    </main>
-  </div>
+<head><meta charset="utf-8"><title>지난 숨들</title></head>
+<body style="font-family:sans-serif;padding:20px;">
+<h2>지난 숨들 🌬</h2>
+<ul id="logs"></ul>
+<script type="module">
+import { supabase } from '../auth/auth.js';
+const user = JSON.parse(localStorage.getItem('luwein_user'));
+if(!user) location.href='../auth/login.html';
+const { data } = await supabase.from('feel_logs')
+  .select('*').eq('user_id',user.user.id).order('created_at',{ascending:false});
+document.getElementById('logs').innerHTML =
+  data.map(d=>`<li>${d.created_at.slice(0,10)} — ${d.emotion}: ${d.message}</li>`).join('');
+</script>
 </body>
 </html>
