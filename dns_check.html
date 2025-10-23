@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>루웨인 DNS 연결 점검기</title>
+<style>
+body {
+  font-family: 'Pretendard', sans-serif;
+  text-align: center;
+  padding: 40px;
+  background: #fafafa;
+  color: #333;
+}
+h1 {
+  color: #5c308a;
+  margin-bottom: 0.5em;
+}
+pre {
+  background: #eee;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: left;
+  display: inline-block;
+  max-width: 90%;
+  overflow-x: auto;
+}
+.status {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.ok { color: #2b8a3e; }
+.fail { color: #c92a2a; }
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background: #5c308a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:hover {
+  background: #6e3cb3;
+}
+</style>
+</head>
+<body>
+<h1>🌐 루웨인 DNS 연결 상태 점검</h1>
+<p>이 페이지는 <b>도메인과 GitHub Pages 간의 연결</b>이 정상인지 확인합니다.</p>
+<p>아래 버튼을 누르면 현재 DNS 정보와 GitHub 연결 여부를 즉시 확인합니다.</p>
+
+<button onclick="checkDNS()">🔍 점검 시작</button>
+<div id="result" style="margin-top:30px;"></div>
+
+<script>
+async function checkDNS() {
+  const result = document.getElementById('result');
+  result.innerHTML = '⏳ 확인 중...';
+
+  try {
+    const domain = location.hostname;
+    const res = await fetch(`https://dns.google/resolve?name=${domain}&type=A`);
+    const data = await res.json();
+
+    if (!data.Answer) {
+      result.innerHTML = '<p class="status fail">❌ DNS A레코드가 감지되지 않습니다.</p>';
+      return;
+    }
+
+    const ips = data.Answer.map(a => a.data);
+    const githubIPs = [
+      '185.199.108.153',
+      '185.199.109.153',
+      '185.199.110.153',
+      '185.199.111.153'
+    ];
+    const matched = ips.filter(ip => githubIPs.includes(ip));
+    let html = `<pre>${JSON.stringify(data.Answer, null, 2)}</pre>`;
+
+    if (matched.length > 0) {
+      html =
+        `<p class="status ok">✅ DNS가 GitHub Pages에 정상 연결 (${matched.join(', ')})</p>` + html;
+    } else {
+      html =
+        `<p class="status fail">⚠️ DNS가 GitHub Pages IP와 일치하지 않습니다.</p>` + html;
+    }
+
+    result.innerHTML = html;
+  } catch (e) {
+    result.innerHTML = `<p class="status fail">❌ 확인 중 오류 발생: ${e.message}</p>`;
+  }
+}
+</script>
+</body>
+</html>
