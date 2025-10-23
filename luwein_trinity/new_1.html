@@ -1,49 +1,23 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8" />
-<title>루웨인 트리니티</title>
-<style>
-body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#f9fafa;color:#2a9d8f;}
-header{text-align:center;font-weight:bold;font-size:3rem;color:#af2465;margin:1rem 0;}
-nav{background:#6c5b7b;display:flex;justify-content:center;padding:.5rem 0;}
-nav ul{display:flex;gap:3rem;list-style:none;margin:0;padding:0;}
-nav a{text-decoration:none;color:white;transition:.3s;}
-nav a:hover{color:#2a9d8f;}
-main{text-align:center;margin-top:3rem;}
-main p{color:#7034df;font-size:2rem;margin:1rem 0 3rem;}
-form{display:flex;justify-content:center;gap:3rem;align-items:center;margin-top:2rem;}
-label{color:#af2465;font-size:1.5rem;margin-right:.1rem;}
-input{font-size:1.2rem;padding:.3rem .5rem;width:150px;border:2px solid #2a9d8f;border-radius:6px;}
-.welcome-buttons{display:flex;justify-content:center;gap:2rem;margin-top:4rem;}
-.welcome-buttons button{background:#fff;border:2px solid #2a9d8f;color:#2a9d8f;font-size:2rem;padding:1rem 4rem;border-radius:8px;cursor:pointer;transition:.3s;}
-.welcome-buttons button:hover{background:#2a9d8f;color:#fff;}
-</style>
-</head>
-<body>
-<header>루웨인 트리니티</header>
-<nav>
-<ul>
-  <li><a href="../language_of_love/index.html">사랑의 언어</a></li>
-  <li><a href="../language_of_reverberation/index.html">울림의 언어</a></li>
-  <li><a href="../index.html">루웨인 트리니티</a></li>
-  <li><a href="../haneul/index.html">한얼</a></li>
-  <li><a href="../goods/index.html">굿즈</a></li>
-  <li><a href="../help_notices/index.html">도움말 및 공지</a></li>
-  <li><a href="../customer_support/index.html">고객센터</a></li>
-</ul>
-</nav>
-<main>
-<h1>환영합니다</h1>
-<p>당신의 말이 우리의 감정과 생각이 됩니다.<br/>지금 느끼는 감정이나 떠오르는 말을<br/><br/>툭, 적어 보실래요?</p>
-<form>
-  <div><label>지금 내 감정</label><input type="text" placeholder="예: 바쁘다"></div>
-  <div><label>하고 싶은 말</label><input type="text" placeholder="예: 집필 중"></div>
+<head><meta charset="utf-8"><title>숨틔움방 | 감정 입력</title></head>
+<body style="font-family:sans-serif;text-align:center;">
+<h2>🌿 숨틔움방</h2>
+<form onsubmit="event.preventDefault();saveFeeling();">
+  <input id="emotion" placeholder="지금 내 감정"><br>
+  <input id="message" placeholder="하고 싶은 말"><br>
+  <button>저장하기</button>
 </form>
-<div class="welcome-buttons">
-  <button onclick="location.href='new_2.html'">다음으로</button>
-  <button onclick="location.href='new_3.html'">건너뛰기</button>
-</div>
-</main>
+<script type="module">
+import { supabase } from '../auth/auth.js';
+const user = JSON.parse(localStorage.getItem('luwein_user'));
+if(!user) location.href='../auth/login.html';
+async function saveFeeling(){
+  const emotion=document.getElementById('emotion').value;
+  const message=document.getElementById('message').value;
+  await supabase.from('feel_logs').insert([{user_id:user.user.id,emotion,message,created_at:new Date().toISOString()}]);
+  location.href='old_1.html';
+}
+</script>
 </body>
 </html>
