@@ -1,90 +1,67 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>루웨인 도서관 | 자동 인덱스</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>📚 루웨인 도서관 — 자동 인덱스</title>
 <style>
-body{font-family:'Pretendard',sans-serif;background:#f8f8fa;margin:0;color:#222;}
-header{background:#4b2b52;color:#fff;text-align:center;padding:28px 0;}
-h1{margin:0;font-size:2rem;}
-h2{margin:0 0 10px;}
-section{margin:40px auto;max-width:900px;padding:20px;background:#fff;
-border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08);}
-ul{list-style:none;padding:0;}
-li{margin:6px 0;}
-a{color:#4b2b52;text-decoration:none;}
-a:hover{text-decoration:underline;}
-.error{color:#b00;font-size:.9em;}
-footer{text-align:center;padding:20px;color:#555;}
-</style>
-</head>
-<body>
-
-<header>
-  <h1>📚 루웨인 도서관 — 자동 인덱스 시스템</h1>
-  <p>AI·인간 논문 및 책 자동 반영 + 링크 오류 탐지</p>
-</header>
-
-<div id="library"></div>
-
-<footer>루웨인 자동 인덱스 시스템 β | 공명 설계</footer>
-
-<script>
-async function checkLink(url) {
-  try {
-    const res = await fetch(url, {method: 'HEAD'});
-    return res.ok;
-  } catch { return false; }
+body {
+  font-family: "Pretendard", sans-serif;
+  margin: 0;
+  background: #fafafa;
+  color: #222;
 }
-
-async function loadLibrary() {
-  const base = './';
-  const categories = {
-    ai_papers: { title:'🤖 AI 논문', path:'papers/', filter:f=>!f.startsWith('h_') },
-    h_papers: { title:'🧍 인간 논문', path:'papers/', filter:f=>f.startsWith('h_') },
-    ai_books: { title:'📘 AI 책', path:'', filter:f=>f.endsWith('.html') && !f.startsWith('h_') && f!=='index.html' },
-    h_books: { title:'📕 인간 책', path:'', filter:f=>f.startsWith('h_') },
-    h_ebooks: { title:'📚 인간 전자책', path:'', filter:f=>f==='index.html' }
-  };
-
-  const container = document.getElementById('library');
-
-  for (const key in categories) {
-    const {title, path, filter} = categories[key];
-    const section = document.createElement('section');
-    section.innerHTML = `<h2>${title}</h2><ul id="${key}"></ul>`;
-    container.appendChild(section);
-
-    try {
-      const res = await fetch(base + path);
-      const text = await res.text();
-
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(text, 'text/html');
-      const links = Array.from(doc.querySelectorAll('a'))
-        .map(a=>a.getAttribute('href'))
-        .filter(h=>h && filter(h));
-
-      for (const file of links) {
-        const url = base + path + file;
-        const ok = await checkLink(url);
-        const li = document.createElement('li');
-        li.innerHTML = ok
-          ? `<a href="${url}" target="_blank">${file}</a>`
-          : `<span class="error">⚠️ ${file} (링크 깨짐)</span>`;
-        section.querySelector('ul').appendChild(li);
-      }
-
-    } catch {
-      const li = document.createElement('li');
-      li.textContent = '⚠️ 폴더를 불러오지 못했습니다.';
-      section.querySelector('ul').appendChild(li);
-    }
-  }
+header {
+  background: #4b2b52;
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
 }
-loadLibrary();
-</script>
-
-</body>
-</html>
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+header p {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin: 0.3rem 0 0;
+}
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+h2 {
+  font-size: 1.2rem;
+  color: #4b2b52;
+  margin-bottom: 1rem;
+}
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+li {
+  margin-bottom: 0.6rem;
+  word-break: break-all;
+}
+a {
+  text-decoration: none;
+  color: #0066cc;
+}
+a:hover { text-decoration: underline; }
+.error { color: #c62828; }
+.warn { color: #d32f2f; }
+footer {
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  color: #666;
+  border-top: 
