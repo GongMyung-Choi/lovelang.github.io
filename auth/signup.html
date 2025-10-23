@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>회원가입 | 루웨인</title></head>
+<body style="text-align:center;font-family:sans-serif;">
+<h2>루웨인 회원가입</h2>
+<form onsubmit="event.preventDefault();signUp(email.value,pwd.value,nick.value)">
+  <input id="email" placeholder="이메일"><br>
+  <input id="pwd" type="password" placeholder="비밀번호"><br>
+  <input id="nick" placeholder="닉네임"><br>
+  <button>가입하기</button>
+</form>
+<script type="module">
+import { signUp } from './auth.js';
+</script>
+</body>
+</html>
