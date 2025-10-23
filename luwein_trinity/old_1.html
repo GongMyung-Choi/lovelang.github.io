@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head><meta charset="utf-8"><title>지난 숨들</title></head>
-<body style="font-family:sans-serif;padding:20px;">
+<head><meta charset="utf-8"><title>지난 숨들 | 루웨인 숨틔움방</title></head>
+<body style="font-family:sans-serif;padding:40px;">
 <h2>지난 숨들 🌬</h2>
 <ul id="logs"></ul>
 <script type="module">
 import { supabase } from '../auth/auth.js';
 const user = JSON.parse(localStorage.getItem('luwein_user'));
-if(!user) location.href='../auth/login.html';
-const { data } = await supabase.from('feel_logs')
-  .select('*').eq('user_id',user.user.id).order('created_at',{ascending:false});
-document.getElementById('logs').innerHTML =
-  data.map(d=>`<li>${d.created_at.slice(0,10)} — ${d.emotion}: ${d.message}</li>`).join('');
+if (!user) location.href='../auth/login.html';
+
+(async () => {
+  const { data } = await supabase.from('feel_logs')
+    .select('*').eq('user_id', user.user.id)
+    .order('created_at', { ascending: false });
+  if (!data || data.length === 0) {
+    document.getElementById('logs').innerHTML = '<li>기록이 없습니다.</li>';
+    return;
+  }
+  document.getElementById('logs').innerHTML =
+    data.map(d => `<li>${d.created_at.slice(0,10)} — ${d.emotion}: ${d.message}</li>`).join('');
+})();
 </script>
 </body>
 </html>
