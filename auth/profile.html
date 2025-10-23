@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head><meta charset="utf-8"><title>프로필 | 루웨인</title></head>
-<body style="text-align:center;font-family:sans-serif;">
+<body style="text-align:center;font-family:sans-serif;padding:40px;">
 <h2>내 정보</h2>
 <div id="info"></div>
 <button onclick="signOut()">로그아웃</button>
@@ -9,7 +9,7 @@
 <script type="module">
 import { supabase, signOut } from './auth.js';
 const user = JSON.parse(localStorage.getItem('luwein_user'));
-if(!user) location.href='login.html';
+if (!user) location.href='login.html';
 else document.getElementById('info').innerHTML =
   `닉네임: ${user.user.user_metadata.nickname}<br>이메일: ${user.user.email}`;
 </script>
