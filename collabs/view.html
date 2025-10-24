@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>협업 상세 보기</title>
+<link rel="stylesheet" href="collab_style.css">
+<script type="module">
+import { fetchCollabById, addComment, fetchComments } from "./collab_api.js";
+
+const urlParams = new URLSearchParams(location.search);
+const collabId = urlParams.get("id");
+const main = document.getElementById("main");
+const commentList = document.getElementById("comments");
+const input = document.getElementById("commentInput");
+const personaInput = document.getElementById("personaInput");
+
+async function render() {
+  const data = await fetchCollabById(collabId);
+  if (!data) return main.innerHTML = "<p>프로젝트를 찾을 수 없습니다.</p>";
+  main.innerHTML = `
+    <div class="card">
+      <h2>${data.title}</h2>
+      <p><b>유형:</b> ${data.type}</p>
+      <p><b>퍼스나:</b> ${data.persona_name}</p>
+      <small>${new Date(data.ts).toLocaleString()}</small>
+      <p>${data.detail?.desc || ''}</p>
+    </div>
+  `;
+  loadComments();
+}
+
+async function loadComments() {
+  const comments = await fetchComments(collabId);
+  commentList.innerHTML = comments.map(c => `
+    <div class="comment">
+      <small>${c.detail.persona} | ${new Date(c.ts).toLocaleTimeString()}</small>
+      <p>${c.detail.comment}</p>
+    </div>
+  `).join("");
+}
+
+document.getElementById("sendBtn").addEventListener("click", async () => {
+  const persona = personaInput.value.trim() || "익명";
+  const text = input.value.trim();
+  if (!text) return;
+  await addComment(collabId, persona, text);
+  input.value = "";
+  loadComments();
+});
+
+render();
+</script>
+</head>
+<body>
+  <header>
+    <h1>📁 협업 프로젝트 상세</h1>
+  </header>
+
+  <main id="main" class="main"></main>
+
+  <section class="main">
+    <h3>💬 퍼스나 코멘트</h3>
+    <div id="comments"></div>
+    <div class="comment-box">
+      <input id="personaInput" placeholder="퍼스나 이름" />
+      <textarea id="commentInput" rows="3" placeholder="코멘트 입력..."></textarea>
+      <button id="sendBtn">등록</button>
+    </div>
+  </section>
+</body>
+</html>
