@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>루웨인 메타베이스 | 시스템 관제실</title>
+<link rel="stylesheet" href="meta_style.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="meta_api.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>📊 루웨인 메타베이스</h1>
+    <p>퍼스나, 숨틔움방, 협업 기록을 통합 모니터링</p>
+  </header>
+
+  <section class="dashboard">
+    <div class="card wide">
+      <h2>퍼스나 감응 상태</h2>
+      <canvas id="personaChart" height="200"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>최근 활동 로그</h2>
+      <ul id="activityList"></ul>
+    </div>
+
+    <div class="card">
+      <h2>시스템 심장 박동</h2>
+      <canvas id="heartbeatChart" height="200"></canvas>
+    </div>
+
+    <div class="card wide">
+      <h2>협업 프로젝트 현황</h2>
+      <canvas id="collabChart" height="180"></canvas>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 루웨인 트리니티 — META OBSERVATORY</p>
+  </footer>
+</body>
+</html>
