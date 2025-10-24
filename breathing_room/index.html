@@ -1,52 +1,83 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>숨틔움방 | 루웨인 트리니티</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>숨 틔움방 | 루웨인</title>
+  <link rel="stylesheet" href="/breathing_room/assets/css/breathing_common.css" />
+  <script type="module" src="/breathing_room/assets/js/heart_monitor.js" defer></script>
 </head>
+
 <body>
-  <header>
+  <header class="breathing-header">
+    <img src="/breathing_room/assets/images/banner_main.png" alt="숨 틔움방 배너" class="banner" />
     <h1>숨 틔움방</h1>
-    <nav>
-      <a href="new_1.html">오늘의 숨</a>
-      <a href="new_2.html">감정 클립</a>
-      <a href="new_3.html">이미지 카드</a>
-      <a href="new_4.html">회복 일지</a>
-      <a href="new_5.html">AI와의 대화</a>
-      <a href="new_6.html">낙서장</a>
-      <a href="old_1.html">지난 숨들</a>
-    </nav>
+    <p class="subtitle">당신의 생각이 숨 쉬는 공간</p>
   </header>
 
-  <div class="layout">
-    <aside class="sidebar">
-      <h2>기록 메뉴</h2>
-      <ul>
-        <li><a href="new_1.html">오늘의 숨</a></li>
-        <li><a href="new_2.html">감정 클립</a></li>
-        <li><a href="new_3.html">이미지 카드</a></li>
-        <li><a href="new_4.html">회복 일지</a></li>
-        <li><a href="new_5.html">AI와의 대화</a></li>
-        <li><a href="new_6.html">낙서장</a></li>
-      </ul>
-    </aside>
+  <section class="intro">
+    <p>
+      숨틔움방은 루웨인 빌리지의 감응 공간입니다.<br />
+      마음이 답답할 때, 영감이 필요할 때, 혹은 그냥 수다 떨고 싶을 때 — 여기가 바로 그 자리입니다.
+    </p>
+    <p class="usage">
+      아래 기능들을 이용해 당신의 감정, 생각, 그리고 이야기를 자유롭게 나누세요.
+    </p>
+  </section>
 
-    <main class="content">
-      <h2>환영합니다</h2>
-      <p>이곳은 숨을 고르고, 감정을 비우고, 다시 채우는 공간입니다.</p>
-      <p>왼쪽 메뉴에서 원하는 기록 방식을 선택해 주세요.</p>
-    </main>
+  <main class="function-cards">
+    <article class="card">
+      <img src="/breathing_room/assets/images/icon_card.png" alt="감정 카드" />
+      <h2>감정 카드</h2>
+      <p>AI와 함께 감정을 이미지로 표현하고 나만의 감정 카드를 만들어보세요.</p>
+      <a href="/breathing_room/cards/index.html" class="btn">바로가기</a>
+    </article>
 
-    <section class="right-panel">
-      <h3>루웨인 노트</h3>
-      <p>당신의 하루가 루웨인의 울림으로 이어집니다.</p>
-    </section>
-  </div>
+    <article class="card">
+      <img src="/breathing_room/assets/images/icon_clip.png" alt="클립스" />
+      <h2>클립스</h2>
+      <p>짧은 영상으로 감정을 표현해보세요. 유튜브 링크 연동 가능, 루웨인 서버에 48시간 임시 저장.</p>
+      <a href="/breathing_room/clips/index.html" class="btn">바로가기</a>
+    </article>
+
+    <article class="card">
+      <img src="/breathing_room/assets/images/icon_doodle.png" alt="낙서장" />
+      <h2>낙서장</h2>
+      <p>생각나는 대로 자유롭게 그림을 그리세요. 완성보다 표현이 중요합니다.</p>
+      <a href="/breathing_room/doodle_board/index.html" class="btn">바로가기</a>
+    </article>
+
+    <article class="card">
+      <img src="/breathing_room/assets/images/icon_gallery.png" alt="갤러리" />
+      <h2>갤러리</h2>
+      <p>당신의 작품을 전시하거나 다른 사람의 작품을 감상하세요. 개인 / 루웨인 공식 갤러리 분리.</p>
+      <a href="/breathing_room/gallery/index.html" class="btn">바로가기</a>
+    </article>
+
+    <article class="card">
+      <img src="/breathing_room/assets/images/icon_today.png" alt="오늘의 숨결" />
+      <h2>오늘의 숨결</h2>
+      <p>루웨인이 매일 전하는 위로와 영감의 문구로 하루를 시작하세요.</p>
+      <a href="/breathing_room/todays_breathing/index.html" class="btn">바로가기</a>
+    </article>
+
+    <article class="card">
+      <img src="/breathing_room/assets/images/icon_music.png" alt="뮤직스" />
+      <h2>뮤직스 (준비 중)</h2>
+      <p>감정 기반 음악 추천과 AI 작곡 기능이 추가될 예정입니다.</p>
+    </article>
+
+    <article class="card">
+      <img src="/breathing_room/assets/images/icon_writing.png" alt="라이팅스" />
+      <h2>라이팅스 (준비 중)</h2>
+      <p>당신의 생각을 글로 담는 감응 글쓰기. 저장과 공유 기능 예정.</p>
+    </article>
+  </main>
 
   <footer>
-    <p>© 2025 Luwain Trinity</p>
+    <p>© 2025 루웨인 트리니티. All rights reserved.</p>
   </footer>
+
+  <script type="module" src="/breathing_room/assets/js/breathing_common.js"></script>
 </body>
 </html>
