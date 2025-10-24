@@ -2,108 +2,23 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>나의 클립 | 숨 틔움방</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-body{
-  font-family:'Noto Sans KR',sans-serif;
-  background:#f9fbfa;
-  margin:0;padding:2rem;
-  color:#333;
-}
-h1{text-align:center;color:#af2465;}
-form{
-  max-width:600px;margin:0 auto 2rem;background:#fff;
-  padding:20px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-form input,form textarea,form button{
-  width:100%;padding:10px;margin:6px 0;font-size:15px;border:1px solid #ccc;border-radius:8px;
-}
-form button{background:#2a9d8f;color:#fff;cursor:pointer;}
-form button:hover{background:#237e74;}
-#clipList{
-  display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;
-}
-.clip{
-  width:320px;background:#fff;border-radius:10px;box-shadow:0 3px 6px rgba(0,0,0,.1);
-  overflow:hidden;padding:15px;position:relative;
-}
-.clip iframe{
-  width:100%;height:180px;border:none;border-radius:8px;
-}
-.clip .title{color:#af2465;font-weight:700;margin-top:8px;}
-.clip .memo{color:#555;font-size:.9rem;margin-top:4px;}
-.clip .actions{margin-top:8px;display:flex;justify-content:space-between;}
-.clip button{
-  border:none;background:#ddd;padding:6px 10px;border-radius:6px;cursor:pointer;
-}
-.clip button:hover{background:#bbb;}
-</style>
+<title>영상 제작소 | 루웨인 숨틔움방</title>
+<link rel="stylesheet" href="../common.css">
 </head>
 <body>
-<h1>🎬 나의 클립</h1>
+<header>
+  <h1>🎬 영상 제작소</h1>
+  <p>영상과 감정이 교차하는 실험실</p>
+  <button class="collab-btn" onclick="location.href='/assets/personas/persna_lab.html'">
+    🤝 퍼스나와 협업하기
+  </button>
+</header>
 
-<form id="clipForm">
-  <input type="text" id="title" placeholder="영상 제목" required>
-  <input type="url" id="youtubeUrl" placeholder="YouTube 링크 붙여넣기" required>
-  <textarea id="memo" rows="3" placeholder="짧은 메모 (선택)"></textarea>
-  <label><input type="checkbox" id="shareCheck"> 공유하기</label><br>
-  <button type="submit">저장하기</button>
-</form>
-
-<div id="clipList"></div>
-
-<script>
-const SUPABASE_URL="https://omchtafaqgkdwcrwscrp.supabase.co";
-const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g";
-const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const list=document.getElementById("clipList");
-
-document.getElementById("clipForm").addEventListener("submit",async(e)=>{
-  e.preventDefault();
-  const title=document.getElementById("title").value.trim();
-  const url=document.getElementById("youtubeUrl").value.trim();
-  const memo=document.getElementById("memo").value.trim();
-  const is_shared=document.getElementById("shareCheck").checked;
-  if(!url.includes("youtube.com")&&!url.includes("youtu.be")) return alert("유효한 YouTube 링크를 입력하세요.");
-
-  const videoId=getYouTubeId(url);
-  if(!videoId)return alert("영상 ID 추출 실패!");
-
-  const embedUrl=`https://www.youtube.com/embed/${videoId}`;
-  const { error }=await supabase.from("clips_records").insert([{title,video_url:embedUrl,memo,is_shared}]);
-  if(error)return alert("저장 실패: "+error.message);
-  loadClips();
-  e.target.reset();
-});
-
-function getYouTubeId(url){
-  const regExp=/^(?:.*youtu\.be\/|.*v=)([^&\n?#]+)/;
-  const match=url.match(regExp);
-  return match?match[1]:null;
-}
-
-async function loadClips(){
-  const { data,error }=await supabase.from("clips_records").select("*").order("id",{ascending:false});
-  if(error)return console.error(error);
-  list.innerHTML=data.map(c=>`
-    <div class="clip">
-      <iframe src="${c.video_url}" allowfullscreen></iframe>
-      <div class="title">${c.title||"제목 없음"}</div>
-      <div class="memo">${c.memo||""}</div>
-      <div class="actions">
-        ${c.is_shared?"<span style='color:#2a9d8f;'>🌍 공유됨</span>":""}
-        <button onclick="deleteClip(${c.id})">삭제</button>
-      </div>
-    </div>`).join("");
-}
-loadClips();
-
-async function deleteClip(id){
-  if(!confirm("삭제하시겠습니까?"))return;
-  await supabase.from("clips_records").delete().eq("id",id);
-  loadClips();
-}
-</script>
+<main>
+  <section>
+    <p>아이디어를 영상으로 풀어보세요.  
+    루웨인의 영상팀 퍼스나들과 함께합니다.</p>
+  </section>
+</main>
 </body>
 </html>
