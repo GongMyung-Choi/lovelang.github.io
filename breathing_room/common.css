@@ -1,0 +1,21 @@
+body {font-family:'Pretendard',sans-serif;background:#f5f6ff;margin:0;color:#222;}
+header {background:#fff;text-align:center;padding:2rem 1rem;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+header h1 {margin:0;font-size:2rem;}
+header p {margin:.3rem 0 1.2rem;font-size:1rem;color:#555;}
+
+.collab-btn {
+  display:inline-block;
+  background:linear-gradient(135deg,#8d8aff,#5fa7ff);
+  color:#fff;
+  font-weight:600;
+  border:none;
+  border-radius:8px;
+  padding:.7rem 1.4rem;
+  cursor:pointer;
+  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.collab-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+}
