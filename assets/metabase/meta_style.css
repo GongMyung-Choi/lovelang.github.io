@@ -1,0 +1,50 @@
+body {
+  font-family: 'Pretendard', sans-serif;
+  background: #f8f9fc;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #8da5ff, #b89cff);
+  color: #fff;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  transition: transform 0.2s ease;
+}
+.card:hover { transform: translateY(-4px); }
+.card.wide { grid-column: span 2; }
+
+#activityList {
+  list-style: none;
+  padding: 0;
+  font-size: 0.9rem;
+}
+#activityList li {
+  margin: 0.3rem 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.3rem;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #f1f1f1;
+  font-size: 0.9rem;
+  color: #555;
+}
