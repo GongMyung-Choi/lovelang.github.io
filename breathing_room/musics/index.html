@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>뮤직스 | 숨 틔움방</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{font-family:'Noto Sans KR',sans-serif;background:#f7fafa;margin:0;padding:2rem;color:#333;}
+h1{text-align:center;color:#af2465;}
+form{
+  max-width:600px;margin:0 auto 2rem;background:#fff;padding:20px;border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+form input,form textarea,form button{
+  width:100%;padding:10px;margin:6px 0;font-size:15px;border:1px solid #ccc;border-radius:8px;
+}
+form button{background:#2a9d8f;color:#fff;cursor:pointer;}
+form button:hover{background:#237e74;}
+#musicList{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;}
+.music{
+  width:320px;background:#fff;border-radius:10px;box-shadow:0 3px 6px rgba(0,0,0,.1);
+  overflow:hidden;padding:15px;
+}
+.music audio{width:100%;margin-top:8px;}
+.music .title{color:#af2465;font-weight:700;margin-top:8px;}
+.music .desc{color:#555;font-size:.9rem;margin-top:4px;}
+.music .actions{margin-top:8px;display:flex;justify-content:space-between;}
+.music button{
+  border:none;background:#ddd;padding:6px 10px;border-radius:6px;cursor:pointer;
+}
+.music button:hover{background:#bbb;}
+</style>
+</head>
+<body>
+<h1>🎵 나의 뮤직스</h1>
+
+<form id="musicForm">
+  <input type="text" id="title" placeholder="곡 제목" required>
+  <input type="url" id="musicUrl" placeholder="음악 파일 URL 또는 YouTube 링크" required>
+  <textarea id="desc" rows="3" placeholder="곡에 대한 메모나 영감"></textarea>
+  <label><input type="checkbox" id="shareCheck"> 공유하기</label><br>
+  <button type="submit">저장하기</button>
+</form>
+
+<div id="musicList"></div>
+
+<script>
+const SUPABASE_URL="https://omchtafaqgkdwcrwscrp.supabase.co";
+const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g";
+const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const list=document.getElementById("musicList");
+
+document.getElementById("musicForm").addEventListener("submit",async(e)=>{
+  e.preventDefault();
+  const title=document.getElementById("title").value.trim();
+  const url=document.getElementById("musicUrl").value.trim();
+  const desc=document.getElementById("desc").value.trim();
+  const is_shared=document.getElementById("shareCheck").checked;
+
+  const { error }=await supabase.from("musics_records").insert([{title,music_url:url,desc,is_shared}]);
+  if(error)return alert("저장 실패: "+error.message);
+  loadMusics();
+  e.target.reset();
+});
+
+async function loadMusics(){
+  const { data,error }=await supabase.from("musics_records").select("*").order("id",{ascending:false});
+  if(error)return console.error(error);
+  list.innerHTML=data.map(m=>`
+    <div class="music">
+      <div class="title">${m.title||"제목 없음"}</div>
+      ${m.music_url.includes("youtube")?`<iframe width="100%" height="180" src="${m.music_url.replace("watch?v=","embed/")}" allowfullscreen></iframe>`:`<audio controls src="${m.music_url}"></audio>`}
+      <div class="desc">${m.desc||""}</div>
+      <div class="actions">
+        ${m.is_shared?"<span style='color:#2a9d8f;'>🌍 공유됨</span>":""}
+        <button onclick="deleteMusic(${m.id})">삭제</button>
+      </div>
+    </div>`).join("");
+}
+loadMusics();
+
+async function deleteMusic(id){
+  if(!confirm("삭제하시겠습니까?"))return;
+  await supabase.from("musics_records").delete().eq("id",id);
+  loadMusics();
+}
+</script>
+</body>
+</html>
