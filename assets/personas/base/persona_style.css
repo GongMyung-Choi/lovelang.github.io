@@ -1,0 +1,21 @@
+body {
+  font-family: 'Pretendard', sans-serif;
+  background: #fafafa;
+  color: #222;
+  margin: 0;
+}
+
+h1, h2 {
+  color: #5c46a0;
+}
+
+.persona-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  margin: 1rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+.persona-card:hover { transform: translateY(-5px); }
