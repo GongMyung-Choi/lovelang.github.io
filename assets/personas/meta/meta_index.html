@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>루웨인 메타 퍼스나 허브</title>
+<link rel="stylesheet" href="../base/persona_style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="./meta_analyzer.js"></script>
+<script type="module" src="./meta_observer.js"></script>
+<style>
+  .persona-list {display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;padding:1.5rem;}
+  .persona-card {cursor:pointer;}
+</style>
+</head>
+<body>
+  <header>
+    <h1>루웨인 메타 퍼스나 허브</h1>
+    <p>퍼스나 상태 관찰 및 로그 기록</p>
+  </header>
+
+  <section class="persona-list" id="personaList"></section>
+  <section>
+    <canvas id="metaRadar" width="400" height="400"></canvas>
+  </section>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+import { analyzePersonas } from './meta_analyzer.js';
+import { logActivity } from './meta_observer.js';
+
+const supabase = createClient("https://omchtafaqgkdwcrwscrp.supabase.co", "공용키");
+
+// 퍼스나 카드 불러오기
+async function loadPersonas() {
+  const { data } = await supabase.from("persona_profiles").select("id, name, role, emotion, logic, empathy, creativity");
+  const container = document.getElementById("personaList");
+  container.innerHTML = data.map(p => `
+    <div class="persona-card" data-name="${p.name}">
+      <h2>${p.name}</h2>
+      <p>${p.role || '루웨인 퍼스나'}</p>
+      <small>감성:${p.emotion} / 논리:${p.logic} / 공감:${p.empathy} / 창의:${p.creativity}</small>
+    </div>
+  `).join('');
+
+  document.querySelectorAll(".persona-card").forEach(card => {
+    card.addEventListener("click", () => openMetaView(card.dataset.name));
+  });
+}
+
+function openMetaView(name) {
+  logActivity("persona_focus", { name });
+  window.open(`/assets/metabase/index.html?persona=${encodeURIComponent(name)}`, "_blank");
+}
+
+loadPersonas();
+analyzePersonas();
+</script>
+</body>
+</html>
