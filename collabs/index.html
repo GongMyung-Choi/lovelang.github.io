@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>루웨인 협업 프로젝트</title>
+<link rel="stylesheet" href="collab_style.css">
+<script type="module">
+import { fetchCollabs } from "./collab_api.js";
+
+async function renderList() {
+  const list = await fetchCollabs();
+  const container = document.getElementById("collabList");
+  container.innerHTML = list.map(c => `
+    <div class="card">
+      <h2>${c.title}</h2>
+      <p><b>유형:</b> ${c.type} &nbsp;|&nbsp; <b>담당:</b> ${c.persona_name}</p>
+      <small>${new Date(c.ts).toLocaleString()}</small>
+      <p>${c.detail?.desc || ''}</p>
+      <button onclick="location.href='view.html?id=${c.id}'">상세 보기</button>
+    </div>
+  `).join("");
+}
+
+renderList();
+</script>
+</head>
+<body>
+  <header>
+    <h1>🤝 루웨인 협업 프로젝트</h1>
+    <p>모든 퍼스나가 함께 울린 흔적들</p>
+  </header>
+  <main class="main" id="collabList"></main>
+</body>
+</html>
