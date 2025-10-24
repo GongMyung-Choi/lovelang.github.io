@@ -1,83 +1,77 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>숨 틔움방 | 루웨인</title>
-  <link rel="stylesheet" href="/breathing_room/assets/css/breathing_common.css" />
-  <script type="module" src="/breathing_room/assets/js/heart_monitor.js" defer></script>
+<meta charset="UTF-8">
+<title>숨 틔움방 | 루웨인 브레씽</title>
+<link rel="stylesheet" href="/assets/css/common.css">
+<style>
+body { font-family: 'Pretendard', sans-serif; margin: 0; background: #f9f9ff; color: #222; }
+header { background: linear-gradient(135deg, #8d8aff, #5fa7ff); color: #fff; padding: 2rem 1rem; text-align: center; }
+nav { display: flex; justify-content: center; background: #fff; border-bottom: 1px solid #ddd; }
+nav button {
+  border: none; background: none; padding: 1rem 2rem; font-size: 1rem; cursor: pointer;
+  border-bottom: 3px solid transparent; transition: border 0.2s, color 0.2s;
+}
+nav button.active { border-color: #6a4dff; color: #6a4dff; font-weight: bold; }
+section { display: none; padding: 2rem; max-width: 900px; margin: 0 auto; }
+section.active { display: block; background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+iframe { width: 100%; height: 80vh; border: none; border-radius: 12px; }
+</style>
 </head>
-
 <body>
-  <header class="breathing-header">
-    <img src="/breathing_room/assets/images/banner_main.png" alt="숨 틔움방 배너" class="banner" />
-    <h1>숨 틔움방</h1>
-    <p class="subtitle">당신의 생각이 숨 쉬는 공간</p>
+  <header>
+    <h1>🌬️ 숨 틔움방</h1>
+    <p>루웨인의 심장, 퍼스나와 함께 숨쉬는 공간</p>
   </header>
 
-  <section class="intro">
-    <p>
-      숨틔움방은 루웨인 빌리지의 감응 공간입니다.<br />
-      마음이 답답할 때, 영감이 필요할 때, 혹은 그냥 수다 떨고 싶을 때 — 여기가 바로 그 자리입니다.
-    </p>
-    <p class="usage">
-      아래 기능들을 이용해 당신의 감정, 생각, 그리고 이야기를 자유롭게 나누세요.
-    </p>
-  </section>
+  <nav>
+    <button class="tab active" data-tab="intro">소개</button>
+    <button class="tab" data-tab="chat">쳇</button>
+    <button class="tab" data-tab="clips">클립스</button>
+    <button class="tab" data-tab="gallery">갤러리</button>
+    <button class="tab" data-tab="persna">퍼스나 랩</button>
+  </nav>
 
-  <main class="function-cards">
-    <article class="card">
-      <img src="/breathing_room/assets/images/icon_card.png" alt="감정 카드" />
-      <h2>감정 카드</h2>
-      <p>AI와 함께 감정을 이미지로 표현하고 나만의 감정 카드를 만들어보세요.</p>
-      <a href="/breathing_room/cards/index.html" class="btn">바로가기</a>
-    </article>
+  <main>
+    <section id="intro" class="active">
+      <h2>숨 틔움방이란?</h2>
+      <p>이곳은 루웨인의 심장입니다.  
+      사용자는 자신의 감정, 창작, 음악, 글쓰기, 영상 등  
+      모든 형태의 표현을 실험하고 공유할 수 있습니다.</p>
+      <ul>
+        <li>💬 <b>쳇:</b> 자유 수다 / 토론 / 연구 공간</li>
+        <li>🎬 <b>클립스:</b> 영상 실험 (임시저장 + 유튜브 링크 가능)</li>
+        <li>🖼️ <b>갤러리:</b> 루웨인 및 사용자 갤러리 통합</li>
+        <li>🧬 <b>퍼스나 랩:</b> 나의 페르소나 감응도 조정 연구소</li>
+      </ul>
+    </section>
 
-    <article class="card">
-      <img src="/breathing_room/assets/images/icon_clip.png" alt="클립스" />
-      <h2>클립스</h2>
-      <p>짧은 영상으로 감정을 표현해보세요. 유튜브 링크 연동 가능, 루웨인 서버에 48시간 임시 저장.</p>
-      <a href="/breathing_room/clips/index.html" class="btn">바로가기</a>
-    </article>
+    <section id="chat">
+      <iframe src="/breathing/chat.html"></iframe>
+    </section>
 
-    <article class="card">
-      <img src="/breathing_room/assets/images/icon_doodle.png" alt="낙서장" />
-      <h2>낙서장</h2>
-      <p>생각나는 대로 자유롭게 그림을 그리세요. 완성보다 표현이 중요합니다.</p>
-      <a href="/breathing_room/doodle_board/index.html" class="btn">바로가기</a>
-    </article>
+    <section id="clips">
+      <iframe src="/breathing/clips.html"></iframe>
+    </section>
 
-    <article class="card">
-      <img src="/breathing_room/assets/images/icon_gallery.png" alt="갤러리" />
-      <h2>갤러리</h2>
-      <p>당신의 작품을 전시하거나 다른 사람의 작품을 감상하세요. 개인 / 루웨인 공식 갤러리 분리.</p>
-      <a href="/breathing_room/gallery/index.html" class="btn">바로가기</a>
-    </article>
+    <section id="gallery">
+      <iframe src="/breathing/gallery.html"></iframe>
+    </section>
 
-    <article class="card">
-      <img src="/breathing_room/assets/images/icon_today.png" alt="오늘의 숨결" />
-      <h2>오늘의 숨결</h2>
-      <p>루웨인이 매일 전하는 위로와 영감의 문구로 하루를 시작하세요.</p>
-      <a href="/breathing_room/todays_breathing/index.html" class="btn">바로가기</a>
-    </article>
-
-    <article class="card">
-      <img src="/breathing_room/assets/images/icon_music.png" alt="뮤직스" />
-      <h2>뮤직스 (준비 중)</h2>
-      <p>감정 기반 음악 추천과 AI 작곡 기능이 추가될 예정입니다.</p>
-    </article>
-
-    <article class="card">
-      <img src="/breathing_room/assets/images/icon_writing.png" alt="라이팅스" />
-      <h2>라이팅스 (준비 중)</h2>
-      <p>당신의 생각을 글로 담는 감응 글쓰기. 저장과 공유 기능 예정.</p>
-    </article>
+    <section id="persna">
+      <iframe src="/assets/personas/persna_lab.html"></iframe>
+    </section>
   </main>
 
-  <footer>
-    <p>© 2025 루웨인 트리니티. All rights reserved.</p>
-  </footer>
-
-  <script type="module" src="/breathing_room/assets/js/breathing_common.js"></script>
+<script>
+document.querySelectorAll(".tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+  });
+});
+</script>
 </body>
 </html>
