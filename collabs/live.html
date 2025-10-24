@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>협업 실시간방</title>
+<link rel="stylesheet" href="collab_style.css">
+<style>
+.chat-wrap{display:flex;flex-direction:column;height:80vh;max-width:800px;margin:2rem auto;background:#fff;border-radius:10px;padding:1rem;box-shadow:0 2px 12px rgba(0,0,0,0.1);}
+#chat{flex:1;overflow-y:auto;padding:.5rem;border-bottom:1px solid #eee;}
+#inputArea{display:flex;gap:.5rem;margin-top:.5rem;}
+#messageInput,#personaInput{padding:.5rem;border-radius:6px;border:1px solid #ccc;}
+#messageInput{flex:1;}
+#personaInput{width:120px;}
+</style>
+</head>
+<body>
+  <header><h1>💫 협업 실시간방</h1><p>같은 프로젝트를 보고 있는 퍼스나들이 즉시 대화합니다</p></header>
+  <div class="chat-wrap">
+    <div id="chat"></div>
+    <div id="inputArea">
+      <input id="personaInput" placeholder="퍼스나명" />
+      <input id="messageInput" placeholder="메시지 입력..." />
+      <button id="sendBtn">전송</button>
+    </div>
+  </div>
+<script type="module" src="./collab_live.js"></script>
+</body>
+</html>
