@@ -1,67 +1,212 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>📚 루웨인 도서관 — 자동 인덱스</title>
+<title>슬기도서관 · 자동 인덱스</title>
 <style>
-body {
-  font-family: "Pretendard", sans-serif;
-  margin: 0;
-  background: #fafafa;
-  color: #222;
+  :root{--bg:#ffffff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--tag:#eef2ff;--brand:#2563eb}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,AppleSDGothicNeo,Segoe UI,Roboto,Apple Color Emoji}
+  header{position:sticky;top:0;background:#fffccf80;backdrop-filter:saturate(120%) blur(6px);border-bottom:1px solid var(--line);padding:12px 16px;z-index:10}
+  header h1{margin:0;font-size:18px}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .pill{padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;cursor:pointer}
+  .pill.active{border-color:var(--brand);color:var(--brand);background:#f8fbff}
+  main{padding:16px;max-width:1200px;margin:0 auto}
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+  .card{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff;display:flex;flex-direction:column;gap:8px}
+  .card h3{margin:0 0 2px 0;font-size:16px}
+  .meta{font-size:12px;color:var(--muted)}
+  .tags{display:flex;gap:6px;flex-wrap:wrap}
+  .tag{font-size:11px;background:var(--tag);padding:2px 8px;border-radius:999px}
+  .path{font-size:11px;color:#6b7280}
+  .empty{padding:40px;border:1px dashed var(--line);border-radius:12px;text-align:center;color:var(--muted)}
+  footer{color:var(--muted);text-align:center;padding:28px 12px}
+  .sr-only{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<header>
+  <h1>슬기도서관 자동 인덱스</h1>
+  <div class="controls" id="filters"></div>
+</header>
+
+<main>
+  <div id="results" class="grid"></div>
+  <div id="empty" class="empty" style="display:none">표시할 항목이 없습니다.</div>
+</main>
+
+<footer>자동 분류 기준: <b>KDC</b> → <b>키워드</b> → <b>폴더명</b> (우선순위)</footer>
+
+<script>
+/* ========= 사용자 설정: 경로 Manifest =========
+   - GitHub Pages는 폴더 목록을 직접 읽을 수 없어서
+     paths.json(아래)로 폴더 경로만 알려주면 내용은 자동으로 파싱합니다.
+   - 새 폴더 생기면 paths.json에 한 줄만 추가하면 됩니다. (완전 자동은 GH Actions로 가능)
+*/
+const MANIFEST_URL = './paths.json';
+
+/* ========= 분류 매핑 ========= */
+const CATEGORY_MAP = [
+  {name:'철학',  test:k => k.kdc?.startsWith('1') || /철학|언어철학|존재|인식/.test(k.words)},
+  {name:'영성·종교', test:k => k.kdc?.startsWith('2') || /영성|신앙|성당|트리니티/.test(k.words)},
+  {name:'사회·인문', test:k => k.kdc?.startsWith('3') || /사회|윤리|정치|문화|민중|연대/.test(k.words)},
+  {name:'자연·과학', test:k => /^5|^6/.test(k.kdc||'') || /과학|물리|파동|기술|AI|알고리즘|모듈/.test(k.words)},
+  {name:'예술·문학', test:k => k.kdc?.startsWith('8') || /소설|시집|시나리오|에세이|문학|드라마|시리즈/.test(k.words)},
+  {name:'기타', test:_ => true}
+];
+
+/* ========= 유틸 ========= */
+const $ = sel => document.querySelector(sel);
+const el = (tag, attrs={}, ...kids) => {
+  const n=document.createElement(tag);
+  Object.entries(attrs).forEach(([k,v])=>{ if(k==='class') n.className=v; else n.setAttribute(k,v); });
+  kids.forEach(k=> n.append(k));
+  return n;
+};
+function trim(s){return (s||'').toString().replace(/^\s+|\s+$/g,'');}
+
+/* ========= summary.txt / metadata.json 파서 ========= */
+function parseSummaryTxt(txt){
+  const lines = txt.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+  const get = label => {
+    const r = new RegExp('^\\s*'+label+'\\s*:\\s*(.+)$','i');
+    const f = lines.find(l=>r.test(l));
+    return f ? trim(f.replace(r,'$1')) : '';
+  };
+  const body = lines.join(' ');
+  return {
+    title: get('제목') || '',
+    author: get('저자') || '',
+    kdc: (get('KDC') || get('분류') || '').replace(/[^\d.].*$/,''),
+    category: get('분류') || '',
+    tags: (get('태그')||'').split(/[,#\s]+/).filter(Boolean),
+    abstract: get('요약') || (body.length>0 ? body.slice(0,200)+'…' : '')
+  };
 }
-header {
-  background: #4b2b52;
-  color: white;
-  padding: 2rem 1rem;
-  text-align: center;
+function normalizeMeta(meta){
+  return {
+    title: meta.title || meta.제목 || '',
+    author: meta.author || meta.저자 || '',
+    kdc: (meta.kdc || meta.KDC || meta.category || '').toString().replace(/[^\d.].*$/,''),
+    category: meta.category_name || meta.분류 || '',
+    tags: meta.tags || meta.태그 || [],
+    abstract: meta.abstract || meta.요약 || ''
+  };
 }
-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
+
+/* ========= 자동 분류기 ========= */
+function decideCategory(info, path){
+  const words = [
+    info.category, info.abstract, info.title, info.tags?.join(' '), path
+  ].join(' ').toLowerCase();
+  const k = {kdc:(info.kdc||'').toString(), words};
+  const found = CATEGORY_MAP.find(c=>c.test(k));
+  return found?.name || '기타';
 }
-header p {
-  font-size: 1rem;
-  opacity: 0.9;
-  margin: 0.3rem 0 0;
+
+/* ========= 카드 렌더 ========= */
+function card(item){
+  const box = el('div',{class:'card'});
+  box.append(
+    el('h3',{}, item.title || '(제목 없음)'),
+    el('div',{class:'meta'}, `저자: ${item.author||'—'} · 분류/KDC: ${item.kdc||'—'} · 코너: ${item.categoryGroup}`),
+    el('div',{}, item.abstract||'요약 없음'),
+    el('div',{class:'tags'},
+      ...(item.tags||[]).slice(0,6).map(t=>el('span',{class:'tag'}, '#'+t))
+    ),
+    el('div',{class:'path'}, `📂 ${item.path}`),
+  );
+  return box;
 }
-main {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 1rem;
+
+/* ========= 필터 UI ========= */
+function buildFilters(groups, onSelect){
+  const wrap = $('#filters'); wrap.innerHTML='';
+  const allBtn = el('button',{class:'pill active','data-cat':'ALL'},'전체');
+  wrap.append(allBtn);
+  Object.keys(groups).forEach(cat=>{
+    wrap.append(el('button',{class:'pill','data-cat':cat},cat));
+  });
+  wrap.addEventListener('click',e=>{
+    if(!e.target.matches('.pill')) return;
+    wrap.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+    e.target.classList.add('active');
+    onSelect(e.target.getAttribute('data-cat'));
+  });
 }
-section {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  margin-bottom: 2rem;
-  padding: 1.5rem;
+
+/* ========= 로딩 루틴 ========= */
+async function tryFetch(url){
+  try{
+    const r = await fetch(url);
+    if(!r.ok) throw new Error(r.status);
+    return await r.text();
+  }catch{ return null; }
 }
-h2 {
-  font-size: 1.2rem;
-  color: #4b2b52;
-  margin-bottom: 1rem;
+async function loadItem(path){
+  // 1) summary.txt
+  const sTxt = await tryFetch(`${path}/summary.txt`);
+  let info = sTxt ? parseSummaryTxt(sTxt) : null;
+
+  // 2) metadata.json
+  const mTxt = await tryFetch(`${path}/metadata.json`);
+  if(mTxt){
+    try{
+      const meta = JSON.parse(mTxt);
+      const norm = normalizeMeta(meta);
+      info = Object.assign({},
+        {title:'',author:'',kdc:'',category:'',tags:[],abstract:''},
+        norm, info||{}
+      );
+    }catch{}
+  }
+
+  // 3) EPUB 힌트만 있는 폴더(OEBPS/mimetype) → 임시 카드
+  if(!info){
+    const mim = await tryFetch(`${path}/mimetype`);
+    if(mim!==null){
+      info = {title:path.split('/').pop(), author:'—', kdc:'', category:'전자책', tags:['epub'], abstract:'(EPUB 구조 감지됨)'};
+    }
+  }
+
+  if(!info) return null;
+  info.categoryGroup = decideCategory(info, path);
+  info.path = path;
+  return info;
 }
-ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
+
+async function main(){
+  const res = await fetch(MANIFEST_URL).then(r=>r.json());
+  const paths = res.paths || [];
+  const items = (await Promise.all(paths.map(loadItem))).filter(Boolean);
+
+  // 그룹핑
+  const byCat = {};
+  for(const it of items){
+    if(!byCat[it.categoryGroup]) byCat[it.categoryGroup]=[];
+    byCat[it.categoryGroup].push(it);
+  }
+
+  // 필터 생성
+  buildFilters(byCat, cat=>{
+    render(cat==='ALL' ? items : byCat[cat]||[]);
+  });
+
+  // 초기 렌더
+  render(items);
 }
-li {
-  margin-bottom: 0.6rem;
-  word-break: break-all;
+
+function render(list){
+  const box = $('#results'); box.innerHTML='';
+  if(!list.length){ $('#empty').style.display='block'; return; }
+  $('#empty').style.display='none';
+  // 최신순 정렬: 경로명에 날짜가 있으면 그걸로, 없으면 알파
+  list.sort((a,b)=> (b.path>a.path?1:-1));
+  list.forEach(it=> box.append(card(it)));
 }
-a {
-  text-decoration: none;
-  color: #0066cc;
-}
-a:hover { text-decoration: underline; }
-.error { color: #c62828; }
-.warn { color: #d32f2f; }
-footer {
-  text-align: center;
-  padding: 1rem 0;
-  font-size: 0.9rem;
-  color: #666;
-  border-top: 
+
+main();
+</script>
+</body>
+</html>
