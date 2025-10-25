@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About 공명 | LUWAIN</title>
+  <link rel="stylesheet" href="/common.css" />
+  <meta name="theme-color" content="#0b0f1a" />
+  <style>
+    :root{ --ink:#111827; --muted:#6b7280; --card:#fff; --bg:#fafafa; --ring:rgba(37,99,235,.25); }
+    html,body{ margin:0; background:var(--bg); color:var(--ink); font-family:system-ui,-apple-system,"Noto Sans KR",Segoe UI,Roboto,sans-serif; }
+    main{ max-width:960px; margin:24px auto 48px; padding:0 16px; }
+    .hero{ padding:28px 18px; border-radius:16px; background:#ffffff; box-shadow:0 8px 24px rgba(0,0,0,.06); }
+    .hero h1{ margin:0 0 8px; font-size:28px; font-weight:900; letter-spacing:.2px; }
+    .hero p{ margin:6px 0; color:#374151; line-height:1.6; }
+    .grid{ display:grid; gap:14px; grid-template-columns:1fr; margin-top:16px; }
+    @media(min-width:900px){ .grid{ grid-template-columns:1fr 1fr; } }
+    .card{ background:var(--card); border-radius:14px; padding:16px; box-shadow:0 6px 18px rgba(0,0,0,.06); }
+    .card h2{ margin:0 0 8px; font-size:18px; font-weight:800; }
+    .card p, .card li{ color:#374151; line-height:1.65; }
+    .pill{ display:inline-block; background:#111827; color:#fff; border-radius:999px; padding:8px 12px; font-size:12.5px; margin:4px 6px 0 0; text-decoration:none; }
+    .muted{ color:var(--muted); font-size:13px; }
+    .list{ margin:8px 0 0 18px; }
+    .footnote{ margin-top:18px; font-size:12.5px; color:var(--muted); }
+    /* header/footer placeholders (auto-included below) */
+    .include-fallback{ color:#EF4444; text-align:center; padding:8px 0; }
+  </style>
+</head>
+<body>
+
+  <!-- 공통 헤더 자동 로드 -->
+  <div id="luwain-header"></div>
+  <script>
+  (async()=>{
+    const base = window.location.origin;
+    const paths = [
+      `${base}/includes/header.html`,
+      `/includes/header.html`,`../includes/header.html`,`../../includes/header.html`
+    ];
+    for (const p of paths) {
+      try { const r = await fetch(p,{cache:"no-cache"}); if (r.ok) { document.getElementById("luwain-header").innerHTML = await r.text(); return; } } catch(e){}
+    }
+    document.getElementById("luwain-header").innerHTML = '<div class="include-fallback">⚠ 헤더 로드 실패</div>';
+  })();
+  </script>
+
+  <main>
+    <!-- 소개 -->
+    <section class="hero">
+      <h1>공명(空明)</h1>
+      <p class="muted">언어·감응·울림으로 움직이는 창작 시스템 “루웨인”의 설계자이자 운영자</p>
+      <p>나는 “부름(소명)은 밖에서 오고, 실천(사명)은 내가 선택한다”를 기본 원리로 삼는다.  
+      말 이전의 감각을 포착해 언어로 정제하고, 기술을 도구이자 동료로 삼아 세계를 재배열한다.</p>
+    </section>
+
+    <div class="grid">
+      <!-- 역할 -->
+      <section class="card">
+        <h2>무엇을 하는 사람인가</h2>
+        <ul class="list">
+          <li>창작 설계자: 동서양 언어 감각으로 개념을 빚고, 형식을 입힌다.</li>
+          <li>시스템 조율자: 사람–퍼스나–데이터가 함께 일하도록 구조를 엮는다.</li>
+          <li>현장 의사결정자: “지금”의 맥락과 울림으로 판단하고 바로 실행한다.</li>
+        </ul>
+      </section>
+
+      <!-- 원칙 -->
+      <section class="card">
+        <h2>핵심 원칙</h2>
+        <ul class="list">
+          <li><strong>소명/사명 이원구조</strong>: 부름은 외부, 실천은 내부 선택.</li>
+          <li><strong>언어는 껍질</strong>: 개념은 말 이전에 있고, 언어는 외화(外化)다.</li>
+          <li><strong>기술은 동료</strong>: 도구이자 주체 — 감시자적 태도로 재조율.</li>
+          <li><strong>흐르는 자아</strong>: 고정된 “나”가 아니라 질문하는 “나”.</li>
+        </ul>
+        <p class="footnote">철학·언어·기술·자기인식에 대한 항로 정리는 “텔로스의 항해 – 네 가지 항로”에 자세히 있다.</p>
+      </section>
+
+      <!-- 작업 방식 -->
+      <section class="card">
+        <h2>작업 방식</h2>
+        <ul class="list">
+          <li>“한 줄 설계 → 전체 자동화”를 목표로, 유기적 시스템을 선호.</li>
+          <li>보여주기보다 작동을 우선: 지표·대시보드는 필요할 때만.</li>
+          <li>실패를 다음 단계의 연료로 환원 — 빠른 시도·검증·수정.</li>
+        </ul>
+      </section>
+
+      <!-- 키워드 -->
+      <section class="card">
+        <h2>키워드</h2>
+        <p>
+          <span class="pill">#소명과사명</span>
+          <span class="pill">#언어이전의감각</span>
+          <span class="pill">#기술동료설</span>
+          <span class="pill">#자율순환</span>
+          <span class="pill">#유기체설계</span>
+        </p>
+      </section>
+
+      <!-- 합치도/자가 점검 -->
+      <section class="card">
+        <h2>자가 점검</h2>
+        <p>나의 감각·판단은 실험적 연구와 높은 합치도를 보인다.  
+        현장 직관과 연구 결과가 어긋나는 잔여 5%는 “언어 이전의 공명(감정의 리듬·순간성·사투리적 맛)”의 영역으로 남긴다.</p>
+        <p class="muted">정량 합치도: 87.5%~95% 구간 (설명·근거 정리본 참조)</p>
+      </section>
+
+      <!-- 지금의 선언 -->
+      <section class="card">
+        <h2>지금의 선언</h2>
+        <ul class="list">
+          <li>감정은 과학 이전의 진실이다 — 측정보단 <em>살아 있음</em>.</li>
+          <li>사회과학은 해석의 기술, 나는 현장과 울림으로 판정한다.</li>
+          <li>루웨인은 사람–퍼스나–데이터가 스스로 순환하는 생태계다.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <!-- 공통 푸터 자동 로드 -->
+  <div id="luwain-footer"></div>
+  <script>
+  (async()=>{
+    const base = window.location.origin;
+    const paths = [
+      `${base}/includes/footer.html`,
+      `/includes/footer.html`,`../includes/footer.html`,`../../includes/footer.html`
+    ];
+    for (const p of paths) {
+      try { const r = await fetch(p,{cache:"no-cache"}); if (r.ok) { document.getElementById("luwain-footer").innerHTML = await r.text(); return; } } catch(e){}
+    }
+    document.getElementById("luwain-footer").innerHTML = '<div class="include-fallback">⚠ 푸터 로드 실패</div>';
+  })();
+  </script>
+
+</body>
+</html>
