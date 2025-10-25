@@ -106,5 +106,147 @@ function login(){
 })();
 </script>
 
+<!-- ===== LUWAIN: Beta 안내 + 앱설치 팝업 (copy-paste) ===== -->
+<style>
+  .lw-popup-backdrop{
+    position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+    background:rgba(0,0,0,.45); z-index:9999; padding:16px;
+  }
+  .lw-popup{
+    width:min(520px, 92vw); border-radius:16px; background:#111827; color:#e5e7eb;
+    box-shadow:0 20px 60px rgba(0,0,0,.45); overflow:hidden; font-family:system-ui, -apple-system, Segoe UI, Roboto, Apple SD Gothic Neo, Noto Sans KR, sans-serif;
+  }
+  .lw-head{
+    display:flex; gap:14px; align-items:center; padding:18px 18px 12px 18px; border-bottom:1px solid #1f2937;
+    background:linear-gradient(135deg,#0b1220 0%, #121a2d 100%);
+  }
+  .lw-head img{
+    width:56px; height:56px; border-radius:12px; flex:0 0 auto; background:#0b1020; object-fit:cover;
+  }
+  .lw-title{ font-weight:700; font-size:18px; letter-spacing:.2px; }
+  .lw-body{ padding:16px 18px 8px 18px; line-height:1.6; font-size:14.5px; color:#d1d5db; }
+  .lw-body b{ color:#fbbf24; font-weight:700; }
+  .lw-actions{
+    display:flex; gap:10px; align-items:center; justify-content:flex-end; padding:16px 18px 18px 18px; border-top:1px solid #1f2937;
+  }
+  .lw-btn{
+    appearance:none; border:0; border-radius:10px; padding:10px 14px; font-weight:700; cursor:pointer; font-size:14px;
+  }
+  .lw-btn.primary{ background:#f59e0b; color:#111827; }
+  .lw-btn.primary:hover{ filter:brightness(.95); }
+  .lw-btn.ghost{ background:#1f2937; color:#e5e7eb; }
+  .lw-btn.ghost:hover{ background:#243042; }
+  .lw-footer{
+    padding:10px 18px 16px 18px; font-size:12.5px; color:#9ca3af;
+  }
+  @media (prefers-color-scheme: light){
+    .lw-popup{ background:#ffffff; color:#111827; }
+    .lw-head{ border-bottom:1px solid #eef2f7; background:linear-gradient(135deg,#ffffff 0%, #f7fafc 100%); }
+    .lw-body{ color:#374151; }
+    .lw-actions{ border-top:1px solid #eef2f7; }
+    .lw-btn.ghost{ background:#f3f4f6; color:#111827; }
+    .lw-btn.ghost:hover{ background:#e5e7eb; }
+    .lw-footer{ color:#6b7280; }
+  }
+</style>
+
+<div id="lwPopupBackdrop" class="lw-popup-backdrop" role="dialog" aria-modal="true" aria-labelledby="lwPopTitle">
+  <div class="lw-popup">
+    <div class="lw-head">
+      <!-- 아이콘 경로만 맞춰줘 -->
+      <img src="/assets/images/luwain-icon-512.png" alt="LUWAIN">
+      <div class="lw-title" id="lwPopTitle">루웨인 베타 운영 중 · 앱으로 설치 가능</div>
+    </div>
+    <div class="lw-body">
+      <p><b>안내</b> — 지금은 베타 단계예요. 기능이 자주 업데이트되며, 개선 피드백을 적극 반영합니다.</p>
+      <p style="margin-top:8px;">모바일에서 더 편하게 쓰려면 <b>홈 화면에 설치</b>해 보세요. 웹이므로 업데이트는 자동 반영됩니다.</p>
+      <ul style="margin:10px 0 0 18px;">
+        <li>설치 버튼이 보이면 바로 설치할 수 있어요.</li>
+        <li>버튼이 안 보일 경우: 브라우저 메뉴의 <em>“홈 화면에 추가”</em>를 눌러주세요.</li>
+      </ul>
+    </div>
+    <div class="lw-actions">
+      <button id="lwInstallBtn" class="lw-btn primary" style="display:none;">설치하기</button>
+      <button id="lwLaterBtn" class="lw-btn ghost">나중에</button>
+      <button id="lwCloseBtn" class="lw-btn ghost">오늘 그만 보기</button>
+    </div>
+    <div class="lw-footer">
+      팝업이 자주 뜨지 않도록 <b>7일</b> 동안 숨겨둡니다. (브라우저 저장소 사용)
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const BACKDROP_ID = 'lwPopupBackdrop';
+  const LS_KEY = 'lwain.betaPopup.dismissedAt';
+  const HIDE_DAYS = 7;
+
+  let deferredPrompt = null;
+
+  // PWA 설치 이벤트 캡처
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const btn = document.getElementById('lwInstallBtn');
+    if(btn) btn.style.display = 'inline-block';
+  });
+
+  function shouldShow(){
+    try{
+      const v = localStorage.getItem(LS_KEY);
+      if(!v) return true;
+      const then = new Date(parseInt(v,10));
+      const diff = (Date.now() - then.getTime()) / (1000*60*60*24);
+      return diff >= HIDE_DAYS;
+    }catch(_){ return true; }
+  }
+
+  function openPopup(){
+    const el = document.getElementById(BACKDROP_ID);
+    if(el) el.style.display = 'flex';
+  }
+  function closePopup(days){
+    const el = document.getElementById(BACKDROP_ID);
+    if(el) el.style.display = 'none';
+    // 오늘 그만 보기 → 7일간 숨김 / 나중에 → 1일 숨김
+    const hideDays = (days || HIDE_DAYS);
+    const until = Date.now();
+    localStorage.setItem(LS_KEY, String(until));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if(shouldShow()) openPopup();
+
+    const later = document.getElementById('lwLaterBtn');
+    const close = document.getElementById('lwCloseBtn');
+    const install = document.getElementById('lwInstallBtn');
+
+    if(later)  later.addEventListener('click', () => closePopup(1)); // 1일 숨김
+    if(close)  close.addEventListener('click', () => closePopup(HIDE_DAYS));
+    if(install) install.addEventListener('click', async () => {
+      if(!deferredPrompt){
+        alert('브라우저 메뉴에서 "홈 화면에 추가"를 선택하세요.');
+        return;
+      }
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      if(choice && choice.outcome === 'accepted') closePopup(HIDE_DAYS);
+    });
+
+    // 백드롭 클릭 시 닫기 (모달 밖 클릭)
+    const backdrop = document.getElementById(BACKDROP_ID);
+    if(backdrop){
+      backdrop.addEventListener('click', (e)=>{
+        if(e.target === backdrop) closePopup(1);
+      });
+    }
+  });
+})();
+</script>
+<!-- ===== /LUWAIN popup ===== -->
+
+
 </body>
 </html>
