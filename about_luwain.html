@@ -21,17 +21,24 @@ ul{padding-left:20px}
 <div id="luwein-header"></div>
 <script>
 (async()=>{
-  const paths=["./includes/header.html","../includes/header.html","/includes/header.html"];
+  const base = window.location.origin;
+  const paths = [
+    `${base}/includes/header.html`,
+    `/includes/header.html`,
+    `../includes/header.html`,
+    `../../includes/header.html`
+  ];
   for(const p of paths){
     try{
-      const r=await fetch(p,{cache:"no-cache"});
+      const r = await fetch(p, {cache:"no-cache"});
       if(r.ok){
-        document.getElementById("luwein-header").innerHTML=await r.text();
+        document.getElementById("luwein-header").innerHTML = await r.text();
         return;
       }
     }catch(e){}
   }
-  document.getElementById("luwein-header").innerHTML='<div style="color:red;text-align:center;">⚠ 헤더 로드 실패</div>';
+  document.getElementById("luwein-header").innerHTML =
+    '<div style="color:red;text-align:center;">⚠ 헤더 로드 실패</div>';
 })();
 </script>
 
@@ -133,17 +140,24 @@ ul{padding-left:20px}
 <div id="luwein-footer"></div>
 <script>
 (async()=>{
-  const paths=["./includes/footer.html","../includes/footer.html","/includes/footer.html"];
+  const base = window.location.origin;
+  const paths = [
+    `${base}/includes/footer.html`,
+    `/includes/footer.html`,
+    `../includes/footer.html`,
+    `../../includes/footer.html`
+  ];
   for(const p of paths){
     try{
-      const r=await fetch(p,{cache:"no-cache"});
+      const r = await fetch(p, {cache:"no-cache"});
       if(r.ok){
-        document.getElementById("luwein-footer").innerHTML=await r.text();
+        document.getElementById("luwein-footer").innerHTML = await r.text();
         return;
       }
     }catch(e){}
   }
-  document.getElementById("luwein-footer").innerHTML='<div style="color:red;text-align:center;">⚠ 푸터 로드 실패</div>';
+  document.getElementById("luwein-footer").innerHTML =
+    '<div style="color:red;text-align:center;">⚠ 푸터 로드 실패</div>';
 })();
 </script>
 
