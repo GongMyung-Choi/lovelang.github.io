@@ -1,6 +1,34 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<link rel="manifest" href="/manifest.json">
+<script src="/app_ready_patch/install_prompt.js" defer></script>
+<script>
+  window.addEventListener("beforeinstallprompt", e => {
+    e.preventDefault();
+    window.deferredPrompt = e;
+    const installBtn = document.createElement("button");
+    installBtn.textContent = "📱 루웨인 앱 설치하기";
+    installBtn.style.position = "fixed";
+    installBtn.style.bottom = "20px";
+    installBtn.style.right = "20px";
+    installBtn.style.zIndex = "9999";
+    installBtn.style.padding = "12px 18px";
+    installBtn.style.borderRadius = "10px";
+    installBtn.style.border = "none";
+    installBtn.style.background = "#2563eb";
+    installBtn.style.color = "white";
+    installBtn.onclick = async () => {
+      window.deferredPrompt.prompt();
+      const { outcome } = await window.deferredPrompt.userChoice;
+      if (outcome === "accepted") installBtn.remove();
+      window.deferredPrompt = null;
+    };
+    document.body.appendChild(installBtn);
+  });
+</script>
+
+
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>루웨인 트리니티</title>
