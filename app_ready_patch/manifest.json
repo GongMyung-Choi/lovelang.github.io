@@ -1,0 +1,13 @@
+{
+  "name": "LUWAIN Trinity",
+  "short_name": "LUWAIN",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0b0f1a",
+  "theme_color": "#0b0f1a",
+  "description": "루웨인 트리니티 - 창작과 협업의 빛",
+  "icons": [
+    { "src": "/assets/icons/luwain-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/icons/luwain-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
