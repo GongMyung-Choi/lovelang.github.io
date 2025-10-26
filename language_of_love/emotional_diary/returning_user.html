@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>이어쓰기 | 감성일기</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div id="luwein-header"></div>
+
+  <main>
+    <h1>이전 감성일기 이어쓰기</h1>
+    <p>최근 일기 목록을 불러옵니다...</p>
+    <div id="diary-list"></div>
+  </main>
+
+  <div id="luwein-footer"></div>
+
+  <script>
+    fetch("../../includes/header.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("luwein-header").innerHTML = html);
+
+    fetch("../../includes/footer.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("luwein-footer").innerHTML = html);
+  </script>
+</body>
+</html>
