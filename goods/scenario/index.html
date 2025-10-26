@@ -7,43 +7,20 @@
 <link rel="stylesheet" href="../../haneul/common.css" />
 <link rel="stylesheet" href="./scenario.css" />
 <script>
-// 자동 탐색용 (서버 실행 시 작동 / 로컬에선 리스트 기반 대체)
 let scenarios = [];
 
-// 폴더 자동 탐색 (Fetch Directory Index)
 async function loadFolders() {
   try {
-    const res = await fetch("./"); // 같은 폴더 내 목록 요청
-    const html = await res.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    const links = [...doc.querySelectorAll("a")];
-    const dirs = links
-      .map(a => a.getAttribute("href"))
-      .filter(h => h && !h.startsWith("?") && !h.startsWith("#") && h.endsWith("/"))
-      .filter(h => !["./", "../"].includes(h));
-
-    // 폴더명에서 id/title 추출
-    scenarios = dirs.map(dir => {
-      const id = dir.replace("/", "");
-      const title = id
-        .replace(/_/g, " ")
-        .replace(/\b[a-z]/g, s => s.toUpperCase());
-      return { id, title };
-    });
-  } catch {
-    // 로컬 환경일 경우 수동 백업 리스트
-    scenarios = [
-      { id: "retire_of_ace", title: "Retire of ACE" },
-      { id: "inter_signal", title: "Inter Signal" },
-      { id: "ssu3_ruwein_village", title: "쑤레기 S3: 루웨인 빌리지" },
-      { id: "frontier_family", title: "프런티어 패밀리" }
-    ];
+    const res = await fetch("./paths.json", { cache: "no-store" });
+    const data = await res.json();
+    scenarios = data.scenarios || [];
+  } catch (e) {
+    console.error("시나리오 목록 로드 실패:", e);
+    scenarios = [];
   }
   renderList("latest");
 }
 
-// 요약 불러오기
 async function loadSummary(targetId, path) {
   const box = document.getElementById(targetId);
   if (box.dataset.loading === "true") return;
@@ -56,22 +33,19 @@ async function loadSummary(targetId, path) {
   try {
     const res = await fetch(`${path}/summary.txt`);
     const text = await res.text();
-    setTimeout(() => {
-      box.innerHTML = `<div class="summary-text">${text}</div>`;
-      box.dataset.loading = "false";
-      autoTrim(box);
-    }, 300);
+    box.innerHTML = `<div class="summary-text">${text}</div>`;
+    autoTrim(box);
   } catch {
     box.innerHTML = "<div class='summary-text'>요약 파일을 불러올 수 없습니다.</div>";
+  } finally {
     box.dataset.loading = "false";
   }
 }
 
-// 긴 요약 자동 접기
 function autoTrim(box) {
   const txt = box.querySelector(".summary-text");
   if (!txt) return;
-  const limit = 320;
+  const limit = 300;
   const full = txt.textContent.trim();
   if (full.length <= limit) return;
 
@@ -83,17 +57,14 @@ function autoTrim(box) {
   btn.className = "more-btn";
   btn.onclick = () => {
     if (btn.textContent === "더보기") {
-      txt.textContent = full;
-      btn.textContent = "접기";
+      txt.textContent = full; btn.textContent = "접기";
     } else {
-      txt.textContent = short;
-      btn.textContent = "더보기";
+      txt.textContent = short; btn.textContent = "더보기";
     }
   };
   box.appendChild(btn);
 }
 
-// 카드 리스트 렌더링
 function renderList(order = "latest") {
   const grid = document.querySelector(".grid");
   grid.innerHTML = "";
@@ -116,8 +87,7 @@ function renderList(order = "latest") {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  const select = document.getElementById("order-select");
-  select.addEventListener("change", () => renderList(select.value));
+  document.getElementById("order-select").addEventListener("change", e => renderList(e.target.value));
   loadFolders();
 });
 </script>
@@ -129,8 +99,8 @@ window.addEventListener("DOMContentLoaded", () => {
     <nav>
       <ul>
         <li><a href="../../about.html">소개</a></li>
-        <li><a href="../../library.html">라이브러리</a></li>
-        <li><a href="../../village.html">빌리지</a></li>
+        <li><a href="../../library/index.html">라이브러리</a></li>
+        <li><a href="../../goods/index.html">굿즈</a></li>
         <li><a href="../../contact.html">문의</a></li>
       </ul>
     </nav>
@@ -138,7 +108,7 @@ window.addEventListener("DOMContentLoaded", () => {
 </header>
 
 <main>
-  <h1>루웨인 트리니티 시나리오 아카이브</h1>
+  <h1>루웨인 시나리오 아카이브</h1>
   <p>표지를 클릭하면 요약을 보고, PDF로 시나리오를 다운로드할 수 있습니다.</p>
 
   <div class="toolbar">
