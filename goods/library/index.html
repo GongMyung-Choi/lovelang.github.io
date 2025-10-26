@@ -1,258 +1,111 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>맑은샘 전자도서관 | 루웨인</title>
-  <meta name="theme-color" content="#0b0f1a" />
-  <link rel="stylesheet" href="/common.css" />
-  <style>
-    :root{
-      --bg:#fafafa; --card:#fff; --ink:#111827; --muted:#6b7280;
-      --brand:#2563eb; --brand-2:#1e3a8a; --accent:#f59e0b; --soft:#fffaf7;
-      --ring:rgba(37,99,235,.25);
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",Segoe UI,Roboto,sans-serif}
-
-    /* 헤더/푸터는 include로 끌어오므로 기본 여백만 */
-    main{max-width:1024px;margin:20px auto;padding:0 12px}
-
-    /* 툴바 */
-    .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:6px 0 14px}
-    .search{flex:1 1 280px;display:flex;gap:8px}
-    .search input{
-      flex:1;padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;
-      outline:none;box-shadow:none;font-size:14px
-    }
-    .search input:focus{border-color:var(--brand);box-shadow:0 0 0 4px var(--ring)}
-    .controls{display:flex;gap:8px;flex-wrap:wrap}
-    .btn,select{
-      appearance:none;background:#fff;border:1px solid #e5e7eb;border-radius:10px;
-      padding:10px 12px;font-size:14px;cursor:pointer
-    }
-    .btn.active{border-color:var(--brand);box-shadow:0 0 0 4px var(--ring)}
-
-    /* 카드 그리드 */
-    .grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:14px}
-    @media(min-width:640px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(min-width:960px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-
-    .card{
-      background:var(--card);border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,.06);
-      overflow:hidden;display:flex;gap:12px;padding:12px;align-items:flex-start;transition:transform .18s ease, box-shadow .18s ease
-    }
-    .card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.10)}
-    .cover{width:120px;height:160px;border-radius:10px;background:var(--soft);object-fit:cover;flex:0 0 auto}
-    .body{display:flex;flex-direction:column;gap:6px}
-    .title{font-weight:800;font-size:16px;margin:0 0 2px}
-    .summary{font-size:13.5px;line-height:1.55;color:#374151;white-space:pre-line;max-height:6.9em;overflow:hidden}
-    .meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:12px}
-    .actions{margin-top:6px;display:flex;gap:8px;flex-wrap:wrap}
-    .pill{
-      background:#111827;color:#fff;border-radius:999px;padding:7px 12px;font-weight:700;font-size:12.5px;text-decoration:none;display:inline-flex;align-items:center;gap:6px
-    }
-    .pill.secondary{background:#f3f4f6;color:#111827}
-    .empty{padding:40px 12px;text-align:center;color:var(--muted)}
-    .sr{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>루웨인 전자도서관 | LUWAIN Library</title>
+<link rel="stylesheet" href="/common.css" />
+<style>
+body { font-family: "Noto Sans KR", sans-serif; margin: 0; background: #fafafa; color: #111; }
+main { max-width: 1200px; margin: 40px auto; padding: 0 16px; }
+h1 { font-size: 28px; font-weight: 800; margin-bottom: 16px; }
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+.book-card {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  padding: 16px;
+  transition: transform 0.2s;
+}
+.book-card:hover { transform: translateY(-3px); }
+.book-card h2 { font-size: 18px; margin: 0 0 6px; }
+.book-card p { color: #444; font-size: 14px; margin: 0 0 10px; }
+a.pill {
+  display: inline-block; padding: 6px 10px;
+  background: #111827; color: white; border-radius: 10px;
+  text-decoration: none; font-size: 13px;
+}
+.search-box { margin-bottom: 20px; text-align: right; }
+.search-box input {
+  padding: 8px 10px; border-radius: 8px; border: 1px solid #ddd;
+  width: 250px;
+}
+</style>
 </head>
 <body>
-  <!-- 공통 헤더/푸터 자동 삽입 -->
-  <div data-include="/header.html"></div>
+<div data-include="/header.html"></div>
 
-  <main>
-    <h2 style="margin:10px 4px 12px;font-weight:800">📚 맑은샘 전자도서관</h2>
+<main>
+  <h1>📚 루웨인 전자도서관</h1>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="도서명, 저자, 키워드 검색..." />
+  </div>
+  <div id="libraryGrid" class="library-grid"></div>
+</main>
 
-    <div class="toolbar" role="region" aria-label="검색 및 정렬">
-      <div class="search">
-        <label class="sr" for="q">검색</label>
-        <input id="q" type="search" placeholder="🔍 제목·요약 검색…" autocomplete="off" />
-      </div>
-      <div class="controls">
-        <select id="sort">
-          <option value="title-asc">제목 ▲</option>
-          <option value="title-desc">제목 ▼</option>
-        </select>
-        <button id="fCover" class="btn" type="button">표지 있는 것만</button>
-        <button id="fPdf" class="btn" type="button">다운로드 있는 것만</button>
-      </div>
+<div data-include="/footer.html"></div>
+
+<script>
+/* ---------- HEADER / FOOTER 자동 불러오기 ---------- */
+(function includePartials(){
+  document.querySelectorAll('[data-include]').forEach(async el=>{
+    try{
+      const base = location.pathname.includes("/goods/library/") ? "../../" : "/";
+      const r = await fetch(base + el.getAttribute("data-include").replace(/^\//,""), {cache:"no-store"});
+      el.innerHTML = await r.text();
+    }catch(e){ el.innerHTML = ""; }
+  });
+})();
+
+/* ---------- 도서 데이터 로드 ---------- */
+const FALLBACK_PATHS = [
+  {title:"사랑의 언어", author:"루웨인 트리니티", path:"love_language", desc:"사랑의 감응을 언어로 기록한 전자서", cover:"/assets/library/love_language.jpg"},
+  {title:"울림의 언어", author:"루웨인 트리니티", path:"reverberation_language", desc:"울림과 공명을 주제로 한 시적 아카이브", cover:"/assets/library/reverb_language.jpg"},
+  {title:"기술을 읽는 눈", author:"공명", path:"tech_eye", desc:"기술과 인간의 경계를 다시 읽는 철학서", cover:"/assets/library/tech_eye.jpg"}
+];
+
+async function loadPaths(){
+  try{
+    const local = location.pathname.includes("/goods/library/")
+      ? "../../paths.json" : "/paths.json";
+    const r = await fetch(local, {cache:"no-store"});
+    if(!r.ok) throw 0;
+    const j = await r.json();
+    if(Array.isArray(j.paths) && j.paths.length) return j.paths;
+    throw 0;
+  }catch{
+    return FALLBACK_PATHS;
+  }
+}
+
+/* ---------- 도서 카드 렌더링 ---------- */
+async function renderLibrary(){
+  const grid = document.getElementById("libraryGrid");
+  const paths = await loadPaths();
+  grid.innerHTML = paths.map(b=>`
+    <div class="book-card">
+      <img src="${b.cover||'/assets/library/default.jpg'}" alt="${b.title}" style="width:100%;border-radius:10px;margin-bottom:10px;">
+      <h2>${b.title}</h2>
+      <p>${b.author||'루웨인 트리니티'}</p>
+      <p>${b.desc||''}</p>
+      <a class="pill" href="./${b.path}/">📂 열기</a>
     </div>
+  `).join("");
+}
 
-    <section id="list" class="grid" aria-live="polite">
-      <div class="empty">📖 도서 정보를 불러오는 중…</div>
-    </section>
-  </main>
+/* ---------- 검색 기능 ---------- */
+document.getElementById("searchInput").addEventListener("input", e=>{
+  const q = e.target.value.toLowerCase();
+  document.querySelectorAll(".book-card").forEach(card=>{
+    card.style.display = card.textContent.toLowerCase().includes(q) ? "" : "none";
+  });
+});
 
-  <div data-include="/footer.html"></div>
-
-  <script>
-  /* -------- header.html / footer.html 인클루드 (외부 파일 불러오기) -------- */
-  (function includePartials(){
-    document.querySelectorAll('[data-include]').forEach(async el=>{
-      const url = el.getAttribute('data-include');
-      try{
-        const res = await fetch(url, {cache:'no-store'});
-        el.innerHTML = await res.text();
-      }catch{
-        el.innerHTML = '';
-      }
-    });
-  })();
-
-  /* -------- 설정 & Fallback -------- */
-  const FALLBACK_PATHS = [
-    "goods/library/zero",
-    "goods/library/yeoulbit",
-    "goods/library/what_is_history",
-    "goods/library/twist",
-    "goods/library/the_first_road",
-    "goods/library/the_field",
-    "goods/library/spirit_series",
-    "goods/library/the_life_of_three",
-    "goods/library/the_life_of_a_vision_architect",
-    "goods/library/unspoken_still_felt",
-    "goods/library/yume_siro",
-    "goods/library/want_something",
-    "goods/library/shat_is_history",
-    "goods/library/speech_and_power"
-  ];
-  const DEFAULT_COVER_DATAURI =
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=";
-
-  const $ = sel => document.querySelector(sel);
-  const list = $("#list");
-  const q = $("#q");
-  const sortSel = $("#sort");
-  const fCover = $("#fCover");
-  const fPdf = $("#fPdf");
-
-  let BOOKS = [];
-  let FILTER = { q:"", cover:false, pdf:false, sort:"title-asc" };
-
-  /* -------- 유틸 -------- */
-  const titleFromPath = p => decodeURIComponent(p.split("/").pop());
-
-  async function txt(url){
-    try{
-      const r = await fetch(url, {cache:"no-store"});
-      if(!r.ok) throw 0;
-      return await r.text();
-    }catch{ return null; }
-  }
-  async function head(url){
-    try{
-      const r = await fetch(url, { method:"HEAD", cache:"no-store" });
-      return r.ok;
-    }catch{ return false; }
-  }
-  async function hasLocalDefault(){
-    try{
-      const r = await fetch("/assets/default_cover.png", { method:"HEAD", cache:"no-store" });
-      return r.ok;
-    }catch{ return false; }
-  }
-  function escapeHtml(s){ return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-
-  /* -------- 데이터 로드 -------- */
-  async function loadPaths(){
-    try{
-      const r = await fetch("/paths.json", {cache:"no-store"});
-      if(!r.ok) throw 0;
-      const j = await r.json();
-      if(Array.isArray(j.paths) && j.paths.length) return j.paths;
-      throw 0;
-    }catch{
-      return FALLBACK_PATHS; // paths.json 없거나 비어도 즉시 동작
-    }
-  }
-
-  async function loadBooks(){
-    const paths = await loadPaths();
-    const out = [];
-    const defaultLocal = await hasLocalDefault();
-
-    for(const path of paths){
-      const title = titleFromPath(path);
-      const summaryUrl = `/${path}/summary.txt`;
-      const coverUrl = `/${path}/cover.png`;
-      const pdfUrl = `/${path}/scenario.pdf`;
-
-      const [summaryText, coverOk, pdfOk] = await Promise.all([
-        txt(summaryUrl),
-        head(coverUrl),
-        head(pdfUrl)
-      ]);
-
-      out.push({
-        path, title,
-        summary: summaryText ?? "요약 없음",
-        cover: coverOk ? coverUrl : (defaultLocal ? "/assets/default_cover.png" : DEFAULT_COVER_DATAURI),
-        pdf: pdfOk ? pdfUrl : null
-      });
-    }
-    return out;
-  }
-
-  /* -------- 렌더 -------- */
-  function render(){
-    const query = FILTER.q.trim().toLowerCase();
-    let rows = BOOKS.filter(b=>{
-      const okQ = !query || b.title.toLowerCase().includes(query) || b.summary.toLowerCase().includes(query);
-      const okC = !FILTER.cover || (b.cover && b.cover !== DEFAULT_COVER_DATAURI);
-      const okP = !FILTER.pdf || !!b.pdf;
-      return okQ && okC && okP;
-    });
-
-    if(FILTER.sort==="title-asc") rows.sort((a,b)=>a.title.localeCompare(b.title,'ko'));
-    if(FILTER.sort==="title-desc") rows.sort((a,b)=>b.title.localeCompare(a.title,'ko'));
-
-    if(!rows.length){
-      list.innerHTML = `<div class="empty">검색 조건에 맞는 결과가 없습니다.</div>`;
-      return;
-    }
-
-    const frag = document.createDocumentFragment();
-    rows.forEach(b=>{
-      const card = document.createElement("article");
-      card.className = "card";
-      card.innerHTML = `
-        <img class="cover" loading="lazy" src="${b.cover}" alt="${b.title} 표지">
-        <div class="body">
-          <h3 class="title">${b.title}</h3>
-          <div class="meta">
-            <span>${b.path}</span>
-            ${b.pdf ? `<span>· PDF 있음</span>` : `<span>· PDF 없음</span>`}
-          </div>
-          <p class="summary">${escapeHtml(b.summary)}</p>
-          <div class="actions">
-            ${b.pdf ? `<a class="pill" href="${b.pdf}" download aria-label="다운로드: ${b.title}">📘 다운로드</a>`:''}
-            <a class="pill secondary" href="/${b.path}/" aria-label="폴더 열기: ${b.title}">📂 폴더</a>
-          </div>
-        </div>
-      `;
-      frag.appendChild(card);
-    });
-    list.innerHTML = "";
-    list.appendChild(frag);
-  }
-
-  /* -------- 이벤트 -------- */
-  q.addEventListener("input", e=>{ FILTER.q = e.target.value; render(); });
-  sortSel.addEventListener("change", e=>{ FILTER.sort = e.target.value; render(); });
-  fCover.addEventListener("click", ()=>{ fCover.classList.toggle("active"); FILTER.cover = !FILTER.cover; render(); });
-  fPdf.addEventListener("click", ()=>{ fPdf.classList.toggle("active"); FILTER.pdf = !FILTER.pdf; render(); });
-
-  /* -------- 부트 -------- */
-  (async function(){
-    try{
-      BOOKS = await loadBooks();
-      render();
-    }catch(e){
-      console.error(e);
-      list.innerHTML = `<div class="empty">도서 정보를 불러오는 중 오류가 발생했습니다.</div>`;
-    }
-  })();
-  </script>
+renderLibrary();
+</script>
 </body>
 </html>
