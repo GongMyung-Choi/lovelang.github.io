@@ -88,6 +88,16 @@
     <h1>감응언어학 (Resonant Linguistics)</h1>
     <div id="book-container"></div>
   </main>
+<script>
+window.addEventListener("DOMContentLoaded",()=>{
+  document.querySelectorAll("main p").forEach(p=>{
+    p.innerHTML = p.innerHTML
+      .replace(/<w:[^>]+>/g,"")
+      .replace(/<\/w:[^>]+>/g,"");
+  });
+});
+</script>
+
 
   <footer>
     <p>© 2025 루웨인 빌리지 | With Love & Resonance</p>
