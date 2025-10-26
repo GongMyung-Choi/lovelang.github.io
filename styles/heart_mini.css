@@ -1,0 +1,30 @@
+/* 🩵 루웨인 미니 심장 모니터 스타일 */
+#heart-mini {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  z-index: 9999;
+}
+
+#heart-pulse {
+  --heart-color: #888;
+  width: 22px;
+  height: 22px;
+  background: var(--heart-color);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--heart-color);
+  animation: pulseMini 1.8s infinite ease-in-out;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+#heart-pulse:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 20px var(--heart-color);
+}
+
+@keyframes pulseMini {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.25); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 1; }
+}
