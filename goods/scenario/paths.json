@@ -1,0 +1,9 @@
+{
+  "scenarios": [
+    { "id": "retire_of_ace", "title": "Retire of ACE" },
+    { "id": "inter_signal", "title": "Inter Signal" },
+    { "id": "pronteer_family_season1", "title": "프런티어 패밀리 시즌 1" },
+    { "id": "ssuregi_season3", "title": "쑤레기 S3: 루웨인 빌리지" },
+    { "id": "world_tree", "title": "세계수" }
+  ]
+}
