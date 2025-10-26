@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>💪 건강한 | Haneul Project</title>
+<link rel="stylesheet" href="../common.css">
+<style>header{background:url('./assets/001.png') center/cover no-repeat;background-color:#8cbf4d;}</style>
+</head><body>
+<header><h1>💪 건강한 | Healthy Haneul</h1><p>몸과 마음의 리듬, 균형의 기술</p></header>
+<section class="grid" id="gallery"></section>
+<footer>루웨인 한얼 프로젝트 · 건강한 © 2025</footer>
+<script>
+const folder='./assets/',total=8,captions=[
+"균형의 기술","루틴의 힘","회복의 리듬","몸과 마음의 조화","내면의 건강"
+];
+const g=document.getElementById('gallery');
+for(let i=2;i<=total;i++){const d=document.createElement('div');d.className='card';
+const img=`${folder}${String(i).padStart(3,'0')}.png`,t=captions[i-2]||`한얼의 숨결 #${i}`;
+d.innerHTML=`<img src="${img}"><div class="text">${t}</div>`;g.appendChild(d);}
+</script></body></html>
