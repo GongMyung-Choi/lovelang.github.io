@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>울림 체조 | Resonance Exercise</title>
+<style>
+:root{
+  --accent:#6c5b7b;
+  --highlight:#2a9d8f;
+  --font:'Noto Sans KR',sans-serif;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:var(--font);
+  background:#fff;
+  color:#333;
+  padding:40px 24px 60px;
+  line-height:1.8;
+  max-width:960px;
+  margin-inline:auto;
+}
+h1{color:var(--accent);font-size:2rem;margin-bottom:8px;}
+h2{color:var(--highlight);margin-top:26px;font-size:1.2rem;}
+p{margin:10px 0;}
+blockquote{
+  background:#f8f7fa;
+  border-left:4px solid var(--accent);
+  padding:12px 16px;
+  color:#555;
+  font-style:italic;
+  border-radius:8px;
+}
+.exercise-box{
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:16px;
+  background:#fafafa;
+  margin:14px 0;
+}
+button{
+  background:var(--highlight);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:10px 16px;
+  font-size:1rem;
+  cursor:pointer;
+}
+button:hover{opacity:.9;}
+.progress{
+  width:100%;
+  height:8px;
+  background:#e0e0e0;
+  border-radius:6px;
+  overflow:hidden;
+  margin-top:10px;
+}
+.bar{
+  width:0%;
+  height:100%;
+  background:var(--highlight);
+  transition:width .2s;
+}
+footer{
+  margin-top:30px;
+  color:#888;
+  font-size:.9rem;
+  text-align:right;
+}
+</style>
+</head>
+<body>
+
+<h1>울림 체조</h1>
+<p>
+울림의 언어를 몸으로 익히는 짧은 루틴입니다.<br>
+매일 3분, 간단한 발성 훈련으로 말의 근육을 깨워 보세요.
+</p>
+
+<blockquote>
+“언어는 호흡의 리듬 위에 서 있다.”  
+— 루웨인 발성 교본
+</blockquote>
+
+<h2>1. 입술 울림 풀기</h2>
+<div class="exercise-box">
+  <p>입술을 가볍게 닫고 <b>“브르르르”</b> 하며 떨려 보세요.  
+  긴장을 푸는 동시에 울림이 얼굴 전체로 확산됩니다.</p>
+  <button onclick="startTimer(10,this)">⏱️ 10초간 연습</button>
+  <div class="progress"><div class="bar"></div></div>
+</div>
+
+<h2>2. 모음 발성</h2>
+<div class="exercise-box">
+  <p>‘아–에–이–오–우–’ 순서로 발성하며  
+  울림이 입천장, 코, 가슴으로 어떻게 이동하는지 느껴보세요.</p>
+  <button onclick="startTimer(15,this)">🎤 15초간 연습</button>
+  <div class="progress"><div class="bar"></div></div>
+</div>
+
+<h2>3. 리듬 호흡</h2>
+<div class="exercise-box">
+  <p>4초 들이마시고, 4초 멈추고, 4초 내쉬기.  
+  아래의 원이 커졌다 작아지며 리듬을 안내합니다.</p>
+  <canvas id="breathCircle" width="180" height="180"></canvas>
+</div>
+
+<h2>4. 나의 울림 기록</h2>
+<p>
+매일의 발성 루틴이 끝나면 느낀 점을 메모하세요.<br>
+이 기록은 울림 일지(Resonance_Log)와 연동됩니다.
+</p>
+<textarea id="memo" rows="4" placeholder="오늘의 울림 느낌을 적어보세요." style="width:100%;padding:10px;border:1px solid #e9e9ee;border-radius:10px"></textarea>
+<div style="margin-top:10px;">
+  <button onclick="saveMemo()">저장</button>
+  <p id="saveStatus" style="color:#666;margin-top:6px;">기록 전</p>
+</div>
+
+<footer>루웨인 언어연구소 · 울림 체조 © 2025</footer>
+
+<script>
+function startTimer(sec,btn){
+  const box=btn.parentElement;
+  const bar=box.querySelector('.bar');
+  btn.disabled=true; bar.style.width='0%';
+  let t=0;
+  const timer=setInterval(()=>{
+    t+=0.2; bar.style.width=(t/sec*100)+'%';
+    if(t>=sec){clearInterval(timer); btn.disabled=false; bar.style.width='100%';}
+  },200);
+}
+
+// 호흡 원 시각화
+const canvas=document.getElementById('breathCircle');
+if(canvas){
+  const ctx=canvas.getContext('2d');
+  let frame=0;
+  function draw(){
+    frame+=0.02;
+    const r=60+Math.sin(frame)*20;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.beginPath();
+    ctx.arc(90,90,r,0,Math.PI*2);
+    ctx.fillStyle='rgba(42,157,143,0.15)';
+    ctx.fill();
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// 메모 저장
+function saveMemo(){
+  const text=document.getElementById('memo').value.trim();
+  if(!text){alert('메모를 입력하세요.');return;}
+  const list=JSON.parse(localStorage.getItem('reverb_exercise')||'[]');
+  list.unshift({text,at:new Date().toLocaleString()});
+  localStorage.setItem('reverb_exercise',JSON.stringify(list));
+  document.getElementById('saveStatus').textContent='저장됨 ('+new Date().toLocaleTimeString()+')';
+  document.getElementById('memo').value='';
+}
+</script>
+
+</body>
+</html>
