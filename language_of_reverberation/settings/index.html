@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>기본설정 | Settings</title>
+<style>
+:root{
+  --accent:#6c5b7b;
+  --highlight:#2a9d8f;
+  --bg-light:#ffffff;
+  --bg-dark:#1c1c1c;
+  --text-light:#333;
+  --text-dark:#eee;
+  --font:'Noto Sans KR',sans-serif;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:var(--font);
+  background:var(--bg-light);
+  color:var(--text-light);
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+header{
+  color:var(--accent);
+  font-weight:800;
+  font-size:1.6rem;
+  text-align:center;
+  padding:18px;
+  border-bottom:2px solid #eee;
+}
+main{
+  flex:1;
+  max-width:700px;
+  margin:0 auto;
+  padding:30px 20px;
+}
+section{
+  background:#fafafa;
+  border:1px solid #eee;
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:16px;
+}
+label{display:block;margin:8px 0 4px;font-weight:600;}
+select,input[type=range]{
+  width:100%;
+  padding:8px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  font-family:inherit;
+}
+.toggle{
+  display:flex;align-items:center;gap:10px;
+}
+button{
+  background:var(--highlight);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:10px 16px;
+  font-size:1rem;
+  cursor:pointer;
+  margin-top:12px;
+}
+button:hover{opacity:.9;}
+footer{
+  padding:14px;
+  color:#888;
+  border-top:1px solid #eee;
+  font-size:.9rem;
+  text-align:center;
+}
+</style>
+</head>
+<body>
+
+<header>⚙️ 기본설정 | Settings</header>
+
+<main>
+  <p>나에게 맞는 울림 환경을 설정해보세요. (로컬에 저장됩니다)</p>
+
+  <section>
+    <h2>🖋 글꼴 & 크기</h2>
+    <label>글꼴 선택</label>
+    <select id="fontSel">
+      <option value="'Noto Sans KR',sans-serif">기본 (Noto Sans KR)</option>
+      <option value="'Nanum Myeongjo',serif">나눔명조</option>
+      <option value="'Pretendard',sans-serif">Pretendard</option>
+    </select>
+
+    <label>글자 크기</label>
+    <input type="range" id="fontSize" min="14" max="22" value="16" />
+  </section>
+
+  <section>
+    <h2>🌗 테마</h2>
+    <div class="toggle">
+      <input type="checkbox" id="darkMode" />
+      <label for="darkMode">다크 모드 사용</label>
+    </div>
+  </section>
+
+  <section>
+    <h2>🔔 알림</h2>
+    <div class="toggle">
+      <input type="checkbox" id="notify" />
+      <label for="notify">활동 알림 받기</label>
+    </div>
+  </section>
+
+  <button id="saveBtn">저장하기</button>
+</main>
+
+<footer>루웨인 언어연구소 · 울림의 언어 © 2025</footer>
+
+<script>
+const fontSel=document.getElementById('fontSel');
+const fontSize=document.getElementById('fontSize');
+const darkMode=document.getElementById('darkMode');
+const notify=document.getElementById('notify');
+const saveBtn=document.getElementById('saveBtn');
+
+function saveSettings(){
+  const set={
+    font:fontSel.value,
+    size:fontSize.value,
+    dark:darkMode.checked,
+    notify:notify.checked
+  };
+  localStorage.setItem('resonance_settings',JSON.stringify(set));
+  applySettings(set);
+  alert('설정이 저장되었습니다.');
+}
+
+function loadSettings(){
+  const data=localStorage.getItem('resonance_settings');
+  if(!data)return;
+  const s=JSON.parse(data);
+  fontSel.value=s.font;
+  fontSize.value=s.size;
+  darkMode.checked=s.dark;
+  notify.checked=s.notify;
+  applySettings(s);
+}
+
+function applySettings(s){
+  document.body.style.fontFamily=s.font;
+  document.body.style.fontSize=s.size+'px';
+  if(s.dark){
+    document.body.style.background='var(--bg-dark)';
+    document.body.style.color='var(--text-dark)';
+  }else{
+    document.body.style.background='var(--bg-light)';
+    document.body.style.color='var(--text-light)';
+  }
+}
+
+saveBtn.addEventListener('click',saveSettings);
+document.addEventListener('DOMContentLoaded',loadSettings);
+</script>
+
+</body>
+</html>
