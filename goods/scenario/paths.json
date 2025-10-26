@@ -1,9 +1,17 @@
 {
-  "scenarios": [
-    { "id": "retire_of_ace", "title": "Retire of ACE" },
-    { "id": "inter_signal", "title": "Inter Signal" },
-    { "id": "pronteer_family_season1", "title": "프런티어 패밀리 시즌 1" },
-    { "id": "ssuregi_season3", "title": "쑤레기 S3: 루웨인 빌리지" },
-    { "id": "world_tree", "title": "세계수" }
+  "paths": [
+    { "title": "루웨인 빌리지", "path": "luwain_village", "subtitle": "마을 세계관 파일럿" },
+    { "title": "은퇴한 에이스", "path": "retire_of_ace" },
+    { "title": "쓰레기 시즌1", "path": "ssuregi_season1" },
+    { "title": "쓰레기 시즌2", "path": "ssuregi_season2" },
+    { "title": "쓰레기 시즌3", "path": "ssuregi_season3" },
+    { "title": "월드 트리", "path": "world_tree" },
+    { "title": "포커", "path": "poker" },
+    { "title": "인터 시그널", "path": "inter_signal" },
+    { "title": "프랙탈", "path": "fractal" },
+    { "title": "프론티어 패밀리 S1", "path": "pronteer_family_season1" },
+    { "title": "프론티어 패밀리 S2", "path": "pronteer_family_season2" },
+    { "title": "the_life_of_a_vision_architect", "path": "the_life_of_a_vision_architect" },
+    { "title": "Chapter 0: zero", "path": "zero" }
   ]
 }
