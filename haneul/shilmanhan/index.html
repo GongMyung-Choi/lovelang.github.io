@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🌿 쉴만한 | Haneul Project</title>
+<link rel="stylesheet" href="../common.css">
+<style>header{background:url('./assets/001.png') center/cover no-repeat;background-color:#7dc8a3;}</style>
+</head><body>
+<header><h1>🌿 쉴만한 | Restful Haneul</h1><p>멈춤 속의 회복, 루웨인의 호흡 공간</p></header>
+<section class="grid" id="gallery"></section>
+<footer>루웨인 한얼 프로젝트 · 쉴만한 © 2025</footer>
+<script>
+const folder='./assets/',total=8,captions=[
+"멈춤 속의 회복","자연과 함께 호흡하기","쉼의 기술, 루웨인의 리듬",
+"조용한 시간, 마음의 정원","숨결이 머무는 공간","오늘도 잠시, 멈춰서"
+];
+const g=document.getElementById('gallery');
+for(let i=2;i<=total;i++){const d=document.createElement('div');d.className='card';
+const img=`${folder}${String(i).padStart(3,'0')}.png`,t=captions[i-2]||`한얼의 숨결 #${i}`;
+d.innerHTML=`<img src="${img}"><div class="text">${t}</div>`;g.appendChild(d);}
+</script></body></html>
