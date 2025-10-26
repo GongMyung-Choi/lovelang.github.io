@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>감응언어학 | 루웨인 트리니티</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Pretendard", sans-serif;
+      background: #fcfcfc;
+      color: #222;
+    }
+    header, footer {
+      background: #f8f9fa;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #e5e5e5;
+    }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+    nav a:hover { color: #007bff; }
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.2em;
+      color: #444;
+    }
+    h2 {
+      margin: 50px 0 15px;
+      font-size: 1.3em;
+      color: #555;
+      border-left: 4px solid #007bff;
+      padding-left: 10px;
+    }
+    iframe {
+      width: 100%;
+      height: 800px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      margin-bottom: 60px;
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const chapters = [
+        "ch1.xhtml","ch2.xhtml","ch3.xhtml","ch4.xhtml",
+        "ch5.xhtml","ch6.xhtml","ch7.xhtml","ch8.xhtml",
+        "epilogue.xhtml","appendix.xhtml","glossary.xhtml","references.xhtml"
+      ];
+      const container = document.getElementById("book-container");
+      chapters.forEach((file, idx) => {
+        const title = document.createElement("h2");
+        title.textContent = "Chapter " + (idx + 1);
+        container.appendChild(title);
+        const iframe = document.createElement("iframe");
+        iframe.src = file;
+        iframe.loading = "lazy";
+        container.appendChild(iframe);
+      });
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/index.html">🏠 홈</a> |
+      <a href="/language_of_love/index.html">💞 사랑의 언어</a> |
+      <a href="/language_of_love/resonant_linguistics/index.html"><b>📘 감응언어학</b></a> |
+      <a href="/library/index.html">📚 도서관</a> |
+      <a href="/about/index.html">🌿 루웨인 소개</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>감응언어학 (Resonant Linguistics)</h1>
+    <div id="book-container"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 루웨인 빌리지 | With Love & Resonance</p>
+    <small>본 사이트는 루웨인 트리니티의 감응언어학 프로젝트 일부입니다.</small>
+  </footer>
+</body>
+</html>
