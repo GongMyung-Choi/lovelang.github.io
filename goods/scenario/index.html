@@ -1,131 +1,123 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>루웨인 시나리오 아카이브</title>
-<link rel="stylesheet" href="../../haneul/common.css" />
-<link rel="stylesheet" href="./scenario.css" />
-<script>
-let scenarios = [];
-
-async function loadFolders() {
-  try {
-    const res = await fetch("./paths.json", { cache: "no-store" });
-    const data = await res.json();
-    scenarios = data.scenarios || [];
-  } catch (e) {
-    console.error("시나리오 목록 로드 실패:", e);
-    scenarios = [];
-  }
-  renderList("latest");
-}
-
-async function loadSummary(targetId, path) {
-  const box = document.getElementById(targetId);
-  if (box.dataset.loading === "true") return;
-  if (box.style.display === "block") { box.style.display = "none"; return; }
-
-  box.innerHTML = '<div class="loader"></div>';
-  box.style.display = "block";
-  box.dataset.loading = "true";
-
-  try {
-    const res = await fetch(`${path}/summary.txt`);
-    const text = await res.text();
-    box.innerHTML = `<div class="summary-text">${text}</div>`;
-    autoTrim(box);
-  } catch {
-    box.innerHTML = "<div class='summary-text'>요약 파일을 불러올 수 없습니다.</div>";
-  } finally {
-    box.dataset.loading = "false";
-  }
-}
-
-function autoTrim(box) {
-  const txt = box.querySelector(".summary-text");
-  if (!txt) return;
-  const limit = 300;
-  const full = txt.textContent.trim();
-  if (full.length <= limit) return;
-
-  const short = full.slice(0, limit) + " ...";
-  txt.textContent = short;
-
-  const btn = document.createElement("button");
-  btn.textContent = "더보기";
-  btn.className = "more-btn";
-  btn.onclick = () => {
-    if (btn.textContent === "더보기") {
-      txt.textContent = full; btn.textContent = "접기";
-    } else {
-      txt.textContent = short; btn.textContent = "더보기";
-    }
-  };
-  box.appendChild(btn);
-}
-
-function renderList(order = "latest") {
-  const grid = document.querySelector(".grid");
-  grid.innerHTML = "";
-  let sorted = [...scenarios];
-  if (order === "alpha") sorted.sort((a, b) => a.title.localeCompare(b.title, "ko"));
-  if (order === "latest") sorted = sorted.reverse();
-
-  sorted.forEach(s => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <h3>${s.title}</h3>
-      <img src="./${s.id}/cover.png" alt="${s.title} 표지" class="cover"
-           onclick="loadSummary('sum-${s.id}','./${s.id}')">
-      <div id="sum-${s.id}" class="summary" data-loading="false"></div>
-      <a class="download" href="./${s.id}/${s.id}.pdf" download>시나리오 다운로드</a>
-    `;
-    grid.appendChild(card);
-  });
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("order-select").addEventListener("change", e => renderList(e.target.value));
-  loadFolders();
-});
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>시나리오 | 루웨인 전자도서관</title>
+<link rel="stylesheet" href="/common.css">
+<style>
+  :root { --ink:#111827; --bg:#f8fafc; --card:#fff; --accent:#6d28d9; }
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Pretendard,Apple SD Gothic Neo,sans-serif}
+  main{max-width:1200px;margin:40px auto;padding:0 16px}
+  h1{font-size:28px;font-weight:800;margin:0 0 18px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+  .card{background:var(--card);border-radius:14px;box-shadow:0 2px 6px rgba(0,0,0,.06);padding:14px;display:flex;flex-direction:column}
+  .cover{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px;background:#eee}
+  .title{font-size:18px;font-weight:700;margin:10px 0 6px}
+  .desc{color:#475569;font-size:14px;margin:0 0 10px;min-height:1.2em}
+  .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+  .btn{appearance:none;border:0;border-radius:10px;padding:8px 12px;font-size:14px;font-weight:600;cursor:pointer}
+  .primary{background:var(--ink);color:#fff}
+  .ghost{background:#eef2ff;color:#1f2937}
+  details{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:10px;margin-top:10px}
+  summary{cursor:pointer;font-weight:700}
+  /* 헤더가 배너/영웅요소보다 위로 올라오는 문제 방지 */
+  header, .site-header { position:relative; z-index:10; }
+</style>
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <h1><a href="../../index.html">루웨인 트리니티</a></h1>
-    <nav>
-      <ul>
-        <li><a href="../../about.html">소개</a></li>
-        <li><a href="../../library/index.html">라이브러리</a></li>
-        <li><a href="../../goods/index.html">굿즈</a></li>
-        <li><a href="../../contact.html">문의</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+  <!-- 헤더/푸터 자동 include -->
+  <div data-include="/header.html"></div>
 
-<main>
-  <h1>루웨인 시나리오 아카이브</h1>
-  <p>표지를 클릭하면 요약을 보고, PDF로 시나리오를 다운로드할 수 있습니다.</p>
+  <main>
+    <h1>🎬 시나리오</h1>
+    <p class="desc" id="countInfo"></p>
+    <div class="grid" id="list"></div>
+  </main>
 
-  <div class="toolbar">
-    <label for="order-select">정렬:</label>
-    <select id="order-select">
-      <option value="latest">최신순</option>
-      <option value="alpha">가나다순</option>
-    </select>
-  </div>
+  <div data-include="/footer.html"></div>
 
-  <div class="grid"></div>
-</main>
+<script>
+/* -------- 공통 헤더/푸터 include (경로 자동 판별) -------- */
+(async () => {
+  const base = location.pathname.replace(/[^\/]+$/,'').includes('/goods/scenario/')
+    ? '../../' : '/';
+  for (const el of document.querySelectorAll('[data-include]')) {
+    const path = el.getAttribute('data-include').replace(/^\//,'');
+    try {
+      const html = await fetch(base + path, {cache:'no-store'}).then(r=>r.text());
+      el.innerHTML = html;
+    } catch { el.innerHTML=''; }
+  }
+})();
 
-<footer>
-  <div class="footer-inner">
-    <p>© 2025 루웨인 트리니티. All rights reserved.</p>
-  </div>
-</footer>
+/* -------- 데이터 로드 -------- */
+async function loadManifest() {
+  const here = location.pathname.replace(/[^\/]+$/,''); // .../goods/scenario/
+  const candidates = [ here + 'paths.json', '/goods/scenario/paths.json' ];
+  for (const url of candidates) {
+    try {
+      const r = await fetch(url, {cache:'no-store'});
+      if (r.ok) return (await r.json()).paths || [];
+    } catch(e){}
+  }
+  return []; // 없으면 비워둠
+}
+
+/* -------- 렌더링 -------- */
+function cardTpl(item){
+  const base = `./${item.path}/`;
+  const cover = item.cover || (base + 'cover.png');
+  const pdf   = item.pdf   || (base + 'scenario.pdf');
+  const sum   = item.summary || (base + 'summary.txt');
+
+  return `
+  <article class="card">
+    <img class="cover" loading="lazy" src="${cover}" alt="${item.title||item.path}">
+    <div class="title">${item.title||item.path}</div>
+    <div class="desc">${item.subtitle||''}</div>
+
+    <div class="row">
+      <a class="btn ghost" href="${base}"  >📂 폴더 열기</a>
+      <a class="btn primary" href="${pdf}" download>⬇️ 시나리오(PDF)</a>
+      <button class="btn ghost" data-summary="${sum}">요약 보기</button>
+    </div>
+
+    <details hidden><summary>요약</summary><div class="sum-body" style="white-space:pre-wrap"></div></details>
+  </article>`;
+}
+
+async function render(){
+  const data = await loadManifest();
+  const box = document.getElementById('list');
+  if (!data.length){
+    document.getElementById('countInfo').textContent =
+      '등록된 시나리오 목록이 없습니다. /goods/scenario/paths.json 을 채워 주세요.';
+    box.innerHTML = '';
+    return;
+  }
+  document.getElementById('countInfo').textContent = `총 ${data.length}편`;
+  box.innerHTML = data.map(cardTpl).join('');
+
+  // 요약 로드(클릭 시)
+  box.addEventListener('click', async (e)=>{
+    const btn = e.target.closest('button[data-summary]');
+    if(!btn) return;
+    const details = btn.closest('.card').querySelector('details');
+    const body = details.querySelector('.sum-body');
+    if (!details.dataset.loaded){
+      try{
+        const txt = await fetch(btn.dataset.summary, {cache:'no-store'}).then(r=>r.text());
+        body.textContent = txt.trim() || '(요약 없음)';
+      }catch{ body.textContent = '(요약을 불러오지 못했습니다)'; }
+      details.dataset.loaded = '1';
+    }
+    details.hidden = false;
+    details.open = true;
+    details.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+}
+render();
+</script>
 </body>
 </html>
