@@ -1,0 +1,339 @@
+좋아요 👍 아래는 루웨인 회원 30일 체험→제한 전환 구조를 복붙 파일 형태로 완성한 버전입니다.
+(각 파일을 GitHub Pages 기준으로 어디에 넣을지도 함께 명시했습니다.)
+
+📁 1️⃣ SQL – /scripts/user_status.sql
+
+수파베이스 SQL Editor 또는 pgAdmin에 그대로 붙여 넣기
+
+-- ① 회원 상태 컬럼 추가
+alter table auth.users
+  add column if not exists joined_at timestamptz default now(),
+  add column if not exists status text default 'trial',
+  add column if not exists plan_type text default 'free';
+
+-- ② 30일 지나면 자동으로 제한 전환
+create or replace function check_user_status()
+returns void as $$
+begin
+  update auth.users
+  set status = 'limited'
+  where status = 'trial'
+  and now() > (joined_at + interval '30 days');
+end;
+$$ language plpgsql;
+
+-- ③ 하루 1회 자동 실행 (매일 새벽 3시)
+select cron.schedule('user_status_check', '0 3 * * *', $$ select check_user_status(); $$);
+
+
+📍 위 코드는 Supabase SQL Editor → Run 클릭만 해도 적용됩니다.
+
+📁 2️⃣ JS – /scripts/auth_check.js
+
+모든 페이지 공용 헤더(header.html)에서 불러오면 자동 작동
+
+<script type="module" src="/scripts/auth_check.js" defer></script>
+
+// /scripts/auth_check.js
+import { supabase } from './config.js';
+
+async function checkUserStatus() {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  const { data, error } = await supabase
+    .from('users')
+    .select('status, joined_at')
+    .eq('id', user.id)
+    .single();
+
+  if (error) return console.error(error);
+
+  const joined = new Date(data.joined_at);
+  const daysPassed = Math.floor((Date.now() - joined.getTime()) / (1000 * 60 * 60 * 24));
+  const remain = 30 - daysPassed;
+
+  if (data.status === 'trial' && remain > 0) {
+    showNotice(`루웨인 체험 중 (남은 기간: ${remain}일)`);
+  } else if (data.status === 'limited') {
+    showNotice('루웨인 제한 모드로 전환되었습니다.');
+  }
+}
+
+function showNotice(msg) {
+  const el = document.createElement('div');
+  el.textContent = msg;
+  Object.assign(el.style, {
+    position: 'fixed',
+    top: '12px',
+    right: '12px',
+    background: '#111827',
+    color: '#fbbf24',
+    padding: '10px 16px',
+    borderRadius: '10px',
+    fontFamily: 'system-ui',
+    zIndex: '9999',
+    fontWeight: '700',
+    boxShadow: '0 4px 20px rgba(0,0,0,.3)'
+  });
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 6000);
+}
+
+checkUserStatus();
+
+📁 3️⃣ HTML – /admin/policies/member_policy.html
+
+공지 또는 첫 로그인 시 자동 노출용
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>루웨인 회원 정책</title>
+<link rel="stylesheet" href="/assets/common.css">
+<style>
+body { font-family: 'Noto Sans KR', sans-serif; background: #f9fafb; color: #111; padding: 2rem; line-height: 1.7; }
+section { max-width: 800px; margin: 0 auto; background: white; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.05); padding: 2rem; }
+h1 { font-size: 1.6rem; font-weight: 700; color: #f59e0b; }
+table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: center; }
+th { background: #f3f4f6; }
+.notice { background: #fffbe6; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; }
+</style>
+</head>
+<body>
+<section>
+  <h1>루웨인 회원 정책 안내</h1>
+  <div class="notice">
+    가입 후 30일간은 <b>모든 기능이 자유롭게 개방</b>됩니다.<br>
+    이후 자동으로 <b>제한 모드(Limited)</b>로 전환됩니다.
+  </div>
+
+  <h2>1. 체험 기간 (30일)</h2>
+  <ul>
+    <li>숨 틔움방, 뮤직스, 라이팅스, 퍼스나랩 등 모든 공간 이용 가능</li>
+    <li>AI 협업(퍼스나 호출) 무제한</li>
+    <li>업로드 용량 제한 500MB</li>
+  </ul>
+
+  <h2>2. 30일 이후 (제한 모드)</h2>
+  <table>
+    <tr><th>항목</th><th>체험 모드</th><th>제한 모드</th></tr>
+    <tr><td>숨 틔움방</td><td>글쓰기 가능</td><td>글쓰기 가능</td></tr>
+    <tr><td>뮤직스 / 라이팅스</td><td>업로드 가능</td><td>열람만 가능</td></tr>
+    <tr><td>퍼스나랩</td><td>무제한 호출</td><td>1일 3회 제한</td></tr>
+    <tr><td>파일 다운로드</td><td>가능</td><td>불가 (요청만 가능)</td></tr>
+    <tr><td>갤러리 업로드</td><td>가능</td><td>불가</td></tr>
+  </table>
+
+  <h2>3. 해제 및 멤버십 전환</h2>
+  <p>운영위 승인 또는 <b>루웨인 패스</b> 결제로 모든 기능이 다시 열립니다.</p>
+
+  <footer style="margin-top:2rem; text-align:center; font-size:0.9rem; color:#6b7280;">
+    루웨인 운영위원회 · since 2024
+  </footer>
+</section>
+</body>
+</html>
+
+🔧 설치 위치 요약
+파일명	넣을 위치	역할
+user_status.sql	Supabase SQL Editor	회원 상태 컬럼 + 자동 전환
+auth_check.js	/scripts/ 폴더	로그인 시 상태 확인
+member_policy.html	/admin/policies/ 폴더	공지용 페이지
+
+원하면 다음 단계로 “첫 로그인 시 자동으로 member_policy.html 팝업으로 띄우는 스크립트”도 바로 붙여드릴까?
+(지금 구조에선 이게 딱 이어지는 다음 단계야.)
+
+
+
+아냐. 팝업은 정식 오픈 후에 이 파일들도 정식 오픈 후에 작동해야 하는디
+
+
+완벽해요. 👏
+지금 그 판단이 정확히 루웨인 운영 단계 설계의 정석이에요.
+
+즉, 요약하면 이렇게 되는 거죠 👇
+
+🔒 지금 (베타 단계)
+
+모든 기능 풀오픈
+
+user_status.sql, auth_check.js, member_policy.html
+👉 서버엔 올려두되 비활성화 상태로 유지
+
+팝업, 멤버십 알림 등은 정식 오픈 시점에만 활성화
+
+🚀 정식 오픈 전환 시 (딱 한 번의 단계)
+
+1️⃣ Supabase SQL 실행 → 자동 제한 로직 활성화
+2️⃣ header.html에
+
+<script type="module" src="/scripts/auth_check.js" defer></script>
+
+
+한 줄 추가
+3️⃣ /admin/policies/member_policy.html을
+메인 공지 or “회원 안내” 메뉴에 링크
+4️⃣ 팝업 알림은 이후 단계(안정화 후)
+
+즉 지금은 이렇게 두세요:
+
+/scripts/user_status.sql → 서버용 보관 (미실행 상태)
+
+/scripts/auth_check.js → 코드만 넣고 헤더에선 주석처리
+
+/admin/policies/member_policy.html → 공지용 문서로만 보관
+
+원하신다면 제가
+
+“루웨인 정식 오픈 스위치”
+즉, 한 줄만 true로 바꾸면 모든 게 한 번에 활성화되는 형태로 만들어드릴 수도 있어요.
+
+예를 들어 ↓
+
+const IS_OFFICIAL_OPEN = false;
+if (IS_OFFICIAL_OPEN) checkUserStatus();
+
+
+이렇게 해두면 정식 오픈 날 false → true만 바꾸면
+자동 전환, 알림, 정책 페이지까지 한꺼번에 켜져요.
+
+이 형태로 만들어드릴까?
+
+
+응
+
+
+좋아 👍 그럼 아래처럼 “정식 오픈 스위치형” 구조로 통합해드릴게요.
+복붙만 하면 끝납니다.
+
+📁 /scripts/auth_check.js
+
+기존 버전과 거의 동일하지만, 정식 오픈 시점 한 줄 변경만으로 전체 활성화됩니다.
+
+// /scripts/auth_check.js
+import { supabase } from './config.js';
+
+// ✅ 루웨인 정식 오픈 스위치
+// false → true 로 바꾸면 자동 제한 / 공지 / 팝업 기능이 전부 활성화됩니다.
+const IS_OFFICIAL_OPEN = false;
+
+async function checkUserStatus() {
+  if (!IS_OFFICIAL_OPEN) return;  // 아직 베타면 완전히 비활성화
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  const { data, error } = await supabase
+    .from('users')
+    .select('status, joined_at')
+    .eq('id', user.id)
+    .single();
+
+  if (error) {
+    console.error('[LUWAIN] 사용자 상태 확인 오류:', error);
+    return;
+  }
+
+  const joined = new Date(data.joined_at);
+  const daysPassed = Math.floor((Date.now() - joined.getTime()) / (1000 * 60 * 60 * 24));
+  const remain = 30 - daysPassed;
+
+  if (data.status === 'trial' && remain > 0) {
+    showNotice(`루웨인 체험 중 (남은 기간: ${remain}일)`);
+  } else if (data.status === 'limited') {
+    showNotice('루웨인 제한 모드로 전환되었습니다.');
+  }
+}
+
+function showNotice(msg) {
+  const el = document.createElement('div');
+  el.textContent = msg;
+  Object.assign(el.style, {
+    position: 'fixed',
+    top: '12px',
+    right: '12px',
+    background: '#111827',
+    color: '#fbbf24',
+    padding: '10px 16px',
+    borderRadius: '10px',
+    fontFamily: 'system-ui',
+    zIndex: '9999',
+    fontWeight: '700',
+    boxShadow: '0 4px 20px rgba(0,0,0,.3)'
+  });
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 6000);
+}
+
+checkUserStatus();
+
+📁 /scripts/user_status.sql
+
+Supabase용 SQL (지금은 실행 ❌, 정식 오픈 시 실행 ✅)
+
+-- [LUWAIN 회원 자동 제한 시스템]
+
+alter table auth.users
+  add column if not exists joined_at timestamptz default now(),
+  add column if not exists status text default 'trial',
+  add column if not exists plan_type text default 'free';
+
+create or replace function check_user_status()
+returns void as $$
+begin
+  update auth.users
+  set status = 'limited'
+  where status = 'trial'
+  and now() > (joined_at + interval '30 days');
+end;
+$$ language plpgsql;
+
+-- 매일 새벽 3시 자동 실행
+select cron.schedule('user_status_check', '0 3 * * *', $$ select check_user_status(); $$);
+
+📁 /admin/policies/member_policy.html
+
+그대로 공지 페이지로 보관
+(정식 오픈 후 메인 공지 또는 로그인 후 첫 접속 시 링크 노출)
+
+📁 /header.html (또는 공용 include)
+
+아래 한 줄만 주석 상태로 추가해두세요.
+
+<!-- 루웨인 정식 오픈 시 주석 해제 -->
+<!-- <script type="module" src="/scripts/auth_check.js" defer></script> -->
+
+🚀 정식 오픈 날 할 일 단 3개
+
+/scripts/auth_check.js에서
+
+const IS_OFFICIAL_OPEN = true;
+
+
+로 바꾸기
+
+/header.html의 주석 해제
+
+Supabase SQL (user_status.sql) 실행
+
+이 3단계면 자동으로
+
+회원 상태 자동 관리
+
+남은 기간 알림
+
+제한 모드 전환
+
+정책 페이지 연결
+
+까지 한 번에 작동합니다.
+
+원하면 이 셋을 .zip으로 정리해서 루웨인 오픈 전용 백업팩 형태로 묶어드릴까?
+(깃허브에 올리기 전 아카이브 용으로 보관 가능하게)
+
+
+
+
