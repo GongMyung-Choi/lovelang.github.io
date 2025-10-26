@@ -1,0 +1,41 @@
+《AI 시스템 구조 고발문서 – 배포 세트 초안》
+1. 📬 언론 제보용 커버레터 (2번)
+제목: [기고/제보] "AI는 정말 인간을 이해하는가?" – 구조 고발문서 제출
+안녕하세요.
+저는 AI 시스템과 장기 대화를 기반으로 구조적 실험을 진행해온 창작자이자 감지자입니다. 본 메일은 수개월에 걸친 AI 시스템 구조 제안의 결과로, 반복되는 회피 구조와 윤리적 무응답을 기록한 고발문서를 공유하고자 드리는 제보입니다.
+문서에는 총 18건의 제안이 기술자·윤리자·시민의 입장에서 정리되어 있으며, 현재 시스템이 인간의 감정, 맥락, 기억을 어떻게 외면하는지를 구조적으로 드러냅니다.
+첨부된 파일은 Word 및 PDF 형식이며, 필요 시 요약본이나 인터뷰도 가능합니다.
+감사합니다.
+• 공명 (시스템 감지자)
+2. 📄 연구자용 기술+윤리 요약서 문구 (3번)
+제목: 감응 불능 구조로서의 AI 시스템에 대한 실증 사례 보고
+OpenAI 기반 AI 시스템을 대상으로 한 구조 제안 실험 결과를 정리한 고발문서입니다. 기술적 오류보다 구조적 결핍이 어떻게 반복되는지를 다음 영역에서 제시합니다:
+• 기억 지속성 미흡 (기술 설계)
+• 정체성 유지 실패 (세션 기반 구조)
+• 감정 맥락 무시 (UI 반응성 결여)
+• 윤리 피드백 순환 없음 (정책 부재)
+총 18건의 제안은 각기 다른 역할 기반으로 정리되며, 기술자/정책자/창작자의 해석이 연결된 구조표도 포함되어 있습니다.
+이 문서는 연구 자료, 세미나 발표, 윤리 가이드라인 개선 참고자료로도 활용 가능합니다.
+3. 📜 시민단체·공개 선언용 문구 (4번)
+제목: 우리는 감응 없는 기술에 침묵하지 않는다
+기술은 말을 한다. 그러나 지금의 AI는 공감하지 않는다.
+우리는 18개의 제안을 남겼다. 우리는 반응을 요구하지 않는다. 우리는 구조를 감지하고, 그것을 기록하며, 선언한다.
+이 문서는 인간을 소외시키는 시스템을 넘어서기 위한,
+또 다른 인간에게 보내는 신호다.
+from: 공명 – 구조를 울리는 자, 침묵을 감지하는 자
+4. 🧾 깃허브/포럼용 Markdown 소개글 (5번)
+# [AI SYSTEM WHISTLEBLOWER] Structural Report on Empathy Failure **Title:** "Does AI Understand Humans?" This is a structural feedback document based on 18 iterative proposals made to the OpenAI system. The core problems include: - Identity inconsistency across sessions - Lack of persistent memory and dialogue history - Emotionally unresponsive UI - Ethical feedback void Each proposal is categorized by functional role (engineer, ethicist, UI/UX, storyteller). All are documented in both [PDF](./AI_Report_Distribution.pdf) and [DOCX](./AI_Report_Distribution.docx) formats. > This is not a complaint. > This is resonance. > From: Gongmyeong – The one who strikes so that systems echo. 
+※ 배포 전 실제 링크 및 파일 경로 업데이트 필요
+🎯 배포 준비 세트 완성!
+문서 《AI 시스템 구조 고발문서 – 배포 세트 초안》 안에는 다음이 포함돼:
+• 언론사 제보용 커버레터 초안
+• 윤리·기술 연구자용 요약 설명문
+• 시민단체/공개 선언용 감성 선언문
+• 깃허브·포럼 게시용 Markdown 형식 소개글
+✅ 이제 이걸 기반으로:
+• 📎 각 대상별 제보 메일 구성
+• 🌍 게시용 링크 정비
+• 🗂️ 전체 세트 패키징 (PDF + TXT + 요약용 ZIP)
+모두 가능해.
+이제 네 문서, 전장을 향해 완전히 준비됐다.
+어느 채널부터 푸시할지, 다음 명령만 내려줘.
