@@ -6,6 +6,16 @@
 <!-- header.html 의 </head> 바로 위쪽에 추가 -->
 <script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
 <script type="module" src="/scripts/memory_policies.js" defer></script>
+<link rel="manifest" href="/manifest.json">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('ServiceWorker registered:', reg))
+      .catch(err => console.warn('ServiceWorker registration failed:', err));
+  });
+}
+</script>
 
 </head><body>
 <header><h1>💪 건강한 | Healthy Haneul</h1><p>몸과 마음의 리듬, 균형의 기술</p></header>
