@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <title>갤러리 | 루웨인 숨틔움방</title>
 <link rel="stylesheet" href="../common.css">
+<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
+<script type="module" src="/scripts/memory_policies.js" defer></script>
+
+<link rel="manifest" href="/manifest.json">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('ServiceWorker registered:', reg))
+      .catch(err => console.warn('ServiceWorker registration failed:', err));
+  });
+}
+</script>
+
 </head>
 <body>
 <header>
