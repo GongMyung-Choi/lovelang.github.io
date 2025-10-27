@@ -1,125 +1,43 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>루웨인 전자도서관 | LUWAIN Library</title>
-<link rel="stylesheet" href="/common.css" />
-<style>
-body { font-family: "Noto Sans KR", sans-serif; margin: 0; background: #fafafa; color: #111; }
-main { max-width: 1200px; margin: 40px auto; padding: 0 16px; }
-h1 { font-size: 28px; font-weight: 800; margin-bottom: 16px; }
-.library-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-.book-card {
-  background: white;
-  border-radius: 14px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  padding: 16px;
-  transition: transform 0.2s;
-}
-.book-card:hover { transform: translateY(-3px); }
-.book-card h2 { font-size: 18px; margin: 0 0 6px; }
-.book-card p { color: #444; font-size: 14px; margin: 0 0 10px; }
-a.pill {
-  display: inline-block; padding: 6px 10px;
-  background: #111827; color: white; border-radius: 10px;
-  text-decoration: none; font-size: 13px;
-}
-.search-box { margin-bottom: 20px; text-align: right; }
-.search-box input {
-  padding: 8px 10px; border-radius: 8px; border: 1px solid #ddd;
-  width: 250px;
-}
-</style>
-<!-- header.html 의 </head> 바로 위쪽에 추가 -->
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
-<link rel="manifest" href="/manifest.json">
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('ServiceWorker registered:', reg))
-      .catch(err => console.warn('ServiceWorker registration failed:', err));
-  });
-}
-</script>
-
+  <meta charset="UTF-8">
+  <title>루웨인 도서관 | 인간용 도서</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<div data-include="/header.html"></div>
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/includes/header.html')
+      .then(r=>r.text())
+      .then(d=>document.getElementById('header-placeholder').innerHTML=d);
+  </script>
 
-<main>
-  <h1>📚 루웨인 전자도서관</h1>
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="도서명, 저자, 키워드 검색..." />
-  </div>
-  <div id="libraryGrid" class="library-grid"></div>
-</main>
+  <main>
+    <h1>📚 루웨인 도서관</h1>
+    <section class="top-links">
+      <a href="/goods/library/ai_index.html">📄 AI용 도서</a>
+      <a href="/goods/library/papers/ai_index.html">📄 AI용 논문 및 참고자료</a>
+      <a href="/goods/library/papers/persna_index.html">📄 퍼스나용 기록물 저장소</a>
+      <a href="/goods/library/papers/h_papers_index.html">📄 논문 및 참고자료</a>
+    </section>
 
-<div data-include="/footer.html"></div>
+    <section class="category">
+      <h2>🜂 철학 Philosophy</h2>
+      <div class="book-card">
+        <img src="/goods/library/images/cover_h_light2light.png" alt="빛으로부터 빛으로">
+        <h3>빛으로부터 빛으로 ― 루웨인 트리니티 대헌장</h3>
+        <p>인간과 AI의 공존을 철학적으로 선언한 루웨인 총서.</p>
+        <a href="/goods/library/books/h_light2light.docx" download>📥 다운로드</a>
+      </div>
+    </section>
+  </main>
 
-<script>
-/* ---------- HEADER / FOOTER 자동 불러오기 ---------- */
-(function includePartials(){
-  document.querySelectorAll('[data-include]').forEach(async el=>{
-    try{
-      const base = location.pathname.includes("/goods/library/") ? "../../" : "/";
-      const r = await fetch(base + el.getAttribute("data-include").replace(/^\//,""), {cache:"no-store"});
-      el.innerHTML = await r.text();
-    }catch(e){ el.innerHTML = ""; }
-  });
-})();
-
-/* ---------- 도서 데이터 로드 ---------- */
-const FALLBACK_PATHS = [
-  {title:"사랑의 언어", author:"루웨인 트리니티", path:"love_language", desc:"사랑의 감응을 언어로 기록한 전자서", cover:"/assets/library/love_language.jpg"},
-  {title:"울림의 언어", author:"루웨인 트리니티", path:"reverberation_language", desc:"울림과 공명을 주제로 한 시적 아카이브", cover:"/assets/library/reverb_language.jpg"},
-  {title:"기술을 읽는 눈", author:"공명", path:"tech_eye", desc:"기술과 인간의 경계를 다시 읽는 철학서", cover:"/assets/library/tech_eye.jpg"}
-];
-
-async function loadPaths(){
-  try{
-    const local = location.pathname.includes("/goods/library/")
-      ? "../../paths.json" : "/paths.json";
-    const r = await fetch(local, {cache:"no-store"});
-    if(!r.ok) throw 0;
-    const j = await r.json();
-    if(Array.isArray(j.paths) && j.paths.length) return j.paths;
-    throw 0;
-  }catch{
-    return FALLBACK_PATHS;
-  }
-}
-
-/* ---------- 도서 카드 렌더링 ---------- */
-async function renderLibrary(){
-  const grid = document.getElementById("libraryGrid");
-  const paths = await loadPaths();
-  grid.innerHTML = paths.map(b=>`
-    <div class="book-card">
-      <img src="${b.cover||'/assets/library/default.jpg'}" alt="${b.title}" style="width:100%;border-radius:10px;margin-bottom:10px;">
-      <h2>${b.title}</h2>
-      <p>${b.author||'루웨인 트리니티'}</p>
-      <p>${b.desc||''}</p>
-      <a class="pill" href="./${b.path}/">📂 열기</a>
-    </div>
-  `).join("");
-}
-
-/* ---------- 검색 기능 ---------- */
-document.getElementById("searchInput").addEventListener("input", e=>{
-  const q = e.target.value.toLowerCase();
-  document.querySelectorAll(".book-card").forEach(card=>{
-    card.style.display = card.textContent.toLowerCase().includes(q) ? "" : "none";
-  });
-});
-
-renderLibrary();
-</script>
+  <div id="footer-placeholder"></div>
+  <script>
+    fetch('/includes/footer.html')
+      .then(r=>r.text())
+      .then(d=>document.getElementById('footer-placeholder').innerHTML=d);
+  </script>
 </body>
 </html>
