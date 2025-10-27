@@ -17,6 +17,20 @@ button{
   padding:10px 14px;margin:6px;cursor:pointer;
 }
 </style>
+<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
+<script type="module" src="/scripts/memory_policies.js" defer></script>
+
+<link rel="manifest" href="/manifest.json">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('ServiceWorker registered:', reg))
+      .catch(err => console.warn('ServiceWorker registration failed:', err));
+  });
+}
+</script>
+
 </head>
 
 <body>
