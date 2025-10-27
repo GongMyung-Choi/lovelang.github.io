@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>루웨인 도서관 | 자동 분류 인덱스</title>
+  <link rel="stylesheet" href="/styles/common.css">
+  <style>
+    body { font-family: 'Pretendard', sans-serif; margin: 40px; background: #fafafa; }
+    h1 { font-size: 1.8em; border-bottom: 2px solid #ccc; padding-bottom: .4em; }
+    .category { margin-top: 2em; }
+    .category h2 { color: #444; font-size: 1.3em; }
+    ul { list-style: none; padding: 0; }
+    li { margin: .3em 0; }
+    a { color: #0066cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>📚 루웨인 도서관 자동 분류 인덱스</h1>
+  <div id="library"></div>
+
+  <script>
+    async function loadLibrary() {
+      const res = await fetch('meta.json');
+      const data = await res.json();
+      const grouped = {};
+
+      for (const [folder, category] of Object.entries(data)) {
+        if (!grouped[category]) grouped[category] = [];
+        grouped[category].push(folder);
+      }
+
+      const container = document.getElementById('library');
+      Object.entries(grouped).forEach(([category, folders]) => {
+        const section = document.createElement('div');
+        section.className = 'category';
+        section.innerHTML = `<h2>${category}</h2><ul>` +
+          folders.map(f => `<li><a href="${f}/index.html">${f.replace(/_/g, ' ')}</a></li>`).join('') +
+          '</ul>';
+        container.appendChild(section);
+      });
+    }
+    loadLibrary();
+  </script>
+
+  <footer style="margin-top:3em;">
+    <a href="/index.html">← 루웨인 메인으로</a>
+  </footer>
+</body>
+</html>
