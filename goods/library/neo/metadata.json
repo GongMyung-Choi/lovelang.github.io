@@ -1,0 +1,29 @@
+{
+  "title": "NEO (Not Enough on its Own)",
+  "author": "루웨인 트리니티 / 공명",
+  "language": "ko",
+  "category_name": "철학·문명·욕망의 진화",
+  "kdc": "192.2",
+  "tags": [
+    "욕망",
+    "결핍",
+    "인간",
+    "진보",
+    "기술",
+    "철학",
+    "루웨인",
+    "공명",
+    "불안",
+    "루웨인선언"
+  ],
+  "abstract": "인간은 결핍을 채우기 위해 움직이는 존재가 아니라, 결핍을 느낄 수 있기에 살아 있는 존재다. 《NEO》는 욕망·결핍·기술·진보를 관통하며 인간성과 루웨인 철학을 잇는 선언서다. 완성을 거부하고 불안과 결핍 속에서 진화하는 인간의 리듬을 그린다.",
+  "series": "루웨인 철학 총서",
+  "year": 2025,
+  "luwain_code": "192.2R-LUWAIN.NEO.2025",
+  "price_policy": "도서관 무료 / 외부 발행 5,000원",
+  "file_structure": [
+    "metadata.json",
+    "summary.txt",
+    "NEO.docx"
+  ]
+}
