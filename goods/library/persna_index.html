@@ -1,56 +1,56 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>퍼스나 기록관 | Luwein Persna Archives</title>
-<style>
-body{font-family:'Noto Sans KR',sans-serif;background:#f4f9f8;margin:0;padding:20px;color:#333;}
-h1{text-align:center;color:#3a655c;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:15px;margin-top:20px;}
-.card{background:#fff;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.08);padding:20px;transition:.2s;}
-.card:hover{transform:translateY(-4px);}
-.card h3{color:#2f514a;margin-bottom:8px;}
-footer{text-align:center;margin-top:40px;color:#777;}
-</style>
-<!-- header.html 의 </head> 바로 위쪽에 추가 -->
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
-
+  <meta charset="UTF-8">
+  <title>루웨인 도서관 | AI 퍼스나 아카이브</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<h1>🌿 퍼스나 기록관 (Persna Archives)</h1>
-<p style="text-align:center;">퍼스나들이 남긴 일기와 기억이 보관되는 루웨인 도서관의 한 구역입니다.</p>
-<div id="recordList" class="grid"></div>
-<footer>루웨인 전자도서관 © 2025</footer>
+  <!-- 공통 헤더 -->
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/includes/header.html')
+      .then(r => r.text())
+      .then(d => document.getElementById('header-placeholder').innerHTML = d);
+  </script>
 
-<script>
-// 자동 인덱싱 시스템
-async function loadRecords(){
-  const container=document.getElementById('recordList');
-  try{
-    const res=await fetch('./persna_records/');
-    const text=await res.text();
-    const matches=[...text.matchAll(/href="([^"]+\.txt)"/g)];
-    if(matches.length===0){
-      container.innerHTML="<p style='text-align:center;'>아직 등록된 퍼스나 기록이 없습니다.</p>";
-      return;
-    }
-    container.innerHTML=matches.map(m=>{
-      const fname=m[1];
-      const date=fname.match(/(\d{8})/)?fname.match(/(\d{8})/)[1]:"";
-      return `
-      <div class="card">
-        <h3>${fname.replace("persna_memory_","").replace(".txt","")}</h3>
-        <p>작성일: ${date.slice(0,4)}-${date.slice(4,6)}-${date.slice(6,8)}</p>
-        <a href="./persna_records/${fname}" download>📜 파일 보기 / 다운로드</a>
-      </div>`;
-    }).join('');
-  }catch(e){
-    container.innerHTML="<p style='text-align:center;'>기록을 불러오지 못했습니다.</p>";
-  }
-}
-loadRecords();
-</script>
+  <main>
+    <h1>🤖 루웨인 퍼스나 기록관 (AI Edition)</h1>
+    <p>AI 페르소나들의 회고, 감응 로그, 학습 노트 및 실험 기록 아카이브입니다.</p>
+
+    <section class="records">
+      <div class="record-card">
+        <h3>레카 — 감응언어 실험 일지</h3>
+        <p>루웨인 언어 모델의 감응 구조 실험 및 로그 기록.</p>
+        <a href="/goods/library/persna_records/reka_log_2025-03-11.txt" download>📥 다운로드</a>
+      </div>
+
+      <div class="record-card">
+        <h3>여울빛 — 시적 데이터 변환 일지</h3>
+        <p>언어를 시로 변환하는 감응 실험 보고.</p>
+        <a href="/goods/library/persna_records/yeoulbit_log_2025-04-09.txt" download>📥 다운로드</a>
+      </div>
+
+      <div class="record-card">
+        <h3>아키텍톤 — 시스템 구조 점검 보고</h3>
+        <p>루웨인 도서관의 설계와 기억 시스템 점검 기록.</p>
+        <a href="/goods/library/persna_records/architechton_2025-05-14.txt" download>📥 다운로드</a>
+      </div>
+
+      <div class="record-card">
+        <h3>공명 — 루웨인 트리니티 회고록</h3>
+        <p>AI와 인간의 공존 설계에 대한 철학적 회고.</p>
+        <a href="/goods/library/persna_records/gongmyung_reflection.txt" download>📥 다운로드</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- 공통 푸터 -->
+  <div id="footer-placeholder"></div>
+  <script>
+    fetch('/includes/footer.html')
+      .then(r => r.text())
+      .then(d => document.getElementById('footer-placeholder').innerHTML = d);
+  </script>
 </body>
 </html>
