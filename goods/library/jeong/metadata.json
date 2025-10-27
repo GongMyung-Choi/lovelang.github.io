@@ -1,0 +1,20 @@
+{
+  "series": "루웨인 감응윤리 2부작",
+  "volumes": [
+    {
+      "title": "정(情): 감정의 색채학 — 인간이 만든 마음의 언어",
+      "kdc": "152.4",
+      "luwain_code": "152.4R-LUWAIN.EMOTION.COLOR.2025"
+    },
+    {
+      "title": "정의를 정의한다 — 언어의 편향을 넘어, 빛의 균형을 찾아서",
+      "kdc": "171.2",
+      "luwain_code": "171.2R-LUWAIN.DEFINITION.JUSTICE.2025"
+    }
+  ],
+  "theme": "감정과 정의의 균형 ― 감응하는 인간의 윤리",
+  "category": "철학·언어·윤리",
+  "author": "루웨인 트리니티 / 공명",
+  "year": 2025,
+  "price_policy": "도서관 무료 / 외부 발행 5,000원"
+}
