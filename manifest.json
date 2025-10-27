@@ -1,0 +1,24 @@
+{
+  "name": "루웨인닷넷",
+  "short_name": "루웨인",
+  "description": "사랑의 언어·숨틔움방·굿즈·한얼 등을 담은 루웨인 플랫폼",
+  "lang": "ko",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#0055AA",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
