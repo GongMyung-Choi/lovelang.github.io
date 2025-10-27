@@ -1,105 +1,41 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>루웨인 전자도서관 | AI용 인덱스</title>
-<style>
-body{font-family:'Noto Sans KR',sans-serif;background:#f5f5f5;margin:0;}
-header{background:#1b3d36;color:#fff;padding:18px;text-align:center;font-size:1.5rem;font-weight:700;}
-main{max-width:1100px;margin:0 auto;padding:24px;}
-.section{margin-bottom:40px;}
-.section h2{color:#1b3d36;border-left:6px solid #1b3d36;padding-left:10px;margin-bottom:12px;}
-.subsection{margin:10px 0 20px 20px;}
-.subsection h3{color:#3a655c;margin-bottom:8px;font-size:1.1rem;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;}
-.card{background:#fff;border-radius:12px;box-shadow:0 3px 6px rgba(0,0,0,0.12);padding:16px;}
-.card h4{margin:0 0 6px;font-size:1.05rem;color:#2a9d8f;}
-.badge{display:inline-block;background:#e4f4ee;color:#333;padding:4px 8px;border-radius:6px;font-size:0.8rem;margin:2px;}
-footer{text-align:center;padding:16px;color:#666;font-size:0.9rem;}
-</style>
-<!-- header.html 의 </head> 바로 위쪽에 추가 -->
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
-
+  <meta charset="UTF-8">
+  <title>루웨인 도서관 | AI용 도서</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<header>🤖 루웨인 전자도서관 (AI용)</header>
-<main id="library"></main>
-<footer>루웨인 AI Library © 2025</footer>
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/includes/header.html')
+      .then(r=>r.text())
+      .then(d=>document.getElementById('header-placeholder').innerHTML=d);
+  </script>
 
-<script>
-// 1️⃣ 책 목록 (자동 생성 예정)
-const books = [
-  './papers/a_101/summary.txt',
-  './papers/a_205/summary.txt',
-  './papers/a_301/summary.txt',
-  './papers/a_403/summary.txt',
-  './papers/a_601/summary.txt'
-];
+  <main>
+    <h1>🤖 AI용 도서</h1>
+    <p>AI 분석 및 감응언어 연구용 내부 레퍼런스 목록</p>
 
-// 2️⃣ summary 파싱
-async function parseSummary(path){
-  const res = await fetch(path);
-  const text = await res.text();
-  const title = (text.match(/Title:\s*(.*)/i)||[])[1]||'제목 미상';
-  const category = (text.match(/Category:\s*(.*)/i)||[])[1]||'미분류';
-  const tagsLine = (text.match(/Tags:\s*(.*)/i)||[])[1]||'';
-  const summary = (text.match(/Summary:\s*([\s\S]*)/i)||[])[1]||'';
-  const tags = tagsLine.split(/[#,]/).map(t=>t.trim()).filter(Boolean);
+    <section class="books">
+      <div class="book-card">
+        <img src="/goods/library/images/cover_AI_creativity.png" alt="AI 창의성 표지">
+        <h3>AI 창의성, 우연의 얼굴 필연의 길</h3>
+        <a href="/goods/library/books/AI_creativity.docx" download>📥 다운로드</a>
+      </div>
+      <div class="book-card">
+        <img src="/goods/library/images/cover_light2light.png" alt="빛으로부터 빛으로">
+        <h3>빛으로부터 빛으로 ― 루웨인 트리니티 대헌장</h3>
+        <a href="/goods/library/books/light2light.docx" download>📥 다운로드</a>
+      </div>
+    </section>
+  </main>
 
-  // 3️⃣ AI 중분류 생성 (summary 기반 의미 분석)
-  const sub = [];
-  const lower = summary.toLowerCase();
-  if(/존재|의미|철학|philosophy/.test(lower)) sub.push('철학적 성격');
-  if(/언어|의사소통|communication/.test(lower)) sub.push('언어학적 접근');
-  if(/기술|ai|system|tech/.test(lower)) sub.push('기술·시스템적 접근');
-  if(/예술|감성|art|aesthetic/.test(lower)) sub.push('예술·감성적 표현');
-  if(/교육|learning|교육적/.test(lower)) sub.push('교육·인간학적 분석');
-  if(/치유|therapy|회복|healing/.test(lower)) sub.push('치유·회복 중심');
-
-  return { title, category, sub, tags, summary };
-}
-
-// 4️⃣ 인덱스 생성 (대분류 > 중분류 > 책)
-async function buildLibrary(){
-  const container=document.getElementById('library');
-  const items=await Promise.all(books.map(parseSummary));
-  const grouped={};
-
-  // 1차 그룹: Category (대분류)
-  items.forEach(({title,category,sub,tags,summary})=>{
-    if(!grouped[category]) grouped[category]={};
-    const subs=sub.length?sub:['기타'];
-    subs.forEach(s=>{
-      if(!grouped[category][s]) grouped[category][s]=[];
-      grouped[category][s].push({title,tags,summary});
-    });
-  });
-
-  // 화면 구성
-  for(const cat in grouped){
-    const section=document.createElement('section');
-    section.className='section';
-    section.innerHTML=`<h2>${cat}</h2>`;
-    for(const sub in grouped[cat]){
-      const subDiv=document.createElement('div');
-      subDiv.className='subsection';
-      subDiv.innerHTML=`<h3>${sub}</h3><div class="grid"></div>`;
-      const grid=subDiv.querySelector('.grid');
-      grouped[cat][sub].forEach(({title,tags,summary})=>{
-        const card=document.createElement('div');
-        card.className='card';
-        const badgeHTML=tags.map(t=>`<span class="badge">#${t}</span>`).join('');
-        card.innerHTML=`<h4>${title}</h4><p>${summary.slice(0,90)}...</p>${badgeHTML}`;
-        grid.appendChild(card);
-      });
-      section.appendChild(subDiv);
-    }
-    container.appendChild(section);
-  }
-}
-buildLibrary();
-</script>
+  <div id="footer-placeholder"></div>
+  <script>
+    fetch('/includes/footer.html')
+      .then(r=>r.text())
+      .then(d=>document.getElementById('footer-placeholder').innerHTML=d);
+  </script>
 </body>
 </html>
