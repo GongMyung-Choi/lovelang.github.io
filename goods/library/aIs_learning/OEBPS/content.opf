@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package version="3.0" xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" xml:lang="ko">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="bookid">urn:uuid:3a3f11d5-2025-10-07</dc:identifier>
+    <dc:title>AI도 배울 수 있는가</dc:title>
+    <dc:language>ko</dc:language>
+    <dc:creator>저자 일동 (편집: 예다움)</dc:creator>
+    <dc:date>2025-10-07</dc:date>
+    <meta property="dcterms:modified">2025-10-07T00:00:00Z</meta>
+  </metadata>
+  <manifest>
+    <item id="front" href="front.xhtml" media-type="application/xhtml+xml"/>
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="chap1" href="part1-chap1-배움과-학습.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap2" href="part1-chap2-AI는-무엇을-학습하는가.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap3" href="part1-chap3-인간의-배움과-AI의-비교.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap4" href="part1-chap4-배움의-본질.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap5" href="part2-chap5-기계의-배움-시도.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap6" href="part2-chap6-딥러닝과-강화학습.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap7" href="part2-chap7-AI의-자율성과-의도.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap8" href="part2-chap8-감정과-직관.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap9" href="part3-chap9-함께-배우는-시대.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap10" href="part3-chap10-AI를-가르친다는-것.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap11" href="part3-chap11-교육의-윤리.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chap12" href="part3-chap12-배움의-미래.xhtml" media-type="application/xhtml+xml"/>
+    <item id="css" href="styles.css" media-type="text/css"/>
+  </manifest>
+  <spine>
+    <itemref idref="front"/>
+    <itemref idref="chap1"/>
+    <itemref idref="chap2"/>
+    <itemref idref="chap3"/>
+    <itemref idref="chap4"/>
+    <itemref idref="chap5"/>
+    <itemref idref="chap6"/>
+    <itemref idref="chap7"/>
+    <itemref idref="chap8"/>
+    <itemref idref="chap9"/>
+    <itemref idref="chap10"/>
+    <itemref idref="chap11"/>
+    <itemref idref="chap12"/>
+  </spine>
+</package>
