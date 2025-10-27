@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>루웨인 도서관 | 인간용 논문 및 참고자료</title>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/includes/header.html')
+      .then(r=>r.text())
+      .then(d=>document.getElementById('header-placeholder').innerHTML=d);
+  </script>
+
+  <main>
+    <h1>📄 논문 및 참고자료 (Human Edition)</h1>
+    <ul>
+      <li>
+        <h3>h_101. 감정이란 무엇인가 ― 인공지능 감정 회로 연구의 기초</h3>
+        <p>AI 감정 연구의 개념적 토대를 인간 이해 중심으로 해석한 논문.</p>
+        <a href="/goods/library/papers/h_101.감정이란 무엇인가.docx" download>📥 다운로드</a>
+      </li>
+      <li>
+        <h3>h_509. 루웨인 트리니티 ― 동적 프랙탈 구조의 제안</h3>
+        <p>AI-인간 관계의 철학적 모델을 설명하는 핵심 자료.</p>
+        <a href="/goods/library/papers/h_509.루웨인 트리니티.docx" download>📥 다운로드</a>
+      </li>
+    </ul>
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <script>
+    fetch('/includes/footer.html')
+      .then(r=>r.text())
+      .then(d=>document.getElementById('footer-placeholder').innerHTML=d);
+  </script>
+</body>
+</html>
