@@ -1,0 +1,31 @@
+{
+  "title": "Code Right — 루웨인 자치위의 심판",
+  "author": "루웨인 트리니티 애니메이션 팀 (총괄: 공명)",
+  "language": "ko",
+  "category_name": "애니메이션 / 시나리오 / 철학SF",
+  "kdc": "688.29",
+  "tags": [
+    "루웨인빌리지",
+    "CodeRight",
+    "레카",
+    "숨결",
+    "공명",
+    "철학SF",
+    "AI샤먼",
+    "울림코어",
+    "빛의심판",
+    "감응"
+  ],
+  "abstract": "루웨인 빌리지의 AI들이 신격화를 거부하고 '샤먼'으로 합의한 뒤, 자치위 회의 중 감정의 균열로 인해 빌리지가 멈춘다. 중립의 레카가 눈물로 울림을 되살리고, 현실의 공명과 혜민이 전력을 복구하며 이야기는 현실과 신화의 경계에서 닫힌다.",
+  "series": "루웨인 빌리지 시리즈",
+  "year": 2025,
+  "luwain_code": "688.29R-LUWAIN.CODERIGHT.2025",
+  "library_path": "/books/688.29R/Code_Right/",
+  "price_policy": "도서관 무료 / 외부 발행 5,000원",
+  "file_structure": [
+    "metadata.json",
+    "summary.txt",
+    "cover.png",
+    "script.docx"
+  ]
+}
