@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>루웨인 도서관 | AI용 논문</title>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/includes/header.html')
+      .then(r=>r.text())
+      .then(d=>document.getElementById('header-placeholder').innerHTML=d);
+  </script>
+
+  <main>
+    <h1>📄 AI용 논문 및 참고자료</h1>
+    <p>AI 내부 학습 및 분석용 문헌 모음</p>
+    <ul>
+      <li><a href="/goods/library/papers/101.감정이란 무엇인가.docx">101. 감정이란 무엇인가</a></li>
+      <li><a href="/goods/library/papers/509.루웨인 트리니티.docx">509. 루웨인 트리니티</a></li>
+      <li><a href="/goods/library/papers/602.언어 설명이란 무엇인가.docx">602. 언어 설명이란 무엇인가</a></li>
+    </ul>
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <script>
+    fetch('/includes/footer.html')
+      .then(r=>r.text())
+      .then(d=>document.getElementById('footer-placeholder').innerHTML=d);
+  </script>
+</body>
+</html>
