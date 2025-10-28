@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Books Index | 루웨인 도서관</title>
+<link rel="stylesheet" href="/styles/library.css" />
+</head>
+<body>
+<h1>📘 AI Books Index</h1>
+<div id="book-list">Loading books...</div>
+
+<script>
+async function loadBooks() {
+  const response = await fetch('/goods/library/metadata.json');
+  const allMetadata = await response.json();
+
+  const container = document.getElementById('book-list');
+  container.innerHTML = '';
+
+  const list = document.createElement('ul');
+
+  allMetadata.forEach(meta => {
+    const item = document.createElement('li');
+    const statusEmoji = meta.status === 'finished' ? '✅' : '🛠️';
+    item.innerHTML = `
+      <strong>${meta.title}</strong> (${meta.author}) ${statusEmoji}<br>
+      <em>${meta.summary}</em><br>
+      <small>경로: ${meta.path}</small>
+    `;
+    list.appendChild(item);
+  });
+
+  container.appendChild(list);
+}
+
+loadBooks().catch(err => {
+  document.getElementById('book-list').innerText = '❌ Error loading metadata.json';
+  console.error(err);
+});
+</script>
+</body>
+</html>
