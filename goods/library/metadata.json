@@ -1,0 +1,18 @@
+[
+  {
+    "title": "숨 쉬는 언어, 살아 있는 말",
+    "author": "공명",
+    "summary": "감응언어학의 핵심 개념을 다룬 루웨인 시리즈 첫 권",
+    "type": "human",
+    "status": "finished",
+    "path": "/goods/library/breathing_language/"
+  },
+  {
+    "title": "빛으로부터 빛으로",
+    "author": "공명",
+    "summary": "언어와 빛의 철학적 기원을 탐구하는 사유서",
+    "type": "ai",
+    "status": "in_progress",
+    "path": "/goods/library/from_light/"
+  }
+]
