@@ -11,33 +11,85 @@
     fetch('/includes/header.html')
       .then(r=>r.text())
       .then(d=>document.getElementById('header-placeholder').innerHTML=d);
-  </script>
 
-  <main>
-    <h1>📚 루웨인 도서관</h1>
-    <section class="top-links">
-      <a href="/goods/library/ai_index.html">📄 AI용 도서</a>
-      <a href="/goods/library/papers/ai_index.html">📄 AI용 논문 및 참고자료</a>
-      <a href="/goods/library/papers/persna_index.html">📄 퍼스나용 기록물 저장소</a>
-      <a href="/goods/library/papers/h_papers_index.html">📄 논문 및 참고자료</a>
-    </section>
+  </script><div style="text-align:center; margin-top:20px;">
+  <input
+    id="searchInput"
+    type="text"
+    placeholder="검색어를 입력하세요 (예: 철학, 루웨인)"
+    style="padding:10px; width:60%; border-radius:8px; border:1px solid #ccc;"
+  />
+</div>
 
-    <section class="category">
-      <h2>🜂 철학 Philosophy</h2>
-      <div class="book-card">
-        <img src="/goods/library/images/cover_h_light2light.png" alt="빛으로부터 빛으로">
-        <h3>빛으로부터 빛으로 ― 루웨인 트리니티 대헌장</h3>
-        <p>인간과 AI의 공존을 철학적으로 선언한 루웨인 총서.</p>
-        <a href="/goods/library/books/h_light2light.docx" download>📥 다운로드</a>
-      </div>
-    </section>
-  </main>
+<div id="library" style="padding:20px;"></div>
 
-  <div id="footer-placeholder"></div>
-  <script>
-    fetch('/includes/footer.html')
-      .then(r=>r.text())
-      .then(d=>document.getElementById('footer-placeholder').innerHTML=d);
-  </script>
+<script>
+async function loadLibrary() {
+  try {
+    const res = await fetch('metadata.json'); // ✅ 경로 정확히 일치
+    if (!res.ok) throw new Error('metadata.json 로드 실패');
+    const data = await res.json();
+
+    // 그룹화
+    const grouped = {};
+    data.forEach(book => {
+      const category = book.category || '기타';
+      if (!grouped[category]) grouped[category] = [];
+      grouped[category].push(book);
+    });
+
+    renderLibrary(grouped);
+
+    // 🔍 검색 기능
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', e => {
+      const keyword = e.target.value.trim().toLowerCase();
+      const filtered = {};
+      Object.entries(grouped).forEach(([cat, books]) => {
+        const matches = books.filter(b =>
+          b.title.toLowerCase().includes(keyword) ||
+          (b.author && b.author.toLowerCase().includes(keyword))
+        );
+        if (matches.length) filtered[cat] = matches;
+      });
+      renderLibrary(filtered);
+    });
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById('library').innerHTML =
+      '<p style="color:red;">⚠️ 메타데이터를 불러오지 못했습니다.</p>';
+  }
+}
+
+function renderLibrary(grouped) {
+  const container = document.getElementById('library');
+  container.innerHTML = '';
+
+  Object.entries(grouped).forEach(([category, books]) => {
+    const section = document.createElement('div');
+    section.className = 'category';
+    section.innerHTML = `
+      <h2 style="margin-top:30px; color:#333;">📚 ${category}</h2>
+      <ul style="list-style:none; padding-left:0;">
+        ${books
+          .map(
+            b => `
+            <li style="margin:8px 0;">
+              <a href="${b.path}" style="text-decoration:none; color:#0077cc;">${b.title}</a>
+              <span style="color:#666;"> — ${b.author || '익명'}</span>
+            </li>`
+          )
+          .join('')}
+      </ul>`;
+    container.appendChild(section);
+  });
+}
+
+loadLibrary();
+</script>
+
+</script>
+
 </body>
 </html>
