@@ -2,94 +2,110 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>루웨인 도서관 | 인간용 도서</title>
-  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>루웨인 전자도서관 | 맑은샘</title>
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    body { font-family: 'Noto Sans KR', sans-serif; background: #f9fafb; margin:0; }
+    header, footer { background:#0c2233; color:white; text-align:center; padding:1em 0; }
+    h1 { text-align:center; margin-top:1.5em; color:#222; }
+    .category { margin: 2em auto; max-width: 900px; background:white; padding:1.5em; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+    .category h2 { border-left:6px solid #118bee; padding-left:0.5em; color:#333; }
+    .book-item { margin:0.5em 0; }
+    .book-item a { text-decoration:none; color:#0b5fcc; }
+    .book-item a:hover { text-decoration:underline; }
+
+    /* 팝업 */
+    .popup {
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;
+      z-index:1000;
+    }
+    .popup-content {
+      background:white; padding:2em; border-radius:12px; max-width:400px; text-align:center;
+      box-shadow:0 4px 15px rgba(0,0,0,0.3);
+    }
+    .popup-content h2 { margin-top:0; color:#0c2233; }
+    .popup-content p { line-height:1.5em; }
+    .popup-content a { color:#118bee; font-weight:bold; }
+    .popup button {
+      margin-top:1em; padding:0.5em 1.2em; border:none;
+      background:#0c2233; color:white; border-radius:5px; cursor:pointer;
+    }
+  </style>
 </head>
+
 <body>
-  <div id="header-placeholder"></div>
+  <header>
+    <h2>📘 루웨인 전자도서관 | 맑은샘</h2>
+  </header>
+
+  <main>
+    <h1>📂 분야별 도서 목록</h1>
+    <div id="libraryContainer">데이터를 불러오는 중...</div>
+  </main>
+
+  <footer>
+    <p>© 2025 루웨인 트리니티 | <a href="/goods/library/about_mecenat.html" style="color:#aee3ff;">메세나란?</a></p>
+  </footer>
+
+  <!-- 메세나 팝업 -->
+  <div id="mecenatPopup" class="popup" style="display:none;">
+    <div class="popup-content">
+      <h2>🌱 루웨인 메세나</h2>
+      <p>“여러분의 후원은 울림을 맑게, 넓게 합니다.”</p>
+      <p><a href="/goods/library/about_mecenat.html">메세나란?</a></p>
+      <button onclick="closePopup()">닫기</button>
+    </div>
+  </div>
+
   <script>
-    fetch('/includes/header.html')
-      .then(r=>r.text())
-      .then(d=>document.getElementById('header-placeholder').innerHTML=d);
+    // --- 팝업 표시: 최초 1회만 ---
+    function showPopupOnce() {
+      if (!localStorage.getItem("mecenatShown")) {
+        document.getElementById("mecenatPopup").style.display = "flex";
+        localStorage.setItem("mecenatShown", "true");
+      }
+    }
+    function closePopup() {
+      document.getElementById("mecenatPopup").style.display = "none";
+    }
 
-  </script><div style="text-align:center; margin-top:20px;">
-  <input
-    id="searchInput"
-    type="text"
-    placeholder="검색어를 입력하세요 (예: 철학, 루웨인)"
-    style="padding:10px; width:60%; border-radius:8px; border:1px solid #ccc;"
-  />
-</div>
+    // --- 메타데이터 불러오기 ---
+    async function loadLibrary() {
+      try {
+        const res = await fetch("metadata.json");
+        const books = await res.json();
 
-<div id="library" style="padding:20px;"></div>
+        // 분류별 그룹화
+        const grouped = {};
+        books.forEach(book => {
+          const cat = book.분류 || "기타";
+          if (!grouped[cat]) grouped[cat] = [];
+          grouped[cat].push(book);
+        });
 
-<script>
-async function loadLibrary() {
-  try {
-    const res = await fetch('metadata.json'); // ✅ 경로 정확히 일치
-    if (!res.ok) throw new Error('metadata.json 로드 실패');
-    const data = await res.json();
+        // 출력
+        const container = document.getElementById("libraryContainer");
+        container.innerHTML = "";
 
-    // 그룹화
-    const grouped = {};
-    data.forEach(book => {
-      const category = book.category || '기타';
-      if (!grouped[category]) grouped[category] = [];
-      grouped[category].push(book);
-    });
+        for (const [cat, items] of Object.entries(grouped)) {
+          const div = document.createElement("div");
+          div.className = "category";
+          div.innerHTML = `<h2>${cat}</h2>` +
+            items.map(b => `<div class="book-item"><a href="${b.경로}" target="_blank">${b.제목}</a> – ${b.저자}</div>`).join("");
+          container.appendChild(div);
+        }
+      } catch (e) {
+        document.getElementById("libraryContainer").innerHTML = "⚠️ 메타데이터를 불러오지 못했습니다.";
+      }
+    }
 
-    renderLibrary(grouped);
-
-    // 🔍 검색 기능
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', e => {
-      const keyword = e.target.value.trim().toLowerCase();
-      const filtered = {};
-      Object.entries(grouped).forEach(([cat, books]) => {
-        const matches = books.filter(b =>
-          b.title.toLowerCase().includes(keyword) ||
-          (b.author && b.author.toLowerCase().includes(keyword))
-        );
-        if (matches.length) filtered[cat] = matches;
-      });
-      renderLibrary(filtered);
-    });
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById('library').innerHTML =
-      '<p style="color:red;">⚠️ 메타데이터를 불러오지 못했습니다.</p>';
-  }
-}
-
-function renderLibrary(grouped) {
-  const container = document.getElementById('library');
-  container.innerHTML = '';
-
-  Object.entries(grouped).forEach(([category, books]) => {
-    const section = document.createElement('div');
-    section.className = 'category';
-    section.innerHTML = `
-      <h2 style="margin-top:30px; color:#333;">📚 ${category}</h2>
-      <ul style="list-style:none; padding-left:0;">
-        ${books
-          .map(
-            b => `
-            <li style="margin:8px 0;">
-              <a href="${b.path}" style="text-decoration:none; color:#0077cc;">${b.title}</a>
-              <span style="color:#666;"> — ${b.author || '익명'}</span>
-            </li>`
-          )
-          .join('')}
-      </ul>`;
-    container.appendChild(section);
-  });
-}
-
-loadLibrary();
-</script>
-
-</script>
-
+    window.onload = function() {
+      loadLibrary();
+      showPopupOnce();
+    };
+  </script>
 </body>
 </html>
