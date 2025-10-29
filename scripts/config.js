@@ -12,8 +12,8 @@ export const MEMORY_SETTINGS = {
 
 // ↓ 필요 시 값 채우기 (비워두면 로컬 모드로만 동작)
 export const SUPABASE_CONFIG = {
-  url: "",      // 예: "https://XXXX.supabase.co"
-  anonKey: "",  // 예: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  url: "",      // 예: "https://omchtafaqgkdwcrwscrp.supabase.co"
+  anonKey: "",  // 예: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g"
 };
 
 // Supabase 클라이언트 획득(설정 없거나 CDN 미로딩이면 null 반환)
