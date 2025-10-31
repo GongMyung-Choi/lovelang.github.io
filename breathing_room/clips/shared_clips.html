@@ -1,0 +1,60 @@
+여긴 제목처럼 짤막한 영상 올리는 곳 그 뭐지 틱톡 생각하면 됨 근데 데이타 베이스 용량을 많이 잡아 먹으니 유투브 계정을 사용자가 만들어서 거기에 링크 시키고 여기선 프레임 인 프레임 형식으로 유투브의 링크된 내용을 볼 수 있<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>공유 클립 갤러리 | 숨 틔움방</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{
+  font-family:'Noto Sans KR',sans-serif;
+  background:#f7faf9;margin:0;padding:2rem;text-align:center;color:#333;
+}
+h1{color:#2a9d8f;margin-bottom:1rem;}
+#gallery{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;
+}
+.clip{
+  width:320px;background:#fff;border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  padding:10px;text-align:left;
+}
+.clip iframe{width:100%;height:180px;border:none;border-radius:8px;}
+.clip .title{color:#af2465;font-weight:bold;margin-top:5px;}
+.like{color:#999;cursor:pointer;}
+.like.active{color:#e86;}
+</style>
+</head>
+<body>
+<h1>🌍 공유 클립 갤러리</h1>
+<p>루웨인 사용자들의 영상 울림을 함께 감상해요.</p>
+<div id="gallery"></div>
+
+<script>
+const SUPABASE_URL="https://omchtafaqgkdwcrwscrp.supabase.co";
+const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g";
+const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const gallery=document.getElementById("gallery");
+
+async function loadShared(){
+  const {data,error}=await supabase.from("clips_records").select("*").eq("is_shared",true).order("id",{ascending:false});
+  if(error)return console.error(error);
+  gallery.innerHTML=data.map(c=>`
+    <div class="clip" id="clip-${c.id}">
+      <iframe src="${c.video_url}" allowfullscreen></iframe>
+      <div class="title">${c.title}</div>
+      <div class="like" onclick="toggleLike(this)">💗 공감하기</div>
+    </div>`).join("");
+}
+loadShared();
+
+// 실시간 반영
+supabase.channel("shared_clips_sync")
+  .on("postgres_changes",{event:"*",schema:"public",table:"clips_records"},payload=>{
+    if(payload.eventType==="DELETE"||payload.eventType==="UPDATE")loadShared();
+  }).subscribe();
+
+function toggleLike(el){el.classList.toggle("active");}
+</script>
+</body>
+</html>
+으면 함 물론 이것도 사진처럼 셰어드 파일 만들어서 공유 및 삭제 언제든 가능했으면 함
