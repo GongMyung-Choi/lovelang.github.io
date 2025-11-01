@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>루웨인 관리자 대시보드</title>
+<link rel="stylesheet" href="styles/dashboard.css">
+<script type="module" src="scripts/dashboard.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>🫀 루웨인 실시간 로그 대시보드</h1>
+  <div class="filters">
+    <input type="text" id="search-input" placeholder="🔍 키워드 검색 (메시지, 퍼스나)">
+    <select id="persona-filter">
+      <option value="">전체 퍼스나</option>
+      <option value="레카">레카</option>
+      <option value="여울빛">여울빛</option>
+      <option value="다온">다온</option>
+      <option value="아키텍톤">아키텍톤</option>
+      <option value="공명">공명</option>
+    </select>
+    <input type="date" id="start-date">
+    <input type="date" id="end-date">
+    <button id="filter-btn">필터 적용</button>
+    <button id="reset-btn">초기화</button>
+  </div>
+</header>
+
+<section id="log-section">
+  <table id="log-table">
+    <thead>
+      <tr>
+        <th>시간</th>
+        <th>유형</th>
+        <th>사용자/퍼스나</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody id="log-body">
+      <tr><td colspan="4">⏳ 로드 중...</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<footer>
+  <p>© 루웨인 시스템 관리자 대시보드</p>
+</footer>
+</body>
+</html>
