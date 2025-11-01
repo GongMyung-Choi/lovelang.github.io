@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>한얼 프로젝트 ― 루웨인 융합실</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body onload="loadHaneul()">
+  <h1>한얼 프로젝트 상태판</h1>
+  <p>루웨인 남해안 네트워크 기반 AI·리조트 프로젝트 진행 현황</p>
+
+  <section id="haneulSection">
+    <h2 id="haneulTitle"></h2>
+    <p id="haneulSummary"></p>
+    <canvas id="haneulChart" width="400" height="200"></canvas>
+    <p><strong>진행률:</strong> <span id="haneulProgress"></span>%</p>
+    <p><strong>최근 업데이트:</strong> <span id="haneulUpdate"></span></p>
+  </section>
+
+  <script>
+    async function loadHaneul() {
+      try {
+        const res = await fetch("/fusion_lab/data/haneul.json");
+        const data = await res.json();
+
+        document.getElementById("haneulTitle").innerText = data.title;
+        document.getElementById("haneulSummary").innerText = data.summary;
+        document.getElementById("haneulProgress").innerText = data.progress;
+        document.getElementById("haneulUpdate").innerText =
+          new Date(data.recent_update).toLocaleString("ko-KR");
+
+        const ctx = document.getElementById("haneulChart").getContext("2d");
+        new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: ["완료", "남은 부분"],
+            datasets: [{
+              data: [data.progress, 100 - data.progress],
+              backgroundColor: ["#ffb347", "#e0e0e0"]
+            }]
+          },
+          options: {
+            plugins: { legend: { display: false } },
+            cutout: "70%"
+          }
+        });
+      } catch (e) {
+        console.error("한얼 데이터 로드 실패:", e);
+        document.getElementById("haneulSection").innerHTML =
+          "<p>데이터를 불러오지 못했습니다.</p>";
+      }
+    }
+  </script>
+</body>
+</html>
