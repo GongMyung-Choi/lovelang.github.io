@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>루웨인 DNS · HTTPS 관리자</title>
+<style>
+body {
+  font-family: 'Pretendard', sans-serif;
+  text-align: center;
+  padding: 40px;
+  background: #f9f9ff;
+  color: #333;
+}
+h1 { color: #5c308a; margin-bottom: 0.3em; }
+section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+}
+button {
+  padding: 10px 18px;
+  margin: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #5c308a;
+  color: #fff;
+  cursor: pointer;
+}
+button:hover { background: #6e3cb3; }
+.ok { color: #2b8a3e; font-weight: bold; }
+.fail { color: #c92a2a; font-weight: bold; }
+pre {
+  background: #f0f0f0;
+  padding: 8px;
+  border-radius: 6px;
+  text-align: left;
+  overflow-x: auto;
+}
+</style>
+</head>
+<body>
+
+<h1>🌐 루웨인 DNS & HTTPS 관리자</h1>
+<p>DNS 연결, GitHub Pages CNAME, HTTPS 인증 상태를 자동으로 점검합니다.</p>
+
+<section>
+  <h3>🔎 DNS 상태 점검</h3>
+  <button onclick="checkDNS()">A레코드 확인</button>
+  <div id="dns-result"></div>
+</section>
+
+<section>
+  <h3>📜 CNAME 파일 확인</h3>
+  <button onclick="checkCNAME()">CNAME 읽기</button>
+  <div id="cname-result"></div>
+</section>
+
+<section>
+  <h3>🔐 HTTPS 인증 상태</h3>
+  <button onclick="checkHTTPS()">HTTPS 확인</button>
+  <div id="https-result"></div>
+</section>
+
+<script>
+async function checkDNS(){
+  const box=document.getElementById('dns-result');
+  box.innerHTML='⏳ 확인 중...';
+  const domain=location.hostname;
+  const res=await fetch(`https://dns.google/resolve?name=${domain}&type=A`);
+  const data=await res.json();
+  if(!data.Answer){ box.innerHTML='<p class="fail">❌ A레코드 없음</p>'; return; }
+  const ips=data.Answer.map(a=>a.data);
+  const github=['185.199.108.153','185.199.109.153','185.199.110.153','185.199.111.153'];
+  const match=ips.filter(ip=>github.includes(ip));
+  if(match.length>0)
+    box.innerHTML=`<p class="ok">✅ GitHub Pages 연결됨 (${match.join(', ')})</p><pre>${JSON.stringify(data.Answer,null,2)}</pre>`;
+  else
+    box.innerHTML=`<p class="fail">⚠️ GitHub IP와 불일치</p><pre>${JSON.stringify(data.Answer,null,2)}</pre>`;
+}
+
+async function checkCNAME(){
+  const box=document.getElementById('cname-result');
+  box.innerHTML='⏳ 확인 중...';
+  try{
+    const res=await fetch('/CNAME');
+    if(!res.ok) throw new Error('CNAME 파일 없음');
+    const text=await res.text();
+    box.innerHTML=`<p class="ok">✅ CNAME 파일 감지됨</p><pre>${text}</pre>`;
+  }catch(e){
+    box.innerHTML=`<p class="fail">❌ ${e.message}</p>`;
+  }
+}
+
+async function checkHTTPS(){
+  const box=document.getElementById('https-result');
+  box.innerHTML='⏳ 확인 중...';
+  const url=location.href.replace(/^http:/,'https:');
+  try{
+    const res=await fetch(url);
+    if(res.ok) box.innerHTML='<p class="ok">✅ HTTPS 연결 정상</p>';
+    else box.innerHTML='<p class="fail">⚠️ HTTPS 응답 불량</p>';
+  }catch(e){
+    box.innerHTML=`<p class="fail">❌ HTTPS 접근 실패 (${e.message})</p>`;
+  }
+}
+</script>
+</body>
+</html>
