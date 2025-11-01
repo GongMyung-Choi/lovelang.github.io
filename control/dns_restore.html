@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>루웨인 도메인 복원기</title>
+<style>
+body {
+  font-family: 'Pretendard', sans-serif;
+  background: #f8f6fb;
+  color: #333;
+  text-align: center;
+  padding: 40px;
+}
+h1 { color: #5c308a; }
+pre {
+  text-align: left;
+  background: #eee;
+  border-radius: 8px;
+  padding: 10px;
+  display: inline-block;
+  max-width: 90%;
+  overflow-x: auto;
+}
+section {
+  background: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 700px;
+}
+button {
+  background: #5c308a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+button:hover { background: #6e3cb3; }
+.ok { color: #2b8a3e; font-weight: bold; }
+.fail { color: #c92a2a; font-weight: bold; }
+.warn { color: #f59f00; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>🌐 루웨인 도메인 복원기</h1>
+<p>이 페이지는 Cloudflare에서 <b>luwain.net</b> 도메인의 DNS 설정과 GitHub Pages 연결을 자동으로 복원합니다.</p>
+
+<section>
+  <h3>1️⃣ DNS 레코드 설정</h3>
+  <p>아래 설정값을 그대로 복사하여 Cloudflare DNS에 입력하세요.</p>
+  <pre>
+A  @  185.199.108.153
+A  @  185.199.109.153
+A  @  185.199.110.153
+A  @  185.199.111.153
+CNAME  www  lovelang.github.io
+  </pre>
+  <p class="warn">☁️ Cloudflare 프록시는 꺼야 합니다 (회색 구름 상태).</p>
+</section>
+
+<section>
+  <h3>2️⃣ CNAME 파일 복원</h3>
+  <button onclick="restoreCNAME()">📄 CNAME 다운로드</button>
+  <div id="cname_result" style="margin-top:20px;"></div>
+</section>
+
+<section>
+  <h3>3️⃣ HTTPS 상태 확인</h3>
+  <button onclick="checkHTTPS()">🔐 HTTPS 확인</button>
+  <div id="https_result" style="margin-top:20px;"></div>
+</section>
+
+<script>
+async function restoreCNAME() {
+  const result = document.getElementById('cname_result');
+  result.innerHTML = '⏳ CNAME 파일 생성 중...';
+  try {
+    const cnameContent = 'luwain.net\nwww.luwain.net';
+    const blob = new Blob([cnameContent], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'CNAME';
+    a.click();
+    result.innerHTML = '<p class="ok">✅ CNAME 파일 생성 완료. 루트에 업로드하세요.</p>';
+  } catch (e) {
+    result.innerHTML = `<p class="fail">❌ 오류 발생: ${e.message}</p>`;
+  }
+}
+
+async function checkHTTPS() {
+  const result = document.getElementById('https_result');
+  result.innerHTML = '⏳ HTTPS 상태 확인 중...';
+  try {
+    const res = await fetch(window.location.origin, { method: 'HEAD' });
+    if (res.ok && location.protocol === 'https:')
+      result.innerHTML = `<p class="ok">✅ HTTPS 정상 작동 (${window.location.origin})</p>`;
+    else if (location.protocol !== 'https:')
+      result.innerHTML = `<p class="warn">⚠️ HTTPS 미사용. https:// 를 확인하세요.</p>`;
+    else
+      result.innerHTML = `<p class="fail">❌ HTTPS 연결 실패</p>`;
+  } catch(e) {
+    result.innerHTML = `<p class="fail">❌ HTTPS 확인 오류: ${e.message}</p>`;
+  }
+}
+</script>
+</body>
+</html>
