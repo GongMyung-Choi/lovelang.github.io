@@ -2,8 +2,6 @@
   "version": 2,
   "name": "ruwein",
   "public": true,
-  "cleanUrls": true,
-  "trailingSlash": false,
   "builds": [
     { "src": "index.html", "use": "@vercel/static" },
     { "src": "fusion_lab/**/*.html", "use": "@vercel/static" },
