@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>루웨인 어드민 채팅</title>
+<link rel="stylesheet" href="styles/chat.css">
+<script type="module" src="connect.js"></script>
+</head>
+<body>
+<div id="chat-container">
+  <div id="messages"></div>
+  <div id="input-area">
+    <input id="user-input" placeholder="메시지를 입력하세요..." autocomplete="off" />
+    <button id="send-btn">보내기</button>
+  </div>
+</div>
+
+<script type="module">
+import { sendToRuwein } from "./connect.js";
+
+const input = document.getElementById("user-input");
+const sendBtn = document.getElementById("send-btn");
+const chat = document.getElementById("messages");
+
+sendBtn.onclick = handleSend;
+input.addEventListener("keypress", e => { if (e.key === "Enter") handleSend(); });
+
+async function handleSend() {
+  const msg = input.value.trim();
+  if (!msg) return;
+  appendMessage("👤 나", msg);
+  input.value = "";
+  const reply = await sendToRuwein(msg);
+  appendMessage("🤖 루웨인", reply);
+}
+
+function appendMessage(sender, text) {
+  const div = document.createElement("div");
+  div.className = "message";
+  div.innerHTML = `<b>${sender}</b><br>${text}`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+</script>
+</body>
+</html>
