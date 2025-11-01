@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>관리자 로그인 | 루웨인</title>
+<link rel="stylesheet" href="./includes/style.css">
+</head><body>
+<aside class="sidebar">
+  <div class="brand"><span class="dot"></span> 루웨인 Admin</div>
+  <nav class="menu">
+    <a href="./index.html">허브</a>
+    <a href="./dashboard.html">대시보드</a>
+  </nav>
+</aside>
+<main class="main">
+  <div class="topbar">
+    <div class="badge" id="sbState">Supabase 확인중…</div>
+  </div>
+
+  <section style="padding:18px;max-width:720px">
+    <div class="panel">
+      <h2>관리자 로그인</h2>
+      <div class="kv" style="margin-top:10px">
+        <div>이메일</div><input class="input" id="email" placeholder="admin@example.com">
+        <div>비밀번호</div><input class="input" id="pw" type="password" placeholder="••••••••">
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="primary" id="signinBtn">로그인</button>
+        <button id="signoutBtn">로그아웃</button>
+        <span class="small" id="authInfo"></span>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:14px">
+      <h3>상태</h3>
+      <div id="statusBox" class="small">대기…</div>
+    </div>
+  </section>
+</main>
+
+<script src="./includes/admin.js"></script>
+<script>
+supabaseStatus('#sbState');
+
+document.getElementById('signinBtn').addEventListener('click', async ()=>{
+  try{
+    const sb = await getSB();
+    const email = qs('#email').value.trim();
+    const pw = qs('#pw').value.trim();
+    const { error } = await sb.auth.signInWithPassword({ email, password: pw });
+    if(error){ adminLog('error','signIn failed',{error}); qs('#statusBox').textContent = '로그인 실패: '+error.message; return;}
+    adminLog('info','signIn ok',{email});
+    qs('#statusBox').textContent='로그인 성공'; location.href='./dashboard.html';
+  }catch(e){ qs('#statusBox').textContent='오류: '+e.message; }
+});
+
+document.getElementById('signoutBtn').addEventListener('click', async ()=>{
+  try{ const sb=await getSB(); await sb.auth.signOut(); adminLog('info','signOut'); qs('#statusBox').textContent='로그아웃 완료'; }
+  catch(e){ qs('#statusBox').textContent='오류: '+e.message; }
+});
+
+(async ()=>{
+  const user = await getUser();
+  qs('#authInfo').textContent = user ? ('현재: '+(user.email||user.id)) : '현재: 미인증';
+})();
+</script>
+</body></html>
