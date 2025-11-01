@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>루웨인 실시간 연결 테스트</title>
+  <style>
+    body { background-color:#000; color:#0f0; font-family:Consolas, monospace; padding:20px; }
+    #log { white-space:pre-wrap; }
+    input, button { font-size:16px; }
+  </style>
+</head>
+<body>
+  <h2>🌐 루웨인 실시간 연결 상태</h2>
+  <div id="log">초기화 중...</div>
+
+  <script type="module">
+    const log = (msg, color="lime") => {
+      const el = document.createElement("div");
+      el.style.color = color;
+      el.textContent = msg;
+      document.getElementById("log").appendChild(el);
+    };
+
+    // ⚙️ Supabase 기본값
+    const SUPABASE_URL = "https://omchtafaagkdwcwrvscrp.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g"; // anon 키로 교체
+    const TABLE_NAME = "todo_luwain";
+
+    log("🔄 WebSocket 연결 시도 중...");
+
+    const socket = new WebSocket(`${SUPABASE_URL.replace('https','wss')}/realtime/v1/websocket?apikey=${SUPABASE_KEY}`);
+
+    socket.onopen = () => log("✅ 연결 성공");
+    socket.onclose = () => log("❌ 연결 종료","red");
+    socket.onerror = (e) => log("⚠️ 오류 발생: " + e.message,"yellow");
+
+    socket.onmessage = (event) => {
+      log("📨 데이터 수신됨: " + event.data);
+    };
+
+    // 구독 설정 (실시간 변경 감지)
+    setTimeout(() => {
+      const subscribeMsg = {
+        event: "phx_join",
+        payload: {},
+        ref: 1,
+        topic: `realtime:public:${TABLE_NAME}`
+      };
+      socket.send(JSON.stringify(subscribeMsg));
+      log(`🧩 ${TABLE_NAME} 구독 요청 보냄`);
+    }, 1000);
+  </script>
+</body>
+</html>
