@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>어드민 허브 | 루웨인</title>
+<style>
+  body{font-family:system-ui, "Noto Sans KR",sans-serif;margin:0;padding:24px;background:#f7f8fa;color:#222}
+  .card{max-width:640px;margin:36px auto;background:#fff;border-radius:12px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+  h1{margin:0 0 8px;color:#274854}
+  .row{display:flex;gap:8px;align-items:center}
+  input{flex:1;padding:10px;border:1px solid #e6e9ee;border-radius:8px}
+  button{padding:10px 14px;border-radius:8px;border:none;background:#2a9d8f;color:#fff;cursor:pointer}
+  .muted{color:#6c6f73;font-size:.95rem;margin-top:8px}
+  .hidden{display:none}
+  .danger{background:#c94a4a}
+  .top-actions{display:flex;gap:8px;justify-content:flex-end;margin-bottom:12px}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="top-actions">
+    <!-- 로그인 전엔 이 버튼 숨김, 로그인 후 보여줌 -->
+    <a id="dashboardBtn" href="./dashboard.html" class="hidden"><button>대시보드 열기</button></a>
+    <button id="logoutBtn" class="hidden danger">로그아웃</button>
+  </div>
+
+  <h1>관리자 로그인</h1>
+  <p class="muted">관리자 계정으로 로그인하면 대시보드에 접근할 수 있습니다.</p>
+
+  <div id="loginForm">
+    <div style="margin-top:12px" class="row">
+      <input id="email" type="email" placeholder="관리자 이메일" />
+      <input id="password" type="password" placeholder="비밀번호" style="width:260px"/>
+    </div>
+    <div style="margin-top:12px" class="row">
+      <button id="loginBtn">로그인</button>
+      <button id="guestBtn" style="background:#6c5b7b">테스트(게스트)</button>
+    </div>
+    <div id="msg" class="muted" style="margin-top:10px"></div>
+  </div>
+
+  <div id="loggedInfo" class="hidden">
+    <p>✅ 로그인 상태입니다. 대시보드로 이동하거나 로그아웃하세요.</p>
+  </div>
+</div>
+
+<script src="/assets/js/supabase.js"></script>
+<script>
+/*
+  전제: /assets/js/supabase.js 에서 아래처럼 supabase 클라이언트가 export 또는 전역으로 존재해야 함.
+  예) const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  (파일 경로는 프로젝트 구조에 맞게 조정)
+*/
+
+const loginForm = document.getElementById('loginForm');
+const loggedInfo = document.getElementById('loggedInfo');
+const dashboardBtn = document.getElementById('dashboardBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const msg = document.getElementById('msg');
+
+async function updateUIForUser(user){
+  if(user){
+    // 로그인 상태: 로그인 폼 숨기고 대시보드 버튼/로그아웃 보이기
+    loginForm.classList.add('hidden');
+    loggedInfo.classList.remove('hidden');
+    dashboardBtn.classList.remove('hidden');
+    logoutBtn.classList.remove('hidden');
+    msg.textContent = `환영합니다, ${user.email || user.user_metadata?.name || '관리자'}님`;
+  } else {
+    // 로그아웃 상태: 폼 보이고 버튼 숨김
+    loginForm.classList.remove('hidden');
+    loggedInfo.classList.add('hidden');
+    dashboardBtn.classList.add('hidden');
+    logoutBtn.classList.add('hidden');
+    msg.textContent = '';
+  }
+}
+
+// 로그인 처리
+document.getElementById('loginBtn').addEventListener('click', async ()=>{
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  if(!email || !password){ msg.textContent = '이메일과 비밀번호를 입력해주세요.'; return; }
+  msg.textContent = '로그인 시도 중...';
+  try{
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if(error) { msg.textContent = '로그인 실패: '+error.message; return; }
+    if(data?.user){
+      msg.textContent = '로그인 성공. 대시보드 버튼을 확인하세요.';
+      await updateUIForUser(data.user);
+      // 자동 리다이렉트 원하면 주석 해제:
+      // location.href = './dashboard.html';
+    } else {
+      msg.textContent = '로그인 응답을 받았으나 사용자 정보가 없습니다.';
+    }
+  }catch(err){
+    msg.textContent = '에러: '+(err.message||err);
+  }
+});
+
+// 테스트용 게스트 버튼 (개발 중 필요하면 사용, 실제 운영시 제거)
+document.getElementById('guestBtn').addEventListener('click', async ()=>{
+  // 로컬테스트용: 임시 토큰 넣기 대신 이메일/패스 하ardcode (권장하지 않음)
+  // 예시: login with pre-created admin account (개발 전용)
+  document.getElementById('email').value = 'admin@example.com';
+  document.getElementById('password').value = 'password123';
+  document.getElementById('loginBtn').click();
+});
+
+// 로그아웃
+logoutBtn.addEventListener('click', async ()=>{
+  await supabase.auth.signOut();
+  updateUIForUser(null);
+  msg.textContent = '로그아웃 되었습니다.';
+});
+
+// 초기: 현재 로그인 상태 검사
+(async function init(){
+  if(!window.supabase){ msg.textContent='Supabase 클라이언트 로드 실패: /assets/js/supabase.js 경로 확인하세요.'; return; }
+  const { data } = await supabase.auth.getUser();
+  const user = data?.user || null;
+  await updateUIForUser(user);
+
+  // 실시간 상태 변경 감지 (세션 만료/다른 탭 로그인 등)
+  supabase.auth.onAuthStateChange((event, session) => {
+    if(session?.user) updateUIForUser(session.user);
+    else updateUIForUser(null);
+  });
+})();
+</script>
+</body>
+</html>
