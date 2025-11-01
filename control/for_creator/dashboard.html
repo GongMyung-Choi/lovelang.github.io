@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin Dashboard</title>
+<style>
+  :root{--accent:#af2465;--teal:#2a9d8f;--line:#ececf1}
+  *{box-sizing:border-box} body{margin:0;font-family:"Noto Sans KR",system-ui,sans-serif;background:#fff}
+  header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:#fff;border-bottom:2px solid #f2d3e1}
+  .btn{border:1px solid var(--teal);padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--teal);cursor:pointer;background:#fff}
+  .btn:hover{background:var(--teal);color:#fff}
+  main{max-width:1100px;margin:0 auto;padding:18px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+  pre{background:#f7fbfa;border:1px solid #d8eeea;padding:10px;border-radius:8px;overflow:auto;max-height:360px}
+  .meta{color:#666}
+  @media (max-width:960px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <strong>Admin · 대시보드</strong>
+  <div style="display:flex;gap:8px;align-items:center">
+    <span id="who" class="meta">확인 중…</span>
+    <button id="logout" class="btn">로그아웃</button>
+  </div>
+</header>
+
+<main>
+  <section class="grid">
+    <article class="card">
+      <h3>세션</h3>
+      <p class="meta" id="sessionInfo">…</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a class="btn" href="/with_luwein.html">with Luwein</a>
+        <a class="btn" href="/admin/index.html">관리자 홈</a>
+        <a class="btn" href="/index.html">루웨인 홈</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>데이터 미리보기</h3>
+      <button class="btn" id="peek">persna_records (5행)</button>
+      <pre id="out">대기…</pre>
+    </article>
+  </section>
+</main>
+
+<script type="module">
+  import { supabase } from "/assets/js/supabase.js";
+  const ADMIN_ALLOW = ["besoulligt@gmail.com"];
+  const $ = s=>document.querySelector(s);
+
+  async function guard(){
+    const { data:{ session } } = await supabase.auth.getSession();
+    if(!session){ location.href="/with_luwein.html"; return null; }
+    const email = session.user.email||"(알 수 없음)";
+    if(!ADMIN_ALLOW.includes(email)){ alert("권한이 없습니다."); location.href="/with_luwein.html"; return null; }
+    $("#who").textContent = email;
+    $("#sessionInfo").textContent = `로그인됨: ${email}`;
+    return session;
+  }
+
+  $("#logout").addEventListener("click", async ()=>{
+    await supabase.auth.signOut();
+    location.href="/with_luwein.html";
+  });
+
+  $("#peek").addEventListener("click", async ()=>{
+    $("#out").textContent = "조회 중…";
+    const { data, error } = await supabase.from("persna_records").select("*").limit(5);
+    if(error){ $("#out").textContent = "⚠ 오류: " + error.message; return; }
+    $("#out").textContent = JSON.stringify(data, null, 2);
+  });
+
+  guard();
+</script>
+</body>
+</html>
