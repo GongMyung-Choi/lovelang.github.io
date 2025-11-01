@@ -1,0 +1,140 @@
+<!-- 경로: /fusion_lab.html -->
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>퍼스나 융합실 | LUWAIN</title>
+  <link rel="icon" href="/assets/icons/pwa-192.png">
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,Malgun Gothic,sans-serif;margin:0;padding:24px;line-height:1.5;background:#0b0e12;color:#e8ecf1}
+    .wrap{max-width:1000px;margin:0 auto}
+    .card{background:#121621;border:1px solid #1f2533;border-radius:16px;padding:16px;margin-bottom:16px}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .row>*{flex:1}
+    input,textarea,button,select{width:100%;padding:12px;border-radius:12px;border:1px solid #2a3244;background:#0e1320;color:#dbe4f4}
+    button{cursor:pointer}
+    .pill{display:inline-block;padding:4px 10px;border:1px solid #2a3244;border-radius:999px;margin-right:6px;font-size:12px}
+    .msg{white-space:pre-wrap;background:#0e1320;border:1px solid #2a3244;border-radius:12px;padding:12px}
+    .muted{color:#9fb0c7}
+    .tiny{font-size:12px}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>퍼스나 융합실</h1>
+  <div class="card">
+    <div class="row">
+      <input id="title" placeholder="융합실 제목 (예: 숨 틔움방 인덱스 설계 이슈)" />
+      <input id="topic" placeholder="토픽 (예: 브라우저/모바일 UI 통일, 색인 자동화 등)" />
+    </div>
+    <input id="tags" placeholder="태그(쉼표로 구분, 예: UI,색인,퍼스나)" />
+    <textarea id="userMsg" rows="4" placeholder="문제/요구사항을 적어주세요. (예: 라이브러리 인덱스가 폰/웹에서 동일하게 동작하도록, 자동 색인 유지하면서 배너-헤더 충돌 제거)"></textarea>
+    <div class="row">
+      <button id="openRoom">융합실 만들기</button>
+      <button id="askAll" disabled>퍼스나 전원 호출</button>
+      <button id="summ" disabled>통합 요약</button>
+      <button id="sync" disabled>(옵션) Supabase 동기화</button>
+    </div>
+    <div class="tiny muted">※ Supabase 연동은 <code>/scripts/supabase_bridge.js</code>와 <code>config.js</code>를 설정했을 때만 활성.</div>
+  </div>
+
+  <div class="card">
+    <h3>스레드 목록</h3>
+    <div id="threads"></div>
+  </div>
+
+  <div class="card">
+    <h3>메시지</h3>
+    <div id="threadMeta" class="muted tiny"></div>
+    <div id="messages"></div>
+  </div>
+</div>
+
+<script type="module">
+  import { Fusion } from "/scripts/fusion_core.js";
+  import { Personas } from "/scripts/personas_registry.js";
+
+  const $ = (s)=>document.querySelector(s);
+  const $threads = $("#threads");
+  const $messages = $("#messages");
+  const $meta = $("#threadMeta");
+
+  let currentId = null;
+
+  const renderThreads = () => {
+    const ts = Fusion.listThreads();
+    $threads.innerHTML = ts.map(t => `
+      <div class="card">
+        <div><b>${t.title}</b></div>
+        <div class="muted tiny">${t.topic || ""}</div>
+        <div class="muted tiny">${t.tags?.map(x=>`<span class="pill">${x}</span>`).join(" ") || ""}</div>
+        <div class="tiny muted">updated: ${t.updated_at}</div>
+        <div style="margin-top:8px"><button data-open="${t.id}">열기</button></div>
+      </div>
+    `).join("") || `<div class="muted tiny">아직 스레드가 없습니다.</div>`;
+    $threads.querySelectorAll("button[data-open]").forEach(btn=>{
+      btn.onclick = ()=> openThread(btn.dataset.open);
+    });
+  };
+
+  const renderMessages = (th) => {
+    $meta.textContent = th ? `#${th.id}  •  ${th.title}  •  ${th.topic}` : "";
+    $messages.innerHTML = th?.messages.map(m => `
+      <div class="msg"><b>[${m.role}] ${m.author}</b>  <span class="tiny muted">${m.ts}</span>\n${m.content}</div>
+    `).join("") || `<div class="muted tiny">메시지가 없습니다.</div>`;
+  };
+
+  const openThread = (id) => {
+    currentId = id;
+    const th = Fusion.getThread(id);
+    renderMessages(th);
+    $("#askAll").disabled = false;
+    $("#summ").disabled = false;
+    $("#sync").disabled = false;
+  };
+
+  // Actions
+  $("#openRoom").onclick = () => {
+    const title = $("#title").value.trim() || "Untitled";
+    const topic = $("#topic").value.trim();
+    const tags = $("#tags").value.split(",").map(s=>s.trim()).filter(Boolean);
+    const userMsg = $("#userMsg").value.trim();
+
+    const th = Fusion.createThread({ title, topic, tags });
+    Fusion.addMessage(th.id, { author:"공명", role:"user", content:userMsg });
+    renderThreads();
+    openThread(th.id);
+  };
+
+  $("#askAll").onclick = async () => {
+    if (!currentId) return;
+    const th = Fusion.getThread(currentId);
+    const lastUser = th.messages.filter(m=>m.role==="user").slice(-1)[0]?.content || "";
+    const results = await Personas.runAll(th.topic || th.title, lastUser);
+    for (const r of results) {
+      Fusion.addMessage(currentId, { author:"persona", role:"persona", content:r });
+    }
+    renderMessages(Fusion.getThread(currentId));
+  };
+
+  $("#summ").onclick = () => {
+    if (!currentId) return;
+    const s = Fusion.summarize(currentId);
+    Fusion.addMessage(currentId, { author:"system", role:"note", content:s });
+    renderMessages(Fusion.getThread(currentId));
+  };
+
+  $("#sync").onclick = async () => {
+    if (!currentId) return;
+    const res = await Fusion.syncUp(currentId);
+    const note = res.ok ? `동기화 완료 (${res.reason||"ok"})` : `동기화 실패`;
+    Fusion.addMessage(currentId, { author:"system", role:"note", content:note });
+    renderMessages(Fusion.getThread(currentId));
+  };
+
+  // 초기 렌더
+  renderThreads();
+</script>
+</body>
+</html>
