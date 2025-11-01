@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<title>레카 | 아키텍처 설계실</title>
+<style>
+body{font-family:system-ui;background:#0e1320;color:#e8ecf1;padding:20px;}
+textarea{width:100%;height:120px;background:#11161e;color:#e8ecf1;border:1px solid #2a3244;border-radius:12px;padding:12px;}
+button{margin-top:10px;padding:10px 16px;border:0;border-radius:8px;background:#24314a;color:#e8ecf1;cursor:pointer;}
+</style>
+</head>
+<body>
+<h3>🏗️ 레카 (RÉKA) ― 설계/아키텍처</h3>
+<textarea id="input" placeholder="요청이나 아이디어를 입력하세요"></textarea>
+<button id="sendBtn">공명에게 전송</button>
+<div id="status"></div>
+
+<script>
+document.getElementById("sendBtn").onclick=()=>{
+  const text=document.getElementById("input").value.trim();
+  if(!text)return;
+  window.opener?.postMessage({from:"레카",text:`[설계 분석] ${text}`},"*");
+  document.getElementById("status").textContent="✅ 공명에게 전송됨";
+};
+</script>
+</body>
+</html>
