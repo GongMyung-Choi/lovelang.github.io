@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><title>루웨인 알림함</title>
+<style>
+body{font-family:'Pretendard',sans-serif;background:#fafafa;padding:24px}
+h1{color:#5c308a}
+table{border-collapse:collapse;width:100%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+th,td{border:1px solid #eee;padding:8px;font-size:14px}
+th{background:#f2e9ff;text-align:left}
+.tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:12px}
+.tag.warn{background:#fff3cd;color:#856404}
+.tag.error{background:#f8d7da;color:#721c24}
+pre{white-space:pre-wrap;font-size:12px;background:#f7f7f7;padding:8px;border-radius:6px}
+</style>
+</head>
+<body>
+<h1>루웨인 시스템 알림함</h1>
+<p>사이트가 스스로 감지한 문제/누락/상태를 여기에 모읍니다.</p>
+<table id="tbl"><thead><tr>
+  <th>시간</th><th>유형</th><th>심각도</th><th>경로</th><th>세부</th>
+</tr></thead><tbody></tbody></table>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import { LUWEIN } from '/scripts/config.js';
+
+const supabase = createClient(LUWEIN.SUPABASE_URL, LUWEIN.SUPABASE_ANON_KEY);
+
+async function loadAlerts(){
+  const { data, error } = await supabase
+    .from('alerts')
+    .select('*')
+    .order('ts', { ascending:false })
+    .limit(200);
+  if (error) { alert('알림 로드 실패'); return; }
+  const tb = document.querySelector('#tbl tbody');
+  tb.innerHTML = (data||[]).map(r => `
+    <tr>
+      <td>${fmt(r.ts)}</td>
+      <td>${r.type}</td>
+      <td><span class="tag ${r.severity||'warn'}">${r.severity||'warn'}</span></td>
+      <td>${r.path||''}</td>
+      <td><pre>${safe(JSON.parse(r.detail||"{}"))}</pre></td>
+    </tr>
+  `).join('');
+}
+function fmt(ts){ try{ return new Date(ts).toLocaleString(); }catch{ return ts; } }
+function safe(o){ return JSON.stringify(o, null, 2); }
+
+loadAlerts();
+</script>
+</body>
+</html>
