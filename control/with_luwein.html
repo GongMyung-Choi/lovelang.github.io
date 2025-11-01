@@ -142,13 +142,15 @@
       }
     }
 
-    // ✅ 자동 배포된 버셀 주소로 통신
+    // ✅ 업스테이지 연결용 루웨인 백엔드 (버셀)
     async function sendToLuwain(message) {
       const res = await fetch("https://lovelang-github-io.vercel.app/api/luwain_chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message })
       });
+
+      if (!res.ok) throw new Error("서버 연결 실패");
       const data = await res.json();
       return data.reply || "⚠️ 응답 없음";
     }
