@@ -2,11 +2,44 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-  <title>융합실 | 루웨인 트리니티</title>
+  <title>루웨인 융합허브</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-  <h1>루웨인 융합실 (Fusion Lab)</h1>
-  <p>이곳은 프로젝트의 실험실입니다.</p>
-  <a href="/">← 메인으로</a>
+
+<body onload="loadHub()">
+  <h1>루웨인 융합허브</h1>
+  <p>각 연구실과 프로젝트 진행 상태</p>
+
+  <section id="dashboard"></section>
+
+  <script>
+    async function loadHub() {
+      const container = document.getElementById("dashboard");
+      try {
+        const res = await fetch("/fusion_lab/api/status.js");
+        const text = await res.text();
+        const jsonText = text.match(/\{[\s\S]*\}/)[0];
+        const data = JSON.parse(jsonText);
+        data.labs.forEach(lab => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <h2>${lab.name}</h2>
+            <p>진행률: ${lab.progress}%</p>
+            ${
+              lab.name === "한얼 프로젝트"
+                ? `<button onclick="location.href='/fusion_lab/haneul.html'">상세보기</button>`
+                : ""
+            }
+          `;
+          container.appendChild(card);
+        });
+      } catch (e) {
+        container.innerHTML = "<p>데이터를 불러올 수 없습니다.</p>";
+        console.error(e);
+      }
+    }
+  </script>
 </body>
 </html>
