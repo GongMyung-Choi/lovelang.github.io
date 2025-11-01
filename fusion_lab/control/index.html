@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>루웨인 관리자 패널</title>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <h1>루웨인 융합실 관리자</h1>
+  <p>연구실 진행률 업데이트</p>
+
+  <form id="updateForm">
+    <label>연구실 이름: <input type="text" name="lab" required></label><br>
+    <label>진행률 (%): <input type="number" name="progress" min="0" max="100" required></label><br>
+    <button type="submit">업데이트</button>
+  </form>
+
+  <p id="result"></p>
+
+  <script>
+    document.getElementById("updateForm").onsubmit = async (e) => {
+      e.preventDefault();
+      const lab = e.target.lab.value;
+      const progress = Number(e.target.progress.value);
+
+      const res = await fetch("/fusion_lab/api/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lab, progress, key: "luwain_admin_2025" })
+      });
+
+      const data = await res.json();
+      document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+    };
+  </script>
+</body>
+</html>
