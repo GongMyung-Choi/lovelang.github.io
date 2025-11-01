@@ -1,0 +1,20 @@
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  background: #f8fafc;
+  padding: 20px;
+  color: #333;
+}
+h1 {
+  color: #3a86ff;
+  margin-bottom: 20px;
+}
+.report-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.report-card h3 {
+  margin: 0 0 8px 0;
+}
