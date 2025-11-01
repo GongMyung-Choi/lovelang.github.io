@@ -1,0 +1,79 @@
+body {
+  font-family: 'Pretendard', sans-serif;
+  background: #f8faff;
+  margin: 0;
+  color: #222;
+}
+
+header {
+  background: linear-gradient(135deg,#7080ff,#55aaff);
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.filters {
+  margin-top: .5rem;
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
+.filters input, .filters select, .filters button {
+  padding: .5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.filters button {
+  cursor: pointer;
+  background: #fff;
+  color: #333;
+  font-weight: 500;
+  border: 1px solid #888;
+}
+
+.filters button:hover {
+  background: #eef4ff;
+  border-color: #55aaff;
+}
+
+#log-section {
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+}
+
+th, td {
+  padding: .6rem;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  vertical-align: top;
+}
+
+tr:hover {
+  background: #f3f6ff;
+}
+
+.msg, .reply {
+  margin: .2rem 0;
+}
+.reply {
+  color: #4455ff;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.9em;
+  color: #555;
+  padding: 1rem;
+}
