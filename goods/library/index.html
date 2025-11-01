@@ -7,31 +7,90 @@
   <link rel="stylesheet" href="../style.css">
 
   <style>
-    body { font-family: 'Noto Sans KR', sans-serif; background: #f9fafb; margin:0; }
-    header, footer { background:#0c2233; color:white; text-align:center; padding:1em 0; }
-    h1 { text-align:center; margin-top:1.5em; color:#222; }
-    .category { margin: 2em auto; max-width: 900px; background:white; padding:1.5em; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
-    .category h2 { border-left:6px solid #118bee; padding-left:0.5em; color:#333; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+      position: relative;
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f9fafb;
+    }
+
+    header, footer {
+      background:#0c2233;
+      color:white;
+      text-align:center;
+      padding:1em 0;
+    }
+
+    h1 {
+      text-align:center;
+      margin-top:1.5em;
+      color:#222;
+    }
+
+    .category {
+      margin: 2em auto;
+      max-width: 900px;
+      background:white;
+      padding:1.5em;
+      border-radius:12px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .category h2 {
+      border-left:6px solid #118bee;
+      padding-left:0.5em;
+      color:#333;
+    }
+
     .book-item { margin:0.5em 0; }
     .book-item a { text-decoration:none; color:#0b5fcc; }
     .book-item a:hover { text-decoration:underline; }
 
     /* 팝업 */
     .popup {
-      position: fixed; top:0; left:0; width:100%; height:100%;
-      background: rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;
-      z-index:1000;
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
+    .popup.show { opacity: 1; }
+
     .popup-content {
-      background:white; padding:2em; border-radius:12px; max-width:400px; text-align:center;
+      background:white;
+      padding:2em;
+      border-radius:12px;
+      max-width:400px;
+      text-align:center;
       box-shadow:0 4px 15px rgba(0,0,0,0.3);
+      animation: popIn 0.25s ease;
     }
+
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity:0; }
+      to { transform: scale(1); opacity:1; }
+    }
+
     .popup-content h2 { margin-top:0; color:#0c2233; }
     .popup-content p { line-height:1.5em; }
     .popup-content a { color:#118bee; font-weight:bold; }
     .popup button {
-      margin-top:1em; padding:0.5em 1.2em; border:none;
-      background:#0c2233; color:white; border-radius:5px; cursor:pointer;
+      margin-top:1em;
+      padding:0.5em 1.2em;
+      border:none;
+      background:#0c2233;
+      color:white;
+      border-radius:5px;
+      cursor:pointer;
     }
   </style>
 </head>
@@ -51,7 +110,7 @@
   </footer>
 
   <!-- 메세나 팝업 -->
-  <div id="mecenatPopup" class="popup" style="display:none;">
+  <div id="mecenatPopup" class="popup">
     <div class="popup-content">
       <h2>🌱 루웨인 메세나</h2>
       <p>“여러분의 후원은 울림을 맑게, 넓게 합니다.”</p>
@@ -61,24 +120,23 @@
   </div>
 
   <script>
-    // --- 팝업 표시: 최초 1회만 ---
     function showPopupOnce() {
       if (!localStorage.getItem("mecenatShown")) {
-        document.getElementById("mecenatPopup").style.display = "flex";
+        const popup = document.getElementById("mecenatPopup");
+        popup.classList.add("show");
         localStorage.setItem("mecenatShown", "true");
       }
     }
+
     function closePopup() {
-      document.getElementById("mecenatPopup").style.display = "none";
+      document.getElementById("mecenatPopup").classList.remove("show");
     }
 
-    // --- 메타데이터 불러오기 ---
     async function loadLibrary() {
       try {
         const res = await fetch("metadata.json");
         const books = await res.json();
 
-        // 분류별 그룹화
         const grouped = {};
         books.forEach(book => {
           const cat = book.분류 || "기타";
@@ -86,7 +144,6 @@
           grouped[cat].push(book);
         });
 
-        // 출력
         const container = document.getElementById("libraryContainer");
         container.innerHTML = "";
 
@@ -97,15 +154,15 @@
             items.map(b => `<div class="book-item"><a href="${b.경로}" target="_blank">${b.제목}</a> – ${b.저자}</div>`).join("");
           container.appendChild(div);
         }
-      } catch (e) {
+      } catch {
         document.getElementById("libraryContainer").innerHTML = "⚠️ 메타데이터를 불러오지 못했습니다.";
       }
     }
 
-    window.onload = function() {
+    document.addEventListener("DOMContentLoaded", () => {
       loadLibrary();
       showPopupOnce();
-    };
+    });
   </script>
 </body>
 </html>
