@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>AI 음악실 | 루웨인</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    async function drawChart() {
+      const res = await fetch("/fusion_lab/data/ai_music.json");
+      const data = await res.json();
+
+      document.getElementById("summary").innerText = data.summary;
+
+      const ctx = document.getElementById("chart").getContext("2d");
+      new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: ["완료", "남은 부분"],
+          datasets: [{
+            data: [data.progress, 100 - data.progress],
+            backgroundColor: ["#ffb347", "#444"]
+          }]
+        },
+        options: {
+          plugins: { legend: { display: true } }
+        }
+      });
+    }
+    window.onload = drawChart;
+  </script>
+</head>
+<body>
+  <h1>AI 음악실</h1>
+  <p id="summary">데이터 불러오는 중...</p>
+  <canvas id="chart" width="300" height="300"></canvas>
+  <p><a href="/fusion_lab/hub.html">← 융합실 허브로</a></p>
+</body>
+</html>
