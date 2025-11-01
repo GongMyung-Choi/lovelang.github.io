@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>🌕 루웨인 통신 연못 | With Luwain</title>
   <style>
     body {
@@ -117,14 +117,13 @@
       appendMessage("user", "👤 나", msg);
       input.value = "";
       appendMessage("bot", "🤖 루웨인", "응답 중...");
-      
+
       try {
-        // 🚧 서버 연결 예시 (임시)
-        // 여기에 OpenAI API 혹은 루웨인 서버 연결 코드 삽입
         const reply = await sendToLuwain(msg);
         updateLastBotMessage(reply);
-      } catch {
-        updateLastBotMessage("⚠️ 연결되지 않았습니다. (루웨인 서버 또는 API 연결 필요)");
+      } catch (err) {
+        console.error(err);
+        updateLastBotMessage("⚠️ 연결되지 않았습니다. (루웨인 서버 확인 필요)");
       }
     }
 
@@ -143,15 +142,15 @@
       }
     }
 
-    // 실제 연결 (나중에 API 키나 서버 URL 연결 시 교체)
+    // ✅ 자동 배포된 버셀 주소로 통신
     async function sendToLuwain(message) {
-      // 여기에 OpenAI / Supabase / 루웨인 내부 API 등 연결 가능
-      // 현재는 더미 응답
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve("루웨인 서버와의 연결이 준비 중입니다. (" + message + ")");
-        }, 1000);
+      const res = await fetch("https://lovelang-github-io.vercel.app/api/luwain_chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
       });
+      const data = await res.json();
+      return data.reply || "⚠️ 응답 없음";
     }
   </script>
 </body>
