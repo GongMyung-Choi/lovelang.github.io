@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>데이터 조회 | 루웨인</title>
+<link rel="stylesheet" href="./includes/style.css">
+</head><body>
+<aside class="sidebar">
+  <div class="brand"><span class="dot"></span> 루웨인 Admin</div>
+  <nav class="menu">
+    <a href="./dashboard.html">대시보드</a>
+    <a class="active" href="./data_view.html">데이터 조회</a>
+    <a href="./logs.html">로그 보기</a>
+    <a href="./monitor.html">모니터</a>
+    <a href="./index.html">허브</a>
+  </nav>
+</aside>
+<main class="main">
+  <div class="topbar">
+    <div class="badge" id="sbState">Supabase 확인중…</div>
+    <div class="row">
+      <select id="tableSel">
+        <option>persna_records</option>
+        <option>cards</option>
+        <option>clips</option>
+        <option>doodles</option>
+        <option>personas</option>
+      </select>
+      <input class="input" id="orderBy" placeholder="정렬 컬럼 (기본: created_at)">
+      <label class="small"><input type="checkbox" id="asc"> 오름차순</label>
+      <input class="input" id="limit" type="number" value="50" style="width:110px">
+      <button class="primary" id="loadBtn">불러오기</button>
+    </div>
+  </div>
+
+  <section style="padding:18px">
+    <div id="out">대기…</div>
+  </section>
+</main>
+
+<script src="./includes/admin.js"></script>
+<script>
+supabaseStatus('#sbState');
+qs('#loadBtn').addEventListener('click', ()=>{
+  const table = qs('#tableSel').value;
+  const order = qs('#orderBy').value.trim() || 'created_at';
+  const desc = !qs('#asc').checked;
+  const limit = Math.max(1, parseInt(qs('#limit').value||'50',10));
+  loadTable({table, order, desc, limit, target:'#out'});
+});
+// auto fire first
+qs('#loadBtn').click();
+</script>
+</body></html>
