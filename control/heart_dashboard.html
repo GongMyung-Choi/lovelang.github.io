@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>루웨인 심장 대시보드</title>
+<link rel="stylesheet" href="styles/heart_dashboard.css">
+<script type="module" src="scripts/heart_dashboard.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>🫀 루웨인 심장 모니터</h1>
+  <p>전체 시스템 울림 상태 실시간 감시</p>
+</header>
+
+<section id="dashboard">
+  <div id="pulse-ring"></div>
+  <div id="status-text">데이터 수집 중...</div>
+  <div id="stats">
+    <p><b>최근 대화:</b> <span id="recent-msgs">0</span></p>
+    <p><b>에러율:</b> <span id="error-rate">0%</span></p>
+    <p><b>평균 응답속도:</b> <span id="avg-latency">-</span> ms</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 루웨인 트리니티 실시간 감응 네트워크</p>
+</footer>
+</body>
+</html>
