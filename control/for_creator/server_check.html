@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>루웨인 서버 연결 상태 (Supabase WebSocket)</title>
+  <style>
+    body { font-family: 'Noto Sans KR', sans-serif; margin: 2rem; }
+    input { width: 600px; padding: 4px; }
+    button { padding: 4px 10px; margin-left: 8px; }
+    pre { background: #111; color: #0f0; padding: 10px; height: 200px; overflow: auto; }
+  </style>
+</head>
+<body>
+  <h3>루웨인 서버 연결 상태 (Supabase WebSocket)</h3>
+  <input id="addr" type="text" value="wss://omchtafaagkdwcwrvscrp.supabase.co/realtime/v1/websocket">
+  <button onclick="check()">체크</button>
+  <pre id="log"></pre>
+
+  <script>
+    async function check() {
+      const addr = document.getElementById("addr").value;
+      const log = document.getElementById("log");
+      log.textContent = "⏳ 연결 시도 중...\n";
+
+      // 🔑 Supabase anon key (Settings → API → Project API keys)
+      const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g";
+
+      // 🧠 연결용 payload
+      const URL = `${addr}?apikey=${SUPABASE_KEY}&vsn=1.0.0`;
+
+      try {
+        const socket = new WebSocket(URL);
+
+        socket.onopen = () => {
+          log.textContent += "✅ WebSocket 연결 성공!\n";
+          socket.send(JSON.stringify({
+            topic: "realtime:*",
+            event: "phx_join",
+            payload: {},
+            ref: 1
+          }));
+        };
+
+        socket.onmessage = (msg) => {
+          log.textContent += "📩 메시지 수신:\n" + msg.data + "\n";
+        };
+
+        socket.onerror = (err) => {
+          log.textContent += "❌ 연결 오류: " + err.message + "\n";
+        };
+
+        socket.onclose = () => {
+          log.textContent += "⚙️ 연결 종료됨\n";
+        };
+
+      } catch (e) {
+        log.textContent += "🚫 연결 예외 발생: " + e.message + "\n";
+      }
+    }
+  </script>
+</body>
+</html>
