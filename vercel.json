@@ -1,18 +1,16 @@
 {
   "version": 2,
-  "name": "ruwein",
-  "public": true,
+  "name": "luwain-fusionlab",
   "builds": [
     { "src": "index.html", "use": "@vercel/static" },
     { "src": "fusion_lab/**/*.html", "use": "@vercel/static" },
-    { "src": "assets/**/*", "use": "@vercel/static" },
-    { "src": "data/**/*", "use": "@vercel/static" },
-    { "src": "scripts/**/*", "use": "@vercel/static" },
-    { "src": "admin/**/*.html", "use": "@vercel/static" }
+    { "src": "fusion_lab/api/*.js", "use": "@vercel/node" },
+    { "src": "admin/**/*.html", "use": "@vercel/static" },
+    { "src": "assets/**/*", "use": "@vercel/static" }
   ],
   "routes": [
+    { "src": "^/fusion_lab/api/(.*)", "dest": "/fusion_lab/api/$1.js" },
     { "src": "^/fusion_lab$", "dest": "/fusion_lab/hub.html" },
-    { "src": "^/fusion$", "dest": "/fusion_lab/hub.html" },
     { "src": "^/admin$", "dest": "/admin/index.html" }
   ]
 }
