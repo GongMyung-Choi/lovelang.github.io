@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>로그 보기 | 루웨인</title>
+<link rel="stylesheet" href="./includes/style.css">
+</head><body>
+<aside class="sidebar">
+  <div class="brand"><span class="dot"></span> 루웨인 Admin</div>
+  <nav class="menu">
+    <a href="./dashboard.html">대시보드</a>
+    <a href="./data_view.html">데이터 조회</a>
+    <a class="active" href="./logs.html">로그 보기</a>
+    <a href="./monitor.html">모니터</a>
+    <a href="./index.html">허브</a>
+  </nav>
+</aside>
+<main class="main">
+  <div class="topbar">
+    <div class="row">
+      <button onclick="exportLogs()">내보내기</button>
+      <button class="warn" onclick="clearLogs()">로컬 로그 초기화</button>
+    </div>
+  </div>
+
+  <section style="padding:18px">
+    <div class="panel">
+      <h3>로컬 로그</h3>
+      <pre id="logBox" style="max-height:60vh"></pre>
+    </div>
+  </section>
+</main>
+
+<script src="./includes/admin.js"></script>
+<script>
+function render(){
+  const arr = JSON.parse(localStorage.getItem('luwein_admin_logs')||'[]');
+  qs('#logBox').textContent = arr.map(x=>`${x.ts} [${x.level}] ${x.msg} ${x.meta?JSON.stringify(x.meta):''}`).join('\n') || '(로그 없음)';
+}
+function clearLogs(){ localStorage.removeItem('luwein_admin_logs'); render(); }
+function exportLogs(){
+  const blob = new Blob([qs('#logBox').textContent], {type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='luwein_admin_logs.txt'; a.click();
+}
+render();
+</script>
+</body></html>
