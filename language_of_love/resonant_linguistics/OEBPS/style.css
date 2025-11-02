@@ -1,0 +1,13 @@
+body {
+  font-family: "나눔명조", serif;
+  line-height: 1.7;
+  margin: 1.2em;
+  color: #222;
+}
+h1, h2, h3 {
+  text-align: center;
+  margin-top: 1.4em;
+  margin-bottom: 0.6em;
+}
+p { text-indent: 1em; margin-bottom: 0.8em; }
+img { display: block; margin: 0 auto; max-width: 100%; }
