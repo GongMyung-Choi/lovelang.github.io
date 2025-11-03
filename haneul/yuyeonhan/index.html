@@ -29,4 +29,32 @@ const g=document.getElementById('gallery');
 for(let i=2;i<=total;i++){const d=document.createElement('div');d.className='card';
 const img=`${folder}${String(i).padStart(3,'0')}.png`,t=captions[i-2]||`한얼의 숨결 #${i}`;
 d.innerHTML=`<img src="${img}"><div class="text">${t}</div>`;g.appendChild(d);}
-</script></body></html>
+</script>
+<!-- ✅ 헤더 -->
+<div id="luwein-header"></div>
+<script>
+(async()=>{
+  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
+
+<!-- ✅ 푸터 -->
+<div id="luwein-footer"></div>
+<script>
+(async()=>{
+  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
+</body></html>
