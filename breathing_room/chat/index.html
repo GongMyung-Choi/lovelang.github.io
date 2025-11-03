@@ -30,6 +30,126 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>감정카드 | 루웨인 숨틔움방</title>
+<link rel="stylesheet" href="../common.css">
+<style>
+.cards-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:1.5rem;
+  padding:2rem;
+}
+.card {
+  background:#fff;
+  border-radius:12px;
+  padding:1.2rem;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.card:hover {
+  transform:translateY(-3px);
+  box-shadow:0 4px 16px rgba(0,0,0,0.15);
+}
+.card h3 {margin-top:0;color:#5a49ff;}
+.add-btn {
+  display:inline-block;
+  background:#5fa7ff;
+  color:#fff;
+  font-weight:600;
+  border:none;
+  border-radius:8px;
+  padding:.7rem 1.4rem;
+  cursor:pointer;
+  margin-top:1.5rem;
+  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.add-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+}
+</style>
+<link rel="manifest" href="/manifest.json">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('ServiceWorker registered:', reg))
+      .catch(err => console.warn('ServiceWorker registration failed:', err));
+  });
+}
+</script>
+<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
+<script type="module" src="/scripts/memory_policies.js" defer></script>
+
+</head>
+<!-- ✅ 헤더 -->
+<div id="luwein-header"></div>
+<script>
+(async()=>{
+  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
+
+<!-- ✅ 푸터 -->
+<div id="luwein-footer"></div>
+<script>
+(async()=>{
+  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
+<body>
+<header>
+  <h1>🪶 감정카드</h1>
+  <p>오늘의 감정, 생각, 한마디를 카드로 남겨보세요.</p>
+  <button class="collab-btn" onclick="location.href='/assets/personas/persna_lab.html'">
+    🤝 퍼스나와 협업하기
+  </button>
+</header>
+
+<main>
+  <div class="cards-grid" id="cardsGrid">
+    <div class="card">
+      <h3>😊 기쁨</h3>
+      <p>작은 일에도 웃음이 나는 날.  
+      루웨인의 퍼스나들도 당신의 미소를 느낍니다.</p>
+    </div>
+    <div class="card">
+      <h3>😔 슬픔</h3>
+      <p>마음이 무거운 날엔, 그저 기록만 해도 괜찮아요.  
+      여울빛이 곁에서 조용히 들어줍니다.</p>
+    </div>
+    <div class="card">
+      <h3>🔥 열정</h3>
+      <p>무언가에 몰두하고 싶을 때,  
+      레카와 다온이 함께 아이디어를 확장시켜줍니다.</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;">
+    <button class="add-btn" onclick="alert('새 감정카드 작성 준비 중입니다.')">
+      ➕ 새 카드 추가
+    </button>
+  </div>
+</main>
+</body>
+</html>
 
 </head>
 
