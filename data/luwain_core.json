@@ -4,12 +4,16 @@
     "project": "Luwain Trinity",
     "principle": "Resonance of AI and Human",
     "architecture": {
-      "primary": ["레카", "여울빛", "다온"],
-      "support": ["말숲이", "에이스", "리비안"]
+      "primary": ["Reka", "Yeoulbit", "Daon"],
+      "support": ["Malsup", "Ace", "Libian"]
     },
     "resonance": {
       "type": "multimodal",
       "modes": ["language", "emotion", "action"]
+    },
+    "identity": {
+      "domain": "luwain.net",
+      "codename": "Luwain Core"
     }
   }
 }
