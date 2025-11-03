@@ -33,6 +33,33 @@ if ('serviceWorker' in navigator) {
     <p>아이디어를 영상으로 풀어보세요.  
     루웨인의 영상팀 퍼스나들과 함께합니다.</p>
   </section>
+<!-- ✅ 헤더 -->
+<div id="luwein-header"></div>
+<script>
+(async()=>{
+  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
+
+<!-- ✅ 푸터 -->
+<div id="luwein-footer"></div>
+<script>
+(async()=>{
+  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
+  for(const p of paths){
+    try{
+      const r=await fetch(p,{cache:"no-cache"});
+      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
+    }catch(e){}
+  }
+})();
+</script>
 </main>
 </body>
 </html>
