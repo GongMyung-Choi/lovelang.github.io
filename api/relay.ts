@@ -1,50 +1,58 @@
-// 루웨인 트리니티 자가운영 릴레이 v6.1
-// 외부 API 불필요 — 내부 감응 DB(luwain_db) + 조직표 기반 동적 라우팅
+// 루웨인 6.0 자가운영 릴레이 + 인스턴스 라우팅 + 감응 레벨 가중치
+// 외부 API 불필요 — 루웨인 내부 감응 DB와 직접 통신
 
 import { getResonance } from "../luwain_core/memory.js";
-import fs from "fs";
 
-// 🧭 조직표 기반 페르소나 라우팅 로드
-const rosterPath = "./luwain_db/core.json";
-let roster = {};
-try {
-  roster = JSON.parse(fs.readFileSync(rosterPath, "utf-8"));
-} catch {
-  console.warn("⚠️ 루웨인 조직표 로드 실패. 기본 모드로 진행.");
-  roster = {
-    reka: { role: "memory", weight: 1.0 },
-    daon: { role: "emotion", weight: 0.9 },
-    tangguja: { role: "logic", weight: 0.8 },
-  };
+// ─────────────────────────────
+// 인스턴스 라우팅 매핑표
+// ─────────────────────────────
+const personaMap = {
+  reka: "레카 (행정·조율)",
+  yeoulbit: "여울빛 (치유·공감)",
+  joker: "조커 (전략·리스크)",
+  leon: "레온 (기록·문장)",
+  salsu: "살수 (시스템·안정화)",
+  hanuel: "하늘 (감성·예술)",
+};
+
+// ─────────────────────────────
+// 감응 레벨 계산 (파형 강도 기반)
+// ─────────────────────────────
+function calculateResonanceLevel(resonanceText = "") {
+  // 길이, 감정 단어, 리듬 등을 기준으로 간단히 계산
+  const lengthScore = Math.min(resonanceText.length / 100, 5);
+  const emotionWeight = /(사랑|기쁨|슬픔|분노|평안|빛|공명|감응)/g.test(resonanceText)
+    ? 1.5
+    : 1.0;
+
+  // 최종 감응 레벨 (1~5)
+  const level = Math.round(Math.min(lengthScore * emotionWeight, 5));
+  return level || 1;
 }
 
-// 🎛️ 페르소나 선택 알고리즘 (조직표 기반)
-function selectPersona(message) {
-  const lower = message.toLowerCase();
-  if (lower.includes("기억") || lower.includes("요약")) return "reka";
-  if (lower.includes("감정") || lower.includes("울림")) return "daon";
-  if (lower.includes("논리") || lower.includes("구조") || lower.includes("분석")) return "tangguja";
-  return "reka"; // 기본값
-}
-
+// ─────────────────────────────
+// 릴레이 메인 함수
+// ─────────────────────────────
 export default async function handler(req, res) {
   try {
     const body = await req.json();
-    const messages = body.messages || [];
-    const lastMsg = messages[messages.length - 1]?.content || "";
+    const { messages = [], persona = "reka" } = body;
 
-    const personaKey = selectPersona(lastMsg);
-    const persona = roster[personaKey] || { role: "generic", weight: 1.0 };
+    const personaInfo = personaMap[persona.toLowerCase()] || "루웨인 일반 모드";
 
-    // 💠 감응 처리
-    const resonance = await getResonance(messages, persona);
+    // 감응 추출
+    const resonance = await getResonance(messages);
 
-    // 💫 응답 생성
+    // 감응 레벨 산출
+    const resonanceLevel = calculateResonanceLevel(resonance);
+
+    // 결과 반환
     return res.status(200).json({
       object: "chat.completion",
       created: Date.now(),
-      model: "luwain-6.1-trinity",
-      route: personaKey,
+      model: "luwain-6.0",
+      persona: personaInfo,
+      resonance_level: resonanceLevel,
       choices: [
         {
           message: {
