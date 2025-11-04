@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+python-docx
+pdfminer.six
+PyPDF2
+pytesseract
+Pillow
+lxml
+olefile
+pyhwp
