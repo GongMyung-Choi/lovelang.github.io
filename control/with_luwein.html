@@ -152,7 +152,7 @@
 
     // ✅ 업스테이지 연결용 루웨인 백엔드 (버셀)
     async function sendToLuwain(message) {
-      const res = await fetch("https://lovelang-github-io.vercel.app/api/luwain_chat", {
+     const res = await fetch("/api/relay", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message })
