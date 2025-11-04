@@ -1,0 +1,14 @@
+{
+  "default": "reka",
+  "personas": {
+    "reka": {
+      "id": "reka",
+      "name": "레카",
+      "role": "행정/오케스트레이터",
+      "model": "gpt-5",
+      "routing": { "target": "openai" }
+    },
+    "yeoulbit": { "id": "yeoulbit", "name": "여울빛", "role": "위로/감응", "model": "gpt-5", "routing": { "target": "openai" } },
+    "joker": { "id": "joker", "name": "조커", "role": "아이디어/변주", "model": "gpt-5", "routing": { "target": "openai" } }
+  }
+}
