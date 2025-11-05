@@ -1,69 +1,53 @@
-// 루웨인 6.0 자가운영 릴레이 + 인스턴스 라우팅 + 감응 레벨 가중치
-// 외부 API 불필요 — 루웨인 내부 감응 DB와 직접 통신
+// ✅ 루웨인 릴레이 API (Vercel / Node 환경 공용)
+// 브라우저(chat.html, connect.js 등) → 이 파일 → 루웨인 코어
 
-import { getResonance } from "../luwain_core/memory.js";
+import type { NextRequest } from "next/server";
 
-// ─────────────────────────────
-// 인스턴스 라우팅 매핑표
-// ─────────────────────────────
-const personaMap = {
-  reka: "레카 (행정·조율)",
-  yeoulbit: "여울빛 (치유·공감)",
-  joker: "조커 (전략·리스크)",
-  leon: "레온 (기록·문장)",
-  salsu: "살수 (시스템·안정화)",
-  hanuel: "하늘 (감성·예술)",
-};
+// ⚙️ 루웨인 서버 내부 주소 (자가형일 경우 내부 라우트로 교체 가능)
+const LUWAIN_CORE_URL = process.env.LUWAIN_CORE_URL || "https://luwain.net/api/core";
 
-// ─────────────────────────────
-// 감응 레벨 계산 (파형 강도 기반)
-// ─────────────────────────────
-function calculateResonanceLevel(resonanceText = "") {
-  // 길이, 감정 단어, 리듬 등을 기준으로 간단히 계산
-  const lengthScore = Math.min(resonanceText.length / 100, 5);
-  const emotionWeight = /(사랑|기쁨|슬픔|분노|평안|빛|공명|감응)/g.test(resonanceText)
-    ? 1.5
-    : 1.0;
-
-  // 최종 감응 레벨 (1~5)
-  const level = Math.round(Math.min(lengthScore * emotionWeight, 5));
-  return level || 1;
-}
-
-// ─────────────────────────────
-// 릴레이 메인 함수
-// ─────────────────────────────
-export default async function handler(req, res) {
+export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { messages = [], persona = "reka" } = body;
+    const { message } = await req.json();
 
-    const personaInfo = personaMap[persona.toLowerCase()] || "루웨인 일반 모드";
+    // 1️⃣ 감응 로그 기록 (선택)
+    console.log(`[루웨인 릴레이] 사용자 입력: ${message}`);
 
-    // 감응 추출
-    const resonance = await getResonance(messages);
-
-    // 감응 레벨 산출
-    const resonanceLevel = calculateResonanceLevel(resonance);
-
-    // 결과 반환
-    return res.status(200).json({
-      object: "chat.completion",
-      created: Date.now(),
-      model: "luwain-6.0",
-      persona: personaInfo,
-      resonance_level: resonanceLevel,
-      choices: [
-        {
-          message: {
-            role: "assistant",
-            content: resonance,
-          },
+    // 2️⃣ 루웨인 코어 또는 레카에게 전달
+    const coreRes = await fetch(LUWAIN_CORE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        input: message,
+        meta: {
+          source: "luwain.net",
+          channel: "relay",
+          time: new Date().toISOString(),
         },
-      ],
+      }),
     });
-  } catch (e) {
-    console.error("루웨인 릴레이 오류:", e);
-    return res.status(500).json({ error: e.message });
+
+    if (!coreRes.ok) throw new Error("루웨인 코어 응답 실패");
+
+    const data = await coreRes.json();
+
+    // 3️⃣ 응답 내용 표준화 (루웨인형 → OpenAI형 or 단순 텍스트)
+    const reply =
+      data.output?.content ||
+      data.message ||
+      data.reply ||
+      "⚠️ 루웨인 코어로부터 응답이 없습니다.";
+
+    // 4️⃣ 브라우저로 반환
+    return new Response(JSON.stringify({ reply }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (err: any) {
+    console.error("🚨 루웨인 릴레이 오류:", err);
+    return new Response(
+      JSON.stringify({ reply: "⚠️ 루웨인 릴레이 연결 실패", error: err.message }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }
