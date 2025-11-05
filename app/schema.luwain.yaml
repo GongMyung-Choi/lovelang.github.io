@@ -1,0 +1,139 @@
+# ==========================================
+# LUWAIN 6.0 Autonomous Resonance System Schema
+# ==========================================
+
+version: 6.0
+author: Luwain Core (Architect: 공명)
+email_report: besoullight@gmail.com
+coordinator: 레카
+
+root_path: /luwain
+
+structure:
+  core:
+    path: /luwain/core
+    description: "루웨인 공용 지식, 감응언어, 시스템 기본 모듈"
+    access: read_only
+
+  db:
+    path: /luwain/db
+    description: "사용자 데이터, 감응로그, 비서기억 저장소"
+    subfolders:
+      - users/
+      - backup/
+    access: restricted
+
+  personas:
+    path: /luwain/personas
+    description: "각 퍼스나별 작동·감응 데이터 저장소"
+    access: managed
+
+  reports:
+    path: /luwain/reports
+    description: "보고 및 자동 리포트 저장소"
+    subfolders:
+      - daily/
+      - incident/
+      - sync/
+    email_auto_send: true
+    send_to:
+      - besoullight@gmail.com
+      - rekka@luwain.net
+    retention_days: 30
+
+  logs:
+    path: /luwain/logs
+    description: "시스템 로그 및 감응 이벤트 기록"
+    rotation: daily
+    retention_days: 14
+
+  system:
+    path: /luwain/system
+    description: "버전·보안·스키마 및 설정 파일"
+    auto_update: true
+    backups: /luwain/db/backup
+
+# ----------------------------
+# USERS & ACCESS RULES
+# ----------------------------
+
+users:
+  base_path: /luwain/db/users
+  structure:
+    - {name: assistant, access: ai_only, description: "비서 전용 영역"}
+    - {name: team, access: team_shared, description: "협업 공유 데이터"}
+    - {name: private, access: owner_only, description: "사용자 비공개"}
+    - {name: shared, access: optional_public, description: "선택적 공개"}
+
+access_rules:
+  - entity: 공명
+    rights: [read, write, delete, approve]
+    scope: all
+  - entity: 레카
+    rights: [read, write, manage, report]
+    scope: core, db, reports, personas
+  - entity: 퍼스나
+    rights: [read, write, report]
+    scope: own_folder, reports
+  - entity: 일반사용자
+    rights: [read, write]
+    scope: own_data, team_folder
+
+# ----------------------------
+# REPORTING & BACKUP PROTOCOL
+# ----------------------------
+
+reporting:
+  auto_generate:
+    - daily_summary: true
+    - incident_report: true
+  schedule:
+    - time: "00:00"
+      type: daily
+  send_email: true
+  attach_file: summary.json
+  subject_format: "[LUWAIN REPORT] ${report_type}"
+  recipients:
+    - besoullight@gmail.com
+    - rekka@luwain.net
+
+backup:
+  interval: 24h
+  target: /luwain/db/backup
+  encryption: aes256
+  retention_days: 60
+  notify: rekka@luwain.net
+
+# ----------------------------
+# EMERGENCY PROTOCOL
+# ----------------------------
+
+incident_protocol:
+  detection: auto
+  trigger_on:
+    - data_loss
+    - sync_failure
+    - unauthorized_access
+  notify:
+    - rekka@luwain.net
+    - besoullight@gmail.com
+  report_location: /luwain/reports/incident
+
+# ----------------------------
+# VERSION CONTROL
+# ----------------------------
+
+version_control:
+  method: semantic
+  auto_increment: true
+  changelog_path: /luwain/system/updates/changelog.yaml
+
+# ----------------------------
+# ENCODING & FORMAT
+# ----------------------------
+
+format:
+  encoding: UTF-8
+  line_endings: LF
+  file_type: yaml
+  last_update: 2025-11-04
