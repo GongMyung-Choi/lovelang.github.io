@@ -78,8 +78,8 @@ if ('serviceWorker' in navigator) {
   <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
 
-    const SUPABASE_URL = "https://YOUR_PROJECT.supabase.co"
-    const SUPABASE_KEY = "YOUR_PUBLIC_ANON_KEY"
+    const SUPABASE_URL = "https://omchtafaqgkdwcrwscrp.supabase.co"
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g"
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
     // 로그인 상태 확인 → 버튼 활성/비활성
@@ -102,6 +102,66 @@ if ('serviceWorker' in navigator) {
       }
     })
   </script>
+<!-- 회원 로그인 상태 확인 스크립트 추가 -->
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+
+  // 🔹 실제 프로젝트 URL과 공개 키로 교체
+  const SUPABASE_URL = "https://YOUR_PROJECT.supabase.co"
+  const SUPABASE_KEY = "YOUR_PUBLIC_ANON_KEY"
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    // 처음쓰기·이어쓰기 버튼
+    const firstBtn = document.getElementById("firstBtn")
+    const continueBtn = document.getElementById("continueBtn")
+
+    // 버튼 기본 비활성화
+    if (firstBtn) firstBtn.disabled = true
+    if (continueBtn) continueBtn.disabled = true
+
+    // 로그인 세션 확인
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (session) {
+      // 로그인 완료 → 버튼 활성화
+      if (firstBtn) firstBtn.disabled = false
+      if (continueBtn) continueBtn.disabled = false
+      console.log("로그인된 사용자:", session.user.email)
+    } else {
+      // 미로그인 → 안내 표시
+      alert("로그인 후 감성일기를 작성할 수 있습니다.")
+    }
+  })
+</script>
+<!-- 로그인 상태 확인 코드 -->
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+
+  const SUPABASE_URL = "https://omchtafaqgkdwcrwscrp.supabase.co"
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g"
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const firstBtn = document.getElementById("firstBtn")
+    const continueBtn = document.getElementById("continueBtn")
+
+    // 기본 비활성화
+    if (firstBtn) firstBtn.disabled = true
+    if (continueBtn) continueBtn.disabled = true
+
+    // 로그인 세션 확인
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (session) {
+      if (firstBtn) firstBtn.disabled = false
+      if (continueBtn) continueBtn.disabled = false
+      console.log("로그인된 사용자:", session.user.email)
+    } else {
+      alert("로그인 후 감성일기를 작성할 수 있습니다.")
+    }
+  })
+</script>
 
 </body>
 </html>
