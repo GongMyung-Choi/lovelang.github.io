@@ -294,6 +294,58 @@ function login(){
 </script>
 <!-- ===== /LUWAIN popup ===== -->
 
+<!-- 🔹 루웨인 로그인 기능 추가 (기존 내용 아래에만 붙이기) -->
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+
+  const SUPABASE_URL = "https://omchtafaqgkdwcrwscrp.supabase.co"   // 네 프로젝트 주소
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g"               // public-anon-key
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+  async function login() {
+    const id = document.getElementById("userid")?.value?.trim()
+    const pw = document.getElementById("userpw")?.value?.trim()
+    if (!id || !pw) return alert("아이디와 비밀번호를 입력해주세요.")
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email: id, password: pw })
+    if (error) alert("로그인 실패: " + error.message)
+    else {
+      alert("로그인 성공: " + data.user.email)
+      location.href = "main.html"
+    }
+  }
+
+  async function signup() {
+    const id = document.getElementById("userid")?.value?.trim()
+    const pw = document.getElementById("userpw")?.value?.trim()
+    if (!id || !pw) return alert("아이디와 비밀번호를 입력해주세요.")
+
+    const { data, error } = await supabase.auth.signUp({ email: id, password: pw })
+    if (error) alert("회원가입 실패: " + error.message)
+    else alert("회원가입 성공! 이메일 인증을 완료해주세요.")
+  }
+
+  async function loginWithGoogle() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin + "/main.html" }
+    })
+    if (error) alert("Google 로그인 실패: " + error.message)
+  }
+
+  // 페이지 로드 시 기존 버튼 아래에 Google 로그인 버튼 자동 추가
+  document.addEventListener("DOMContentLoaded", () => {
+    const btnArea = document.querySelector(".welcome-buttons") || document.body
+    const googleBtn = document.createElement("button")
+    googleBtn.textContent = "Google 계정으로 로그인"
+    googleBtn.style.backgroundColor = "#db4437"
+    googleBtn.style.color = "#fff"
+    googleBtn.style.marginTop = "8px"
+    googleBtn.onclick = loginWithGoogle
+    btnArea.appendChild(googleBtn)
+  })
+</script>
+<!-- 🔹 추가 끝 -->
 
 </body>
 </html>
