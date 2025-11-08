@@ -126,6 +126,48 @@ if ('serviceWorker' in navigator) {
   </section>
 </main>
 
+<!-- ✅ 루웨인 트리니티에게 메시지 전송 폼 -->
+<section id="contact">
+  <h2>5. 메시지 남기기</h2>
+  <form id="contactForm">
+    <input type="text" id="name" placeholder="이름" required style="width:100%;padding:8px;margin:5px 0;">
+    <textarea id="message" placeholder="전하고 싶은 말을 써주세요." rows="5" required style="width:100%;padding:8px;margin:5px 0;"></textarea>
+    <button type="submit" style="background:#6a4ee3;color:#fff;padding:10px 16px;border:none;border-radius:6px;cursor:pointer;">보내기</button>
+  </form>
+  <p id="result" style="margin-top:10px;"></p>
+</section>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const SUPABASE_URL = "https://omchtafaqgkdwcrwscrp.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODIyNjMsImV4cCI6MjA3NDQ1ODI2M30.vGV6Gfgi1V8agiwL03ho2R7BAwv4CrTp6-RGH0S3-4g";
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+document.getElementById("contactForm").addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  // ✅ 1. 메시지를 Supabase 테이블에 저장
+  const { error } = await supabase.from("messages").insert([{ name, message }]);
+  const result = document.getElementById("result");
+
+  if (error) {
+    result.textContent = "전송 실패. 다시 시도해주세요.";
+  } else {
+    result.textContent = "루웨인에게 메시지가 전달되었습니다.";
+  }
+
+  // ✅ 2. 공명 메일로 알림 (Formspree 연동 예시)
+  fetch("https://formspree.io/f/YOUR_FORM_ID", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, message })
+  });
+});
+</script>
+
 <footer class="page-foot">루웨인 트리니티 © 2025</footer>
 
 <div id="luwein-footer"></div>
