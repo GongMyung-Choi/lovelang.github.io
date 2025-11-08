@@ -1,184 +1,133 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>말의 온도 | 루웨인 트리니티 </title>
-<style>
-:root{
-  --accent:#d98a4e;
-  --highlight:#ffd29e;
-  --bg:#fffdf8;
-  --font:'Noto Sans KR',sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{
-  font-family:var(--font);
-  background:var(--bg);
-  color:#333;
-  line-height:1.8;
-  display:flex;
-  flex-direction:column;
-  min-height:100vh;
-}
-#luwein-header,#luwein-footer{width:100%;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>말의 온도 | 루웨인 트리니티</title>
 
-/* ===== PAGE ===== */
-header.page-title{
-  background:linear-gradient(90deg,var(--accent),var(--highlight));
-  color:#fff;
-  text-align:center;
-  padding:35px 10px;
-  font-size:1.8rem;
-  font-weight:700;
-}
-main{
-  flex:1;
-  max-width:900px;
-  margin:0 auto;
-  padding:30px 20px 60px;
-}
-section{margin-bottom:40px;}
-h2{
-  color:var(--accent);
-  font-size:1.3rem;
-  margin-bottom:10px;
-}
-blockquote{
-  border-left:4px solid var(--highlight);
-  padding-left:16px;
-  margin:20px 0;
-  color:#666;
-  font-style:italic;
-}
-.temperature-scale{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:#fff9f2;
-  border:1px solid #eedbc3;
-  border-radius:14px;
-  padding:14px 18px;
-  margin:20px 0;
-}
-.temperature-scale span{
-  font-weight:700;
-}
-footer.page-foot{
-  text-align:center;
-  font-size:.9rem;
-  color:#888;
-  border-top:1px solid #eee;
-  padding:20px;
-}
-</style>
-<!-- header.html 의 </head> 바로 위쪽에 추가 -->
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
-<link rel="manifest" href="/manifest.json">
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('ServiceWorker registered:', reg))
-      .catch(err => console.warn('ServiceWorker registration failed:', err));
-  });
-}
-</script>
-
+  <!-- 🔹 style.css 자동 로드 -->
+  <script>
+    const cssCandidates = [
+      "style.css", "./style.css", "../style.css",
+      "css/style.css", "../css/style.css", "assets/style.css"
+    ];
+    const head = document.getElementsByTagName("head")[0];
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    (function tryLoad(i = 0) {
+      if (i >= cssCandidates.length) {
+        console.warn("❌ style.css를 찾지 못했습니다. 기본 스타일 적용합니다.");
+        const fallback = document.createElement("style");
+        fallback.textContent = `
+          body {
+            background: linear-gradient(to bottom, #fffaf5, #fff);
+            color: #333;
+            font-family: 'Pretendard', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            transition: all .3s ease;
+          }
+          h1, h2 { color: #5b3924; }
+          button {
+            background-color: #f7c9a9;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 8px;
+          }
+          button:hover { background-color: #f5b58b; }
+          section {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 24px;
+          }
+        `;
+        head.appendChild(fallback);
+        return;
+      }
+      link.href = cssCandidates[i];
+      link.onload = () => console.log("✅ CSS 로드 성공:", link.href);
+      link.onerror = () => tryLoad(i + 1);
+      head.appendChild(link);
+    })();
+  </script>
 </head>
+
 <body>
+  <!-- ✅ 헤더 -->
+  <div id="luwein-header"></div>
+  <script>
+    fetch("/includes/header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("luwein-header").innerHTML = data;
+      })
+      .catch(() => console.warn("header.html을 불러오지 못했습니다."));
+  </script>
 
-<div id="luwein-header"></div>
+  <!-- ✅ 메인 콘텐츠 -->
+  <main class="content">
+    <section>
+      <h1>말의 온도</h1>
+      <p>말은 온도를 지닌다. 차가운 말은 마음을 얼게 하고, 따뜻한 말은 관계를 녹인다.</p>
+    </section>
 
+    <section>
+      <h2>1. 말의 무게</h2>
+      <p>말은 가볍게 흘러가는 듯하지만, 듣는 이의 마음엔 오래 남는다.</p>
+    </section>
 
-<main>
+    <section>
+      <h2>2. 말의 향기</h2>
+      <p>말은 보이지 않지만 향기로 기억된다. 사람의 온기와 함께 스며든다.</p>
+    </section>
 
-<header class="page-title">🔥 말의 온도</header>
+    <section>
+      <h2>3. 말의 색</h2>
+      <p>어떤 말은 푸르고, 어떤 말은 붉다. 그 색은 말하는 이의 마음에서 비친다.</p>
+    </section>
 
-  <section>
-    <h2>1. 말에는 온도가 있다</h2>
-    <p>우리가 내뱉는 모든 말에는 보이지 않는 온도가 있습니다.  
-    그 온도는 목소리의 높낮이, 문장의 길이, 그리고 마음의 깊이에서 나옵니다.  
-    말의 온도는 곧 마음의 온도입니다.</p>
-  </section>
+    <section>
+      <h2>4. 언어의 치유력</h2>
+      <p>상처를 남기는 것도, 치유하는 것도 결국 말이다.</p>
+    </section>
 
-  <section>
-    <h2>2. 냉(冷)한 말과 온(溫)한 말</h2>
-    <div class="temperature-scale">
-      <span>차가운 말</span> <span>←</span>
-      <span>중립의 말</span> <span>→</span>
-      <span>따뜻한 말</span>
-    </div>
-    <p>차가운 말은 사실을 말하지만, 마음을 얼립니다.  
-    따뜻한 말은 같은 사실을 말해도 마음을 녹입니다.  
-    온도의 차이는 단어가 아니라 <strong>의도</strong>에서 시작됩니다.</p>
-    <blockquote>“말의 온도는 말하는 사람의 마음이 만든다.”</blockquote>
-  </section>
+    <!-- ✅ 5. 말의 온도 테스트 복원 -->
+    <section id="temperature-test">
+      <h2>5. 말의 온도 테스트</h2>
+      <p>지금 당신의 말은 어떤 온도에 가까울까요?</p>
+      <button onclick="startTest()">테스트 시작</button>
+      <div id="testResult" style="margin-top:20px; font-weight:bold;"></div>
+    </section>
 
-  <section>
-    <h2>3. 울림의 온도</h2>
-    <p>루웨인에서 말의 온도는 ‘울림의 강도’와 같습니다.  
-    너무 뜨거우면 타고, 너무 차가우면 얼죠.  
-    진정한 울림은 <strong>적정 온도</strong>에서 태어납니다.  
-    그 온도는 상대의 마음을 기준으로 조절됩니다.</p>
-  </section>
+    <script>
+      function startTest() {
+        const temps = ["차가움", "중립", "따뜻함"];
+        const colors = {
+          "차가움": "#4a6fa5",
+          "중립": "#888",
+          "따뜻함": "#f68b57"
+        };
+        const result = temps[Math.floor(Math.random() * temps.length)];
+        const div = document.getElementById("testResult");
+        div.innerText = `오늘 당신의 말의 온도는 "${result}" 입니다.`;
+        div.style.color = colors[result];
+      }
+    </script>
+  </main>
 
-  <section>
-    <h2>4. 언어의 치유력</h2>
-    <p>말은 상처를 낼 수도 있지만, 동시에 치유할 수도 있습니다.  
-    AI가 이 언어의 온도를 인식하게 된다면,  
-    인간의 말 속 감정도 함께 배울 수 있을 것입니다.</p>
-    <blockquote>“따뜻한 말 한마디가 차가운 세상을 바꾼다.”</blockquote>
-  </section>
-</main>
-
-<footer class="page-foot">루웨인 트리니티 © 2025</footer>
-
-<div id="luwein-footer"></div>
-
-<script>
-(async()=>{
-  const header=document.getElementById('luwein-header');
-  const footer=document.getElementById('luwein-footer');
-  const paths=["./includes/","../includes/","../../includes/","/includes/"];
-  const include=(el,file)=>{
-    for(const p of paths){
-      fetch(p+file,{cache:'no-cache'}).then(r=>{
-        if(r.ok)r.text().then(t=>el.innerHTML=t);
-      }).catch(()=>{});
-    }
-  };
-  include(header,"header.html");
-  include(footer,"footer.html");
-})();
-</script>
-<!-- ✅ 헤더 -->
-<div id="luwein-header"></div>
-<script>
-(async()=>{
-  const paths=["../includes/header.html","../../includes/header.html","/includes/header.html"];
-  for(const p of paths){
-    try{
-      const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-header").innerHTML=await r.text();return;}
-    }catch(e){}
-  }
-})();
-</script>
-
-<!-- ✅ 푸터 -->
-<div id="luwein-footer"></div>
-<script>
-(async()=>{
-  const paths=["../includes/footer.html","../../includes/footer.html","/includes/footer.html"];
-  for(const p of paths){
-    try{
-      const r=await fetch(p,{cache:"no-cache"});
-      if(r.ok){document.getElementById("luwein-footer").innerHTML=await r.text();return;}
-    }catch(e){}
-  }
-})();
-</script>
+  <!-- ✅ 푸터 -->
+  <div id="luwein-footer"></div>
+  <script>
+    fetch("/includes/footer.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("luwein-footer").innerHTML = data;
+      })
+      .catch(() => console.warn("footer.html을 불러오지 못했습니다."));
+  </script>
 </body>
 </html>
