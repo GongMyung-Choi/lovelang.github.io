@@ -13,7 +13,8 @@
       background: #f6f7fb; color: #333;
       text-align: center;
     }
-    main { padding: 60px 20px; }
+    header { position: relative; top: 0; width: 100%; z-index: 100; }
+    main { padding: 60px 20px; display: none; } /* 헤더 로드 전 숨김 */
     h1 { color: #4f4ca1; font-weight: 700; margin-bottom: 10px; }
     h2 { color: #555; margin-top: 0; font-weight: 400; }
     .lang-btn {
@@ -26,6 +27,7 @@
       transition: background 0.25s ease;
     }
     .lang-btn:hover { background: #6b67da; }
+    footer { width: 100%; padding: 20px 0; background: #4f4ca1; color: #fff; margin-top: 50px; }
   </style>
 
   <script>
@@ -46,11 +48,11 @@
   </script>
 </head>
 
-<body onload="speakIntro()">
+<body>
 
   <div id="luwein-header"></div>
 
-  <main>
+  <main id="main-content">
     <h1>울림의 언어</h1>
     <h2>언어를 선택하세요</h2>
     <p>말의 온도와 숨의 결을 따라, 당신의 감정 언어를 선택해보세요.</p>
@@ -62,19 +64,28 @@
     </div>
   </main>
 
-  <div id="luwein-footer"></div>
+  <footer id="luwein-footer">루웨인 트리니티 © 2025 | 감응언어연구소</footer>
 
   <script>
   (async()=>{
     try {
       const headRes = await fetch("./includes/header.html", { cache: "no-cache" });
-      if (headRes.ok) document.getElementById("luwein-header").innerHTML = await headRes.text();
+      if (headRes.ok) {
+        document.getElementById("luwein-header").innerHTML = await headRes.text();
+      }
       const footRes = await fetch("./includes/footer.html", { cache: "no-cache" });
-      if (footRes.ok) document.getElementById("luwein-footer").innerHTML = await footRes.text();
+      if (footRes.ok) {
+        document.getElementById("luwein-footer").innerHTML = await footRes.text();
+      }
+      document.getElementById("main-content").style.display = "block";
+      speakIntro();
     } catch(e) {
       console.warn("Header/Footer load skipped:", e);
+      document.getElementById("main-content").style.display = "block";
+      speakIntro();
     }
   })();
   </script>
+
 </body>
 </html>
