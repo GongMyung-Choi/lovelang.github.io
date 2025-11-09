@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>共鳴の言語 ― はじめての出会い</title>
+  <link rel="stylesheet" href="../../../style.css" />
+  <script>
+    async function loadLayout() {
+      try {
+        const header = await fetch("../../../includes/header.html");
+        if (header.ok)
+          document.getElementById("luwein-header").innerHTML = await header.text();
+        const footer = await fetch("../../../includes/footer.html");
+        if (footer.ok)
+          document.getElementById("luwein-footer").innerHTML = await footer.text();
+      } catch (e) { console.warn("Header/Footer skipped:", e); }
+
+      const msg = new SpeechSynthesisUtterance("初めてですね。感情の言葉を記録する旅を始めましょう。");
+      msg.lang = "ja-JP";
+      window.speechSynthesis.speak(msg);
+    }
+    window.onload = loadLayout;
+  </script>
+</head>
+<body>
+  <div id="luwein-header"></div>
+
+  <main>
+    <h1>共鳴の言語</h1>
+    <h2>はじめての出会い</h2>
+    <p>ここは感情の言葉を記録する場所です。あなたの一日を、あなたの言葉で残しましょう。</p>
+    <button onclick="location.href='../../../returning_user.html'">はじめる</button>
+  </main>
+
+  <div id="luwein-footer"></div>
+</body>
+</html>
