@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Language of Resonance ― First Encounter</title>
+  <link rel="stylesheet" href="../../../style.css" />
+  <script>
+    async function loadLayout() {
+      try {
+        const header = await fetch("../../../includes/header.html");
+        if (header.ok)
+          document.getElementById("luwein-header").innerHTML = await header.text();
+        const footer = await fetch("../../../includes/footer.html");
+        if (footer.ok)
+          document.getElementById("luwein-footer").innerHTML = await footer.text();
+      } catch (e) { console.warn("Header/Footer skipped:", e); }
+
+      const msg = new SpeechSynthesisUtterance("Welcome. This is your first encounter with the Language of Resonance.");
+      msg.lang = "en-US";
+      window.speechSynthesis.speak(msg);
+    }
+    window.onload = loadLayout;
+  </script>
+</head>
+<body>
+  <div id="luwein-header"></div>
+
+  <main>
+    <h1>Language of Resonance</h1>
+    <h2>First Encounter</h2>
+    <p>This is where you begin recording the language of your emotions. Express your day in your own words.</p>
+    <button onclick="location.href='../../../returning_user.html'">Start</button>
+  </main>
+
+  <div id="luwein-footer"></div>
+</body>
+</html>
