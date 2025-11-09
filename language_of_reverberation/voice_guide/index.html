@@ -3,57 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>음성 안내 | 루웨인 울림 가이드</title>
+<title>울림의 언어 ― 감응 음성 안내 | 루웨인 트리니티</title>
 <style>
-body{font-family:'Noto Sans KR',sans-serif;margin:0;padding:0;background:#f7f8fc;color:#333;line-height:1.8;}
+body{font-family:'Noto Sans KR',sans-serif;margin:0;padding:0;background:#f8f9fb;color:#333;line-height:1.8;}
 header,footer{text-align:center;padding:20px;background:#504b9b;color:#fff;}
 main{max-width:800px;margin:40px auto;padding:0 20px;}
-button{background:#504b9b;color:#fff;border:none;padding:10px 18px;border-radius:8px;font-size:1rem;cursor:pointer;}
-button:hover{background:#635bd6;}
+h1,h2{font-weight:600;}
+button{background:#504b9b;color:#fff;border:none;padding:12px 20px;border-radius:10px;font-size:1rem;cursor:pointer;}
+button:hover{background:#6a61db;}
 .voice-guide{margin-top:30px;}
+section p{margin-bottom:18px;}
 </style>
-<!-- header.html 의 </head> 바로 위쪽에 추가 -->
-<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-<script type="module" src="/scripts/memory_policies.js" defer></script>
-<link rel="manifest" href="/manifest.json">
+
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
+    navigator.serviceWorker.register('./service-worker.js')
       .then(reg => console.log('ServiceWorker registered:', reg))
       .catch(err => console.warn('ServiceWorker registration failed:', err));
   });
 }
 </script>
-
 </head>
-<body>
 
+<body>
 <header>
-  <h1>음성 안내</h1>
-  <p>울림의 언어, 숨의 결을 따라가며 듣는 시간</p>
+  <h1>울림의 언어</h1>
+  <p>숨의 결을 따라, 말의 온도를 느끼는 시간</p>
 </header>
 
 <main>
   <section class="voice-guide">
-    <h2>🌬 감응 훈련 가이드</h2>
-    <p>이 안내는 루웨인 트리니티의 ‘울림 훈련’을 위한 음성 버전입니다.<br>
-       귀로 듣고, 마음으로 따라하며, 호흡으로 언어의 결을 느껴보세요.</p>
-    <button onclick="speakText()">음성 안내 듣기 ▶</button>
+    <h2>🌬 감응 훈련 ― 음성 안내</h2>
+    <p>루웨인 트리니티의 ‘울림 훈련’은 단순한 발화가 아니라,  
+       말이 가진 떨림을 다시 호흡으로 되돌리는 과정입니다.<br>
+       지금부터 안내를 들으며 천천히 따라가세요.</p>
+    <button onclick="startGuide()">안내 듣기 ▶</button>
   </section>
 </main>
 
 <footer>루웨인 트리니티 © 2025 | 감응언어연구소</footer>
 
 <script>
-function speakText(){
-  const msg=new SpeechSynthesisUtterance();
-  msg.lang='ko-KR';
-  msg.text='숨을 고르고, 천천히 말의 결을 따라가세요. 울림은 곧 당신의 언어가 됩니다.';
-  window.speechSynthesis.speak(msg);
+const steps=[
+  "숨을 고릅니다. 천천히, 한 호흡 길게 들이마시세요.",
+  "이제 내쉬며, 말의 결을 느껴보세요.",
+  "울림은 목소리가 아니라, 당신의 마음에서 시작됩니다.",
+  "이제 조용히 한 문장을 떠올려 보세요. 당신의 말이 곧 울림이 됩니다."
+];
+
+function startGuide(){
+  let i=0;
+  function speakNext(){
+    if(i>=steps.length)return;
+    const msg=new SpeechSynthesisUtterance(steps[i]);
+    msg.lang='ko-KR';
+    msg.rate=1.0;
+    window.speechSynthesis.speak(msg);
+    i++;
+    msg.onend=()=>setTimeout(speakNext,1500);
+  }
+  speakNext();
 }
 </script>
-<!-- ✅ 헤더 -->
+
+<!-- 🔹 헤더/푸터 동적 불러오기 -->
 <div id="luwein-header"></div>
 <script>
 (async()=>{
@@ -67,7 +81,6 @@ function speakText(){
 })();
 </script>
 
-<!-- ✅ 푸터 -->
 <div id="luwein-footer"></div>
 <script>
 (async()=>{
