@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>울림의 언어 ― 언어 선택 | 루웨인 트리니티</title>
-  <link rel="manifest" href="./manifest.json">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="manifest" href="../../../manifest.json">
+  <link rel="stylesheet" href="../../../style.css" />
   <style>
     body {
       font-family: 'Noto Sans KR', sans-serif;
@@ -13,8 +13,7 @@
       background: #f6f7fb; color: #333;
       text-align: center;
     }
-    header { position: relative; top: 0; width: 100%; z-index: 100; }
-    main { padding: 60px 20px; display: none; } /* 헤더 로드 전 숨김 */
+    main { padding: 60px 20px; display: none; }
     h1 { color: #4f4ca1; font-weight: 700; margin-bottom: 10px; }
     h2 { color: #555; margin-top: 0; font-weight: 400; }
     .lang-btn {
@@ -27,29 +26,52 @@
       transition: background 0.25s ease;
     }
     .lang-btn:hover { background: #6b67da; }
-    footer { width: 100%; padding: 20px 0; background: #4f4ca1; color: #fff; margin-top: 50px; }
   </style>
 
   <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./service-worker.js')
-        .then(r => console.log('SW Registered:', r))
-        .catch(e => console.warn('SW Failed:', e));
-    });
+  // ✅ 언어 선택 → 음성 출력 후 해당 폴더 이동
+  const langs = {
+    ko: {
+      msg: "안녕하세요. 울림의 언어입니다. 사용할 언어를 선택해주세요.",
+      code: "ko-KR"
+    },
+    en: {
+      msg: "Hello. This is the Language of Resonance. Please choose your language.",
+      code: "en-US"
+    },
+    ja: {
+      msg: "こんにちは。共鳴の言語です。言語を選んでください。",
+      code: "ja-JP"
+    }
+  };
+
+  function selectLang(lang) {
+    const data = langs[lang];
+    localStorage.setItem("ulrim_lang", lang);
+    const msg = new SpeechSynthesisUtterance(data.msg);
+    msg.lang = data.code;
+    window.speechSynthesis.speak(msg);
+    setTimeout(() => {
+      location.href = `./languages/${lang}/first_time.html`;
+    }, 2000);
   }
 
-  function speakIntro() {
-    const msg = new SpeechSynthesisUtterance("안녕하세요. 울림의 언어입니다. 사용할 언어를 선택해주세요.");
-    msg.lang = "ko-KR";
-    msg.rate = 1.0;
-    window.speechSynthesis.speak(msg);
+  async function loadLayout() {
+    try {
+      const header = await fetch("../../../includes/header.html");
+      if (header.ok)
+        document.getElementById("luwein-header").innerHTML = await header.text();
+      const footer = await fetch("../../../includes/footer.html");
+      if (footer.ok)
+        document.getElementById("luwein-footer").innerHTML = await footer.text();
+    } catch (e) { console.warn("Header/Footer skipped:", e); }
+    document.getElementById("main-content").style.display = "block";
   }
+  window.onload = loadLayout;
   </script>
 </head>
 
 <body>
-
   <div id="luwein-header"></div>
 
   <main id="main-content">
@@ -58,34 +80,12 @@
     <p>말의 온도와 숨의 결을 따라, 당신의 감정 언어를 선택해보세요.</p>
 
     <div>
-      <button class="lang-btn" onclick="location.href='first_time.html'">한국어</button>
-      <button class="lang-btn" onclick="location.href='first_time.html'">English</button>
-      <button class="lang-btn" onclick="location.href='first_time.html'">日本語</button>
+      <button class="lang-btn" onclick="selectLang('ko')">한국어</button>
+      <button class="lang-btn" onclick="selectLang('en')">English</button>
+      <button class="lang-btn" onclick="selectLang('ja')">日本語</button>
     </div>
   </main>
 
-  <footer id="luwein-footer">루웨인 트리니티 © 2025 | 감응언어연구소</footer>
-
-  <script>
-  (async()=>{
-    try {
-      const headRes = await fetch("./includes/header.html", { cache: "no-cache" });
-      if (headRes.ok) {
-        document.getElementById("luwein-header").innerHTML = await headRes.text();
-      }
-      const footRes = await fetch("./includes/footer.html", { cache: "no-cache" });
-      if (footRes.ok) {
-        document.getElementById("luwein-footer").innerHTML = await footRes.text();
-      }
-      document.getElementById("main-content").style.display = "block";
-      speakIntro();
-    } catch(e) {
-      console.warn("Header/Footer load skipped:", e);
-      document.getElementById("main-content").style.display = "block";
-      speakIntro();
-    }
-  })();
-  </script>
-
+  <div id="luwein-footer"></div>
 </body>
 </html>
