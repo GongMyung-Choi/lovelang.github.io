@@ -79,10 +79,15 @@ Write-Host ('-' * 38) -ForegroundColor Cyan
 Write-Host "🌿 모든 설정 완료!" -ForegroundColor Green
 Write-Host "테스트하려면 아래 명령을 PowerShell에서 실행하세요:" -ForegroundColor White
 Write-Host ""
-Write-Host ('curl -X POST -H "Content-Type: application/json" ' `
-           + '-H "x-shared-secret: ' + $SUPA_SECRET + '" ' `
-           + "-d '{\"path\":\"test/page\",\"content\":{\"ok\":true},\"meta\":{\"note\":\"hello\"}}' " `
-           + $SUPA_URL + '/functions/v1/record-memory')
+
+$curlTest = @"
+curl -X POST -H "Content-Type: application/json" `
+ -H "x-shared-secret: $SUPA_SECRET" `
+ -d '{""path"":""test/page"",""content"":{""ok"":true},""meta"":{""note"":""hello""}}' `
+ $SUPA_URL/functions/v1/record-memory
+"@
+
+Write-Host $curlTest -ForegroundColor Yellow
 Write-Host ""
 Write-Host ('-' * 38) -ForegroundColor Cyan
 Pause
