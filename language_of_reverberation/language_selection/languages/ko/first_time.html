@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>울림의 언어 ― 첫 만남</title>
+  <link rel="stylesheet" href="../../../style.css" />
+  <script>
+    async function loadLayout() {
+      try {
+        const header = await fetch("../../../includes/header.html");
+        if (header.ok)
+          document.getElementById("luwein-header").innerHTML = await header.text();
+        const footer = await fetch("../../../includes/footer.html");
+        if (footer.ok)
+          document.getElementById("luwein-footer").innerHTML = await footer.text();
+      } catch (e) { console.warn("Header/Footer skipped:", e); }
+
+      const msg = new SpeechSynthesisUtterance("처음 오셨군요. 감정의 언어를 기록하는 여정을 시작합니다.");
+      msg.lang = "ko-KR";
+      window.speechSynthesis.speak(msg);
+    }
+    window.onload = loadLayout;
+  </script>
+</head>
+<body>
+  <div id="luwein-header"></div>
+
+  <main>
+    <h1>울림의 언어</h1>
+    <h2>첫 만남</h2>
+    <p>이곳은 감정의 언어를 기록하는 공간입니다. 당신의 하루를, 당신의 말로 남겨보세요.</p>
+    <button onclick="location.href='../../../returning_user.html'">시작하기</button>
+  </main>
+
+  <div id="luwein-footer"></div>
+</body>
+</html>
