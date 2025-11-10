@@ -1,42 +1,27 @@
-import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
-const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-const SHARED_SECRET = Deno.env.get("SHARED_SECRET")!;
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+// supabase/functions/record-memory/index.ts
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 serve(async (req) => {
-  try {
-    const auth = req.headers.get("x-shared-secret");
-    if (auth !== SHARED_SECRET) {
-      return new Response("Unauthorized", { status: 401 });
-    }
+  const body = await req.json();
+  console.log("📥 Memory Record Received:", body);
 
-    const body = await req.json();
-    const { path, content, meta } = body;
+  const supabaseUrl = Deno.env.get("https://omchtafaqgkdwcrwscrp.supabase.co");
+  const supabaseKey = Deno.env.get("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tY2h0YWZhcWdrZHdjcndzY3JwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1ODg4MjI2MywiZXhwIjoyMDc0NDU4MjYzfQ.XHX844n9Jcs6lXObcNcl-IbEWLmdCOoV6H_IiBbnbAk");
+  const { createClient } = await import("https://esm.sh/@supabase/supabase-js");
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const { error } = await supabase.from("memory_events").insert([
-      {
-        path,
-        content,
-        meta,
-        created_at: new Date().toISOString(),
-      },
-    ]);
+  const { path, content, meta } = body;
 
-    if (error) throw error;
+  const { error } = await supabase
+    .from("memory_events")
+    .insert([{ path, content, meta }]);
 
-    return new Response(
-      JSON.stringify({ ok: true, message: "Memory stored successfully" }),
-      { headers: { "Content-Type": "application/json" } }
-    );
-  } catch (err) {
-    console.error("❌ memory record error:", err);
-    return new Response(JSON.stringify({ ok: false, error: err.message }), {
-      headers: { "Content-Type": "application/json" },
-      status: 500,
-    });
+  if (error) {
+    console.error("❌ DB insert error:", error);
+    return new Response(JSON.stringify({ ok: false, error }), { status: 500 });
   }
+
+  return new Response(JSON.stringify({ ok: true }), {
+    headers: { "Content-Type": "application/json" },
+  });
 });
