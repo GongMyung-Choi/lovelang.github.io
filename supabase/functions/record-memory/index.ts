@@ -1,27 +1,36 @@
-// supabase/functions/record-memory/index.ts
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+// 환경 변수에서 키 불러오기
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+
+// Supabase 클라이언트 생성
+const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 serve(async (req) => {
-  const body = await req.json();
-  console.log("📥 Memory Record Received:", body);
+  try {
+    const data = await req.json();
+    const { path, content, meta } = data;
 
-  const supabaseUrl = Deno.env.get("https://omchtafaqgkdwcrwscrp.supabase.co");
- 
-  const { createClient } = await import("https://esm.sh/@supabase/supabase-js");
-  const supabase = createClient(supabaseUrl, supabaseKey);
+    // 저장: memory_events 테이블에 기록
+    const { error } = await supabase.from("memory_events").insert({
+      path,
+      content,
+      meta,
+      created_at: new Date().toISOString(),
+    });
 
-  const { path, content, meta } = body;
+    if (error) throw error;
 
-  const { error } = await supabase
-    .from("memory_events")
-    .insert([{ path, content, meta }]);
-
-  if (error) {
-    console.error("❌ DB insert error:", error);
-    return new Response(JSON.stringify({ ok: false, error }), { status: 500 });
+    return new Response(
+      JSON.stringify({ status: "success", message: "Memory recorded!" }),
+      { headers: { "Content-Type": "application/json" } }
+    );
+  } catch (err) {
+    return new Response(
+      JSON.stringify({ status: "error", message: err.message }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
+    );
   }
-
-  return new Response(JSON.stringify({ ok: true }), {
-    headers: { "Content-Type": "application/json" },
-  });
 });
