@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>맏언니 – LuWain Direct</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="app.js"></script>
+
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <link rel="apple-touch-icon" href="../icons/icon-192x192.png" />
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <h1>맏언니</h1>
+      <div id="modelButtons">
+        <button data-model="luwain">루웨인</button>
+        <button data-model="lunai">루나이</button>
+        <button data-model="lumian">루미안</button>
+      </div>
+    </header>
+
+    <main id="chat"></main>
+
+    <footer>
+      <input type="file" id="imageInput" accept="image/*" hidden />
+      <button id="imgBtn">📷</button>
+      <input id="msg" placeholder="메시지 입력" />
+      <button id="send">➤</button>
+    </footer>
+  </div>
+</body>
+</html>
