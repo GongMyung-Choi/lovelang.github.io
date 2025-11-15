@@ -1,0 +1,87 @@
+body {
+  margin: 0;
+  background: #111;
+  color: #eee;
+  font-family: 'Pretendard', sans-serif;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  padding: 15px;
+  background: #1d1d1d;
+  border-bottom: 1px solid #333;
+}
+
+header h1 {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  color: #ffd24d;
+}
+
+#modelButtons button {
+  margin-right: 6px;
+  background: #333;
+  color: #eee;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 6px;
+}
+
+#modelButtons button.active {
+  background: #ffd24d;
+  color: #000;
+}
+
+#chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.msg {
+  margin-bottom: 12px;
+  max-width: 80%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.me {
+  background: #ffd24d;
+  color: #000;
+  margin-left: auto;
+}
+
+.bot {
+  background: #333;
+}
+
+footer {
+  display: flex;
+  padding: 10px;
+  background: #1d1d1d;
+  border-top: 1px solid #333;
+}
+
+footer input#msg {
+  flex: 1;
+  margin-right: 8px;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+footer button {
+  background: #ffd24d;
+  border: none;
+  padding: 0 15px;
+  border-radius: 6px;
+  font-size: 18px;
+}
