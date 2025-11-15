@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>루웨인 무전기 · 맏언니 채널</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-circle">
+          <span class="logo-dot logo-sun"></span>
+          <span class="logo-dot logo-moon"></span>
+        </div>
+        <div class="brand-text">
+          <h1>루웨인 무전기</h1>
+          <p>맏언니 전용 직통 채널</p>
+        </div>
+      </div>
+      <div class="status">
+        <span class="status-dot"></span>
+        <span id="status-text">대기 중</span>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <section id="chat-window" class="chat-window">
+        <!-- 메시지가 여기 쌓임 -->
+      </section>
+      <section class="input-panel">
+        <textarea
+          id="user-input"
+          rows="2"
+          placeholder="여기다 그냥 툭 던져. 맏언니가 받아줄게 :)"
+        ></textarea>
+        <div class="input-actions">
+          <button id="clear-btn" type="button" class="ghost-btn">대화 지우기</button>
+          <button id="send-btn" type="button" class="primary-btn">보내기</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
